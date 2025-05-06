@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPF_Fallout_Character_Manager">
+    <FontFamily x:Key="Monofonto">../Fonts/NotoSans-Regular.ttf#Monofonto</FontFamily>
+    <FontFamily x:Key="JH_Fallout">../Fonts/JH_FALLOUT.ttf#JH_Fallout</FontFamily>
+</ResourceDictionary>
