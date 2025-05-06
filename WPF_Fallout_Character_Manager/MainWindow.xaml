@@ -38,116 +38,27 @@
 
             <TextBlock Text="Pip-boy 2025 RobCo."
                        Grid.Column="0"
-                       Foreground="#23ba03"
+                       Style="{StaticResource FalloutDefaultText}"
                        FontSize="9"
-                       FontFamily="{StaticResource JH_Fallout}"
                        FontWeight="Bold"
                        VerticalAlignment="Center"
                        Margin="10, 0, 0, 0"/>
 
-            <Button x:Name="btnMinimize"
-                    Grid.Column="1"
-                    FontSize="12"
-                    FontFamily="{StaticResource Monofonto}"
-                    Cursor="Hand"
-                    Click="btnMinimize_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Content" Value=" - "/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#23ba03"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Content" Value="[-]"/>
+            <Button x:Name="Minimize"
+                Grid.Column="1"
+                Style="{StaticResource FalloutMinimizeButtonStyle}"
+                Click="btnMinimize_Click"/>
 
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="18" Height="18"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <Button x:Name="btnFullscreen"
+            <Button x:Name="Fullscreen"
                 Grid.Column="2"
-                FontSize="12"
-                FontFamily="{StaticResource Monofonto}"
-                Cursor="Hand"
-                Click="btnFullscreen_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Content" Value=" o "/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#23ba03"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Content" Value="[o]"/>
+                Style="{StaticResource FalloutFullscreenButtonStyle}"
+                Click="btnFullscreen_Click"/>
 
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
+            <Button x:Name="Close"
+                Grid.Column="3"
+                Style="{StaticResource FalloutCloseButtonStyle}"
+                Click="btnClose_Click"/>
 
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="18" Height="18"
-                    Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <Button x:Name="btnClose"
-                    Grid.Column="3"
-                    FontSize="12"
-                    FontFamily="{StaticResource Monofonto}"
-                    Cursor="Hand"
-                    Click="btnClose_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Content" Value=" x "/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#23ba03"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Content" Value="[x]"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="18" Height="18"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
         </Grid>
 
         <Border Grid.Row="1"
@@ -181,14 +92,10 @@
                         <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
                         <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
                         <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
                     </StackPanel>
                     <StackPanel
                         Grid.Row="1"
                         Grid.Column="3">
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
                         <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
                         <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
                         <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
