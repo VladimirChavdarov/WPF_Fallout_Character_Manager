@@ -1,4 +1,52 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <Style x:Key="BracketBorderStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- NOTE: I will leave this for now, because I want to figure out a way to set the width/height of the rectangles
+                        based on a BorderThickness parameter passed from the ContentControl -->
+                        <!-- Brackets -->
+                        <Rectangle Grid.Row="0" Grid.Column="0" Width="1" Height="5" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Left"/>
+                        <Rectangle Grid.Row="0" Grid.Column="0" Width="5" Height="1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Top"/>
+
+                        <Rectangle Grid.Row="2" Grid.Column="0" Width="1" Height="5" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Left"/>
+                        <Rectangle Grid.Row="2" Grid.Column="0" Width="5" Height="1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Bottom"/>
+
+                        <Rectangle Grid.Row="0" Grid.Column="2" Width="1" Height="5" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Right"/>
+                        <Rectangle Grid.Row="0" Grid.Column="2" Width="5" Height="1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Top"/>
+
+                        <Rectangle Grid.Row="2" Grid.Column="2" Width="1" Height="5" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Right"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Width="5" Height="1" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Bottom"/>
+                        
+                        <!-- Middle Parts (Horizontal) -->
+                        <!--<Rectangle Grid.Row="0" Grid.Column="1" Width="Auto" Height="2" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Top"/>-->
+                        <!--<Rectangle Grid.Row="2" Grid.Column="1" Width="Auto" Height="2" Fill="{TemplateBinding BorderBrush}" VerticalAlignment="Bottom"/>-->
+                        
+                        <!-- Middle Parts (Vertical)-->
+                        <Rectangle Grid.Row="1" Grid.Column="0" Width="1" Height="Auto" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Left"/>
+                        <Rectangle Grid.Row="1" Grid.Column="2" Width="1" Height="Auto" Fill="{TemplateBinding BorderBrush}" HorizontalAlignment="Right"/>
+                        
+                        <!-- Content -->
+                        <ContentPresenter 
+                        Grid.Row="1" Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

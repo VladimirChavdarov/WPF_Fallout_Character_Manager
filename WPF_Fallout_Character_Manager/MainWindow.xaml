@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1320" Height="760"
+        Title="MainWindow" Width="1325" Height="785"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         MinWidth="205"
@@ -16,14 +16,15 @@
         
         MouseDown="Window_MouseDown">
 
-    
-    
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!-- Top Bar -->
         <Border Grid.Row="0"
         Background="Black"
         BorderBrush="#23ba03"
@@ -60,61 +61,153 @@
                 Click="btnClose_Click"/>
 
         </Grid>
+        <!-- -->
 
+        <!-- Main Window -->
         <Border Grid.Row="1"
                 Background="Black"
                 BorderBrush="#23ba03"
                 BorderThickness="1">
+
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto"
                 HorizontalScrollBarVisibility="Auto">
-
                 <Grid>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="360"/>
-                        <RowDefinition Height="360"/>
-                    </Grid.RowDefinitions>
-
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="320"/>
-                        <ColumnDefinition Width="320"/>
-                        <ColumnDefinition Width="320"/>
-                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="198"/>
+                        <ColumnDefinition Width="594"/>
+                        <ColumnDefinition Width="198"/>
+                        <ColumnDefinition Width="330"/>
                     </Grid.ColumnDefinitions>
 
-                    <ScrollViewer>
-                        <StackPanel
+                    <!-- First Column (Small Bio, Survival Params., Passives) -->
+                    <Grid
+                        Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250"/>
+                            <RowDefinition Height="260"/>
+                            <RowDefinition Height="250"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Small Bio -->
+                        <GroupBox
+                            Header="Short Bio"
                             Grid.Row="0"
-                            Grid.Column="0">
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                            <TextBox Height="30" Width="200" Margin="10" Background="Red"/>
-                        </StackPanel>
-                    </ScrollViewer>
-                    <StackPanel
-                        Grid.Row="1"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+
+                        <!-- Survival -->
+                        <GroupBox
+                            Header="Survival"
+                            Grid.Row="1"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+
+                        <!-- Passives -->
+                        <GroupBox
+                            Header="Passives"
+                            Grid.Row="2"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+                    </Grid>
+                    <!-- -->
+
+                    <!-- Second Column (SPECIAL, Equipped Items) -->
+                    <Grid
+                        Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="456"/>
+                            <RowDefinition Height="304"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <!-- SPECIAL -->
+                        <GroupBox
+                            Header="S.P.E.C.I.A.L. | Stats"
+                            Grid.Row="0"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+
+                        <!-- Equipped Items -->
+                        <GroupBox
+                            Header="Equipped Items"
+                            Grid.Row="1"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+                    </Grid>
+                    <!-- -->
+
+                    <!-- Third Column (Skills) -->
+                    <Grid
+                        Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="760"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Skills -->
+                        <GroupBox
+                            Header="Skills"
+                            Grid.Row="0"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+                    </Grid>
+                    <!-- -->
+
+                    <!-- Fourth Column (Conditions) -->
+                    <Grid
                         Grid.Column="3">
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                        <TextBox Height="30" Width="200" Margin="10" Background="Blue"/>
-                    </StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="760"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Conditions -->
+                        <GroupBox
+                            Header="Conditions"
+                            Grid.Row="0"
+                            Margin="5"
+                            Background="Black"
+                            BorderBrush="#23ba03"
+                            BorderThickness="1">
+
+                        </GroupBox>
+                        <!-- -->
+                    </Grid>
+                    <!-- -->
+
                 </Grid>
             </ScrollViewer>
         </Border>
+        <!-- -->
     </Grid>
 
 </Window>
