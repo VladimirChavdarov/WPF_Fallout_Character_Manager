@@ -25,6 +25,11 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             InitializeComponent();
 
+            this.CustomTextBox.PreviewMouseLeftButtonDown += (sender, e) =>
+            {
+                Caret.Visibility = Visibility.Visible;
+                MoveCustomCaret();
+            };
             this.CustomTextBox.SelectionChanged += (sender, e) => MoveCustomCaret();
             this.CustomTextBox.LostFocus += (sender, e) => Caret.Visibility = Visibility.Collapsed;
             this.CustomTextBox.GotFocus += (sender, e) => Caret.Visibility = Visibility.Visible;
@@ -35,6 +40,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             var caretLocation = CustomTextBox.GetRectFromCharacterIndex(CustomTextBox.CaretIndex).Location;
 
+            Debug.WriteLine($"Char before caret: '{caretLocation}'");
             if (!double.IsInfinity(caretLocation.X))
             {
                 Canvas.SetLeft(Caret, caretLocation.X);
