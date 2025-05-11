@@ -3,6 +3,9 @@
 
     <Style TargetType="GroupBox">
         <Setter Property="Foreground" Value="#23ba03"/>
+        <Setter Property="FontFamily" Value="{StaticResource Monofonto}"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
@@ -19,10 +22,9 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="6"/>
                         </Grid.RowDefinitions>
-                        <Border BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="4" Grid.Column="0" CornerRadius="0" Grid.Row="1" Grid.RowSpan="3"/>
                         <Border BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="4" CornerRadius="0" Grid.Row="1" Grid.RowSpan="3">
                             <Border.OpacityMask>
-                                <MultiBinding ConverterParameter="7">
+                                <MultiBinding ConverterParameter="6">
                                     <MultiBinding.Converter>
                                         <BorderGapMaskConverter />
                                     </MultiBinding.Converter>
@@ -44,7 +46,7 @@
                         <Border
                             x:Name="Header"
                             Grid.Column="1"
-                            Padding="5,1,5,4"
+                            Padding="5,4,5,0"
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Background="Transparent"

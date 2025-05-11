@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager"
+        xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Width="1325" Height="785"
         WindowStyle="None"
@@ -69,9 +70,7 @@
                 BorderBrush="#23ba03"
                 BorderThickness="1">
 
-            <ScrollViewer
-                VerticalScrollBarVisibility="Auto"
-                HorizontalScrollBarVisibility="Auto">
+            <ScrollViewer>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="198"/>
@@ -97,7 +96,45 @@
                             Background="Black"
                             BorderBrush="#23ba03"
                             BorderThickness="1">
-
+                            <ScrollViewer>
+                                <StackPanel
+                                    Margin="0 5 0 0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource FalloutDefaultLabel}"
+                                            FontSize="9"
+                                            VerticalAlignment="Center">
+                                            Name:
+                                        </Label>
+                                        <TextBox
+                                            Grid.Column="1"
+                                            Style="{StaticResource FalloutDefaultTextBox}"
+                                            MinWidth="125"
+                                            FontSize="20"/>
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource FalloutDefaultLabel}"
+                                            FontSize="9"
+                                            VerticalAlignment="Center">
+                                            Race:
+                                        </Label>
+                                        <controls:ChunkyCaretTextBox
+                                            Grid.Column="1"/>
+                                    </Grid>
+                                    
+                                </StackPanel>
+                            </ScrollViewer>
                         </GroupBox>
                         <!-- -->
 
