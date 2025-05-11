@@ -49,17 +49,20 @@
 
             <Button x:Name="Minimize"
                 Grid.Column="1"
-                Style="{StaticResource FalloutMinimizeButtonStyle}"
+                Content=" - "
+                Style="{StaticResource FalloutTopBarButton}"
                 Click="btnMinimize_Click"/>
 
             <Button x:Name="Fullscreen"
                 Grid.Column="2"
-                Style="{StaticResource FalloutFullscreenButtonStyle}"
+                Content=" o "
+                Style="{StaticResource FalloutTopBarButton}"
                 Click="btnFullscreen_Click"/>
 
             <Button x:Name="Close"
                 Grid.Column="3"
-                Style="{StaticResource FalloutCloseButtonStyle}"
+                Content=" x "
+                Style="{StaticResource FalloutTopBarButton}"
                 Click="btnClose_Click"/>
 
         </Grid>

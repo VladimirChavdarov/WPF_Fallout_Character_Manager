@@ -4,26 +4,28 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 
 namespace WPF_Fallout_Character_Manager.Converters
 {
-    public class FontSizeToMarginConverter : IValueConverter
+    public class BracketConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double fontSize)
+            if (value is string s && s.StartsWith(" ") && s.EndsWith(" "))
             {
-                // Set top margin to font size; other margins to 0
-                return new Thickness(0, 0, 0, 0);
+                return $"[{s.Substring(1, s.Length - 2)}]";
             }
-            return new Thickness(0);
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is string s && s.StartsWith("[") && s.EndsWith("]"))
+            {
+                return s.Substring(1, s.Length - 2);
+            }
+            return value;
         }
     }
 }
