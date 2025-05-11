@@ -40,7 +40,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             var caretLocation = CustomTextBox.GetRectFromCharacterIndex(CustomTextBox.CaretIndex).Location;
 
-            Debug.WriteLine($"Char before caret: '{caretLocation}'");
+            //Debug.WriteLine($"Char before caret: '{caretLocation}'");
             if (!double.IsInfinity(caretLocation.X))
             {
                 Canvas.SetLeft(Caret, caretLocation.X);
