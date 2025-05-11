@@ -89,7 +89,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="140"/>
                             <RowDefinition Height="200"/>
-                            <RowDefinition Height="130"/>
+                            <RowDefinition Height="180"/>
                         </Grid.RowDefinitions>
 
                         <!-- Small Bio -->
@@ -370,6 +370,23 @@
                                         MinWidth="30"
                                         FontSize="11"
                                         VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid Margin="0 0 0 5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Column="0"
+                                        Style="{StaticResource FalloutDefaultLabel}"
+                                        FontSize="10"
+                                        VerticalAlignment="Center">
+                                        TestTesr:
+                                    </Label>
+                                    <controls:UpDownNumberInputControl
+                                        Grid.Column="1">
+                                        
+                                    </controls:UpDownNumberInputControl>
                                 </Grid>
                             </StackPanel>
                         </GroupBox>

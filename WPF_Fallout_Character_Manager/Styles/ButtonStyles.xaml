@@ -33,4 +33,40 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="FalloutRepeatButton" TargetType="RepeatButton">
+        <Setter Property="Margin" Value="2 1 0 1"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{StaticResource Monofonto}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource FalloutGreen}"/>
+        <Setter Property="Width" Value="18"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border
+                        x:Name="PART_Border"
+                        Background="{TemplateBinding Background}">
+                        <ContentPresenter
+                              x:Name="PART_ContentPresenter"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ContentPresenter" Property="Content"
+                            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource BracketConverter}}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
