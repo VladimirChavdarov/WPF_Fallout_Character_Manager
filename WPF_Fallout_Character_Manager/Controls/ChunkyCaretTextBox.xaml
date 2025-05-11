@@ -22,15 +22,15 @@
                 Background="{StaticResource FalloutGreenBackground}"
                 Foreground="{StaticResource FalloutGreen}"
                 FontFamily="{StaticResource JH_Fallout}"
-                FontSize="20" 
-                MinWidth="125"
+                FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Padding="{Binding ElementName=CustomTextBox, Path=FontSize, Converter={StaticResource FontSizeToPaddingConverter}}"
                 CaretBrush="Transparent" 
-                Padding="5 5 25 5"
                 Margin="0"/>
         <Canvas>
             <Border x:Name="Caret" 
                 Visibility="Collapsed"
-                    
+                Width="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Height="{Binding ElementName=CustomTextBox, Path=FontSize, Converter={StaticResource DivideByConverter}, ConverterParameter=1.25}" 
                 Background="{StaticResource FalloutGreen}">
                 <Border.Triggers>

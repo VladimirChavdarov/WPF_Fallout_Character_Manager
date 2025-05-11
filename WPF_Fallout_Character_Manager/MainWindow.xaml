@@ -73,8 +73,8 @@
             <ScrollViewer>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="198"/>
-                        <ColumnDefinition Width="594"/>
+                        <ColumnDefinition Width="230"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="198"/>
                         <ColumnDefinition Width="330"/>
                     </Grid.ColumnDefinitions>
@@ -115,7 +115,7 @@
                                             Grid.Column="1"
                                             Style="{StaticResource FalloutDefaultTextBox}"
                                             MinWidth="125"
-                                            FontSize="20"/>
+                                            FontSize="12"/>
                                     </Grid>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -127,10 +127,13 @@
                                             Style="{StaticResource FalloutDefaultLabel}"
                                             FontSize="9"
                                             VerticalAlignment="Center">
-                                            Race:
+                                            Name:
                                         </Label>
                                         <controls:ChunkyCaretTextBox
-                                            Grid.Column="1"/>
+                                            Grid.Column="1"
+                                            MinWidth="125"
+                                            FontSize="12"
+                                            VerticalAlignment="Center"/>
                                     </Grid>
                                     
                                 </StackPanel>

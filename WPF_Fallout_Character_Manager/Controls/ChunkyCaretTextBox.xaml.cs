@@ -49,34 +49,35 @@ namespace WPF_Fallout_Character_Manager.Controls
         private void CustomTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             int caretIndex = CustomTextBox.CaretIndex;
-            if (caretIndex > 0 && caretIndex <= CustomTextBox.Text.Length)
+            double charWidth = 0;
+
+            // This should be true if there is at least one character 
+            if (caretIndex < CustomTextBox.Text.Length)
             {
-                double charWidth = 0;
-                if(caretIndex+1 <= CustomTextBox.Text.Length)
-                {
-                    char charBefore = CustomTextBox.Text[caretIndex];
-                    Debug.WriteLine($"Char before caret: '{caretIndex}', '{charBefore}'");
+                char charBefore = CustomTextBox.Text[caretIndex];
 
-                    var typeface = new Typeface(CustomTextBox.FontFamily, CustomTextBox.FontStyle,
-                                                CustomTextBox.FontWeight, CustomTextBox.FontStretch);
+                var typeface = new Typeface(CustomTextBox.FontFamily, CustomTextBox.FontStyle,
+                                            CustomTextBox.FontWeight, CustomTextBox.FontStretch);
 
-                    var formattedText = new FormattedText(
-                        charBefore.ToString(),
-                        CultureInfo.CurrentCulture,
-                        FlowDirection.LeftToRight,
-                        typeface,
-                        CustomTextBox.FontSize,
-                        Brushes.Red,
-                        new NumberSubstitution(),
-                        TextFormattingMode.Ideal,
-                        VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                var formattedText = new FormattedText(
+                    charBefore.ToString(),
+                    CultureInfo.CurrentCulture,
+                    FlowDirection.LeftToRight,
+                    typeface,
+                    CustomTextBox.FontSize,
+                    Brushes.Red,
+                    new NumberSubstitution(),
+                    TextFormattingMode.Ideal,
+                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
-                    charWidth = formattedText.WidthIncludingTrailingWhitespace;
-
-                }
-
-                Caret.Width = Math.Max(20, charWidth);
+                charWidth = formattedText.WidthIncludingTrailingWhitespace + 1;
             }
+
+            // Fallback to default size
+            if (charWidth <= 0)
+                Caret.Width = CustomTextBox.FontSize;
+            else
+                Caret.Width = Math.Max(1, charWidth);
         }
     }
 }

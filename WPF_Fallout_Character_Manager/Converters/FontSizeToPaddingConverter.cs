@@ -16,7 +16,7 @@ namespace WPF_Fallout_Character_Manager.Converters
             if (value is double fontSize)
             {
                 // Set top margin to font size; other margins to 0
-                return new Thickness(0, 0, fontSize, 0);
+                return new Thickness(2, 2, 2 + fontSize, 2);
             }
             return new Thickness(0);
         }
