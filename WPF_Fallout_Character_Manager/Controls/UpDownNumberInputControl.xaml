@@ -29,6 +29,7 @@
         <RepeatButton
             Grid.Column="1"
             Style="{StaticResource FalloutRepeatButton}"
+            FontWeight="Regular"
             Content=" - "
             Click="btnAdd_Click">
         </RepeatButton>
@@ -36,6 +37,7 @@
         <RepeatButton
             Grid.Column="2"
             Style="{StaticResource FalloutRepeatButton}"
+            FontWeight="Regular"
             Content=" + "
             Click="btnSubtract_Click">
             

@@ -25,13 +25,15 @@
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Padding="{Binding ElementName=CustomTextBox, Path=FontSize, Converter={StaticResource FontSizeToPaddingConverter}}"
                 CaretBrush="Transparent" 
-                Margin="0"/>
+                Margin="0"
+                Cursor="IBeam"/>
         <Canvas>
             <Border x:Name="Caret" 
                 Visibility="Collapsed"
                 Width="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Height="{Binding ElementName=CustomTextBox, Path=FontSize, Converter={StaticResource DivideByConverter}, ConverterParameter=1.25}" 
-                Background="{StaticResource FalloutGreen}">
+                Background="{StaticResource FalloutGreen}"
+                Cursor="IBeam">
                 <Border.Triggers>
                     <EventTrigger RoutedEvent="Border.Loaded">
                         <BeginStoryboard>

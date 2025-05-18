@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+        xmlns:panels="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1325" Height="785"
+        Title="MainWindow" Width="1365" Height="825"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         MinWidth="205"
@@ -29,7 +30,7 @@
         <Border Grid.Row="0"
         Background="Black"
         BorderBrush="#23ba03"
-        BorderThickness="1"/>
+        BorderThickness="1 1 1 1"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -45,6 +46,7 @@
                        FontWeight="Bold"
                        FontStyle="Italic"
                        VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
                        Margin="10, 0, 0, 0"/>
 
             <Button x:Name="Minimize"
@@ -72,406 +74,153 @@
         <Border Grid.Row="1"
                 Background="Black"
                 BorderBrush="#23ba03"
-                BorderThickness="1">
+                BorderThickness="1 1 1 1">
 
             <ScrollViewer>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="230"/>
-                        <ColumnDefinition Width="562"/>
-                        <ColumnDefinition Width="198"/>
-                        <ColumnDefinition Width="330"/>
-                    </Grid.ColumnDefinitions>
+                <TabControl>
+                    
+                    <!-- Character Tab -->
+                    <TabItem Header="Character">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="230"/>
+                                <ColumnDefinition Width="562"/>
+                                <ColumnDefinition Width="198"/>
+                                <ColumnDefinition Width="330"/>
+                            </Grid.ColumnDefinitions>
 
-                    <!-- First Column (Small Bio, Survival Params., Passives) -->
-                    <Grid
-                        Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="140"/>
-                            <RowDefinition Height="200"/>
-                            <RowDefinition Height="180"/>
-                        </Grid.RowDefinitions>
+                            <!-- First Column (Small Bio, Survival Params., Passives) -->
+                            <Grid
+                                Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="420"/>
+                                    <RowDefinition Height="200"/>
+                                    <RowDefinition Height="140"/>
+                                </Grid.RowDefinitions>
 
-                        <!-- Small Bio -->
-                        <GroupBox
-                            Header="Short Bio"
-                            Grid.Row="0"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-                            <ScrollViewer>
-                                <StackPanel Margin="0 5 5 5">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label
-                                            Grid.Column="0"
-                                            Style="{StaticResource FalloutDefaultLabel}"
-                                            FontSize="10"
-                                            VerticalAlignment="Center">
-                                            Name:
-                                        </Label>
-                                        <controls:ChunkyCaretTextBox
-                                            Grid.Column="1"
-                                            MinWidth="140"
-                                            FontSize="11"
-                                            VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label
-                                            Grid.Column="0"
-                                            Style="{StaticResource FalloutDefaultLabel}"
-                                            FontSize="10"
-                                            VerticalAlignment="Center">
-                                            Race:
-                                        </Label>
-                                        <controls:ChunkyCaretTextBox
-                                            Grid.Column="1"
-                                            MinWidth="142"
-                                            FontSize="11"
-                                            VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label
-                                            Grid.Column="0"
-                                            Style="{StaticResource FalloutDefaultLabel}"
-                                            FontSize="10"
-                                            VerticalAlignment="Center">
-                                            Background:
-                                        </Label>
-                                        <controls:ChunkyCaretTextBox
-                                            Grid.Column="1"
-                                            MinWidth="92"
-                                            FontSize="11"
-                                            VerticalAlignment="Center"/>
-                                    </Grid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label
-                                                Grid.Column="0"
-                                                Style="{StaticResource FalloutDefaultLabel}"
-                                                FontSize="10"
-                                                VerticalAlignment="Center">
-                                                Level:
-                                            </Label>
-                                            <controls:ChunkyCaretTextBox
-                                                Grid.Column="1"
-                                                MinWidth="30"
-                                                FontSize="11"
-                                                VerticalAlignment="Center"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label
-                                                Grid.Column="0"
-                                                Style="{StaticResource FalloutDefaultLabel}"
-                                                FontSize="10"
-                                                VerticalAlignment="Center">
-                                                XP:
-                                            </Label>
-                                            <controls:ChunkyCaretTextBox
-                                                Grid.Column="1"
-                                                MinWidth="74"
-                                                FontSize="11"
-                                                VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Grid>
+                                <!-- Small Bio -->
+                                <panels:SmallBioPanel
+                                    Grid.Row="0"/>
+                                <!-- -->
 
-                                </StackPanel>
-                            </ScrollViewer>
-                        </GroupBox>
-                        <!-- -->
+                                <!-- Survival -->
+                                <panels:SurvivalPanel
+                                    Grid.Row="1"/>
+                                <!-- -->
 
-                        <!-- Survival -->
-                        <GroupBox
-                            Header="Survival"
-                            Grid.Row="1"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-                            <StackPanel Margin="0 5 5 5">
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Rad DC:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Label FontSize="10"/>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Rads:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Hunger:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Dehydration:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Exhaustion:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                            </StackPanel>
-                        </GroupBox>
-                        <!-- -->
+                                <!-- Passives -->
+                                <panels:PassivesPanel
+                                        Grid.Row="2"/>
+                                <!-- -->
+                            </Grid>
+                            <!-- -->
 
-                        <!-- Passives -->
-                        <GroupBox
-                            Header="Passives"
-                            Grid.Row="2"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-                            <StackPanel Margin="0 5 5 5">
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Passive Sense:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Party Nerve:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        Group Sneak:
-                                    </Label>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="11"
-                                        VerticalAlignment="Center"/>
-                                </Grid>
-                                <Grid Margin="0 0 0 5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="10"
-                                        VerticalAlignment="Center">
-                                        TestTesr:
-                                    </Label>
-                                    <controls:UpDownNumberInputControl
-                                        Grid.Column="1">
-                                        
-                                    </controls:UpDownNumberInputControl>
-                                </Grid>
-                            </StackPanel>
-                        </GroupBox>
-                        <!-- -->
-                    </Grid>
+                            <!-- Second Column (SPECIAL, Equipped Items) -->
+                            <Grid
+                                Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="456"/>
+                                    <RowDefinition Height="304"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <!-- SPECIAL -->
+                                <GroupBox
+                                    Header="S.P.E.C.I.A.L. | Stats"
+                                    Grid.Row="0"
+                                    Margin="5"
+                                    Background="Black"
+                                    BorderBrush="#23ba03"
+                                    BorderThickness="1">
+
+                                </GroupBox>
+                                <!-- -->
+
+                                <!-- Equipped Items -->
+                                <GroupBox
+                                    Header="Equipped Items"
+                                    Grid.Row="1"
+                                    Margin="5"
+                                    Background="Black"
+                                    BorderBrush="#23ba03"
+                                    BorderThickness="1">
+
+                                </GroupBox>
+                                <!-- -->
+                            </Grid>
+                            <!-- -->
+
+                            <!-- Third Column (Skills) -->
+                            <Grid
+                                Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="760"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Skills -->
+                                <GroupBox
+                                    Header="Skills"
+                                    Grid.Row="0"
+                                    Margin="5"
+                                    Background="Black"
+                                    BorderBrush="#23ba03"
+                                    BorderThickness="1">
+
+                                </GroupBox>
+                                <!-- -->
+                            </Grid>
+                            <!-- -->
+
+                            <!-- Fourth Column (Conditions) -->
+                            <Grid
+                                Grid.Column="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="760"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Conditions -->
+                                <GroupBox
+                                    Header="Conditions"
+                                    Grid.Row="0"
+                                    Margin="5"
+                                    Background="Black"
+                                    BorderBrush="#23ba03"
+                                    BorderThickness="1">
+
+                                </GroupBox>
+                                <!-- -->
+                            </Grid>
+                            <!-- -->
+
+                        </Grid>
+                    </TabItem>
+                    <!-- -->
+                    
+                    <!-- Inventory Tab -->
+                    <TabItem Header="Inventory">
+                        <TextBlock>
+                            Placeholder
+                        </TextBlock>
+                    </TabItem>
                     <!-- -->
 
-                    <!-- Second Column (SPECIAL, Equipped Items) -->
-                    <Grid
-                        Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="456"/>
-                            <RowDefinition Height="304"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <!-- SPECIAL -->
-                        <GroupBox
-                            Header="S.P.E.C.I.A.L. | Stats"
-                            Grid.Row="0"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-
-                        </GroupBox>
-                        <!-- -->
-
-                        <!-- Equipped Items -->
-                        <GroupBox
-                            Header="Equipped Items"
-                            Grid.Row="1"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-
-                        </GroupBox>
-                        <!-- -->
-                    </Grid>
+                    <!-- Perks Tab -->
+                    <TabItem Header="Perks">
+                        <TextBlock>
+                            Placeholder
+                        </TextBlock>
+                    </TabItem>
                     <!-- -->
 
-                    <!-- Third Column (Skills) -->
-                    <Grid
-                        Grid.Column="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="760"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Skills -->
-                        <GroupBox
-                            Header="Skills"
-                            Grid.Row="0"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-
-                        </GroupBox>
-                        <!-- -->
-                    </Grid>
+                    <!-- Perks Tab -->
+                    <TabItem Header="Data">
+                        <TextBlock>
+                            Placeholder
+                        </TextBlock>
+                    </TabItem>
                     <!-- -->
-
-                    <!-- Fourth Column (Conditions) -->
-                    <Grid
-                        Grid.Column="3">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="760"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Conditions -->
-                        <GroupBox
-                            Header="Conditions"
-                            Grid.Row="0"
-                            Margin="5"
-                            Background="Black"
-                            BorderBrush="#23ba03"
-                            BorderThickness="1">
-
-                        </GroupBox>
-                        <!-- -->
-                    </Grid>
-                    <!-- -->
-
-                </Grid>
+                </TabControl>
+                
             </ScrollViewer>
         </Border>
         <!-- -->
