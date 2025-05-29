@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
 {
-    public class RelayCommand
+    public class RelayCommand : ICommand
     {
         #region Fields 
         readonly Action<object> _execute;
@@ -36,5 +36,31 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
         }
         public void Execute(object parameter) { _execute(parameter); }
         #endregion // ICommand Members 
+
+        //private Action<object> execute; //execution logic
+        //private Func<object, bool> canExecute; //detects whether command can be executed
+
+
+        //public event EventHandler CanExecuteChanged //is called when conditions for whether command can be executed or not change
+        //{
+        //    add { CommandManager.RequerySuggested += value; }
+        //    remove { CommandManager.RequerySuggested -= value; }
+        //}
+
+        //public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        //{
+        //    this.execute = execute;
+        //    this.canExecute = canExecute;
+        //}
+
+        //public bool CanExecute(object parameter)
+        //{
+        //    return this.canExecute == null || this.canExecute(parameter);
+        //}
+
+        //public void Execute(object parameter)
+        //{
+        //    this.execute(parameter);
+        //}
     }
 }

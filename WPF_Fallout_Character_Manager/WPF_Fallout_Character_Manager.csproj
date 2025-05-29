@@ -11,6 +11,13 @@
   <ItemGroup>
     <None Remove="Fonts\JH_FALLOUT.TTF" />
     <None Remove="Fonts\monofonto.ttf" />
+    <None Remove="Resources\Vault_Boy.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Vault_Boy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

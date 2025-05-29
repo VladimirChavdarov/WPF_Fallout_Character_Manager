@@ -14,8 +14,7 @@
             BorderBrush="#23ba03"
             BorderThickness="1">
             <ScrollViewer>
-                <StackPanel Margin="0 5 5 5"
-                            DataContext="{Binding SurvivalModel}">
+                <StackPanel Margin="0 5 5 5">
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -33,7 +32,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding PassiveSense}"/>
+                            Text="{Binding SurvivalModel.PassiveSense}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -52,7 +51,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding PartyNerve}"/>
+                            Text="{Binding SurvivalModel.PartyNerve}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -71,7 +70,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding GroupSneak}"/>
+                            Text="{Binding SurvivalModel.GroupSneak}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>

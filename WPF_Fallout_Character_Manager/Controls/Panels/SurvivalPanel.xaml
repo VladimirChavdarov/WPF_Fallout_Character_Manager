@@ -14,8 +14,7 @@
     BorderBrush="#23ba03"
     BorderThickness="1">
             <ScrollViewer>
-                <StackPanel Margin="0 5 5 5"
-                            DataContext="{Binding SurvivalModel}">
+                <StackPanel Margin="0 5 5 5">
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -33,7 +32,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding RadDC}"/>
+                            Text="{Binding SurvivalModel.RadDC}"/>
                     </Grid>
                     <Label FontSize="10"/>
                     <Grid Margin="0 0 0 5">
@@ -53,7 +52,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Rads}"/>
+                            Text="{Binding SurvivalModel.Rads}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -72,7 +71,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Hunger}"/>
+                            Text="{Binding SurvivalModel.Hunger}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -91,7 +90,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Dehydration}"/>
+                            Text="{Binding SurvivalModel.Dehydration}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -110,7 +109,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Exhaustion}"/>
+                            Text="{Binding SurvivalModel.Exhaustion}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>

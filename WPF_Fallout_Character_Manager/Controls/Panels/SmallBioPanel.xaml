@@ -15,8 +15,7 @@
             BorderBrush="#23ba03"
             BorderThickness="1">
             <ScrollViewer>
-                <StackPanel Margin="0 5 5 5"
-                            DataContext="{Binding BioModel}">
+                <StackPanel Margin="0 5 5 5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -34,7 +33,7 @@
                             MinWidth="189"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Name}"/>
+                            Text="{Binding BioModel.Name}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -53,7 +52,7 @@
                             MinWidth="191"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Race}"/>
+                            Text="{Binding BioModel.Race}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -72,7 +71,7 @@
                             MinWidth="92"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Background}"/>
+                            Text="{Binding BioModel.Background}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -96,7 +95,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding Level}"/>
+                            Text="{Binding BioModel.Level}"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>
@@ -115,10 +114,22 @@
                             MinWidth="74"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding XP}"/>
+                            Text="{Binding BioModel.XP}"/>
                         </Grid>
                     </Grid>
 
+                    <Button
+                        Command="{Binding LoadImageCommand}"
+                        Style="{StaticResource FalloutImageButton}"
+                        Margin="5"
+                        MaxWidth="230"
+                        MaxHeight="270">
+                        <Image
+                            Source="{Binding Image}"
+                            Width="230"
+                            Height="270"
+                            Stretch="Uniform"/>
+                    </Button>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

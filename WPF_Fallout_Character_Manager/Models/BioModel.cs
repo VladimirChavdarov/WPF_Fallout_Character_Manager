@@ -17,6 +17,7 @@ namespace WPF_Fallout_Character_Manager.Models
             Backstory = "No Backstory";
             Level = 0;
             XP = 0;
+            ImageSource = "Resources/Vault_Boy.png";
         }
 
         public string Name { get; set; }
@@ -25,5 +26,6 @@ namespace WPF_Fallout_Character_Manager.Models
         public string Backstory { get; set; }
         public int Level { get; set; }
         public int XP { get; set; }
+        public string ImageSource { get; set; }
     }
 }
