@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,12 +20,39 @@ namespace WPF_Fallout_Character_Manager.Controls
     /// <summary>
     /// Interaction logic for ChunkyCaretTextBox.xaml
     /// </summary>
+     
     public partial class ChunkyCaretTextBox : UserControl
     {
+        // Dependency Properties
+        #region TextBox
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register("Text", typeof(string), typeof(ChunkyCaretTextBox),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTextChanged)));
+
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ChunkyCaretTextBox? ThisUserControl = d as ChunkyCaretTextBox;
+            ThisUserControl.OnTextChanged(e);
+        }
+
+        private void OnTextChanged(DependencyPropertyChangedEventArgs e)
+        {
+            CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+        //
+
         public ChunkyCaretTextBox()
         {
             InitializeComponent();
 
+            // Caret setup
             this.CustomTextBox.PreviewMouseLeftButtonDown += (sender, e) =>
             {
                 Caret.Visibility = Visibility.Visible;
@@ -34,6 +62,7 @@ namespace WPF_Fallout_Character_Manager.Controls
             this.CustomTextBox.LostFocus += (sender, e) => Caret.Visibility = Visibility.Collapsed;
             this.CustomTextBox.GotFocus += (sender, e) => Caret.Visibility = Visibility.Visible;
             this.CustomTextBox.SelectionChanged += CustomTextBox_SelectionChanged;
+            //
         }
 
         private void MoveCustomCaret()

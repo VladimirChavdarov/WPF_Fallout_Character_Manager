@@ -9,30 +9,32 @@
              d:DesignHeight="20" d:DesignWidth="800">
     <Grid>
         <GroupBox
-    Header="Short Bio"
-    Margin="5"
-    Background="Black"
-    BorderBrush="#23ba03"
-    BorderThickness="1">
+            Header="Short Bio"
+            Margin="5"
+            Background="Black"
+            BorderBrush="#23ba03"
+            BorderThickness="1">
             <ScrollViewer>
-                <StackPanel Margin="0 5 5 5">
+                <StackPanel Margin="0 5 5 5"
+                            DataContext="{Binding BioModel}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
-                    Grid.Column="0"
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    FontSize="10"
-                    VerticalAlignment="Center">
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
                             Name:
                         </Label>
                         <controls:ChunkyCaretTextBox
-                    Grid.Column="1"
-                    MinWidth="140"
-                    FontSize="11"
-                    VerticalAlignment="Center"/>
+                            Grid.Column="1"
+                            MinWidth="140"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding Name}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -40,17 +42,18 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
-                    Grid.Column="0"
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    FontSize="10"
-                    VerticalAlignment="Center">
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
                             Race:
                         </Label>
                         <controls:ChunkyCaretTextBox
-                Grid.Column="1"
-                MinWidth="142"
-                FontSize="11"
-                VerticalAlignment="Center"/>
+                            Grid.Column="1"
+                            MinWidth="142"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding Race}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -58,59 +61,56 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
-                    Grid.Column="0"
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    FontSize="10"
-                    VerticalAlignment="Center">
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
                             Background:
                         </Label>
                         <controls:ChunkyCaretTextBox
-                    Grid.Column="1"
-                    MinWidth="92"
-                    FontSize="11"
-                    VerticalAlignment="Center"/>
+                            Grid.Column="1"
+                            MinWidth="92"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding Background}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label
-                        Grid.Column="0"
-                        Style="{StaticResource FalloutDefaultLabel}"
-                        FontSize="10"
-                        VerticalAlignment="Center">
-                                Level:
-                            </Label>
-                            <controls:ChunkyCaretTextBox
-                        Grid.Column="1"
-                        MinWidth="30"
-                        FontSize="11"
-                        VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label
-                        Grid.Column="0"
-                        Style="{StaticResource FalloutDefaultLabel}"
-                        FontSize="10"
-                        VerticalAlignment="Center">
-                                XP:
-                            </Label>
-                            <controls:ChunkyCaretTextBox
-                        Grid.Column="1"
-                        MinWidth="74"
-                        FontSize="11"
-                        VerticalAlignment="Center"/>
-                        </Grid>
+                        <Label
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
+                            Level:
+                        </Label>
+                        <controls:UpDownNumberInputControl
+                            Grid.Column="1"
+                            MinWidth="30"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding Level}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
+                            XP:
+                        </Label>
+                        <controls:UpDownNumberInputControl
+                            Grid.Column="1"
+                            MinWidth="74"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding XP}"/>
                     </Grid>
 
                 </StackPanel>

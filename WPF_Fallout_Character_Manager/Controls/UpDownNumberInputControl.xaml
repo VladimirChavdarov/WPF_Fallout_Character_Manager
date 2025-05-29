@@ -19,10 +19,11 @@
 
         <Grid Grid.RowSpan="2" Grid.Column="0">
             <controls:ChunkyCaretTextBox
+                x:Name="CustomChunkyCaretTextBox"
                 MinWidth="30"
                 FontSize="11"
-                VerticalAlignment="Center">
-                <!--TODO: Put default value (0) in these text fields.-->
+                VerticalAlignment="Center"
+                Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </controls:ChunkyCaretTextBox>
         </Grid>
 
@@ -31,7 +32,7 @@
             Style="{StaticResource FalloutRepeatButton}"
             FontWeight="Regular"
             Content=" - "
-            Click="btnAdd_Click">
+            Click="btnSubtract_Click">
         </RepeatButton>
 
         <RepeatButton
@@ -39,7 +40,7 @@
             Style="{StaticResource FalloutRepeatButton}"
             FontWeight="Regular"
             Content=" + "
-            Click="btnSubtract_Click">
+            Click="btnAdd_Click">
             
         </RepeatButton>
 

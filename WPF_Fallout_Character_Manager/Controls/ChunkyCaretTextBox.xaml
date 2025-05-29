@@ -13,7 +13,7 @@
         <conv:DivideByConverter x:Key="DivideByConverter"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <TextBox x:Name="CustomTextBox" 
                 BorderThickness="0"
                 VerticalContentAlignment="Center"
@@ -26,7 +26,8 @@
                 Padding="{Binding ElementName=CustomTextBox, Path=FontSize, Converter={StaticResource FontSizeToPaddingConverter}}"
                 CaretBrush="Transparent" 
                 Margin="0"
-                Cursor="IBeam"/>
+                Cursor="IBeam"
+                Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Canvas>
             <Border x:Name="Caret" 
                 Visibility="Collapsed"

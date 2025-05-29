@@ -20,6 +20,32 @@ namespace WPF_Fallout_Character_Manager.Controls
     /// </summary>
     public partial class UpDownNumberInputControl : UserControl
     {
+
+        // Dependency Properties
+        #region ChunkyCaretTextBox
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register("Text", typeof(string), typeof(UpDownNumberInputControl),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTextChanged)));
+
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownNumberInputControl? ThisUserControl = d as UpDownNumberInputControl;
+            ThisUserControl.OnTextChanged(e);
+        }
+
+        private void OnTextChanged(DependencyPropertyChangedEventArgs e)
+        {
+            CustomChunkyCaretTextBox.CustomTextBox.Text = Text;
+        }
+        #endregion
+        //
+
         public UpDownNumberInputControl()
         {
             InitializeComponent();
@@ -27,12 +53,28 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            
+            if(int.TryParse(Text, out int value))
+            {
+                value++;
+                Text = value.ToString();
+            }
+            else
+            {
+                Text = "0";
+            }
         }
 
         private void btnSubtract_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (int.TryParse(Text, out int value))
+            {
+                value--;
+                Text = value.ToString();
+            }
+            else
+            {
+                Text = "0";
+            }
         }
     }
 }
