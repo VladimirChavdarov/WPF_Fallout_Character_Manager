@@ -20,7 +20,7 @@
         <Grid Grid.RowSpan="2" Grid.Column="0">
             <controls:ChunkyCaretTextBox
                 x:Name="CustomChunkyCaretTextBox"
-                MinWidth="30"
+                MinWidth="36"
                 FontSize="11"
                 VerticalAlignment="Center"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

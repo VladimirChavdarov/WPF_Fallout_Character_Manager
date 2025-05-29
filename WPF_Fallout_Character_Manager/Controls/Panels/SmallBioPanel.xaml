@@ -31,7 +31,7 @@
                         </Label>
                         <controls:ChunkyCaretTextBox
                             Grid.Column="1"
-                            MinWidth="140"
+                            MinWidth="189"
                             FontSize="11"
                             VerticalAlignment="Center"
                             Text="{Binding Name}"/>
@@ -50,7 +50,7 @@
                         </Label>
                         <controls:ChunkyCaretTextBox
                             Grid.Column="1"
-                            MinWidth="142"
+                            MinWidth="191"
                             FontSize="11"
                             VerticalAlignment="Center"
                             Text="{Binding Race}"/>
@@ -76,41 +76,47 @@
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Label
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
                             Grid.Column="0"
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             VerticalAlignment="Center">
-                            Level:
-                        </Label>
-                        <controls:UpDownNumberInputControl
+                                Level:
+                            </Label>
+                            <controls:UpDownNumberInputControl
                             Grid.Column="1"
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
                             Text="{Binding Level}"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
                             Grid.Column="0"
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             VerticalAlignment="Center">
-                            XP:
-                        </Label>
-                        <controls:UpDownNumberInputControl
+                                XP:
+                            </Label>
+                            <controls:UpDownNumberInputControl
                             Grid.Column="1"
                             MinWidth="74"
                             FontSize="11"
                             VerticalAlignment="Center"
                             Text="{Binding XP}"/>
+                        </Grid>
                     </Grid>
 
                 </StackPanel>
