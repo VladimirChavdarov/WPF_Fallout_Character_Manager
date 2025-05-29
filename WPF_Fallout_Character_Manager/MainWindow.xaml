@@ -106,12 +106,14 @@
 
                                 <!-- Survival -->
                                 <panels:SurvivalPanel
-                                    Grid.Row="1"/>
+                                    Grid.Row="1"
+                                    DataContext="{Binding SurvivalViewModel}"/>
                                 <!-- -->
 
                                 <!-- Passives -->
                                 <panels:PassivesPanel
-                                        Grid.Row="2"/>
+                                    Grid.Row="2"
+                                    DataContext="{Binding SurvivalViewModel}"/>
                                 <!-- -->
                             </Grid>
                             <!-- -->

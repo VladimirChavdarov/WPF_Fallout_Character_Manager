@@ -15,8 +15,8 @@ namespace WPF_Fallout_Character_Manager.Models
             Race = "No Race";
             Background = "No Background";
             Backstory = "No Backstory";
-            Level = -1;
-            XP = -1;
+            Level = 0;
+            XP = 0;
         }
 
         public string Name { get; set; }

@@ -8,29 +8,28 @@ using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
-    internal class BioViewModel : ViewModelBase
+    internal class SurvivalViewModel : ViewModelBase
     {
+
         // local variables
-        private BioModel? _bioModel;
+        private SurvivalModel? _survival;
         //
 
-        public BioModel? BioModel
+        public SurvivalModel? SurvivalModel
         {
-            get { return _bioModel; }
+            get { return _survival; }
             set
             {
-                _bioModel = value;
-                OnPropertyChanged("BioModel");
+                _survival = value;
+                OnPropertyChanged("SurvivalModel");
             }
         }
 
         // constructor
-        public BioViewModel(BioModel? bioModel)
+        public SurvivalViewModel(SurvivalModel? survival)
         {
-            _bioModel = bioModel;
+            _survival = survival;
         }
         //
-
-        
     }
 }

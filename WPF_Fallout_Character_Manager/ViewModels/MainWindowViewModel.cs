@@ -11,12 +11,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
     {
         // All ViewModels
         public BioViewModel? BioViewModel { get; }
+        public SurvivalViewModel? SurvivalViewModel { get; }
         //
 
         // Constructor
         public MainWindowViewModel()
         {
             BioViewModel = new BioViewModel(new Models.BioModel());
+            SurvivalViewModel = new SurvivalViewModel(new Models.SurvivalModel());
         }
         //
     }

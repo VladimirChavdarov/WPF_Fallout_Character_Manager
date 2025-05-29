@@ -8,30 +8,32 @@
              mc:Ignorable="d" >
     <Grid>
         <GroupBox
-    Header="Passives"
-    Margin="5"
-    Background="Black"
-    BorderBrush="#23ba03"
-    BorderThickness="1">
+            Header="Passives"
+            Margin="5"
+            Background="Black"
+            BorderBrush="#23ba03"
+            BorderThickness="1">
             <ScrollViewer>
-                <StackPanel Margin="0 5 5 5">
+                <StackPanel Margin="0 5 5 5"
+                            DataContext="{Binding SurvivalModel}">
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
-            Grid.Column="0"
-            Style="{StaticResource FalloutDefaultLabel}"
-            FontSize="10"
-            VerticalAlignment="Center">
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
                             Passive Sense:
                         </Label>
                         <controls:ChunkyCaretTextBox
-            Grid.Column="1"
-            MinWidth="30"
-            FontSize="11"
-            VerticalAlignment="Center"/>
+                            Grid.Column="1"
+                            MinWidth="30"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding PassiveSense}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -39,17 +41,18 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
-            Grid.Column="0"
-            Style="{StaticResource FalloutDefaultLabel}"
-            FontSize="10"
-            VerticalAlignment="Center">
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
                             Party Nerve:
                         </Label>
                         <controls:ChunkyCaretTextBox
-        Grid.Column="1"
-        MinWidth="30"
-        FontSize="11"
-        VerticalAlignment="Center"/>
+                            Grid.Column="1"
+                            MinWidth="30"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding PartyNerve}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -57,17 +60,18 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
-            Grid.Column="0"
-            Style="{StaticResource FalloutDefaultLabel}"
-            FontSize="10"
-            VerticalAlignment="Center">
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center">
                             Group Sneak:
                         </Label>
                         <controls:ChunkyCaretTextBox
-            Grid.Column="1"
-            MinWidth="30"
-            FontSize="11"
-            VerticalAlignment="Center"/>
+                            Grid.Column="1"
+                            MinWidth="30"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Text="{Binding GroupSneak}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
