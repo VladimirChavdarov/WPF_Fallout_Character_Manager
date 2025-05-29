@@ -43,5 +43,19 @@ namespace WPF_Fallout_Character_Manager
         {
             Application.Current.Shutdown();
         }
+
+        private void RunFunctionTab_SaveCharacter(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("TODO: Implement the Saving function");
+
+            e.Handled = true;
+        }
+
+        private void RunFunctionTab_LoadCharacter(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("TODO: Implement the Loading function");
+
+            e.Handled = true;
+        }
     }
 }

@@ -219,6 +219,27 @@
                         </TextBlock>
                     </TabItem>
                     <!-- -->
+
+                    <TabItem Header="   "
+                             Focusable="False"
+                             IsHitTestVisible="False"
+                             FontFamily="{StaticResource Monofonto}">
+                        <TextBlock>
+                            Placeholder
+                        </TextBlock>
+                    </TabItem>
+
+                    <!-- Perks Tab -->
+                    <TabItem Header="Load"
+                             PreviewMouseDown="RunFunctionTab_LoadCharacter">
+                    </TabItem>
+                    <!-- -->
+
+                    <!-- Perks Tab -->
+                    <TabItem Header="Save"
+                             PreviewMouseDown="RunFunctionTab_SaveCharacter">
+                    </TabItem>
+                    <!-- -->
                 </TabControl>
                 
             </ScrollViewer>
