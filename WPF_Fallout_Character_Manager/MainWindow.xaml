@@ -100,7 +100,8 @@
 
                                 <!-- Small Bio -->
                                 <panels:SmallBioPanel
-                                    Grid.Row="0"/>
+                                    Grid.Row="0"
+                                    DataContext="{Binding BioViewModel}"/>
                                 <!-- -->
 
                                 <!-- Survival -->

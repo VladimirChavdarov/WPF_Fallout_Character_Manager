@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.ViewModels;
 
 namespace WPF_Fallout_Character_Manager
 {
@@ -19,6 +20,8 @@ namespace WPF_Fallout_Character_Manager
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new MainWindowViewModel();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

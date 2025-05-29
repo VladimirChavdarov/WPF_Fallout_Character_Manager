@@ -25,7 +25,7 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
         {
             InitializeComponent();
 
-            this.DataContext = new BioViewModel(new Models.BioModel());
+            //this.DataContext = new BioViewModel(new Models.BioModel());
         }
     }
 }
