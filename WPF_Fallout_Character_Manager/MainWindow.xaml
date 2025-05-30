@@ -14,7 +14,7 @@
         MinHeight="205"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="true"
-        Background="Transparent"
+        Background="Black"
         
         MouseDown="Window_MouseDown">
 

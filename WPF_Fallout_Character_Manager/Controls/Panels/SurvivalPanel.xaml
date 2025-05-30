@@ -32,7 +32,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.RadDC}"/>
+                            Text="{Binding SurvivalModel.RadDC.Total}"/>
                     </Grid>
                     <Label FontSize="10"/>
                     <Grid Margin="0 0 0 5">
@@ -52,7 +52,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.Rads}"/>
+                            Text="{Binding SurvivalModel.Rads.Total}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -71,7 +71,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.Hunger}"/>
+                            Text="{Binding SurvivalModel.Hunger.Total}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -90,7 +90,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.Dehydration}"/>
+                            Text="{Binding SurvivalModel.Dehydration.Total}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -109,7 +109,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.Exhaustion}"/>
+                            Text="{Binding SurvivalModel.Exhaustion.Total}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
