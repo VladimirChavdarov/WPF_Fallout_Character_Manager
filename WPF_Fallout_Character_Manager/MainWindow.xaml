@@ -128,15 +128,9 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- SPECIAL -->
-                                <GroupBox
-                                    Header="S.P.E.C.I.A.L. | Stats"
+                                <panels:SPECIALPanel
                                     Grid.Row="0"
-                                    Margin="5"
-                                    Background="Black"
-                                    BorderBrush="#23ba03"
-                                    BorderThickness="1">
-
-                                </GroupBox>
+                                    DataContext="{Binding SPECIALViewModel}"/>
                                 <!-- -->
 
                                 <!-- Equipped Items -->

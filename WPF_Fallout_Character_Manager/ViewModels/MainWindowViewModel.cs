@@ -12,6 +12,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // All ViewModels
         public BioViewModel? BioViewModel { get; }
         public SurvivalViewModel? SurvivalViewModel { get; }
+        public SPECIALViewModel? SPECIALViewModel { get; }
         //
 
         // Constructor
@@ -19,6 +20,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             BioViewModel = new BioViewModel(new Models.BioModel());
             SurvivalViewModel = new SurvivalViewModel(new Models.SurvivalModel());
+            SPECIALViewModel = new SPECIALViewModel(new Models.SPECIALModel());
         }
         //
     }
