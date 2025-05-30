@@ -8,20 +8,20 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel
-            MinWidth="80">
+            MinWidth="60">
             <Label
                 x:Name="StatSymbolLabel"
                 Style="{StaticResource FalloutDefaultLabel}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="28"
+                FontSize="24"
                 Content="{Binding StatSymbol, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Label
                 x:Name="StatName"
                 Style="{StaticResource FalloutDefaultLabel}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="8"
+                FontSize="6"
                 Opacity="0.7"
                 Content="{Binding StatLabel, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <ContentControl
@@ -35,7 +35,7 @@
                         x:Name="PrimaryStatTextBox"
                         Style="{StaticResource FalloutDefaultTextBox}"
                         Background="Black"
-                        FontSize="28"
+                        FontSize="24"
                         Padding="0 5 0 15"
                         HorizontalContentAlignment="Center"
                         HorizontalAlignment="Center"
@@ -51,7 +51,7 @@
                             x:Name="ModifierTextBox"
                             Style="{StaticResource FalloutDefaultTextBox}"
                             Background="{StaticResource FalloutGreenBackground}"
-                            FontSize="24"
+                            FontSize="20"
                             HorizontalContentAlignment="Center"
                             HorizontalAlignment="Center"
                             Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
