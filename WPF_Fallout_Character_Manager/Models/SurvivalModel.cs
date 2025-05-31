@@ -10,23 +10,18 @@ namespace WPF_Fallout_Character_Manager.Models
     {
         public SurvivalModel()
         {
-            Hunger = new ModInt(1);
-            Dehydration = new ModInt(2);
-            Exhaustion = new ModInt(3);
-            RadDC = new ModInt(4);
-            Rads = new ModInt(5);
-            PassiveSense = new ModInt(6);
-            PartyNerve = new ModInt(7);
-            GroupSneak = new ModInt(8);
+            IntegerValues = new Dictionary<string, ModInt>();
+
+            IntegerValues.Add("Hunger", new ModInt(1));
+            IntegerValues.Add("Dehydration", new ModInt(2));
+            IntegerValues.Add("Exhaustion", new ModInt(3));
+            IntegerValues.Add("RadDC", new ModInt(4));
+            IntegerValues.Add("Rads", new ModInt(5));
+            IntegerValues.Add("PassiveSense", new ModInt(6));
+            IntegerValues.Add("PartyNerve", new ModInt(7));
+            IntegerValues.Add("GroupSneak", new ModInt(8));
         }
 
-        public ModInt Hunger { get; set; }
-        public ModInt Dehydration { get; set; }
-        public ModInt Exhaustion { get; set; }
-        public ModInt RadDC { get; set; }
-        public ModInt Rads { get; set; }
-        public ModInt PassiveSense { get; set; }
-        public ModInt PartyNerve { get; set; }
-        public ModInt GroupSneak { get; set; }
+        public Dictionary<string, ModInt>? IntegerValues;
     }
 }

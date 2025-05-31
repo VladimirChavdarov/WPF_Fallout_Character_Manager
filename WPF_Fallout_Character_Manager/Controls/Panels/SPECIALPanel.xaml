@@ -34,7 +34,7 @@
                             Grid.Column="0"
                             Margin="5"
                             StatLabel="Strength"
-                            PrimaryStat="{Binding SPECIALModel.Strength}"/>
+                            PrimaryStat="{Binding IntegerValues[Strength]}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="1"
                             Margin="5"

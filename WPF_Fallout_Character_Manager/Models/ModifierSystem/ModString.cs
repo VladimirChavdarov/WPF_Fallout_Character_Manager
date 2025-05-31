@@ -2,31 +2,30 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
-    public sealed class ModInt
+    public sealed class ModString
     {
-        public ModInt(int value)
+        public ModString(string value)
         {
             BaseValue = value;
-            Modifiers = new ObservableCollection<LabeledInt>();
+            Modifiers = new ObservableCollection<LabeledString>();
             UpdateTotal();
         }
 
         public void UpdateTotal()
         {
             Total = BaseValue;
-            for(int i = 0; i < Modifiers.Count; i++)
+            for (int i = 0; i < Modifiers.Count; i++)
             {
                 Total += Modifiers[i].Value;
             }
         }
 
-        public void AddModifier(LabeledInt newModifier)
+        public void AddModifier(LabeledString newModifier)
         {
             Modifiers.Add(newModifier);
         }
@@ -36,25 +35,25 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             Modifiers.RemoveAt(indexToRemove);
         }
 
-        public void RemoveModifier(LabeledInt modifierToRemove)
+        public void RemoveModifier(LabeledString modifierToRemove)
         {
             Modifiers.Remove(modifierToRemove);
         }
 
-        public int Total { get; set; }
-        public int BaseValue { get; set; }
-        public ObservableCollection<LabeledInt>? Modifiers { get; set; }
+        public string Total { get; set; }
+        public string BaseValue { get; set; }
+        public ObservableCollection<LabeledString>? Modifiers { get; set; }
     }
 
-    public sealed class LabeledInt
+    public sealed class LabeledString
     {
-        public LabeledInt()
+        public LabeledString()
         {
-            Name = "NewNumericValue";
-            Value = 0;
+            Name = "NewStringValue";
+            Value = "";
         }
 
         public string Name { get; set; }
-        public int Value { get; set; }
+        public string Value { get; set; }
     }
 }

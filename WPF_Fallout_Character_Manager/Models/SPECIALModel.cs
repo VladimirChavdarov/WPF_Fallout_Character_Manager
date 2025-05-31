@@ -4,32 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 namespace WPF_Fallout_Character_Manager.Models
 {
     internal sealed class SPECIALModel
     {
         public SPECIALModel()
         {
-            Strength = 1;
-            Perception = 2;
-            Endurance = 3;
-            Charisma = 4;
-            Intelligence = 5;
-            Agility = 6;
-            Luck = 7;
+            IntegerValues = new Dictionary<string, ModInt>();
+
+            IntegerValues.Add("Strength", new ModInt(1));
+            IntegerValues.Add("Perception", new ModInt(2));
+            IntegerValues.Add("Endurance", new ModInt(3));
+            IntegerValues.Add("Charisma", new ModInt(4));
+            IntegerValues.Add("Intelligence", new ModInt(5));
+            IntegerValues.Add("Agility", new ModInt(6));
+            IntegerValues.Add("Luck", new ModInt(7));
         }
 
-        public int GetModifier(int MainStat)
-        {
-            return MainStat - 5;
-        }
-
-        public int Strength {  get; set; }
-        public int Perception {  get; set; }
-        public int Endurance {  get; set; }
-        public int Charisma {  get; set; }
-        public int Intelligence {  get; set; }
-        public int Agility {  get; set; }
-        public int Luck {  get; set; }
+        public Dictionary<string, ModInt>? IntegerValues;
     }
 }
