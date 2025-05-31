@@ -12,14 +12,14 @@ namespace WPF_Fallout_Character_Manager.Models
         // constructor
         public SurvivalModel()
         {
-            _hunger = 1;
-            _dehydration = 2;
-            _exhaustion = 3;
-            _radDc = 4;
-            _rads = 5;
-            _passiveSense = 6;
-            _partyNerve = 7;
-            _groupSneak = 8;
+            _hunger = new ModInt("Hunger", 1);
+            _dehydration = new ModInt("Dehydration", 2);
+            _exhaustion = new ModInt("Exhaustion", 3);
+            _radDc = new ModInt("RadDC", 4);
+            _rads = new ModInt("Rads", 5);
+            _passiveSense = new ModInt("Passive Sense", 6);
+            _partyNerve = new ModInt("Party Nerve", 7);
+            _groupSneak = new ModInt("Group Sneak", 8);
         }
         //
 
@@ -34,62 +34,62 @@ namespace WPF_Fallout_Character_Manager.Models
 
         void CalculateRadDC(int enduranceModifier)
         {
-            RadDC = 12 - enduranceModifier;
+            RadDC.BaseValue = 12 - enduranceModifier;
         }
         //
 
         // Data
-        private int _hunger;
-        public int Hunger
+        private ModInt _hunger;
+        public ModInt Hunger
         {
             get => _hunger;
             set => Update(ref _hunger, value);
         }
 
-        private int _dehydration;
-        public int Dehydration
+        private ModInt _dehydration;
+        public ModInt Dehydration
         {
             get => _dehydration;
             set => Update(ref _dehydration, value);
         }
 
-        private int _exhaustion;
-        public int Exhaustion
+        private ModInt _exhaustion;
+        public ModInt Exhaustion
         {
             get => _exhaustion;
             set => Update(ref _exhaustion, value);
         }
 
-        private int _radDc;
-        public int RadDC
+        private ModInt _radDc;
+        public ModInt RadDC
         {
             get => _radDc;
             set => Update(ref _radDc, value);
         }
 
-        private int _rads;
-        public int Rads
+        private ModInt _rads;
+        public ModInt Rads
         {
             get => _rads;
             set => Update(ref _rads, value);
         }
 
-        private int _passiveSense;
-        public int PassiveSense
+        private ModInt _passiveSense;
+        public ModInt PassiveSense
         {
             get => _passiveSense;
             set => Update(ref _passiveSense, value);
         }
 
-        private int _partyNerve;
-        public int PartyNerve
+        private ModInt _partyNerve;
+        public ModInt PartyNerve
         {
             get => _partyNerve;
             set => Update(ref _partyNerve, value);
         }
 
-        private int _groupSneak;
-        public int GroupSneak
+        private ModInt _groupSneak;
+        public ModInt GroupSneak
         {
             get => _groupSneak;
             set => Update(ref _groupSneak, value);

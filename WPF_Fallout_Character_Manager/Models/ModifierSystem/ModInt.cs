@@ -15,8 +15,9 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class ModInt : ModTypeBase
     {
         // constructor
-        public ModInt(int value)
+        public ModInt(string name, int value)
         {
+            _name = name;
             _baseValue = value;
             Modifiers = new ObservableCollection<LabeledInt>();
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
@@ -88,14 +89,28 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         public int Total
         {
             get => _total;
-            set => Update(ref _total, value);
+            // This shouldn't be set explicitly. It's always calculated via UpdateTotal().
+            private set => Update(ref _total, value);
         }
 
         private int _baseValue;
         public int BaseValue
         {
             get => _baseValue;
-            set => Update(ref _baseValue, value);
+            set
+            {
+                Update(ref _baseValue, value);
+                UpdateTotal();
+            }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            // We don't need a setter for the name because the names of the parameters won't change dynamically. This value should only be set
+            // on construction.
+            //set => Update(ref _name, value);
         }
 
         public ObservableCollection<LabeledInt>? Modifiers { get; }
@@ -109,6 +124,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         {
             _name = "NewNumericValue";
             _value = 0;
+            _note = "";
         }
         //
 
@@ -125,6 +141,13 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         {
             get => _value;
             set => Update(ref _value, value);
+        }
+
+        private string _note;
+        public string Note
+        {
+            get => _note;
+            set => Update(ref _note, value);
         }
         //
     }
