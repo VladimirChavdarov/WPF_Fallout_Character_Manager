@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         // local variables
         private SurvivalModel? _survival;
+        private SPECIALModel? _special;
         //
 
         public SurvivalModel? SurvivalModel
@@ -21,14 +23,29 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set
             {
                 _survival = value;
-                OnPropertyChanged("SurvivalModel");
+                Update(ref _survival, value);
             }
         }
 
         // constructor
-        public SurvivalViewModel(SurvivalModel? survival)
+        public SurvivalViewModel(SurvivalModel? survival, SPECIALModel? special)
         {
             _survival = survival;
+            _special = special;
+
+            _special.PropertyChanged += SPECIALModel_PropertyChanged;
+
+            // update once on initialize
+            SurvivalModel.UpdateModel(_special);
+        }
+
+        private void SPECIALModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            // The SurvivalComponent's only dependency in the SPECIAL is Endurance because of RadDC
+            if (e.PropertyName == nameof(SPECIALModel.Endurance))
+            {
+                _survival.UpdateModel(_special);
+            }
         }
         //
     }

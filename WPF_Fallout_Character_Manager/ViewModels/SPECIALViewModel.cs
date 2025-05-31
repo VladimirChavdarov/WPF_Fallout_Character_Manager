@@ -20,7 +20,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set
             {
                 _special = value;
-                OnPropertyChanged("SPECIALModel");
+                Update(ref _special, value);
             }
         }
 

@@ -27,7 +27,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
         // Updates any properties that depend on other Models via functions here.
         // Updates the RadDC based on the Endurance Modifier
-        void UpdateModel(SPECIALModel specialModel)
+        public void UpdateModel(SPECIALModel specialModel)
         {
             CalculateRadDC(specialModel.GetModifier(specialModel.Endurance));
         }
