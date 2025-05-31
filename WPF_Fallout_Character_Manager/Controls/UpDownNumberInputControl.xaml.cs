@@ -25,7 +25,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region ChunkyCaretTextBox
         public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register("Text", typeof(string), typeof(UpDownNumberInputControl),
-            new FrameworkPropertyMetadata("", new PropertyChangedCallback(OnTextChanged)));
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTextChanged)));
 
         public string Text
         {

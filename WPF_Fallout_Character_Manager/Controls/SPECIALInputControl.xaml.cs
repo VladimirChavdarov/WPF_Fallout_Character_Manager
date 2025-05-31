@@ -23,7 +23,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region PrimaryStat
         public static readonly DependencyProperty PrimaryStatProperty =
             DependencyProperty.Register("PrimaryStat", typeof(string), typeof(SPECIALInputControl),
-                new FrameworkPropertyMetadata("", new PropertyChangedCallback(OnPrimaryStatChanged)));
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPrimaryStatChanged)));
 
         public string PrimaryStat
         {
@@ -59,7 +59,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region StatModifier
         public static readonly DependencyProperty StatModifierProperty =
             DependencyProperty.Register("StatModifier", typeof(string), typeof(SPECIALInputControl),
-                new FrameworkPropertyMetadata(""));
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private string StatModifier
         {

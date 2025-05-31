@@ -90,7 +90,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         {
             get => _total;
             // This shouldn't be set explicitly. It's always calculated via UpdateTotal().
-            private set => Update(ref _total, value);
+            /*private*/ set => Update(ref _total, value);
         }
 
         private int _baseValue;
