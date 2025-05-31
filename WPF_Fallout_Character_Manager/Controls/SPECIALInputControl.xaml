@@ -15,7 +15,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="24"
-                Content="{Binding StatSymbol, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Content="{Binding StatSymbol, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
             <Label
                 x:Name="StatName"
                 Style="{StaticResource FalloutDefaultLabel}"
@@ -23,7 +23,7 @@
                 VerticalAlignment="Center"
                 FontSize="6"
                 Opacity="0.7"
-                Content="{Binding StatLabel, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Content="{Binding StatLabel, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
             <ContentControl
                 Style="{StaticResource BracketBorderStyle}"
                 BorderBrush="{StaticResource FalloutGreen}"
@@ -39,7 +39,7 @@
                         Padding="0 5 0 15"
                         HorizontalContentAlignment="Center"
                         HorizontalAlignment="Center"
-                        Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
                     <ContentControl
                         Style="{StaticResource BracketBorderStyle}"
                         BorderBrush="{StaticResource FalloutGreen}"
@@ -54,7 +54,7 @@
                             FontSize="20"
                             HorizontalContentAlignment="Center"
                             HorizontalAlignment="Center"
-                            Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"/>
                     </ContentControl>
                 </StackPanel>
                 

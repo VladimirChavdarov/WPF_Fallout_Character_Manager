@@ -33,38 +33,38 @@
                         <controls:SPECIALInputControl
                             Grid.Column="0"
                             Margin="5"
-                            StatLabel="Strength"
-                            PrimaryStat="{Binding SPECIALModel.Strength}"/>
+                            StatLabel="{Binding SPECIALModel.Strength.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Strength.Total}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="1"
                             Margin="5"
-                            StatLabel="Perception"
-                            PrimaryStat="{Binding SPECIALModel.Perception}"/>
+                            StatLabel="{Binding SPECIALModel.Perception.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Perception.Total}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="2"
                             Margin="5"
-                            StatLabel="Endurance"
-                            PrimaryStat="{Binding SPECIALModel.Endurance}"/>
+                            StatLabel="{Binding SPECIALModel.Endurance.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Endurance.BaseValue}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="3"
                             Margin="5"
-                            StatLabel="Charisma"
-                            PrimaryStat="{Binding SPECIALModel.Charisma}"/>
+                            StatLabel="{Binding SPECIALModel.Charisma.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Charisma.Total}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="4"
                             Margin="5"
-                            StatLabel="Intelligence"
-                            PrimaryStat="{Binding SPECIALModel.Intelligence}"/>
+                            StatLabel="{Binding SPECIALModel.Intelligence.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Intelligence.Total}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="5"
                             Margin="5"
-                            StatLabel="Agility"
-                            PrimaryStat="{Binding SPECIALModel.Agility}"/>
+                            StatLabel="{Binding SPECIALModel.Agility.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Agility.Total}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="6"
                             Margin="5"
-                            StatLabel="Luck"
-                            PrimaryStat="{Binding SPECIALModel.Luck}"/>
+                            StatLabel="{Binding SPECIALModel.Luck.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Luck.Total}"/>
                     </Grid>
                 </Grid>
             </ScrollViewer>

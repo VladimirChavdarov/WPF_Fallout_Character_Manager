@@ -27,7 +27,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region TextBox
         public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register("Text", typeof(string), typeof(ChunkyCaretTextBox),
-            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTextChanged)));
+            new FrameworkPropertyMetadata("", new PropertyChangedCallback(OnTextChanged)));
 
         public string Text
         {

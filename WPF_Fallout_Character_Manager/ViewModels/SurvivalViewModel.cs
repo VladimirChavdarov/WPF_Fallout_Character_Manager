@@ -42,7 +42,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void SPECIALModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             // The SurvivalComponent's only dependency in the SPECIAL is Endurance because of RadDC
-            if (e.PropertyName == nameof(SPECIALModel.Endurance))
+            if (e.PropertyName == nameof(SPECIALModel.Endurance.BaseValue))
             {
                 _survival.UpdateModel(_special);
             }

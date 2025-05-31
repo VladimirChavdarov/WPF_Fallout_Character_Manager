@@ -24,15 +24,15 @@
                             Grid.Column="0"
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
-                            VerticalAlignment="Center">
-                            Rad DC:
-                        </Label>
+                            VerticalAlignment="Center"
+                            Content="{Binding SurvivalModel.RadDC.Name}"
+                            ContentStringFormat="{}{0}:"/>
                         <controls:ChunkyCaretTextBox
                             Grid.Column="1"
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.RadDC}"/>
+                            Text="{Binding SurvivalModel.RadDC.Total}"/>
                     </Grid>
                     <Label FontSize="10"/>
                     <Grid Margin="0 0 0 5">

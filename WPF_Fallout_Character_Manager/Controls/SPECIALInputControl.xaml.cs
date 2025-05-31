@@ -23,7 +23,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region PrimaryStat
         public static readonly DependencyProperty PrimaryStatProperty =
             DependencyProperty.Register("PrimaryStat", typeof(string), typeof(SPECIALInputControl),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPrimaryStatChanged)));
+                new FrameworkPropertyMetadata("", new PropertyChangedCallback(OnPrimaryStatChanged)));
 
         public string PrimaryStat
         {
@@ -59,7 +59,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region StatModifier
         public static readonly DependencyProperty StatModifierProperty =
             DependencyProperty.Register("StatModifier", typeof(string), typeof(SPECIALInputControl),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(""));
 
         private string StatModifier
         {
@@ -74,7 +74,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region StatLabel
         public static readonly DependencyProperty StatLabelProperty =
             DependencyProperty.Register("StatLabel", typeof(string), typeof(SPECIALInputControl),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnStatLabelChanged)));
+                new FrameworkPropertyMetadata("", new PropertyChangedCallback(OnStatLabelChanged)));
 
         public string StatLabel
         {
@@ -104,7 +104,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region StatSymbolLabel
         public static readonly DependencyProperty StatSymbolProperty =
             DependencyProperty.Register("StatSymbol", typeof(string), typeof(SPECIALInputControl),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(""));
 
         private string StatSymbol
         {
