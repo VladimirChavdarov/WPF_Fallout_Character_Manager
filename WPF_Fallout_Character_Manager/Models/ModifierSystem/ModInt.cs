@@ -1,29 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
-    public sealed class ModInt
+    public sealed class ModInt : ModTypeBase
     {
+        // constructor
         public ModInt(int value)
         {
-            BaseValue = value;
+            _baseValue = value;
             Modifiers = new ObservableCollection<LabeledInt>();
+            Modifiers.CollectionChanged += Modifiers_CollectionChanged;
+            UpdateTotal();
+        }
+        //
+
+        //
+        // TODO: Find someone and ask if this is too much redundant calls of UpdateTotal().
+        // Maybe not actually. UpdateTotal() gets called when the size of the ObservableCollection changes
+        // or when a LabeledInt's value changes.
+        private void Modifiers_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if(e.NewItems != null)
+            {
+                foreach(LabeledInt mod in  e.NewItems)
+                {
+                    mod.PropertyChanged += Modifiers_PropertyChanged;
+                }
+            }
+            if(e.OldItems != null)
+            {
+                foreach(LabeledInt mod in e.OldItems)
+                {
+                    mod.PropertyChanged -= Modifiers_PropertyChanged;
+                }
+            }
             UpdateTotal();
         }
 
+        private void Modifiers_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(LabeledInt.Value))
+            {
+                UpdateTotal();
+            }
+        }
+        //
+
+        // helpers
         public void UpdateTotal()
         {
-            Total = BaseValue;
+            int sum = BaseValue;
             for (int i = 0; i < Modifiers.Count; i++)
             {
-                Total += Modifiers[i].Value;
+                sum += Modifiers[i].Value;
             }
+            Total = sum;
         }
 
         public void AddModifier(LabeledInt newModifier)
@@ -35,26 +76,56 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         {
             Modifiers.RemoveAt(indexToRemove);
         }
+        //
 
         public void RemoveModifier(LabeledInt modifierToRemove)
         {
             Modifiers.Remove(modifierToRemove);
         }
 
-        public int Total { get; set; }
-        public int BaseValue { get; set; }
-        public ObservableCollection<LabeledInt>? Modifiers { get; set; }
-    }
-
-    public sealed class LabeledInt
-    {
-        public LabeledInt()
+        // Data
+        private int _total;
+        public int Total
         {
-            Name = "NewNumericValue";
-            Value = 0;
+            get => _total;
+            set => Update(ref _total, value);
         }
 
-        public string Name { get; set; }
-        public int Value { get; set; }
+        private int _baseValue;
+        public int BaseValue
+        {
+            get => _baseValue;
+            set => Update(ref _baseValue, value);
+        }
+
+        public ObservableCollection<LabeledInt>? Modifiers { get; }
+        //
+    }
+
+    public sealed class LabeledInt : ModTypeBase
+    {
+        // constructor
+        public LabeledInt()
+        {
+            _name = "NewNumericValue";
+            _value = 0;
+        }
+        //
+
+        // Data
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => Update(ref _name, value);
+        }
+
+        private int _value;
+        public int Value
+        {
+            get => _value;
+            set => Update(ref _value, value);
+        }
+        //
     }
 }
