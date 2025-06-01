@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         mc:Ignorable="d"
-        Title="ModifiersWindow" Height="150" Width="200"
+        Title="ModifiersWindow" Height="150" Width="Auto"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         MinWidth="50"
         MinHeight="50"
+        MaxWidth="250"
         AllowsTransparency="true"
         Background="Black"
         MouseDown="Window_MouseDown">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="20"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -33,10 +34,10 @@
                 <ColumnDefinition Width="18"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Modifiers"
+            <TextBlock Text="{Binding ModInt.Name, Mode=OneWay}"
                Grid.Column="0"
                Style="{StaticResource FalloutDefaultText}"
-               FontSize="6"
+               FontSize="9"
                FontWeight="Bold"
                FontStyle="Italic"
                VerticalAlignment="Center"
@@ -48,7 +49,6 @@
                 VerticalAlignment="Center"
                 Content=" x "
                 Style="{StaticResource FalloutTopBarButton}"
-                FontSize="8"
                 Click="btnClose_Click"/>
 
         </Grid>
@@ -60,12 +60,58 @@
             Background="Black"
             BorderBrush="#23ba03"
             BorderThickness="1 1 1 1">
-            
-            <StackPanel>
-                <TextBox
-                    Text="{Binding ModInt.Name, Mode=OneWay}"
-                    IsReadOnly="True"/>
-            </StackPanel>
+
+            <ScrollViewer>
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            VerticalAlignment="Center"
+                            Content="Base Value"
+                            ContentStringFormat="{}{0}:"/>
+                        <controls:ChunkyCaretTextBox
+                            Grid.Column="1"
+                            MinWidth="30"
+                            FontSize="10"
+                            VerticalAlignment="Center"
+                            Text="{Binding ModInt.BaseValue}"/>
+                    </Grid>
+                    <ListView ItemsSource="{Binding ModInt.Modifiers}"
+                              HorizontalAlignment="Left">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <controls:ChunkyCaretTextBox
+                                        Grid.Column="1"
+                                        MinWidth="30"
+                                        FontSize="10"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Name}"/>
+                                    <controls:ChunkyCaretTextBox
+                                        Grid.Column="1"
+                                        MinWidth="30"
+                                        FontSize="10"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Value}"/>
+                                    <controls:ChunkyCaretTextBox
+                                        Grid.Column="1"
+                                        MinWidth="30"
+                                        FontSize="10"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Note}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
             
         </Border>
         <!-- -->

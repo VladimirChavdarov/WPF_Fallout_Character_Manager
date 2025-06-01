@@ -22,6 +22,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             _baseValue = value;
             _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledInt>();
+            Modifiers.Add(new LabeledInt());
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
             UpdateTotal();
         }
@@ -139,11 +140,11 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class LabeledInt : ModTypeBase
     {
         // constructor
-        public LabeledInt()
+        public LabeledInt(string name = "NewNumericValue", int value = 0, string note = "")
         {
-            _name = "NewNumericValue";
-            _value = 0;
-            _note = "";
+            _name = name;
+            _value = value;
+            _note = note;
         }
         //
 
