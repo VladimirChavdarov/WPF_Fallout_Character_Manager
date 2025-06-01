@@ -40,6 +40,7 @@
                             >
                             <controls:SPECIALInputControl
                                 Margin="5"
+                                ModInt="{Binding SPECIALModel.Strength}"
                                 StatLabel="{Binding SPECIALModel.Strength.Name}"
                                 PrimaryStat="{Binding SPECIALModel.Strength.Total, Mode=OneWay}"/>
                             <TextBox
@@ -50,6 +51,7 @@
                             Grid.Column="1">
                             <controls:SPECIALInputControl
                                 Margin="5"
+                                ModInt="{Binding SPECIALModel.Perception}"
                                 StatLabel="{Binding SPECIALModel.Perception.Name}"
                                 PrimaryStat="{Binding SPECIALModel.Perception.Total, Mode=OneWay}"/>
                             <TextBox
@@ -60,6 +62,7 @@
                             Grid.Column="2">
                             <controls:SPECIALInputControl
                                 Margin="5"
+                                ModInt="{Binding SPECIALModel.Endurance}"
                                 StatLabel="{Binding SPECIALModel.Endurance.Name}"
                                 PrimaryStat="{Binding SPECIALModel.Endurance.Total, Mode=OneWay}"/>
                             <TextBox
@@ -69,21 +72,25 @@
                         <controls:SPECIALInputControl
                             Grid.Column="3"
                             Margin="5"
+                            ModInt="{Binding SPECIALModel.Charisma}"
                             StatLabel="{Binding SPECIALModel.Charisma.Name}"
                             PrimaryStat="{Binding SPECIALModel.Charisma.BaseValue}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="4"
                             Margin="5"
+                            ModInt="{Binding SPECIALModel.Intelligence}"
                             StatLabel="{Binding SPECIALModel.Intelligence.Name}"
                             PrimaryStat="{Binding SPECIALModel.Intelligence.BaseValue}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="5"
                             Margin="5"
+                            ModInt="{Binding SPECIALModel.Agility}"
                             StatLabel="{Binding SPECIALModel.Agility.Name}"
                             PrimaryStat="{Binding SPECIALModel.Agility.BaseValue}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="6"
                             Margin="5"
+                            ModInt="{Binding SPECIALModel.Luck}"
                             StatLabel="{Binding SPECIALModel.Luck.Name}"
                             PrimaryStat="{Binding SPECIALModel.Luck.BaseValue}"/>
                     </Grid>

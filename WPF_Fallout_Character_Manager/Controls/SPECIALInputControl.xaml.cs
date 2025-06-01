@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 
 namespace WPF_Fallout_Character_Manager.Controls
 {
@@ -138,6 +139,29 @@ namespace WPF_Fallout_Character_Manager.Controls
             //CustomTextBox.IsReadOnly = (bool)e.NewValue;
             PrimaryStatTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
             ModifierTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
+
+        #region ModInt
+        public static readonly DependencyProperty ModIntProperty =
+            DependencyProperty.Register("ModInt", typeof(ModInt), typeof(SPECIALInputControl),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModIntPropertyChanged)));
+
+        public ModInt ModInt
+        {
+            get => (ModInt)GetValue(ModIntProperty);
+            set => SetValue(ModIntProperty, value);
+        }
+
+        private static void ModIntPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SPECIALInputControl? ThisUserControl = d as SPECIALInputControl;
+            ThisUserControl.ModIntPropertyChanged(e);
+        }
+
+        private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+
         }
         #endregion
 

@@ -40,7 +40,16 @@
                         HorizontalContentAlignment="Center"
                         HorizontalAlignment="Center"
                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.InputBindings>
+                            <MouseBinding Gesture="RightClick"
+                                Command="{Binding OpenModifierModalWindowCommand}"
+                                CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <MouseBinding Gesture="LeftDoubleClick"
+                                Command="{Binding OpenModifierModalWindowCommand}"
+                                CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <ContentControl
                         Style="{StaticResource BracketBorderStyle}"
                         BorderBrush="{StaticResource FalloutGreen}"
@@ -56,7 +65,16 @@
                             HorizontalContentAlignment="Center"
                             HorizontalAlignment="Center"
                             IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <MouseBinding Gesture="RightClick"
+                                    Command="{Binding OpenModifierModalWindowCommand}"
+                                    CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                <MouseBinding Gesture="LeftDoubleClick"
+                                    Command="{Binding OpenModifierModalWindowCommand}"
+                                    CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
                     </ContentControl>
                 </StackPanel>
 
