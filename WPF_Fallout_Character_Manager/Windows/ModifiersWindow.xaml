@@ -68,19 +68,11 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="Base Value"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Text="{Binding ModInt.BaseValue}"/>
+                        <controls:TextBoxWithLabelControl
+                            Orientation="Horizontal"
+                            LabelText="Base Value"
+                            Text="{Binding ModInt.BaseValue}"
+                            ModInt="{Binding ModInt}"/>
                     </Grid>
                     <ListView ItemsSource="{Binding ModInt.Modifiers}"
                               HorizontalAlignment="Left">
