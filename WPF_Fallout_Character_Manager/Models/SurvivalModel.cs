@@ -12,21 +12,21 @@ namespace WPF_Fallout_Character_Manager.Models
         // constructor
         public SurvivalModel()
         {
-            _hunger = new ModInt("Hunger", 1);
+            _hunger = new ModInt("Hunger", 0);
             _hunger.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Hunger));
-            _dehydration = new ModInt("Dehydration", 2);
+            _dehydration = new ModInt("Dehydration", 0);
             _dehydration.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Dehydration));
-            _exhaustion = new ModInt("Exhaustion", 3);
+            _exhaustion = new ModInt("Exhaustion", 0);
             _exhaustion.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Exhaustion));
-            _radDc = new ModInt("RadDC", 4);
+            _radDc = new ModInt("RadDC", 0);
             _radDc.PropertyChanged += (s, e) => OnPropertyChanged(nameof(RadDC));
-            _rads = new ModInt("Rads", 5);
+            _rads = new ModInt("Rads", 0);
             _rads.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Rads));
-            _passiveSense = new ModInt("Passive Sense", 6);
+            _passiveSense = new ModInt("Passive Sense", 0);
             _passiveSense.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PassiveSense));
-            _partyNerve = new ModInt("Party Nerve", 7);
+            _partyNerve = new ModInt("Party Nerve", 0);
             _partyNerve.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PartyNerve));
-            _groupSneak = new ModInt("Group Sneak", 8);
+            _groupSneak = new ModInt("Group Sneak", 0);
             _groupSneak.PropertyChanged += (s, e) => OnPropertyChanged(nameof(GroupSneak));
         }
         //
@@ -38,11 +38,17 @@ namespace WPF_Fallout_Character_Manager.Models
         public void UpdateModel(SPECIALModel specialModel)
         {
             CalculateRadDC(specialModel.GetModifier(specialModel.Endurance));
+            CalculatePassiveSense(specialModel.GetModifier(specialModel.Perception));
         }
 
         void CalculateRadDC(int enduranceModifier)
         {
             RadDC.BaseValue = 12 - enduranceModifier;
+        }
+
+        void CalculatePassiveSense(int perceptionModifier)
+        {
+            PassiveSense.BaseValue = 12 + perceptionModifier;
         }
         //
 

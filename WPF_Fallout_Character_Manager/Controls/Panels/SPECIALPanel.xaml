@@ -45,10 +45,6 @@
                             <TextBox
                                 Margin="0 15 0 0 "
                                 Text="{Binding SPECIALModel.Strength.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBox
-                                Margin="0 15 0 0 "
-                                Background="Yellow"
-                                Text="{Binding SPECIALModel.Strength.Total, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel
                             Grid.Column="1">

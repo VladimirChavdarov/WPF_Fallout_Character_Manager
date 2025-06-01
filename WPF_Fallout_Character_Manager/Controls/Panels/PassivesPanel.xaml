@@ -24,15 +24,16 @@
                             Grid.Column="0"
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
-                            VerticalAlignment="Center">
-                            Passive Sense:
-                        </Label>
+                            VerticalAlignment="Center"
+                            Content="{Binding SurvivalModel.PassiveSense.Name}"
+                            ContentStringFormat="{}{0}:"/>
                         <controls:ChunkyCaretTextBox
                             Grid.Column="1"
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.PassiveSense.BaseValue}"/>
+                            IsReadOnly="True"
+                            Text="{Binding SurvivalModel.PassiveSense.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -43,15 +44,16 @@
                             Grid.Column="0"
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
-                            VerticalAlignment="Center">
-                            Party Nerve:
-                        </Label>
+                            VerticalAlignment="Center"
+                            Content="{Binding SurvivalModel.PartyNerve.Name}"
+                            ContentStringFormat="{}{0}:"/>
                         <controls:ChunkyCaretTextBox
                             Grid.Column="1"
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.PartyNerve.BaseValue}"/>
+                            IsReadOnly="True"
+                            Text="{Binding SurvivalModel.PartyNerve.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -62,15 +64,16 @@
                             Grid.Column="0"
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
-                            VerticalAlignment="Center">
-                            Group Sneak:
-                        </Label>
+                            VerticalAlignment="Center"
+                            Content="{Binding SurvivalModel.GroupSneak.Name}"
+                            ContentStringFormat="{}{0}:"/>
                         <controls:ChunkyCaretTextBox
                             Grid.Column="1"
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.GroupSneak.BaseValue}"/>
+                            IsReadOnly="True"
+                            Text="{Binding SurvivalModel.GroupSneak.Total, Mode=OneWay}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
