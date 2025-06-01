@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -15,10 +16,11 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class ModInt : ModTypeBase
     {
         // constructor
-        public ModInt(string name, int value)
+        public ModInt(string name, int value, bool isBaseValueReadOnly = false)
         {
             _name = name;
             _baseValue = value;
+            _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledInt>();
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
             UpdateTotal();
@@ -101,12 +103,16 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             get => _baseValue;
             set
             {
-                if (_baseValue != value)
+                // This check might be redundant in most cases but still good to have here just in case.
+                if(!_isBaseValueReadOnly)
                 {
-                    _baseValue = value;
+                    if (_baseValue != value)
+                    {
+                        _baseValue = value;
+                    }
+                    //Update(ref _baseValue, value);
+                    UpdateTotal();
                 }
-                //Update(ref _baseValue, value);
-                UpdateTotal();
             }
         }
 
@@ -118,6 +124,13 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             // on construction.
             //set => Update(ref _name, value);
         }
+
+        private bool _isBaseValueReadOnly;
+        public bool IsBaseValueReadOnly
+        {
+            get => _isBaseValueReadOnly;
+        }
+
 
         public ObservableCollection<LabeledInt>? Modifiers { get; }
         //
