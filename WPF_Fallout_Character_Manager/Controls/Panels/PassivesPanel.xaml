@@ -33,6 +33,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.PassiveSense}"
                             Text="{Binding SurvivalModel.PassiveSense.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
@@ -53,6 +54,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.PartyNerve}"
                             Text="{Binding SurvivalModel.PartyNerve.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
@@ -73,12 +75,9 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.GroupSneak}"
                             Text="{Binding SurvivalModel.GroupSneak.Total, Mode=OneWay}"/>
                     </Grid>
-                    <Button
-                        Content="OpenModalWindow"
-                        Command="{Binding OpenModifierModalWindowCommand}"
-                        CommandParameter="{Binding SurvivalModel.GroupSneak}"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

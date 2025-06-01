@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 namespace WPF_Fallout_Character_Manager.Controls
 {
     /// <summary>
@@ -69,6 +70,29 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             //CustomTextBox.IsReadOnly = (bool)e.NewValue;
             CustomTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
+
+        #region ModInt
+        public static readonly DependencyProperty ModIntProperty =
+            DependencyProperty.Register("ModInt", typeof(ModInt), typeof(ChunkyCaretTextBox),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModIntPropertyChanged)));
+
+        public ModInt ModInt
+        {
+            get => (ModInt)GetValue(ModIntProperty);
+            set => SetValue(ModIntProperty, value);
+        }
+
+        private static void ModIntPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ChunkyCaretTextBox? ThisUserControl = d as ChunkyCaretTextBox;
+            ThisUserControl.ModIntPropertyChanged(e);
+        }
+
+        private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            
         }
         #endregion
         //

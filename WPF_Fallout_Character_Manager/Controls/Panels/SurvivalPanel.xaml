@@ -33,6 +33,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.RadDC}"
                             Text="{Binding SurvivalModel.RadDC.Total, Mode=OneWay}"/>
                     </Grid>
                     <Label FontSize="10"/>
@@ -54,6 +55,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.Rads}"
                             Text="{Binding SurvivalModel.Rads.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
@@ -74,6 +76,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.Hunger}"
                             Text="{Binding SurvivalModel.Hunger.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
@@ -94,6 +97,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.Dehydration}"
                             Text="{Binding SurvivalModel.Dehydration.Total, Mode=OneWay}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
@@ -114,6 +118,7 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             IsReadOnly="True"
+                            ModInt="{Binding SurvivalModel.Exhaustion}"
                             Text="{Binding SurvivalModel.Exhaustion.Total, Mode=OneWay}"/>
                     </Grid>
                 </StackPanel>

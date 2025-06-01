@@ -26,7 +26,7 @@ namespace WPF_Fallout_Character_Manager.Models
             _passiveSense.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PassiveSense));
             _partyNerve = new ModInt("Party Nerve", 0);
             _partyNerve.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PartyNerve));
-            _groupSneak = new ModInt("Group Sneak", 0);
+            _groupSneak = new ModInt("Group Sneak", 5);
             _groupSneak.PropertyChanged += (s, e) => OnPropertyChanged(nameof(GroupSneak));
         }
         //

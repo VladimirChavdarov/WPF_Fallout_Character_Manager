@@ -62,6 +62,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
             if (modInt is ModInt typedModInt)
             {
                 var window = new ModifiersWindow(new ModifierSystem.ModIntViewModel(typedModInt));
+                var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+                window.Left = mousePoint.X + 100;
+                window.Top = mousePoint.Y;
+
                 window.ShowDialog();
             }
             else
