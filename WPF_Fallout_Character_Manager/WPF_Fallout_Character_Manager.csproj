@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\" />
     <Folder Include="Controls\Tabs\" />
   </ItemGroup>
 

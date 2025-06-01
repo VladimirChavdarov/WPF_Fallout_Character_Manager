@@ -20,7 +20,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.ModifierSystem
             set
             {
                 _modInt = value;
-                OnPropertyChanged("ModInt");
+                Update(ref _modInt, value);
             }
         }
 

@@ -75,6 +75,10 @@
                             IsReadOnly="True"
                             Text="{Binding SurvivalModel.GroupSneak.Total, Mode=OneWay}"/>
                     </Grid>
+                    <Button
+                        Content="OpenModalWindow"
+                        Command="{Binding OpenModifierModalWindowCommand}"
+                        CommandParameter="{Binding SurvivalModel.GroupSneak}"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

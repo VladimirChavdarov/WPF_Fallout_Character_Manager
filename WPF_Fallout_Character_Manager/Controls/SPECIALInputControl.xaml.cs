@@ -144,6 +144,8 @@ namespace WPF_Fallout_Character_Manager.Controls
         public SPECIALInputControl()
         {
             InitializeComponent();
+
+            
         }
     }
 }

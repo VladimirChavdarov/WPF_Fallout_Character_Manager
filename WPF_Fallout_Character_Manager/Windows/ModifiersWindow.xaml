@@ -53,5 +53,21 @@
 
         </Grid>
         <!-- -->
+
+        <!-- Modifier Window -->
+        <Border
+            Grid.Row="1"
+            Background="Black"
+            BorderBrush="#23ba03"
+            BorderThickness="1 1 1 1">
+            
+            <StackPanel>
+                <TextBox
+                    Text="{Binding ModInt.Name, Mode=OneWay}"
+                    IsReadOnly="True"/>
+            </StackPanel>
+            
+        </Border>
+        <!-- -->
     </Grid>
 </Window>
