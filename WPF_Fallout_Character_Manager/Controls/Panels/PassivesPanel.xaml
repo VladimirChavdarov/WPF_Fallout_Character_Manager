@@ -32,7 +32,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.PassiveSense.Total}"/>
+                            Text="{Binding SurvivalModel.PassiveSense.BaseValue}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -51,7 +51,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.PartyNerve.Total}"/>
+                            Text="{Binding SurvivalModel.PartyNerve.BaseValue}"/>
                     </Grid>
                     <Grid Margin="0 0 0 5">
                         <Grid.ColumnDefinitions>
@@ -70,7 +70,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.GroupSneak.Total}"/>
+                            Text="{Binding SurvivalModel.GroupSneak.BaseValue}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>

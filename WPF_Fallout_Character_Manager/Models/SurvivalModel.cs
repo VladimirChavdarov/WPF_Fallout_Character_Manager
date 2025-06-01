@@ -13,13 +13,21 @@ namespace WPF_Fallout_Character_Manager.Models
         public SurvivalModel()
         {
             _hunger = new ModInt("Hunger", 1);
+            _hunger.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Hunger));
             _dehydration = new ModInt("Dehydration", 2);
+            _dehydration.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Dehydration));
             _exhaustion = new ModInt("Exhaustion", 3);
+            _exhaustion.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Exhaustion));
             _radDc = new ModInt("RadDC", 4);
+            _radDc.PropertyChanged += (s, e) => OnPropertyChanged(nameof(RadDC));
             _rads = new ModInt("Rads", 5);
+            _rads.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Rads));
             _passiveSense = new ModInt("Passive Sense", 6);
+            _passiveSense.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PassiveSense));
             _partyNerve = new ModInt("Party Nerve", 7);
+            _partyNerve.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PartyNerve));
             _groupSneak = new ModInt("Group Sneak", 8);
+            _groupSneak.PropertyChanged += (s, e) => OnPropertyChanged(nameof(GroupSneak));
         }
         //
 

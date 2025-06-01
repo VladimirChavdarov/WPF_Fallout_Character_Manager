@@ -14,12 +14,19 @@ namespace WPF_Fallout_Character_Manager.Models
         public SPECIALModel()
         {
             _strength = new ModInt("Strength", 1);
+            _strength.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Strength));
             _perception = new ModInt("Perception", 2);
+            _perception.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Perception));
             _endurance = new ModInt("Endurance", 3);
+            _endurance.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Endurance));
             _charisma = new ModInt("Charisma", 4);
+            _charisma.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Charisma));
             _intelligence = new ModInt("Intelligence", 5);
+            _intelligence.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Intelligence));
             _agililty = new ModInt("Agility", 6);
+            _agililty.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Agility));
             _luck = new ModInt("Luck", 7);
+            _luck.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Luck));
         }
         //
 

@@ -30,21 +30,36 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <controls:SPECIALInputControl
-                            Grid.Column="0"
-                            Margin="5"
-                            StatLabel="{Binding SPECIALModel.Strength.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Strength.BaseValue}"/>
-                        <controls:SPECIALInputControl
-                            Grid.Column="1"
-                            Margin="5"
-                            StatLabel="{Binding SPECIALModel.Perception.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Perception.BaseValue}"/>
-                        <controls:SPECIALInputControl
-                            Grid.Column="2"
-                            Margin="5"
-                            StatLabel="{Binding SPECIALModel.Endurance.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Endurance.BaseValue}"/>
+                        <StackPanel
+                            Grid.Column="0">
+                            <controls:SPECIALInputControl
+                                Margin="5"
+                                StatLabel="{Binding SPECIALModel.Strength.Name}"
+                                PrimaryStat="{Binding SPECIALModel.Strength.Total}"/>
+                            <TextBox
+                                Margin="0 15 0 0 "
+                                Text="{Binding SPECIALModel.Strength.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Column="1">
+                            <controls:SPECIALInputControl
+                                Margin="5"
+                                StatLabel="{Binding SPECIALModel.Perception.Name}"
+                                PrimaryStat="{Binding SPECIALModel.Perception.Total}"/>
+                            <TextBox
+                                Margin="0 15 0 0 "
+                                Text="{Binding SPECIALModel.Perception.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Column="2">
+                            <controls:SPECIALInputControl
+                                Margin="5"
+                                StatLabel="{Binding SPECIALModel.Endurance.Name}"
+                                PrimaryStat="{Binding SPECIALModel.Endurance.Total}"/>
+                            <TextBox
+                                Margin="0 15 0 0 "
+                                Text="{Binding SPECIALModel.Endurance.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
                         <controls:SPECIALInputControl
                             Grid.Column="3"
                             Margin="5"
