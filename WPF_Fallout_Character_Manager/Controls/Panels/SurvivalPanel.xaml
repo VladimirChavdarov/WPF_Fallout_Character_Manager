@@ -32,7 +32,7 @@
                             MinWidth="30"
                             FontSize="11"
                             VerticalAlignment="Center"
-                            Text="{Binding SurvivalModel.RadDC.Total, Mode=TwoWay}"/>
+                            Text="{Binding SurvivalModel.RadDC.Total, Mode=OneWay}"/>
                     </Grid>
                     <Label FontSize="10"/>
                     <Grid Margin="0 0 0 5">

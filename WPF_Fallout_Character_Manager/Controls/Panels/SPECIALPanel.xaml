@@ -5,7 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
              xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:cvrt="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              mc:Ignorable="d" >
+    <UserControl.Resources>
+        <cvrt:IntToStringConverter x:Key="IntToStringConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <GroupBox
             Header="S.P.E.C.I.A.L. | Stats"
@@ -31,21 +36,26 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel
-                            Grid.Column="0">
+                            Grid.Column="0"
+                            >
                             <controls:SPECIALInputControl
                                 Margin="5"
                                 StatLabel="{Binding SPECIALModel.Strength.Name}"
-                                PrimaryStat="{Binding SPECIALModel.Strength.Total}"/>
+                                PrimaryStat="{Binding SPECIALModel.Strength.Total, Mode=OneWay}"/>
                             <TextBox
                                 Margin="0 15 0 0 "
                                 Text="{Binding SPECIALModel.Strength.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox
+                                Margin="0 15 0 0 "
+                                Background="Yellow"
+                                Text="{Binding SPECIALModel.Strength.Total, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel
                             Grid.Column="1">
                             <controls:SPECIALInputControl
                                 Margin="5"
                                 StatLabel="{Binding SPECIALModel.Perception.Name}"
-                                PrimaryStat="{Binding SPECIALModel.Perception.Total}"/>
+                                PrimaryStat="{Binding SPECIALModel.Perception.Total, Mode=OneWay}"/>
                             <TextBox
                                 Margin="0 15 0 0 "
                                 Text="{Binding SPECIALModel.Perception.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>
@@ -55,7 +65,7 @@
                             <controls:SPECIALInputControl
                                 Margin="5"
                                 StatLabel="{Binding SPECIALModel.Endurance.Name}"
-                                PrimaryStat="{Binding SPECIALModel.Endurance.Total}"/>
+                                PrimaryStat="{Binding SPECIALModel.Endurance.Total, Mode=OneWay}"/>
                             <TextBox
                                 Margin="0 15 0 0 "
                                 Text="{Binding SPECIALModel.Endurance.BaseValue, UpdateSourceTrigger=PropertyChanged}"/>

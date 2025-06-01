@@ -41,6 +41,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void OnTextChanged(DependencyPropertyChangedEventArgs e)
         {
+            //TODO: Make sure this communicates to/from the Model properly. Look at the other UserControls
             CustomChunkyCaretTextBox.CustomTextBox.Text = Text;
         }
         #endregion

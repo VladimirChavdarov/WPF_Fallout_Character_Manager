@@ -43,7 +43,8 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void OnTextChanged(DependencyPropertyChangedEventArgs e)
         {
-            CustomTextBox.Text = e.NewValue.ToString();
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
         }
         #endregion
         //

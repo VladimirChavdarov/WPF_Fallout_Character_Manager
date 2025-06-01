@@ -92,7 +92,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             // This shouldn't be set explicitly. It's always calculated via UpdateTotal().
             // NOTE: This conflicts with the TwoWay binding so I will comment it out for now.
             // When you display the total in a View field, MAKE IT READ-ONLY.
-            /*private*/ set => Update(ref _total, value);
+            private set => Update(ref _total, value);
         }
 
         private int _baseValue;

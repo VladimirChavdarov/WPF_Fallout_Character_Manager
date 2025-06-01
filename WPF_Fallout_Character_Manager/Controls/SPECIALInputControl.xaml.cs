@@ -51,7 +51,8 @@ namespace WPF_Fallout_Character_Manager.Controls
                 StatModifier = "-42";
             }
 
-            PrimaryStatTextBox.Text = PrimaryStat;
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //PrimaryStatTextBox.Text = PrimaryStat;
             ModifierTextBox.Text = StatModifier;
         }
         #endregion
