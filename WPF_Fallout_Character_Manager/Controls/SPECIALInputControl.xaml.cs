@@ -115,6 +115,32 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region ReadOnly
+        // Make them read-only by default
+        public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(SPECIALInputControl),
+            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(IsReadOnlyPropertyChanged)));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        private static void IsReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SPECIALInputControl? ThisUserControl = d as SPECIALInputControl;
+            ThisUserControl.IsReadOnlyPropertyChanged(e);
+        }
+
+        private void IsReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            //CustomTextBox.IsReadOnly = (bool)e.NewValue;
+            PrimaryStatTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+            ModifierTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
+
         public SPECIALInputControl()
         {
             InitializeComponent();

@@ -27,7 +27,8 @@
                 CaretBrush="Transparent" 
                 Margin="0"
                 Cursor="IBeam"
-                Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         <Canvas>
             <Border x:Name="Caret" 
                 Visibility="Collapsed"

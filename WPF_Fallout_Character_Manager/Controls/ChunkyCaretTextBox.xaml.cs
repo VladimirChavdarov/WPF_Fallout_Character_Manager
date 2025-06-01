@@ -47,6 +47,30 @@ namespace WPF_Fallout_Character_Manager.Controls
             //CustomTextBox.Text = e.NewValue.ToString();
         }
         #endregion
+
+        #region ReadOnly
+        public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(ChunkyCaretTextBox),
+            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(IsReadOnlyPropertyChanged)));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        private static void IsReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ChunkyCaretTextBox? ThisUserControl = d as ChunkyCaretTextBox;
+            ThisUserControl.IsReadOnlyPropertyChanged(e);
+        }
+
+        private void IsReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            //CustomTextBox.IsReadOnly = (bool)e.NewValue;
+            CustomTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
         //
 
         public ChunkyCaretTextBox()

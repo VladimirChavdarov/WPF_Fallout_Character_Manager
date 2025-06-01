@@ -39,6 +39,7 @@
                         Padding="0 5 0 15"
                         HorizontalContentAlignment="Center"
                         HorizontalAlignment="Center"
+                        IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                         Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <ContentControl
                         Style="{StaticResource BracketBorderStyle}"
@@ -54,6 +55,7 @@
                             FontSize="20"
                             HorizontalContentAlignment="Center"
                             HorizontalAlignment="Center"
+                            IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                             Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ContentControl>
                 </StackPanel>
