@@ -32,6 +32,7 @@
                 FontFamily="{StaticResource JH_Fallout}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Padding="{Binding ElementName=CustomTextBox, Path=FontSize, Converter={StaticResource FontSizeToPaddingConverter}}"
                 CaretBrush="Transparent" 
                 Margin="0"

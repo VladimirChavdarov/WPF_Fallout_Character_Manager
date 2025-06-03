@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="/Styles/GroupBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/ScrollStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TabControlStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ListViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         mc:Ignorable="d"
-        Title="ModifiersWindow" Height="150" Width="Auto"
+        Title="ModifiersWindow" Height="300" Width="500"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         MinWidth="50"
         MinHeight="50"
-        MaxWidth="250"
         AllowsTransparency="true"
         Background="Black"
         MouseDown="Window_MouseDown">
@@ -43,7 +42,7 @@
                VerticalAlignment="Center"
                HorizontalAlignment="Left"
                Margin="10, 0, 0, 0"/>
-            
+
             <Button x:Name="Close"
                 Grid.Column="3"
                 VerticalAlignment="Center"
@@ -63,48 +62,119 @@
 
             <ScrollViewer>
                 <StackPanel Margin="5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <controls:TextBoxWithLabelControl
-                            Orientation="Horizontal"
-                            LabelText="Base Value"
-                            Text="{Binding ModInt.BaseValue}"
-                            ModInt="{Binding ModInt}"/>
-                    </Grid>
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        LabelFontSize="10"
+                        LabelText="Base Value"
+                        FontSize="11"
+                        Text="{Binding ModInt.BaseValue}"
+                        ModInt="{Binding ModInt}"
+                        BorderThickness="0 0 0 1"
+                        BorderBrush="{StaticResource FalloutGreen}"/>
                     <ListView ItemsSource="{Binding ModInt.Modifiers}"
-                              HorizontalAlignment="Left">
+                              HorizontalAlignment="Left"
+                              Background="Black"
+                              Height="200"
+                              Width="480">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel
                                     Orientation="Horizontal">
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="10"
+                                    <controls:TextBoxWithLabelControl
+                                        Margin="2"
+                                        Width="135"
                                         VerticalAlignment="Center"
+                                        Orientation="Vertical"
+                                        LabelFontSize="8"
+                                        LabelText="Modifier"
+                                        FontSize="9"
                                         Text="{Binding Name}"/>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="10"
+                                    <controls:TextBoxWithLabelControl
+                                        Margin="2"
+                                        Width="50"
                                         VerticalAlignment="Center"
+                                        Orientation="Vertical"
+                                        LabelFontSize="8"
+                                        LabelText="Value"
+                                        FontSize="9"
                                         Text="{Binding Value}"/>
-                                    <controls:ChunkyCaretTextBox
-                                        Grid.Column="1"
-                                        MinWidth="30"
-                                        FontSize="10"
+                                    <controls:TextBoxWithLabelControl
+                                        Margin="2"
+                                        Width="200"
                                         VerticalAlignment="Center"
+                                        Orientation="Vertical"
+                                        LabelFontSize="8"
+                                        LabelText="Note"
+                                        FontSize="9"
                                         Text="{Binding Note}"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label
+                                        Style="{StaticResource FalloutDefaultLabel}"
+                                        FontSize="8"
+                                        VerticalAlignment="Center"
+                                        Content=""/>
+                                        <Button
+                                            Cursor="Hand"
+                                            FontSize="9"
+                                            Margin="0 0 0 5"
+                                            Background="{StaticResource FalloutGreenBackground}"
+                                            BorderThickness="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding DataContext.RemoveModifierCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="PART_Border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                                        <Rectangle x:Name="PART_OverlayRect"
+                                                        Margin="5"
+                                                        Width="18"
+                                                        Height="18">
+                                                            <Rectangle.Fill>
+                                                                <SolidColorBrush Color="#23ba03"/>
+                                                            </Rectangle.Fill>
+                                                            <Rectangle.OpacityMask>
+                                                                <ImageBrush ImageSource="/Resources/trashcan.png"/>
+                                                            </Rectangle.OpacityMask>
+                                                        </Rectangle>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListView>
+                    <Grid>
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="Add"
+                            Margin="5 5 0 0"
+                            Padding="5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding DataContext.AddModifierCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="Close"
+                            Padding="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Click="btnClose_Click"/>
+                    </Grid>
                 </StackPanel>
             </ScrollViewer>
-            
+
         </Border>
         <!-- -->
     </Grid>

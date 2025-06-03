@@ -11,13 +11,15 @@
             Orientation="{Binding Orientation, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Label
                 Style="{StaticResource FalloutDefaultLabel}"
-                FontSize="10"
+                FontSize="{Binding LabelFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 VerticalAlignment="Center"
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 ContentStringFormat="{}{0}:"/>
-            <local:ChunkyCaretTextBox
-                MinWidth="30"
-                FontSize="11"
+            <local:EnhancedTextBox
+                MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Padding="4"
+                FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 VerticalAlignment="Center"
                 ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

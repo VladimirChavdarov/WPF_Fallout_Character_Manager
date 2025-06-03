@@ -22,8 +22,11 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             _baseValue = value;
             _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledInt>();
-            Modifiers.Add(new LabeledInt());
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
+            Modifiers.Add(new LabeledInt());
+            Modifiers.Add(new LabeledInt());
+            Modifiers.Add(new LabeledInt());
+            Modifiers.Add(new LabeledInt());
             UpdateTotal();
         }
         //

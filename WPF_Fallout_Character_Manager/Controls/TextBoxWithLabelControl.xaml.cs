@@ -116,6 +116,30 @@ namespace WPF_Fallout_Character_Manager.Controls
             //CustomTextBox.Text = e.NewValue.ToString();
         }
         #endregion
+
+        #region LabelFontSize
+        public static readonly DependencyProperty LabelFontSizeProperty =
+        DependencyProperty.Register("LabelFontSize", typeof(int), typeof(TextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(10, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnLabelFontSizeChanged)));
+
+        public int LabelFontSize
+        {
+            get { return (int)GetValue(LabelFontSizeProperty); }
+            set { SetValue(LabelFontSizeProperty, value); }
+        }
+
+        private static void OnLabelFontSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelControl? ThisUserControl = d as TextBoxWithLabelControl;
+            ThisUserControl.OnLabelFontSizeChanged(e);
+        }
+
+        private void OnLabelFontSizeChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
         //
 
         public TextBoxWithLabelControl()
