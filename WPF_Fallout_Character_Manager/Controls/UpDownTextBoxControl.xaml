@@ -23,7 +23,6 @@
                 VerticalAlignment="Center"
                 IsReadOnly="False"
                 CanOpenModal="False"
-                ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </controls:EnhancedTextBox>
         </Grid>
