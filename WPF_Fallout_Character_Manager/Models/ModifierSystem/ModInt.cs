@@ -104,16 +104,12 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             get => _baseValue;
             set
             {
-                // This check might be redundant in most cases but still good to have here just in case.
-                if(!_isBaseValueReadOnly)
+                if (_baseValue != value)
                 {
-                    if (_baseValue != value)
-                    {
-                        _baseValue = value;
-                    }
-                    //Update(ref _baseValue, value);
-                    UpdateTotal();
+                    _baseValue = value;
                 }
+                //Update(ref _baseValue, value);
+                UpdateTotal();
             }
         }
 

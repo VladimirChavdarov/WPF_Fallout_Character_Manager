@@ -15,112 +15,62 @@
     BorderThickness="1">
             <ScrollViewer>
                 <StackPanel Margin="0 5 5 5">
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.RadDC.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.RadDC}"
-                            Text="{Binding SurvivalModel.RadDC.Total, Mode=OneWay}"/>
-                    </Grid>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.RadDC.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.RadDC}"
+                        Text="{Binding SurvivalModel.RadDC.Total, Mode=OneWay}"
+                        MinWidth="30"/>
                     <Label FontSize="10"/>
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.Rads.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.Rads}"
-                            Text="{Binding SurvivalModel.Rads.Total, Mode=OneWay}"/>
-                    </Grid>
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.Hunger.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.Hunger}"
-                            Text="{Binding SurvivalModel.Hunger.Total, Mode=OneWay}"/>
-                    </Grid>
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.Dehydration.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.Dehydration}"
-                            Text="{Binding SurvivalModel.Dehydration.Total, Mode=OneWay}"/>
-                    </Grid>
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.Exhaustion.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.Exhaustion}"
-                            Text="{Binding SurvivalModel.Exhaustion.Total, Mode=OneWay}"/>
-                    </Grid>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.Rads.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.Rads}"
+                        Text="{Binding SurvivalModel.Rads.Total, Mode=OneWay}"
+                        MinWidth="30"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.Hunger.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.Hunger}"
+                        Text="{Binding SurvivalModel.Hunger.Total, Mode=OneWay}"
+                        MinWidth="30"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.Dehydration.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.Dehydration}"
+                        Text="{Binding SurvivalModel.Dehydration.Total, Mode=OneWay}"
+                        MinWidth="30"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.Exhaustion.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.Exhaustion}"
+                        Text="{Binding SurvivalModel.Exhaustion.Total, Mode=OneWay}"
+                        MinWidth="30"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

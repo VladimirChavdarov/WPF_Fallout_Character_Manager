@@ -16,63 +16,33 @@
             BorderThickness="1">
             <ScrollViewer>
                 <StackPanel Margin="0 5 5 5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center">
-                            Name:
-                        </Label>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="189"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            Text="{Binding BioModel.Name}"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center">
-                            Race:
-                        </Label>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="191"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            Text="{Binding BioModel.Race}"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center">
-                            Background:
-                        </Label>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="92"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            Text="{Binding BioModel.Background}"/>
-                    </Grid>
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Name"
+                        FontSize="11"
+                        Text="{Binding BioModel.Name}"
+                        CanOpenModal="false"
+                        MinWidth="178"/>
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Race"
+                        FontSize="11"
+                        Text="{Binding BioModel.Race}"
+                        CanOpenModal="false"
+                        MinWidth="180"/>
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Background"
+                        FontSize="11"
+                        Text="{Binding BioModel.Background}"
+                        CanOpenModal="false"
+                        MinWidth="128"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -120,14 +90,15 @@
 
                     <Button
                         Command="{Binding LoadImageCommand}"
+                        HorizontalAlignment="Left"
                         Style="{StaticResource FalloutImageButton}"
                         Margin="5"
                         MaxWidth="230"
-                        MaxHeight="270">
+                        MaxHeight="260">
                         <Image
                             Source="{Binding Image}"
                             Width="230"
-                            Height="270"
+                            Height="240"
                             Stretch="Uniform"/>
                     </Button>
                 </StackPanel>

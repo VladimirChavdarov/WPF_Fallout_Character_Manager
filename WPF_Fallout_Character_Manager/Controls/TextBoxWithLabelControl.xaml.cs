@@ -25,7 +25,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region Label
         public static readonly DependencyProperty LabelTextProperty =
         DependencyProperty.Register("LabelText", typeof(string), typeof(TextBoxWithLabelControl),
-            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnLabelTextChanged)));
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(OnLabelTextChanged)));
 
         public string LabelText
         {
@@ -184,6 +184,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CanOpenModalPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
+            CanOpenModal = (bool)GetValue(CanOpenModalProperty);
         }
         #endregion
         //

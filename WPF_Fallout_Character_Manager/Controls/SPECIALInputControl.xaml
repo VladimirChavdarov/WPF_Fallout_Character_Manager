@@ -45,9 +45,6 @@
                             <MouseBinding Gesture="RightClick"
                                 Command="{Binding OpenModifierModalWindowCommand}"
                                 CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                            <MouseBinding Gesture="LeftDoubleClick"
-                                Command="{Binding OpenModifierModalWindowCommand}"
-                                CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         </TextBox.InputBindings>
                     </TextBox>
                     <ContentControl
@@ -68,9 +65,6 @@
                             Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.InputBindings>
                                 <MouseBinding Gesture="RightClick"
-                                    Command="{Binding OpenModifierModalWindowCommand}"
-                                    CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                                <MouseBinding Gesture="LeftDoubleClick"
                                     Command="{Binding OpenModifierModalWindowCommand}"
                                     CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </TextBox.InputBindings>

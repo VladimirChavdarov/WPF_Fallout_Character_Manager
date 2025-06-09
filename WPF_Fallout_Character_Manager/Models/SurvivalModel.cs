@@ -18,15 +18,15 @@ namespace WPF_Fallout_Character_Manager.Models
             _dehydration.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Dehydration));
             _exhaustion = new ModInt("Exhaustion", 0);
             _exhaustion.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Exhaustion));
-            _radDc = new ModInt("RadDC", 0);
+            _radDc = new ModInt("RadDC", 0, true);
             _radDc.PropertyChanged += (s, e) => OnPropertyChanged(nameof(RadDC));
             _rads = new ModInt("Rads", 0);
             _rads.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Rads));
-            _passiveSense = new ModInt("Passive Sense", 0);
+            _passiveSense = new ModInt("Passive Sense", 0, true);
             _passiveSense.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PassiveSense));
             _partyNerve = new ModInt("Party Nerve", 0);
             _partyNerve.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PartyNerve));
-            _groupSneak = new ModInt("Group Sneak", 5);
+            _groupSneak = new ModInt("Group Sneak", 5); //TODO: remove placeholder value
             _groupSneak.PropertyChanged += (s, e) => OnPropertyChanged(nameof(GroupSneak));
         }
         //

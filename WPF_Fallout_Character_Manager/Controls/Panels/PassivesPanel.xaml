@@ -15,69 +15,39 @@
             BorderThickness="1">
             <ScrollViewer>
                 <StackPanel Margin="0 5 5 5">
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.PassiveSense.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.PassiveSense}"
-                            Text="{Binding SurvivalModel.PassiveSense.Total, Mode=OneWay}"/>
-                    </Grid>
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.PartyNerve.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.PartyNerve}"
-                            Text="{Binding SurvivalModel.PartyNerve.Total, Mode=OneWay}"/>
-                    </Grid>
-                    <Grid Margin="0 0 0 5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Column="0"
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            FontSize="10"
-                            VerticalAlignment="Center"
-                            Content="{Binding SurvivalModel.GroupSneak.Name}"
-                            ContentStringFormat="{}{0}:"/>
-                        <controls:ChunkyCaretTextBox
-                            Grid.Column="1"
-                            MinWidth="30"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            IsReadOnly="True"
-                            ModInt="{Binding SurvivalModel.GroupSneak}"
-                            Text="{Binding SurvivalModel.GroupSneak.Total, Mode=OneWay}"/>
-                    </Grid>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.PassiveSense.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.PassiveSense}"
+                        Text="{Binding SurvivalModel.PassiveSense.Total, Mode=OneWay}"
+                        MinWidth="30"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.PartyNerve.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.PartyNerve}"
+                        Text="{Binding SurvivalModel.PartyNerve.Total, Mode=OneWay}"
+                        MinWidth="30"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="{Binding SurvivalModel.GroupSneak.Name}"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        ModInt="{Binding SurvivalModel.GroupSneak}"
+                        Text="{Binding SurvivalModel.GroupSneak.Total, Mode=OneWay}"
+                        MinWidth="30"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
