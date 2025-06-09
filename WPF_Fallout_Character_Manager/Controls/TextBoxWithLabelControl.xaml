@@ -15,14 +15,23 @@
                 VerticalAlignment="Center"
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 ContentStringFormat="{}{0}:"/>
-            <local:EnhancedTextBox
+            <local:EnhancedTextBox x:Name="EnhancedTextBox"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Padding="4"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 VerticalAlignment="Center"
                 ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                PreviewMouseRightButtonDown="EnhancedTextBox_PreviewMouseRightButtonDown">
+                <local:EnhancedTextBox.InputBindings>
+                    <MouseBinding Gesture="RightClick"
+                        Command="{Binding OpenModifierModalWindowCommand}"
+                        CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </local:EnhancedTextBox.InputBindings>
+            </local:EnhancedTextBox>
         </StackPanel>
     </Grid>
 </UserControl>

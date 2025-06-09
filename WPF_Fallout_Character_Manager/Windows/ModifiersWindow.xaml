@@ -69,6 +69,8 @@
                         FontSize="11"
                         Text="{Binding ModInt.BaseValue}"
                         ModInt="{Binding ModInt}"
+                        IsReadOnly="{Binding ModInt.IsBaseValueReadOnly}"
+                        CanOpenModal="false"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{StaticResource FalloutGreen}"/>
                     <ListView ItemsSource="{Binding ModInt.Modifiers}"
@@ -88,6 +90,7 @@
                                         LabelFontSize="8"
                                         LabelText="Modifier"
                                         FontSize="9"
+                                        CanOpenModal="false"
                                         Text="{Binding Name}"/>
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"
@@ -97,6 +100,7 @@
                                         LabelFontSize="8"
                                         LabelText="Value"
                                         FontSize="9"
+                                        CanOpenModal="false"
                                         Text="{Binding Value}"/>
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"
@@ -106,6 +110,7 @@
                                         LabelFontSize="8"
                                         LabelText="Note"
                                         FontSize="9"
+                                        CanOpenModal="false"
                                         Text="{Binding Note}"/>
                                     <StackPanel Orientation="Vertical">
                                         <Label

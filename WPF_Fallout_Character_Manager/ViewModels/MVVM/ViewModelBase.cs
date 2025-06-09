@@ -45,7 +45,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
         // Open Modifier Windows
         public RelayCommand OpenModifierModalWindowCommand { get; private set; }
         // ChatGPT told me to do that in order to open the Modal through the View to follow the MVVM pattern. Double-check it.
-        public Action<object>? OnRequestOpenModifierModalWindow;
+        //public Action<object>? OnRequestOpenModifierModalWindow;
 
         private void OpenModal(object modInt)
         {

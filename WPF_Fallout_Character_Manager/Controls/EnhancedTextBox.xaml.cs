@@ -92,11 +92,41 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         }
         #endregion
+
+        #region CanOpenModal
+        public static readonly DependencyProperty CanOpenModalProperty =
+        DependencyProperty.Register("CanOpenModal", typeof(bool), typeof(EnhancedTextBox),
+            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(CanOpenModalPropertyChanged)));
+
+        public bool CanOpenModal
+        {
+            get => (bool)GetValue(CanOpenModalProperty);
+            set => SetValue(CanOpenModalProperty, value);
+        }
+
+        private static void CanOpenModalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
+            ThisUserControl.CanOpenModalPropertyChanged(e);
+        }
+
+        private void CanOpenModalPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public EnhancedTextBox()
         {
             InitializeComponent();
+        }
+
+        private void CustomTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(!CanOpenModal)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

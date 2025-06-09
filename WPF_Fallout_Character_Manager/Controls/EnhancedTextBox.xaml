@@ -25,14 +25,12 @@
                 Margin="0"
                 Cursor="IBeam"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                PreviewMouseRightButtonDown="CustomTextBox_PreviewMouseRightButtonDown">
             <TextBox.InputBindings>
                 <MouseBinding Gesture="RightClick"
-            Command="{Binding OpenModifierModalWindowCommand}"
-            CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                <MouseBinding Gesture="LeftDoubleClick"
-            Command="{Binding OpenModifierModalWindowCommand}"
-            CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    Command="{Binding OpenModifierModalWindowCommand}"
+                    CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             </TextBox.InputBindings>
         </TextBox>
     </Grid>

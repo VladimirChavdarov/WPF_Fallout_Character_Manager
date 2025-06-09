@@ -140,11 +140,65 @@ namespace WPF_Fallout_Character_Manager.Controls
             //CustomTextBox.Text = e.NewValue.ToString();
         }
         #endregion
+
+        #region ReadOnly
+        public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(TextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(IsReadOnlyPropertyChanged)));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        private static void IsReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelControl? ThisUserControl = d as TextBoxWithLabelControl;
+            ThisUserControl.IsReadOnlyPropertyChanged(e);
+        }
+
+        private void IsReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            //CustomTextBox.IsReadOnly = (bool)e.NewValue;
+            EnhancedTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
+
+        #region CanOpenModal
+        public static readonly DependencyProperty CanOpenModalProperty =
+        DependencyProperty.Register("CanOpenModal", typeof(bool), typeof(TextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(CanOpenModalPropertyChanged)));
+
+        public bool CanOpenModal
+        {
+            get => (bool)GetValue(CanOpenModalProperty);
+            set => SetValue(CanOpenModalProperty, value);
+        }
+
+        private static void CanOpenModalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelControl? ThisUserControl = d as TextBoxWithLabelControl;
+            ThisUserControl.CanOpenModalPropertyChanged(e);
+        }
+
+        private void CanOpenModalPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public TextBoxWithLabelControl()
         {
             InitializeComponent();
+        }
+
+        private void EnhancedTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!CanOpenModal)
+            {
+                e.Handled = true;
+            }
         }
     }
 }
