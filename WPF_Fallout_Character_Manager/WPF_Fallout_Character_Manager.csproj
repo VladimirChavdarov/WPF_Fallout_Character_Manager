@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\Tabs\**" />
+    <EmbeddedResource Remove="Controls\Tabs\**" />
+    <None Remove="Controls\Tabs\**" />
+    <Page Remove="Controls\Tabs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Fonts\JH_FALLOUT.TTF" />
     <None Remove="Fonts\monofonto.ttf" />
     <None Remove="Resources\trashcan.png" />
@@ -30,7 +37,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Controls\Tabs\" />
   </ItemGroup>
 
   <ItemGroup>

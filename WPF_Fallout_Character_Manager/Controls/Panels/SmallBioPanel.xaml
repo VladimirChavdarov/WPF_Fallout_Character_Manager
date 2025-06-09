@@ -60,9 +60,9 @@
                             VerticalAlignment="Center">
                                 Level:
                             </Label>
-                            <controls:UpDownNumberInputControl
+                            <controls:UpDownTextBoxControl
                             Grid.Column="1"
-                            MinWidth="30"
+                            MinWidth="20"
                             FontSize="11"
                             VerticalAlignment="Center"
                             Text="{Binding BioModel.Level}"/>
@@ -79,12 +79,11 @@
                             VerticalAlignment="Center">
                                 XP:
                             </Label>
-                            <controls:UpDownNumberInputControl
-                            Grid.Column="1"
-                            MinWidth="74"
-                            FontSize="11"
-                            VerticalAlignment="Center"
-                            Text="{Binding BioModel.XP}"/>
+                            <controls:UpDownTextBoxControl
+                                Grid.Column="1"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                Text="{Binding BioModel.XP}"/>
                         </Grid>
                     </Grid>
 
