@@ -62,7 +62,7 @@
 
             <ScrollViewer>
                 <StackPanel Margin="5">
-                    <controls:TextBoxWithLabelControl
+                    <controls:UpDownTextBoxWithLabelControl
                         Orientation="Horizontal"
                         LabelFontSize="10"
                         LabelText="Base Value"
@@ -70,7 +70,6 @@
                         Text="{Binding ModInt.BaseValue}"
                         ModInt="{Binding ModInt}"
                         IsReadOnly="{Binding ModInt.IsBaseValueReadOnly}"
-                        CanOpenModal="false"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{StaticResource FalloutGreen}"/>
                     <ListView ItemsSource="{Binding ModInt.Modifiers}"
@@ -92,15 +91,13 @@
                                         FontSize="9"
                                         CanOpenModal="false"
                                         Text="{Binding Name}"/>
-                                    <controls:TextBoxWithLabelControl
+                                    <controls:UpDownTextBoxWithLabelControl
                                         Margin="2"
-                                        Width="50"
                                         VerticalAlignment="Center"
                                         Orientation="Vertical"
                                         LabelFontSize="8"
                                         LabelText="Value"
                                         FontSize="9"
-                                        CanOpenModal="false"
                                         Text="{Binding Value}"/>
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"

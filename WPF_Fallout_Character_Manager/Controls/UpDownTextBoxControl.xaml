@@ -21,7 +21,7 @@
                 Padding="2 3 2 3"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 VerticalAlignment="Center"
-                IsReadOnly="False"
+                IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 CanOpenModal="False"
                 ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

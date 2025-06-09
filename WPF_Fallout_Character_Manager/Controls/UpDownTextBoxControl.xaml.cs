@@ -68,6 +68,30 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         }
         #endregion
+
+        #region ReadOnly
+        public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(UpDownTextBoxControl),
+            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(IsReadOnlyPropertyChanged)));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        private static void IsReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxControl? ThisUserControl = d as UpDownTextBoxControl;
+            ThisUserControl.IsReadOnlyPropertyChanged(e);
+        }
+
+        private void IsReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            //CustomTextBox.IsReadOnly = (bool)e.NewValue;
+            CustomEnhancedTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
         //
 
         public UpDownTextBoxControl()
@@ -77,27 +101,33 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void btnSubtract_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(Text, out int value))
+            if(!IsReadOnly)
             {
-                value--;
-                Text = value.ToString();
-            }
-            else
-            {
-                Text = "0";
+                if (int.TryParse(Text, out int value))
+                {
+                    value--;
+                    Text = value.ToString();
+                }
+                else
+                {
+                    Text = "0";
+                }
             }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(Text, out int value))
+            if (!IsReadOnly)
             {
-                value++;
-                Text = value.ToString();
-            }
-            else
-            {
-                Text = "0";
+                if (int.TryParse(Text, out int value))
+                {
+                    value++;
+                    Text = value.ToString();
+                }
+                else
+                {
+                    Text = "0";
+                }
             }
         }
     }

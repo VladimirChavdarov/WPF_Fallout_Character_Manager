@@ -1,0 +1,174 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
+
+namespace WPF_Fallout_Character_Manager.Controls
+{
+    /// <summary>
+    /// Interaction logic for UpDownTextBoxWithLabelControl.xaml
+    /// </summary>
+    public partial class UpDownTextBoxWithLabelControl : UserControl
+    {
+        // Dependency Properties
+        #region TextBox
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register("Text", typeof(string), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnTextChanged)));
+
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.OnTextChanged(e);
+        }
+
+        private void OnTextChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region ModInt
+        public static readonly DependencyProperty ModIntProperty =
+            DependencyProperty.Register("ModInt", typeof(ModInt), typeof(UpDownTextBoxWithLabelControl),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModIntPropertyChanged)));
+
+        public ModInt ModInt
+        {
+            get => (ModInt)GetValue(ModIntProperty);
+            set => SetValue(ModIntProperty, value);
+        }
+
+        private static void ModIntPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.ModIntPropertyChanged(e);
+        }
+
+        private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region Orientation
+        public static readonly DependencyProperty OrientationProperty =
+        DependencyProperty.Register("Orientation", typeof(Orientation), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnOrientationChanged)));
+
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
+
+        private static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.OnOrientationChanged(e);
+        }
+
+        private void OnOrientationChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region Label
+        public static readonly DependencyProperty LabelTextProperty =
+        DependencyProperty.Register("LabelText", typeof(string), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(OnLabelTextChanged)));
+
+        public string LabelText
+        {
+            get { return (string)GetValue(LabelTextProperty); }
+            set { SetValue(LabelTextProperty, value); }
+        }
+
+        private static void OnLabelTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.OnLabelTextChanged(e);
+        }
+
+        private void OnLabelTextChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region LabelFontSize
+        public static readonly DependencyProperty LabelFontSizeProperty =
+        DependencyProperty.Register("LabelFontSize", typeof(int), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(10, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnLabelFontSizeChanged)));
+
+        public int LabelFontSize
+        {
+            get { return (int)GetValue(LabelFontSizeProperty); }
+            set { SetValue(LabelFontSizeProperty, value); }
+        }
+
+        private static void OnLabelFontSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.OnLabelFontSizeChanged(e);
+        }
+
+        private void OnLabelFontSizeChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region ReadOnly
+        public static readonly DependencyProperty IsReadOnlyProperty =
+        DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(IsReadOnlyPropertyChanged)));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        private static void IsReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.IsReadOnlyPropertyChanged(e);
+        }
+
+        private void IsReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            //CustomTextBox.IsReadOnly = (bool)e.NewValue;
+            //CustomEnhancedTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+        }
+        #endregion
+        //
+
+        public UpDownTextBoxWithLabelControl()
+        {
+            InitializeComponent();
+        }
+    }
+}
