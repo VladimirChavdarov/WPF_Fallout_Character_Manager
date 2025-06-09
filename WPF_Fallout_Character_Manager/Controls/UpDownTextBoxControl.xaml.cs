@@ -45,6 +45,29 @@ namespace WPF_Fallout_Character_Manager.Controls
             //CustomTextBox.Text = e.NewValue.ToString();
         }
         #endregion
+
+        #region ModInt
+        public static readonly DependencyProperty ModIntProperty =
+            DependencyProperty.Register("ModInt", typeof(ModInt), typeof(UpDownTextBoxControl),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModIntPropertyChanged)));
+
+        public ModInt ModInt
+        {
+            get => (ModInt)GetValue(ModIntProperty);
+            set => SetValue(ModIntProperty, value);
+        }
+
+        private static void ModIntPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxControl? ThisUserControl = d as UpDownTextBoxControl;
+            ThisUserControl.ModIntPropertyChanged(e);
+        }
+
+        private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
         //
 
         public UpDownTextBoxControl()
