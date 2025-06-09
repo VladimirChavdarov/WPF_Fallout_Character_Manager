@@ -65,6 +65,7 @@
                             MinWidth="20"
                             FontSize="11"
                             VerticalAlignment="Center"
+                            CanOpenModal="False"
                             Text="{Binding BioModel.Level}"/>
                         </Grid>
                         <Grid Grid.Column="1">
@@ -83,6 +84,7 @@
                                 Grid.Column="1"
                                 FontSize="11"
                                 VerticalAlignment="Center"
+                                CanOpenModal="False"
                                 Text="{Binding BioModel.XP}"/>
                         </Grid>
                     </Grid>

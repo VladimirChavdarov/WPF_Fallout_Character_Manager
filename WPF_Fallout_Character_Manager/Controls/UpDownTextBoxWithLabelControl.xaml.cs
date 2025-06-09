@@ -164,6 +164,28 @@ namespace WPF_Fallout_Character_Manager.Controls
             //CustomEnhancedTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
         }
         #endregion
+
+        #region CanOpenModal
+        public static readonly DependencyProperty CanOpenModalProperty =
+        DependencyProperty.Register("CanOpenModal", typeof(bool), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(CanOpenModalPropertyChanged)));
+
+        public bool CanOpenModal
+        {
+            get => (bool)GetValue(CanOpenModalProperty);
+            set => SetValue(CanOpenModalProperty, value);
+        }
+
+        private static void CanOpenModalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.CanOpenModalPropertyChanged(e);
+        }
+
+        private void CanOpenModalPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public UpDownTextBoxWithLabelControl()

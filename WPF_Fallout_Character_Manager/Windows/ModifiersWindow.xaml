@@ -70,6 +70,7 @@
                         Text="{Binding ModInt.BaseValue}"
                         ModInt="{Binding ModInt}"
                         IsReadOnly="{Binding ModInt.IsBaseValueReadOnly}"
+                        CanOpenModal="False"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{StaticResource FalloutGreen}"/>
                     <ListView ItemsSource="{Binding ModInt.Modifiers}"
@@ -107,7 +108,7 @@
                                         LabelFontSize="8"
                                         LabelText="Note"
                                         FontSize="9"
-                                        CanOpenModal="false"
+                                        CanOpenModal="False"
                                         Text="{Binding Note}"/>
                                     <StackPanel Orientation="Vertical">
                                         <Label
