@@ -14,12 +14,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public BioModel BioModel { get; } = new BioModel();
         public SPECIALModel SPECIALModel { get; } = new SPECIALModel();
         public SurvivalModel SurvivalModel { get; } = new SurvivalModel();
+        public CombatModel CombatModel { get; } = new CombatModel();
         //
 
         // All ViewModels
         public BioViewModel? BioViewModel { get; }
-        public SurvivalViewModel? SurvivalViewModel { get; }
         public SPECIALViewModel? SPECIALViewModel { get; }
+        public SurvivalViewModel? SurvivalViewModel { get; }
+        public CombatViewModel CombatViewModel { get; }
         //
 
         // Constructor
@@ -28,6 +30,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             BioViewModel = new BioViewModel(BioModel);
             SPECIALViewModel = new SPECIALViewModel(SPECIALModel);
             SurvivalViewModel = new SurvivalViewModel(SurvivalModel, SPECIALModel);
+            CombatViewModel = new CombatViewModel(CombatModel, SPECIALModel, BioModel);
         }
         //
     }

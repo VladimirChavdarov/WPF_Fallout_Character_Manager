@@ -12,7 +12,7 @@
         <TextBox x:Name="CustomTextBox" 
                 BorderThickness="0"
                 VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Left"
+                HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Background="{StaticResource FalloutGreenBackground}"
                 Foreground="{StaticResource FalloutGreen}"
                 FontFamily="{StaticResource JH_Fallout}"

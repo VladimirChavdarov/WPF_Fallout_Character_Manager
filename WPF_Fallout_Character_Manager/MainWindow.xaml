@@ -130,7 +130,7 @@
                                 <!-- SPECIAL -->
                                 <panels:SPECIALPanel
                                     Grid.Row="0"
-                                    DataContext="{Binding SPECIALViewModel}"/>
+                                    DataContext="{Binding CombatViewModel}"/>
                                 <!-- -->
 
                                 <!-- Equipped Items -->

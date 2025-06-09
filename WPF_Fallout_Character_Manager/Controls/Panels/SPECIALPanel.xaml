@@ -78,6 +78,101 @@
                             StatLabel="{Binding SPECIALModel.Luck.Name}"
                             PrimaryStat="{Binding SPECIALModel.Luck.Total, Mode=OneWay}"/>
                     </Grid>
+
+                    <Grid Grid.Row="1"
+                          Margin="0 50 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="0" Grid.Column="0"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.ActionPoints.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.ActionPoints.Name}"
+                            Text="{Binding CombatModel.ActionPoints.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.ActionPoints}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="1" Grid.Column="0"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.StaminaPoints.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.StaminaPoints.Name}"
+                            Text="{Binding CombatModel.StaminaPoints.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.StaminaPoints}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="2" Grid.Column="0"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.HealthPoints.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.HealthPoints.Name}"
+                            Text="{Binding CombatModel.HealthPoints.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.HealthPoints}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="1" Grid.Column="1"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.ArmorClass.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.ArmorClass.Name}"
+                            Text="{Binding CombatModel.ArmorClass.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.ArmorClass}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="2" Grid.Column="1"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.DamageThreshold.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.DamageThreshold.Name}"
+                            Text="{Binding CombatModel.DamageThreshold.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.DamageThreshold}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="0" Grid.Column="2"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.CombatSequence.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.CombatSequence.Name}"
+                            Text="{Binding CombatModel.CombatSequence.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.CombatSequence}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="1" Grid.Column="2"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.HealingRate.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.HealingRate.Name}"
+                            Text="{Binding CombatModel.HealingRate.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.HealingRate}"/>
+                        <controls:TextBoxWithLabelControl
+                            Grid.Row="2" Grid.Column="2"
+                            Margin="0 0 0 20"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical"
+                            LabelFontSize="11"
+                            IsReadOnly="{Binding CombatModel.Fatigue.IsBaseValueReadOnly}"
+                            LabelText="{Binding CombatModel.Fatigue.Name}"
+                            Text="{Binding CombatModel.Fatigue.Total, Mode=OneWay}"
+                            ModInt="{Binding CombatModel.Fatigue}"/>
+                    </Grid>
                 </Grid>
             </ScrollViewer>
         </GroupBox>

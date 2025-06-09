@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel
             Orientation="{Binding Orientation, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            HorizontalAlignment="Left">
+            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Label
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="{Binding LabelFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -17,6 +17,8 @@
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 ContentStringFormat="{}{0}:"/>
             <local:EnhancedTextBox x:Name="EnhancedTextBox"
+                HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
