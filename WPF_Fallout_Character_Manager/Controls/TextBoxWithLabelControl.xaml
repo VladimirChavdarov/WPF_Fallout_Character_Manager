@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel
+            FlowDirection="{Binding FlowDirection, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Orientation="{Binding Orientation, RelativeSource={RelativeSource AncestorType=UserControl}}"
             HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Label
@@ -15,7 +16,7 @@
                 FontSize="{Binding LabelFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 VerticalAlignment="Center"
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                ContentStringFormat="{}{0}:"/>
+                />
             <local:EnhancedTextBox x:Name="EnhancedTextBox"
                 HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
