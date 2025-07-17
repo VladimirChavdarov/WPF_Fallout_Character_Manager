@@ -17,8 +17,10 @@ namespace WPF_Fallout_Character_Manager.Models
             Race = "No Race";
             Background = "No Background";
             Backstory = "No Backstory";
-            Level = 0;
-            XP = 0;
+            _level = new ModInt("Level", 1, false);
+            _level.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Level));
+            _xp = new ModInt("XP", 543, false);
+            _xp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(XP));
             ImageSource = "Resources/Vault_Boy.png";
         }
 
@@ -50,15 +52,15 @@ namespace WPF_Fallout_Character_Manager.Models
             set => Update(ref _backstory, value);
         }
 
-        private int _level;
-        public int Level
+        private ModInt _level;
+        public ModInt Level
         {
             get => _level;
             set => Update(ref _level, value);
         }
 
-        private int _xp;
-        public int XP
+        private ModInt _xp;
+        public ModInt XP
         {
             get => _xp;
             set => Update(ref _xp, value);

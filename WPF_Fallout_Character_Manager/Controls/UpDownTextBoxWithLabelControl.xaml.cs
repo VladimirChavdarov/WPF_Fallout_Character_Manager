@@ -186,6 +186,50 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
         }
         #endregion
+
+        #region MaxValue
+        public static readonly DependencyProperty MaxValueProperty =
+        DependencyProperty.Register("MaxValue", typeof(int), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(2147483647, new PropertyChangedCallback(MaxValuePropertyChanged)));
+
+        public int MaxValue
+        {
+            get => (int)GetValue(MaxValueProperty);
+            set => SetValue(MaxValueProperty, value);
+        }
+
+        private static void MaxValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.MaxValuePropertyChanged(e);
+        }
+
+        private void MaxValuePropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
+
+        #region MinValue
+        public static readonly DependencyProperty MinValueProperty =
+        DependencyProperty.Register("MinValue", typeof(int), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(-2147483648, new PropertyChangedCallback(MinValuePropertyChanged)));
+
+        public int MinValue
+        {
+            get => (int)GetValue(MinValueProperty);
+            set => SetValue(MinValueProperty, value);
+        }
+
+        private static void MinValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.MinValuePropertyChanged(e);
+        }
+
+        private void MinValuePropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public UpDownTextBoxWithLabelControl()

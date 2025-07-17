@@ -62,11 +62,15 @@
                             </Label>
                             <controls:UpDownTextBoxControl
                             Grid.Column="1"
+                            MinValue="1"
+                            MaxValue="30"
                             MinWidth="20"
                             FontSize="11"
                             VerticalAlignment="Center"
                             CanOpenModal="False"
-                            Text="{Binding BioModel.Level}"/>
+                            Text="{Binding BioModel.Level.BaseValue}"
+                            ModInt="{Binding BioModel.Level}"
+                            IsReadOnly="{Binding BioModel.Level.IsBaseValueReadOnly}"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>
@@ -82,10 +86,13 @@
                             </Label>
                             <controls:UpDownTextBoxControl
                                 Grid.Column="1"
+                                MinValue="0"
                                 FontSize="11"
                                 VerticalAlignment="Center"
                                 CanOpenModal="False"
-                                Text="{Binding BioModel.XP}"/>
+                                Text="{Binding BioModel.XP.BaseValue}"
+                                ModInt="{Binding BioModel.XP}"
+                                IsReadOnly="{Binding BioModel.XP.IsBaseValueReadOnly}"/>
                         </Grid>
                     </Grid>
 

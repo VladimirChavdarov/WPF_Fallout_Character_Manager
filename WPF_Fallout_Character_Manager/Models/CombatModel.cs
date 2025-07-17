@@ -15,9 +15,13 @@ namespace WPF_Fallout_Character_Manager.Models
         {
             _ap = new ModInt("Action Points", 0, true);
             _ap.PropertyChanged += (s, e) => OnPropertyChanged(nameof(ActionPoints));
-            _sp = new ModInt("Stamina Points", 0, true);
+            _msp = new ModInt("Max Stamina Points", 0, true);
+            _msp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(MaxStaminaPoints));
+            _sp = new ModInt("Stamina Points", 0, false);
             _sp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(StaminaPoints));
-            _hp = new ModInt("Health Points", 0, true);
+            _mhp = new ModInt("Max Health Points", 0, true);
+            _mhp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(MaxHealthPoints));
+            _hp = new ModInt("Health Points", 0, false);
             _hp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(HealthPoints));
             _ac = new ModInt("Armor Class", 0, true);
             _ac.PropertyChanged += (s, e) => OnPropertyChanged(nameof(ArmorClass));
@@ -37,10 +41,13 @@ namespace WPF_Fallout_Character_Manager.Models
         public void UpdateModel(SPECIALModel specialModel, int level)
         {
             CalculateActionPoints(specialModel.GetModifier(specialModel.Agility));
-            CalculateStaminaPoints(specialModel.GetModifier(specialModel.Agility), level);
-            CalculateHealthPoints(specialModel.GetModifier(specialModel.Endurance), level);
+            CalculateMaxStaminaPoints(specialModel.GetModifier(specialModel.Agility), level);
+            CalculateMaxHealthPoints(specialModel.GetModifier(specialModel.Endurance), level);
             CalculateCombatSequence(specialModel.GetModifier(specialModel.Perception));
             CalculateHealingRate(specialModel.Endurance.Total, level);
+
+            StaminaPoints.BaseValue = MaxStaminaPoints.BaseValue;
+            HealthPoints.BaseValue = MaxHealthPoints.BaseValue;
         }
 
         public void CalculateActionPoints(int agilityModifier)
@@ -48,16 +55,16 @@ namespace WPF_Fallout_Character_Manager.Models
             ActionPoints.BaseValue = 10 + agilityModifier;
         }
 
-        public void CalculateStaminaPoints(int agilityModifier, int level)
+        public void CalculateMaxStaminaPoints(int agilityModifier, int level)
         {
             //TODO: Apply the correct formula when you upload the datatables from the rulebook.
-            StaminaPoints.BaseValue = 10 + agilityModifier + level;
+            MaxStaminaPoints.BaseValue = 10 + agilityModifier + level;
         }
 
-        public void CalculateHealthPoints(int enduranceModifier, int level)
+        public void CalculateMaxHealthPoints(int enduranceModifier, int level)
         {
             //TODO: Apply the correct formula when you upload the datatables from the rulebook.
-            HealthPoints.BaseValue = 10 + enduranceModifier + level;
+            MaxHealthPoints.BaseValue = 10 + enduranceModifier + level;
         }
 
         public void CalculateCombatSequence(int perceptionModifier)
@@ -79,11 +86,25 @@ namespace WPF_Fallout_Character_Manager.Models
             set => Update(ref  _ap, value);
         }
 
+        private ModInt _msp;
+        public ModInt MaxStaminaPoints
+        {
+            get => _msp;
+            set => Update(ref _msp, value);
+        }
+
         private ModInt _sp;
         public ModInt StaminaPoints
         {
             get => _sp;
             set => Update(ref _sp, value);
+        }
+
+        private ModInt _mhp;
+        public ModInt MaxHealthPoints
+        {
+            get => _mhp;
+            set => Update(ref _mhp, value);
         }
 
         private ModInt _hp;

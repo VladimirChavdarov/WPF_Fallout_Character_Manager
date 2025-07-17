@@ -17,6 +17,8 @@
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 ContentStringFormat="{}{0}:"/>
             <local:UpDownTextBoxControl
+                MinValue="{Binding MinValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                MaxValue="{Binding MaxValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"

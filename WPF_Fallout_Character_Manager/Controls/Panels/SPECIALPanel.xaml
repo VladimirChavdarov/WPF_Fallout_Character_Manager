@@ -102,26 +102,84 @@
                             LabelText="{Binding CombatModel.ActionPoints.Name}"
                             Text="{Binding CombatModel.ActionPoints.Total, Mode=OneWay}"
                             ModInt="{Binding CombatModel.ActionPoints}"/>
-                        <controls:TextBoxWithLabelControl
+
+                        <StackPanel
                             Grid.Row="1" Grid.Column="0"
                             Margin="0 0 0 20"
-                            HorizontalAlignment="Center"
+                            FlowDirection="LeftToRight"
                             Orientation="Vertical"
-                            LabelFontSize="11"
-                            IsReadOnly="{Binding CombatModel.StaminaPoints.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.StaminaPoints.Name}"
-                            Text="{Binding CombatModel.StaminaPoints.Total, Mode=OneWay}"
-                            ModInt="{Binding CombatModel.StaminaPoints}"/>
-                        <controls:TextBoxWithLabelControl
+                            HorizontalAlignment="Center">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                Content="{Binding CombatModel.StaminaPoints.Name}"
+                                />
+                            <StackPanel
+                                FlowDirection="LeftToRight"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                                <controls:UpDownTextBoxControl x:Name="CurrentStaminaPoints"
+                                    FontSize="11"
+                                    MinValue="0"
+                                    MaxValue="2"
+                                    Text="{Binding CombatModel.StaminaPoints.BaseValue}"
+                                    IsReadOnly="{Binding CombatModel.StaminaPoints.IsBaseValueReadOnly}"
+                                    ModInt="{Binding CombatModel.StaminaPoints}"
+                                    CanOpenModal="False"/>
+                                <Label
+                                    Style="{StaticResource FalloutDefaultLabel}"
+                                    FontSize="11"
+                                    VerticalAlignment="Center"
+                                    Content="/"/>
+                                <controls:EnhancedTextBox x:Name="MaxStaminaPoints"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="2, 3"
+                                    IsReadOnly="{Binding CombatModel.MaxStaminaPoints.IsBaseValueReadOnly}"
+                                    Text="{Binding CombatModel.MaxStaminaPoints.Total, Mode=OneWay}"
+                                    ModInt="{Binding CombatModel.MaxStaminaPoints}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel
                             Grid.Row="2" Grid.Column="0"
                             Margin="0 0 0 20"
-                            HorizontalAlignment="Center"
+                            FlowDirection="LeftToRight"
                             Orientation="Vertical"
-                            LabelFontSize="11"
-                            IsReadOnly="{Binding CombatModel.HealthPoints.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.HealthPoints.Name}"
-                            Text="{Binding CombatModel.HealthPoints.Total, Mode=OneWay}"
-                            ModInt="{Binding CombatModel.HealthPoints}"/>
+                            HorizontalAlignment="Center">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                Content="{Binding CombatModel.HealthPoints.Name}"/>
+                            <StackPanel
+                                FlowDirection="LeftToRight"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                                <controls:EnhancedTextBox x:Name="CurrentHealthPoints"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="2, 3"
+                                    IsReadOnly="{Binding CombatModel.HealthPoints.IsBaseValueReadOnly}"
+                                    Text="{Binding CombatModel.HealthPoints.Total, Mode=OneWay}"
+                                    ModInt="{Binding CombatModel.HealthPoints}"/>
+                                <Label
+                                    Style="{StaticResource FalloutDefaultLabel}"
+                                    FontSize="11"
+                                    VerticalAlignment="Center"
+                                    Content="/"/>
+                                <controls:EnhancedTextBox x:Name="MaxHealthPoints"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="2, 3"
+                                    CanOpenModal="False"
+                                    IsReadOnly="{Binding CombatModel.MaxHealthPoints.IsBaseValueReadOnly}"
+                                    Text="{Binding CombatModel.MaxHealthPoints.Total, Mode=OneWay}"
+                                    ModInt="{Binding CombatModel.MaxHealthPoints}"/>
+                            </StackPanel>
+                        </StackPanel>
+
                         <controls:TextBoxWithLabelControl
                             Grid.Row="1" Grid.Column="1"
                             Margin="0 0 0 20"
@@ -132,6 +190,7 @@
                             LabelText="{Binding CombatModel.ArmorClass.Name}"
                             Text="{Binding CombatModel.ArmorClass.Total, Mode=OneWay}"
                             ModInt="{Binding CombatModel.ArmorClass}"/>
+                        
                         <controls:TextBoxWithLabelControl
                             Grid.Row="2" Grid.Column="1"
                             Margin="0 0 0 20"
@@ -142,6 +201,7 @@
                             LabelText="{Binding CombatModel.DamageThreshold.Name}"
                             Text="{Binding CombatModel.DamageThreshold.Total, Mode=OneWay}"
                             ModInt="{Binding CombatModel.DamageThreshold}"/>
+                        
                         <controls:TextBoxWithLabelControl
                             Grid.Row="0" Grid.Column="2"
                             Margin="0 0 0 20"
@@ -152,6 +212,7 @@
                             LabelText="{Binding CombatModel.CombatSequence.Name}"
                             Text="{Binding CombatModel.CombatSequence.Total, Mode=OneWay}"
                             ModInt="{Binding CombatModel.CombatSequence}"/>
+                        
                         <controls:TextBoxWithLabelControl
                             Grid.Row="1" Grid.Column="2"
                             Margin="0 0 0 20"
@@ -162,6 +223,7 @@
                             LabelText="{Binding CombatModel.HealingRate.Name}"
                             Text="{Binding CombatModel.HealingRate.Total, Mode=OneWay}"
                             ModInt="{Binding CombatModel.HealingRate}"/>
+                        
                         <controls:TextBoxWithLabelControl
                             Grid.Row="2" Grid.Column="2"
                             Margin="0 0 0 20"

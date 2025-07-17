@@ -46,20 +46,20 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _special.PropertyChanged += SPECIALModel_PropertyChanged;
             _bio.PropertyChanged += BioModel_PropertyChanged;
 
-            CombatModel.UpdateModel(_special, _bio.Level);
+            CombatModel.UpdateModel(_special, _bio.Level.Total);
         }
 
         private void SPECIALModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SPECIALModel.Endurance))
             {
-                _combat.CalculateHealingRate(_special.Endurance.Total, _bio.Level);
-                _combat.CalculateHealthPoints(_special.GetModifier(_special.Endurance), _bio.Level);
+                _combat.CalculateHealingRate(_special.Endurance.Total, _bio.Level.Total);
+                _combat.CalculateMaxHealthPoints(_special.GetModifier(_special.Endurance), _bio.Level.Total);
             }
             if(e.PropertyName == nameof(SPECIALModel.Agility))
             {
                 _combat.CalculateActionPoints(_special.GetModifier(_special.Agility));
-                _combat.CalculateStaminaPoints(_special.GetModifier(_special.Agility), _bio.Level);
+                _combat.CalculateMaxStaminaPoints(_special.GetModifier(_special.Agility), _bio.Level.Total);
             }
             if (e.PropertyName == nameof(SPECIALModel.Perception))
             {
@@ -69,7 +69,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void BioModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            CombatModel.UpdateModel(_special, _bio.Level);
+            CombatModel.UpdateModel(_special, _bio.Level.Total);
         }
     }
 }
