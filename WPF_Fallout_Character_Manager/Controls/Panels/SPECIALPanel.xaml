@@ -122,7 +122,7 @@
                                 <controls:UpDownTextBoxControl x:Name="CurrentStaminaPoints"
                                     FontSize="11"
                                     MinValue="0"
-                                    MaxValue="2"
+                                    MaxValue="{Binding CombatModel.MaxStaminaPoints.Total}"
                                     Text="{Binding CombatModel.StaminaPoints.BaseValue}"
                                     IsReadOnly="{Binding CombatModel.StaminaPoints.IsBaseValueReadOnly}"
                                     ModInt="{Binding CombatModel.StaminaPoints}"
