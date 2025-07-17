@@ -113,14 +113,16 @@
                                 Style="{StaticResource FalloutDefaultLabel}"
                                 FontSize="11"
                                 VerticalAlignment="Center"
-                                Content="{Binding CombatModel.StaminaPoints.Name}"
-                                />
+                                Content="{Binding CombatModel.StaminaPoints.Name}"/>
                             <StackPanel
                                 FlowDirection="LeftToRight"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center">
                                 <controls:UpDownTextBoxControl x:Name="CurrentStaminaPoints"
                                     FontSize="11"
+                                    MinusButtonSlot="0"
+                                    PlusButtonSlot="2"
+                                    TextBoxSlot="1"
                                     MinValue="0"
                                     MaxValue="{Binding CombatModel.MaxStaminaPoints.Total}"
                                     Text="{Binding CombatModel.StaminaPoints.BaseValue}"
@@ -136,6 +138,7 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Padding="2, 3"
+                                    FontSize="11"
                                     IsReadOnly="{Binding CombatModel.MaxStaminaPoints.IsBaseValueReadOnly}"
                                     Text="{Binding CombatModel.MaxStaminaPoints.Total, Mode=OneWay}"
                                     ModInt="{Binding CombatModel.MaxStaminaPoints}"/>
@@ -157,13 +160,17 @@
                                 FlowDirection="LeftToRight"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center">
-                                <controls:EnhancedTextBox x:Name="CurrentHealthPoints"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Padding="2, 3"
+                                <controls:UpDownTextBoxControl x:Name="CurrentHealthPoints"
+                                    FontSize="11"
+                                    MinusButtonSlot="0"
+                                    PlusButtonSlot="2"
+                                    TextBoxSlot="1"
+                                    MinValue="0"
+                                    MaxValue="{Binding CombatModel.MaxHealthPoints.Total}"
+                                    Text="{Binding CombatModel.HealthPoints.BaseValue}"
                                     IsReadOnly="{Binding CombatModel.HealthPoints.IsBaseValueReadOnly}"
-                                    Text="{Binding CombatModel.HealthPoints.Total, Mode=OneWay}"
-                                    ModInt="{Binding CombatModel.HealthPoints}"/>
+                                    ModInt="{Binding CombatModel.HealthPoints}"
+                                    CanOpenModal="False"/>
                                 <Label
                                     Style="{StaticResource FalloutDefaultLabel}"
                                     FontSize="11"
@@ -173,7 +180,7 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Padding="2, 3"
-                                    CanOpenModal="False"
+                                    FontSize="11"
                                     IsReadOnly="{Binding CombatModel.MaxHealthPoints.IsBaseValueReadOnly}"
                                     Text="{Binding CombatModel.MaxHealthPoints.Total, Mode=OneWay}"
                                     ModInt="{Binding CombatModel.MaxHealthPoints}"/>
@@ -223,17 +230,34 @@
                             LabelText="{Binding CombatModel.HealingRate.Name}"
                             Text="{Binding CombatModel.HealingRate.Total, Mode=OneWay}"
                             ModInt="{Binding CombatModel.HealingRate}"/>
-                        
-                        <controls:TextBoxWithLabelControl
+
+                        <StackPanel
                             Grid.Row="2" Grid.Column="2"
                             Margin="0 0 0 20"
-                            HorizontalAlignment="Center"
+                            FlowDirection="LeftToRight"
                             Orientation="Vertical"
-                            LabelFontSize="11"
-                            IsReadOnly="{Binding CombatModel.Fatigue.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.Fatigue.Name}"
-                            Text="{Binding CombatModel.Fatigue.Total, Mode=OneWay}"
-                            ModInt="{Binding CombatModel.Fatigue}"/>
+                            HorizontalAlignment="Center">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                Content="{Binding CombatModel.Fatigue.Name}"/>
+                            <StackPanel
+                                FlowDirection="LeftToRight"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                                <controls:UpDownTextBoxControl x:Name="Fatigue"
+                                    FontSize="11"
+                                    MinusButtonSlot="0"
+                                    PlusButtonSlot="2"
+                                    TextBoxSlot="1"
+                                    MinValue="0"
+                                    Text="{Binding CombatModel.Fatigue.BaseValue}"
+                                    IsReadOnly="{Binding CombatModel.Fatigue.IsBaseValueReadOnly}"
+                                    ModInt="{Binding CombatModel.Fatigue}"
+                                    CanOpenModal="False"/>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </ScrollViewer>

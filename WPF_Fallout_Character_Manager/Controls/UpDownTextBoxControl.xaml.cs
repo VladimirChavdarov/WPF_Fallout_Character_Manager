@@ -174,6 +174,72 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
         }
         #endregion
+
+        #region TextBoxSlot
+        public static readonly DependencyProperty TextBoxSlotProperty =
+        DependencyProperty.Register("TextBoxSlot", typeof(int), typeof(UpDownTextBoxControl),
+            new FrameworkPropertyMetadata(0, new PropertyChangedCallback(TextBoxSlotPropertyChanged)));
+
+        public int TextBoxSlot
+        {
+            get => (int)GetValue(TextBoxSlotProperty);
+            set => SetValue(TextBoxSlotProperty, value);
+        }
+
+        private static void TextBoxSlotPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxControl? ThisUserControl = d as UpDownTextBoxControl;
+            ThisUserControl.TextBoxSlotPropertyChanged(e);
+        }
+
+        private void TextBoxSlotPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
+
+        #region PlusButtonSlot
+        public static readonly DependencyProperty PlusButtonSlotProperty =
+        DependencyProperty.Register("PlusButtonSlot", typeof(int), typeof(UpDownTextBoxControl),
+            new FrameworkPropertyMetadata(2, new PropertyChangedCallback(PlusButtonSlotPropertyChanged)));
+
+        public int PlusButtonSlot
+        {
+            get => (int)GetValue(PlusButtonSlotProperty);
+            set => SetValue(PlusButtonSlotProperty, value);
+        }
+
+        private static void PlusButtonSlotPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxControl? ThisUserControl = d as UpDownTextBoxControl;
+            ThisUserControl.PlusButtonSlotPropertyChanged(e);
+        }
+
+        private void PlusButtonSlotPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
+
+        #region MinusButtonSlot
+        public static readonly DependencyProperty MinusButtonSlotProperty =
+        DependencyProperty.Register("MinusButtonSlot", typeof(int), typeof(UpDownTextBoxControl),
+            new FrameworkPropertyMetadata(1, new PropertyChangedCallback(MinusButtonSlotPropertyChanged)));
+
+        public int MinusButtonSlot
+        {
+            get => (int)GetValue(MinusButtonSlotProperty);
+            set => SetValue(MinusButtonSlotProperty, value);
+        }
+
+        private static void MinusButtonSlotPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxControl? ThisUserControl = d as UpDownTextBoxControl;
+            ThisUserControl.MinusButtonSlotPropertyChanged(e);
+        }
+
+        private void MinusButtonSlotPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public UpDownTextBoxControl()

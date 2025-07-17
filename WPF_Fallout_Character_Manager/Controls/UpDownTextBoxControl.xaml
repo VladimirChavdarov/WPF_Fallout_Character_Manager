@@ -14,7 +14,9 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.RowSpan="2" Grid.Column="0">
+        <Grid
+            Grid.RowSpan="2"
+            Grid.Column="{Binding TextBoxSlot, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <controls:EnhancedTextBox x:Name="CustomEnhancedTextBox"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -29,10 +31,10 @@
         </Grid>
 
         <RepeatButton
-            Grid.Column="1"
+            Grid.Column="{Binding MinusButtonSlot, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Height="Auto"
             Width="22"
-            Margin="0 3 0 3"
+            Margin="1 3 1 3"
             Style="{StaticResource FalloutRepeatButton}"
             FontWeight="Regular"
             Content=" - "
@@ -40,10 +42,10 @@
         </RepeatButton>
 
         <RepeatButton
-            Grid.Column="2"
+            Grid.Column="{Binding PlusButtonSlot, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Height="Auto"
             Width="22"
-            Margin="2 3 0 3"
+            Margin="1 3 1 3"
             Style="{StaticResource FalloutRepeatButton}"
             FontWeight="Regular"
             Content=" + "
