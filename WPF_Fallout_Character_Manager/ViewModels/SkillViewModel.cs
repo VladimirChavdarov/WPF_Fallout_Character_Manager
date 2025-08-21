@@ -80,7 +80,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             special.PropertyChanged += SPECIALModel_PropertyChanged;
 
-            SkillModel.UpdateModel(_special);
+            SkillModel.UpdateModel(_special, BreachScaling, IntimidadtionScaling, MedicineScaling);
         }
 
         private void SPECIALModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -89,7 +89,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 if(_intimidationScaling == SPECIAL.Strength)
                 {
-                    _skill.CalculateIntimidation();
+                    _skill.CalculateSkill(Skill.Intimidation, _special.GetModifier(SPECIAL.Strength), false);
                 }
             }
         }

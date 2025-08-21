@@ -37,8 +37,8 @@ namespace WPF_Fallout_Character_Manager.Models
         // Updates the RadDC based on the Endurance Modifier
         public void UpdateModel(SPECIALModel specialModel)
         {
-            CalculateRadDC(specialModel.GetModifier(specialModel.Endurance));
-            CalculatePassiveSense(specialModel.GetModifier(specialModel.Perception));
+            CalculateRadDC(specialModel.GetModifier(SPECIAL.Endurance));
+            CalculatePassiveSense(specialModel.GetModifier(SPECIAL.Perception));
         }
 
         void CalculateRadDC(int enduranceModifier)

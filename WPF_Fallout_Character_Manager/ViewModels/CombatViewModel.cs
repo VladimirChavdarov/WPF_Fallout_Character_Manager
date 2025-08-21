@@ -54,16 +54,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if(e.PropertyName == nameof(SPECIALModel.Endurance))
             {
                 _combat.CalculateHealingRate(_special.Endurance.Total, _bio.Level.Total);
-                _combat.CalculateMaxHealthPoints(_special.GetModifier(_special.Endurance), _bio.Level.Total);
+                _combat.CalculateMaxHealthPoints(_special.GetModifier(SPECIAL.Endurance), _bio.Level.Total);
             }
             if(e.PropertyName == nameof(SPECIALModel.Agility))
             {
-                _combat.CalculateActionPoints(_special.GetModifier(_special.Agility));
-                _combat.CalculateMaxStaminaPoints(_special.GetModifier(_special.Agility), _bio.Level.Total);
+                _combat.CalculateActionPoints(_special.GetModifier(SPECIAL.Agility));
+                _combat.CalculateMaxStaminaPoints(_special.GetModifier(SPECIAL.Agility), _bio.Level.Total);
             }
             if (e.PropertyName == nameof(SPECIALModel.Perception))
             {
-                _combat.CalculateCombatSequence(_special.GetModifier(_special.Perception));
+                _combat.CalculateCombatSequence(_special.GetModifier(SPECIAL.Perception));
             }
         }
 

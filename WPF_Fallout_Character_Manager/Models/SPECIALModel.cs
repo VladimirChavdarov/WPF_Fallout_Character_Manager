@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,20 +25,25 @@ namespace WPF_Fallout_Character_Manager.Models
         // constructor
         public SPECIALModel()
         {
-            _strength = new ModInt("Strength", 1);
-            _strength.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Strength));
-            _perception = new ModInt("Perception", 2);
-            _perception.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Perception));
-            _endurance = new ModInt("Endurance", 3);
-            _endurance.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Endurance));
-            _charisma = new ModInt("Charisma", 4);
-            _charisma.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Charisma));
-            _intelligence = new ModInt("Intelligence", 5);
-            _intelligence.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Intelligence));
-            _agililty = new ModInt("Agility", 6);
-            _agililty.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Agility));
-            _luck = new ModInt("Luck", 7);
-            _luck.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Luck));
+            _special = new Dictionary<SPECIAL, ModInt>
+            {
+                { SPECIAL.Strength,     new ModInt("Strength", 1, true) },
+                { SPECIAL.Perception,   new ModInt("Perception", 2, true) },
+                { SPECIAL.Endurance,    new ModInt("Endurance", 3, true) },
+                { SPECIAL.Charisma,     new ModInt("Charisma", 4, true) },
+                { SPECIAL.Intelligence, new ModInt("Intelligence", 5, true) },
+                { SPECIAL.Agility,      new ModInt("Agility", 6, true) },
+                { SPECIAL.Luck,         new ModInt("Luck", 7, true) }
+
+            };
+
+            foreach(var keyValue in _special)
+            {
+                var key = keyValue.Key;
+                var value = keyValue.Value;
+
+                value.PropertyChanged += (s, e) => OnPropertyChanged(key.ToString());
+            }
         }
         //
 
@@ -49,76 +55,53 @@ namespace WPF_Fallout_Character_Manager.Models
 
         public int GetModifier(SPECIAL MainStat)
         {
-            switch(MainStat)
-            {
-                case SPECIAL.Strength:
-                    return Strength.Total - 5;
-                case SPECIAL.Perception:
-                    return Perception.Total - 5;
-                case SPECIAL.Endurance:
-                    return Endurance.Total - 5;
-                case SPECIAL.Charisma:
-                    return Charisma.Total - 5;
-                case SPECIAL.Intelligence:
-                    return Intelligence.Total - 5;
-                case SPECIAL.Agility:
-                    return Agility.Total - 5;
-                case SPECIAL.Luck:
-                    return Luck.Total - 5;
-                default:
-                    throw new Exception("Invalid enum value...");
-            }
+            return _special[MainStat].Total - 5;
         }
         //
 
         // Data
-        private ModInt _strength;
+        private Dictionary<SPECIAL, ModInt> _special;
+
         public ModInt Strength
         {
-            get => _strength;
-            set => Update(ref _strength, value);
+            get => _special[SPECIAL.Strength];
+            set => Update(_special[SPECIAL.Strength], value, v => _special[SPECIAL.Strength] = v);
         }
 
-        private ModInt _perception;
         public ModInt Perception
         {
-            get => _perception;
-            set => Update(ref _perception, value);
+            get => _special[SPECIAL.Perception];
+            set => Update(_special[SPECIAL.Perception], value, v => _special[SPECIAL.Perception] = v);
         }
 
-        private ModInt _endurance;
         public ModInt Endurance
         {
-            get => _endurance;
-            set => Update(ref _endurance, value);
+            get => _special[SPECIAL.Endurance];
+            set => Update(_special[SPECIAL.Endurance], value, v => _special[SPECIAL.Endurance] = v);
         }
 
-        private ModInt _charisma;
         public ModInt Charisma
         {
-            get => _charisma;
-            set => Update(ref _charisma, value);
+            get => _special[SPECIAL.Charisma];
+            set => Update(_special[SPECIAL.Charisma], value, v => _special[SPECIAL.Charisma] = v);
         }
 
-        private ModInt _intelligence;
         public ModInt Intelligence
         {
-            get => _intelligence;
-            set => Update(ref _intelligence, value);
+            get => _special[SPECIAL.Intelligence];
+            set => Update(_special[SPECIAL.Intelligence], value, v => _special[SPECIAL.Intelligence] = v);
         }
 
-        private ModInt _agililty;
         public ModInt Agility
         {
-            get => _agililty;
-            set => Update(ref _agililty, value);
+            get => _special[SPECIAL.Agility];
+            set => Update(_special[SPECIAL.Agility], value, v => _special[SPECIAL.Agility] = v);
         }
 
-        private ModInt _luck;
         public ModInt Luck
         {
-            get => _luck;
-            set => Update(ref _luck, value);
+            get => _special[SPECIAL.Luck];
+            set => Update(_special[SPECIAL.Luck], value, v => _special[SPECIAL.Luck] = v);
         }
         //
     }

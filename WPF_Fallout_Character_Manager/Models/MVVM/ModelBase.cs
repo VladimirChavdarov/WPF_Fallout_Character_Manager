@@ -22,5 +22,14 @@ namespace WPF_Fallout_Character_Manager.Models.MVVM
                 OnPropertyChanged(propertyName);
             }
         }
+
+        protected void Update<T>(T oldValue, T newValue, Action<T> setter, [CallerMemberName] string? propertyName = null)
+        {
+            if(!EqualityComparer<T>.Default.Equals(oldValue, newValue))
+            {
+                setter(newValue);
+                OnPropertyChanged(propertyName);
+            }
+        }
     }
 }
