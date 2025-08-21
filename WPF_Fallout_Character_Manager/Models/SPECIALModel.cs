@@ -8,6 +8,17 @@ using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
+    enum SPECIAL
+    {
+        Strength,
+        Perception,
+        Endurance,
+        Charisma,
+        Intelligence,
+        Agility,
+        Luck
+    }
+
     internal sealed class SPECIALModel : ModelBase
     {
         // constructor
@@ -31,9 +42,32 @@ namespace WPF_Fallout_Character_Manager.Models
         //
 
         // helpers
-        public int GetModifier(ModInt MainStat)
+        //public int GetModifier(ModInt MainStat)
+        //{
+        //    return MainStat.Total - 5;
+        //}
+
+        public int GetModifier(SPECIAL MainStat)
         {
-            return MainStat.Total - 5;
+            switch(MainStat)
+            {
+                case SPECIAL.Strength:
+                    return Strength.Total - 5;
+                case SPECIAL.Perception:
+                    return Perception.Total - 5;
+                case SPECIAL.Endurance:
+                    return Endurance.Total - 5;
+                case SPECIAL.Charisma:
+                    return Charisma.Total - 5;
+                case SPECIAL.Intelligence:
+                    return Intelligence.Total - 5;
+                case SPECIAL.Agility:
+                    return Agility.Total - 5;
+                case SPECIAL.Luck:
+                    return Luck.Total - 5;
+                default:
+                    throw new Exception("Invalid enum value...");
+            }
         }
         //
 

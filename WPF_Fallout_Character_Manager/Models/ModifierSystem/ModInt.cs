@@ -87,6 +87,15 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             Modifiers.Remove(modifierToRemove);
         }
 
+        public void RemoveModifier(string modifierName)
+        {
+            LabeledInt modifierToRemove = Modifiers?.FirstOrDefault(m => m.Name == modifierName);
+            if(modifierToRemove != null)
+                Modifiers.Remove(modifierToRemove);
+            else
+                throw new Exception($"Modifier with label '{modifierName}' not found.");
+        }
+
         // Data
         private int _total;
         public int Total

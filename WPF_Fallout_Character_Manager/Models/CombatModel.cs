@@ -40,10 +40,10 @@ namespace WPF_Fallout_Character_Manager.Models
         // TODO: BaseValues of AC and DT should scale with the equipped armor. For now, these two will be fully calculated via modifiers
         public void UpdateModel(SPECIALModel specialModel, int level)
         {
-            CalculateActionPoints(specialModel.GetModifier(specialModel.Agility));
-            CalculateMaxStaminaPoints(specialModel.GetModifier(specialModel.Agility), level);
-            CalculateMaxHealthPoints(specialModel.GetModifier(specialModel.Endurance), level);
-            CalculateCombatSequence(specialModel.GetModifier(specialModel.Perception));
+            CalculateActionPoints(specialModel.GetModifier(SPECIAL.Agility));
+            CalculateMaxStaminaPoints(specialModel.GetModifier(SPECIAL.Agility), level);
+            CalculateMaxHealthPoints(specialModel.GetModifier(SPECIAL.Endurance), level);
+            CalculateCombatSequence(specialModel.GetModifier(SPECIAL.Perception));
             CalculateHealingRate(specialModel.Endurance.Total, level);
 
             StaminaPoints.BaseValue = MaxStaminaPoints.BaseValue;
