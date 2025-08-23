@@ -53,6 +53,7 @@
                         <!-- Hover -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
+                            <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
 
                         <!-- Pressed -->

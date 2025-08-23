@@ -85,8 +85,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="270"/>
                                 <ColumnDefinition Width="562"/>
-                                <ColumnDefinition Width="250"/>
-                                <ColumnDefinition Width="270"/>
+                                <ColumnDefinition Width="260"/>
+                                <ColumnDefinition Width="260"/>
                             </Grid.ColumnDefinitions>
 
                             <!-- First Column (Small Bio, Survival Params., Passives) -->

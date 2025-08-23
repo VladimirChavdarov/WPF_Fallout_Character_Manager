@@ -26,7 +26,7 @@
                 IsChecked="{Binding ModIntSkill.IsTagged, RelativeSource={RelativeSource AncestorType=UserControl}}">
 
             </CheckBox>
-            
+
             <local:TextBoxWithLabelControl
                 x:Name="LabeledTextBox"
                 FlowDirection="{Binding FlowDirection, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -44,7 +44,7 @@
                 LabelText="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
-            
+
             <ItemsControl ItemsSource="{Binding ModIntSkill.SkillModifiers, RelativeSource={RelativeSource AncestorType=UserControl}}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -54,12 +54,12 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <RadioButton
+                            Style="{StaticResource FalloutSkillRadioButton}"
                             VerticalAlignment="Center"
                             Content="{Binding Converter={StaticResource SPECIALToShortConverter}}"
                             GroupName="{Binding ModIntSkill.Name, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            Foreground="White"
                             FontFamily="{StaticResource JH_Fallout}"
-                            FontSize="8"
+                            FontSize="7"
                             Checked="RadioButton_Checked">
                             <RadioButton.IsChecked>
                                 <MultiBinding Converter="{StaticResource EqualityToBoolConverter}" Mode="TwoWay">
