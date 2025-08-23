@@ -27,13 +27,13 @@ namespace WPF_Fallout_Character_Manager.Models
         {
             _special = new Dictionary<SPECIAL, ModInt>
             {
-                { SPECIAL.Strength,     new ModInt("Strength", 1, true) },
-                { SPECIAL.Perception,   new ModInt("Perception", 2, true) },
-                { SPECIAL.Endurance,    new ModInt("Endurance", 3, true) },
-                { SPECIAL.Charisma,     new ModInt("Charisma", 4, true) },
-                { SPECIAL.Intelligence, new ModInt("Intelligence", 5, true) },
-                { SPECIAL.Agility,      new ModInt("Agility", 6, true) },
-                { SPECIAL.Luck,         new ModInt("Luck", 7, true) }
+                { SPECIAL.Strength,     new ModInt("Strength", 1, false) },
+                { SPECIAL.Perception,   new ModInt("Perception", 2, false) },
+                { SPECIAL.Endurance,    new ModInt("Endurance", 3, false) },
+                { SPECIAL.Charisma,     new ModInt("Charisma", 4, false) },
+                { SPECIAL.Intelligence, new ModInt("Intelligence", 5, false) },
+                { SPECIAL.Agility,      new ModInt("Agility", 6, false) },
+                { SPECIAL.Luck,         new ModInt("Luck", 7, false) }
 
             };
 
