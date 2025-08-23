@@ -15,9 +15,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // local variables
         private SkillModel _skill;
         private SPECIALModel _special;
-
-        // The SPECIAL stat with which the skill currently scales. Changing a value in this ObservableCollection should trigger SkillModel.CalculateSkill
-        ObservableCollection<SPECIAL> SelectedSkillModifier;
         //
 
         public SkillModel SkillModel

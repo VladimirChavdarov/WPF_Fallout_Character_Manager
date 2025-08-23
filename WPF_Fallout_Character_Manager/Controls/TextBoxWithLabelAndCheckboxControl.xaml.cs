@@ -118,6 +118,32 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region SkillViewModel
+        public static readonly DependencyProperty SkillViewModelProperty =
+            DependencyProperty.Register("SkillViewModel", typeof(SkillViewModel), typeof(TextBoxWithLabelAndCheckboxControl),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(SkillViewModelPropertyChanged)));
+
+        // I need to cast this to the SkillViewModel class when I want to use stuff from that class.
+        public object SkillViewModel
+        {
+            //get => (SkillViewModel)GetValue(SkillViewModelProperty);
+            //set => SetValue(SkillViewModelProperty, value);
+            get => GetValue(SkillViewModelProperty);
+            set => SetValue(SkillViewModelProperty, value);
+        }
+
+        private static void SkillViewModelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelAndCheckboxControl? ThisUserControl = d as TextBoxWithLabelAndCheckboxControl;
+            ThisUserControl.SkillViewModelPropertyChanged(e);
+        }
+
+        private void SkillViewModelPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
         #region Orientation
         public static readonly DependencyProperty OrientationProperty =
         DependencyProperty.Register("Orientation", typeof(Orientation), typeof(TextBoxWithLabelAndCheckboxControl),
@@ -248,6 +274,8 @@ namespace WPF_Fallout_Character_Manager.Controls
             if(sender is RadioButton rb && rb.DataContext is SPECIAL special)
             {
                 ModIntSkill.SelectedModifier = special;
+                var svm = SkillViewModel as SkillViewModel; // svm = skill view model
+                svm?.VMCalculateSkill(SkillKey);
             }
         }
     }

@@ -27,6 +27,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Barter}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Barter"
                         Text="{Binding SkillModel.Barter.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -41,6 +42,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Breach}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Breach"
                         Text="{Binding SkillModel.Breach.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -55,6 +57,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Crafting}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Crafting"
                         Text="{Binding SkillModel.Crafting.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -69,6 +72,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.EnergyWeapons}"
+                        SkillViewModel="{Binding}"
                         SkillKey="EnergyWeapons"
                         Text="{Binding SkillModel.EnergyWeapons.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -83,6 +87,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Explosives}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Explosives"
                         Text="{Binding SkillModel.Explosives.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -97,6 +102,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Guns}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Guns"
                         Text="{Binding SkillModel.Guns.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -111,6 +117,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Intimidation}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Intimidation"
                         Text="{Binding SkillModel.Intimidation.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -125,6 +132,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Medicine}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Medicine"
                         Text="{Binding SkillModel.Medicine.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -139,6 +147,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.MeleeWeapons}"
+                        SkillViewModel="{Binding}"
                         SkillKey="MeleeWeapons"
                         Text="{Binding SkillModel.MeleeWeapons.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -153,6 +162,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Science}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Science"
                         Text="{Binding SkillModel.Science.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -167,6 +177,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Sneak}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Sneak"
                         Text="{Binding SkillModel.Sneak.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -181,6 +192,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Speech}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Speech"
                         Text="{Binding SkillModel.Speech.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -195,6 +207,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Survival}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Survival"
                         Text="{Binding SkillModel.Survival.Total, Mode=OneWay}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
@@ -209,6 +222,7 @@
                         MinWidth="30"
                         IsReadOnly="True"
                         ModIntSkill="{Binding SkillModel.Unarmed}"
+                        SkillViewModel="{Binding}"
                         SkillKey="Unarmed"
                         Text="{Binding SkillModel.Unarmed.Total, Mode=OneWay}"/>
                 </StackPanel>
