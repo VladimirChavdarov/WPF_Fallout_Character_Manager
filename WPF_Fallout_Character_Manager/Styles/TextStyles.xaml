@@ -22,5 +22,7 @@
         <Setter Property="CaretBrush" Value="{StaticResource FalloutGreen}"/>
         <Setter Property="FontSize" Value="9"/>
         <Setter Property="FontFamily" Value="{StaticResource JH_Fallout}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource FalloutGreen}"/>
+        <Setter Property="SelectionOpacity" Value="1"/>
     </Style>
 </ResourceDictionary>
