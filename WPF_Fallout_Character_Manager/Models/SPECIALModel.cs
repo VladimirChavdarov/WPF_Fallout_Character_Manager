@@ -9,7 +9,7 @@ using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
-    enum SPECIAL
+    public enum SPECIAL
     {
         Strength,
         Perception,
@@ -48,14 +48,21 @@ namespace WPF_Fallout_Character_Manager.Models
         //
 
         // helpers
-        //public int GetModifier(ModInt MainStat)
-        //{
-        //    return MainStat.Total - 5;
-        //}
-
         public int GetModifier(SPECIAL MainStat)
         {
             return _special[MainStat].Total - 5;
+        }
+
+        /// <summary>
+        /// IMPORTANT: This function follows the rules of the TTRPG. It takes the Luck Modifier and halfs it, rounded down. If the modifier is negative, it clamps it to -1.
+        /// </summary>
+        /// <returns></returns>
+        public int GetClampedHalfLuckModifier()
+        {
+            int luckModifier = Math.Clamp(GetModifier(SPECIAL.Luck), -1, 2147483647);
+            if (luckModifier >= 0)
+                return luckModifier /= 2;
+            return -1;
         }
         //
 

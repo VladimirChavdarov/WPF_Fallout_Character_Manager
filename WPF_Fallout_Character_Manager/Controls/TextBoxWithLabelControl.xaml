@@ -25,6 +25,7 @@
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Padding="2, 3"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                FlowDirection="LeftToRight"
                 VerticalAlignment="Center"
                 ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"

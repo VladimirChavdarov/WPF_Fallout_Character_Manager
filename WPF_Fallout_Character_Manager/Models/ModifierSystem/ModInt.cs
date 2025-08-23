@@ -13,7 +13,7 @@ using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
-    public sealed class ModInt : ModTypeBase
+    public class ModInt : ModTypeBase
     {
         // constructor
         public ModInt(string name, int value, bool isBaseValueReadOnly = false)
@@ -32,7 +32,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // TODO: Find someone and ask if this is too much redundant calls of UpdateTotal().
         // Maybe not actually. UpdateTotal() gets called when the size of the ObservableCollection changes
         // or when a LabeledInt's value changes.
-        private void Modifiers_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        protected void Modifiers_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if(e.NewItems != null)
             {
@@ -51,7 +51,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             UpdateTotal();
         }
 
-        private void Modifiers_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        protected void Modifiers_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(LabeledInt.Value))
             {
@@ -97,7 +97,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
         // Data
-        private int _total;
+        protected int _total;
         public int Total
         {
             get => _total;
@@ -107,7 +107,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             private set => Update(ref _total, value);
         }
 
-        private int _baseValue;
+        protected int _baseValue;
         public int BaseValue
         {
             get => _baseValue;
@@ -122,7 +122,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             }
         }
 
-        private string _name;
+        protected string _name;
         public string Name
         {
             get => _name;
@@ -131,7 +131,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             //set => Update(ref _name, value);
         }
 
-        private bool _isBaseValueReadOnly;
+        protected bool _isBaseValueReadOnly;
         public bool IsBaseValueReadOnly
         {
             get => _isBaseValueReadOnly;

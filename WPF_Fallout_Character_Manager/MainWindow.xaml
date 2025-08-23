@@ -85,8 +85,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="270"/>
                                 <ColumnDefinition Width="562"/>
-                                <ColumnDefinition Width="198"/>
-                                <ColumnDefinition Width="330"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="270"/>
                             </Grid.ColumnDefinitions>
 
                             <!-- First Column (Small Bio, Survival Params., Passives) -->
@@ -155,15 +155,9 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Skills -->
-                                <GroupBox
-                                    Header="Skills"
+                                <panels:SkillsPanel
                                     Grid.Row="0"
-                                    Margin="5"
-                                    Background="Black"
-                                    BorderBrush="#23ba03"
-                                    BorderThickness="1">
-
-                                </GroupBox>
+                                    DataContext="{Binding SkillViewModel}"/>
                                 <!-- -->
                             </Grid>
                             <!-- -->
