@@ -170,15 +170,8 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Conditions -->
-                                <GroupBox
-                                    Header="Conditions"
-                                    Grid.Row="0"
-                                    Margin="5"
-                                    Background="Black"
-                                    BorderBrush="#23ba03"
-                                    BorderThickness="1">
-
-                                </GroupBox>
+                                <panels:ConditionsPanel
+                                    Grid.Row="0"/>
                                 <!-- -->
                             </Grid>
                             <!-- -->

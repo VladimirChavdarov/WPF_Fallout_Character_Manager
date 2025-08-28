@@ -21,6 +21,7 @@
     <None Remove="Resources\trashcan.png" />
     <None Remove="Resources\trashcan1.png" />
     <None Remove="Resources\Vault_Boy.png" />
+    <None Remove="Resources\vault_boy_thumbsup.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Vault_Boy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\vault_boy_thumbsup.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
