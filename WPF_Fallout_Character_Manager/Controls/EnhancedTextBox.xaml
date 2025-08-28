@@ -11,6 +11,7 @@
     <Grid x:Name="LayoutRoot">
         <TextBox x:Name="CustomTextBox" 
                 BorderThickness="0"
+                TextWrapping="Wrap"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Background="{StaticResource FalloutGreenBackground}"

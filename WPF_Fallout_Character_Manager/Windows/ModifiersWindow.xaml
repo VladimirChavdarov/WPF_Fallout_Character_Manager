@@ -85,7 +85,7 @@
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"
                                         Width="135"
-                                        VerticalAlignment="Center"
+                                        VerticalAlignment="Top"
                                         Orientation="Vertical"
                                         LabelFontSize="8"
                                         LabelText="Modifier"
@@ -94,7 +94,7 @@
                                         Text="{Binding Name}"/>
                                     <controls:UpDownTextBoxWithLabelControl
                                         Margin="2"
-                                        VerticalAlignment="Center"
+                                        VerticalAlignment="Top"
                                         Orientation="Vertical"
                                         LabelFontSize="8"
                                         LabelText="Value"
@@ -103,7 +103,8 @@
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"
                                         Width="200"
-                                        VerticalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        HorizontalContentAlignment="Left"
                                         Orientation="Vertical"
                                         LabelFontSize="8"
                                         LabelText="Note"
@@ -115,7 +116,7 @@
                                         Style="{StaticResource FalloutDefaultLabel}"
                                         FontSize="8"
                                         VerticalAlignment="Center"
-                                        Content=""/>
+                                        Content=" "/>
                                         <Button
                                             Cursor="Hand"
                                             FontSize="9"
@@ -123,7 +124,7 @@
                                             Background="{StaticResource FalloutGreenBackground}"
                                             BorderThickness="0"
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
+                                            VerticalAlignment="Top"
                                             Command="{Binding DataContext.RemoveModifierCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                             CommandParameter="{Binding}">
                                             <Button.Template>
