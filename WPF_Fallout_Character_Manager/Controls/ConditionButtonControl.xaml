@@ -14,13 +14,13 @@
             CanOpenModal="False"
             BorderBrush="{StaticResource FalloutGreen}"
             BorderThickness="1 1 1 0"
-            Width="25"
             HorizontalAlignment="Left"
             HorizontalContentAlignment="Left"
-            Padding="0 2 0 1"
+            Padding="0 2 2 1"
             TextBoxBackground="Black"
             IsReadOnly="True"
-            Text="10"/>
+            TextWrapping="NoWrap"
+            Text="1"/>
         <Button
             Style="{StaticResource FalloutButton}"
             FontFamily="{StaticResource JH_Fallout}"

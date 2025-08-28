@@ -130,6 +130,21 @@ namespace WPF_Fallout_Character_Manager.Controls
             set => SetValue(TextBoxBackgroundProperty, value);
         }
         #endregion
+
+        #region TextWrapping
+        public static readonly DependencyProperty TextWrappingProperty =
+        DependencyProperty.Register(
+            nameof(TextWrapping),
+            typeof(TextWrapping),
+            typeof(EnhancedTextBox),
+            new PropertyMetadata(TextWrapping.Wrap)); // default
+
+        public TextWrapping TextWrapping
+        {
+            get => (TextWrapping)GetValue(TextWrappingProperty);
+            set => SetValue(TextWrappingProperty, value);
+        }
+        #endregion
         //
 
         public EnhancedTextBox()
