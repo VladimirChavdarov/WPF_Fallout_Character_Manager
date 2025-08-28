@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="260">
+             d:DesignHeight="380" d:DesignWidth="260">
     <Grid>
         <GroupBox
             Header="Conditions"
@@ -17,61 +18,49 @@
             <ScrollViewer>
                 <Grid>
                     <Image
-                        Margin="0 40 0 0"
+                        Margin="0 60 0 0"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Center"
                         Width="130"
                         Stretch="Uniform"
                         Source="/Resources/vault_boy_thumbsup.png"/>
                     <Grid>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            FontFamily="{StaticResource JH_Fallout}"
+                        <controls:ConditionButtonControl
                             FontSize="10"
-                            Content="Head"
                             Margin="100 10 0 0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top"/>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            FontFamily="{StaticResource JH_Fallout}"
+                            VerticalAlignment="Top"
+                            ButtonText="Head"/>
+                        <controls:ConditionButtonControl
                             FontSize="10"
-                            Content="Eyes"
                             Margin="180 60 0 0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top"/>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            FontFamily="{StaticResource JH_Fallout}"
+                            VerticalAlignment="Top"
+                            ButtonText="Eyes"/>
+                        <controls:ConditionButtonControl
                             FontSize="10"
-                            Content="Arms"
                             Margin="10 65 0 0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top"/>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            FontFamily="{StaticResource JH_Fallout}"
+                            VerticalAlignment="Top"
+                            ButtonText="Arms"/>
+                        <controls:ConditionButtonControl
                             FontSize="10"
-                            Content="Torso"
                             Margin="25 150 0 0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top"/>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            FontFamily="{StaticResource JH_Fallout}"
+                            VerticalAlignment="Top"
+                            ButtonText="Torso"/>
+                        <controls:ConditionButtonControl
                             FontSize="10"
-                            Content="Groin"
                             Margin="180 170 0 0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top"/>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            FontFamily="{StaticResource JH_Fallout}"
+                            VerticalAlignment="Top"
+                            ButtonText="Groin"/>
+                        <controls:ConditionButtonControl
                             FontSize="10"
-                            Content="Legs"
-                            Margin="100 245 0 0"
+                            Margin="60 245 0 0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Top"/>
+                            VerticalAlignment="Top"
+                            ButtonText="Legs"/>
                     </Grid>
                 </Grid>
             </ScrollViewer>

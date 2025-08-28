@@ -14,7 +14,7 @@
                 TextWrapping="Wrap"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Background="{StaticResource FalloutGreenBackground}"
+                Background="{Binding TextBoxBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Foreground="{StaticResource FalloutGreen}"
                 FontFamily="{StaticResource JH_Fallout}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"

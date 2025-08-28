@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WPF_Fallout_Character_Manager.Controls.ConditionButtonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             mc:Ignorable="d" >
+    <StackPanel
+        Orientation="Vertical"
+        HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        VerticalAlignment="{Binding VerticalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+        <local:EnhancedTextBox
+            CanOpenModal="False"
+            BorderBrush="{StaticResource FalloutGreen}"
+            BorderThickness="1 1 1 0"
+            Width="25"
+            HorizontalAlignment="Left"
+            HorizontalContentAlignment="Left"
+            Padding="0 2 0 1"
+            TextBoxBackground="Black"
+            IsReadOnly="True"
+            Text="10"/>
+        <Button
+            Style="{StaticResource FalloutButton}"
+            FontFamily="{StaticResource JH_Fallout}"
+            FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Content="{Binding ButtonText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
+            BorderThickness="1 1 1 1"
+            BorderBrush="{StaticResource FalloutGreen}"/>
+    </StackPanel>
+</UserControl>
