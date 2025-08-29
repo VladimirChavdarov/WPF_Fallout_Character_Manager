@@ -31,7 +31,6 @@ namespace WPF_Fallout_Character_Manager.Windows
         {
             if(this.DataContext is  LimbConditionsViewModel limbConditionsVM)
             {
-                limbConditionsVM.LimbConditionsModel.AddLimbCondition(new Models.External.LimbCondition("TestCondition", "Head"));
                 limbConditionsVM.IsModalOpen = false;
             }
             this.Close();

@@ -73,19 +73,8 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             InitializeComponent();
 
-            this.DataContextChanged += (s, e) =>
-            {
-                if (DataContext is LimbConditionsViewModel vm)
-                {
-                    vm.PropertyChanged += (sender, args) =>
-                    {
-                        if (args.PropertyName == nameof(LimbConditionsViewModel.IsModalOpen) && !vm.IsModalOpen)
-                        {
-                            ToggleBtn.IsChecked = false;
-                        }
-                    };
-                }
-            };
+            // Everytime the DataContext changes, check if the modal window was closed and the boolean indicating that was flipped.
+            this.DataContextChanged += ConditionButtonControl_DataContextChanged;
         }
 
         private void ConditionButtonControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
