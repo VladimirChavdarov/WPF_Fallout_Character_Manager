@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WPF_Fallout_Character_Manager.Controls.Panels
 {
     /// <summary>
-    /// Interaction logic for ConditionsPanel.xaml
+    /// Interaction logic for LimbConditionsPanel.xaml
     /// </summary>
-    public partial class ConditionsPanel : UserControl
+    public partial class LimbConditionsPanel : UserControl
     {
-        public ConditionsPanel()
+        public LimbConditionsPanel()
         {
             InitializeComponent();
         }

@@ -9,7 +9,7 @@ using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
-    class ConditionsViewModel : ViewModelBase
+    class LimbConditionsViewModel : ViewModelBase
     {
         // local variables
         private XtrnlLimbConditionsModel _xtrnlLimbConditions;
@@ -29,7 +29,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         }
 
         // constructor
-        public ConditionsViewModel(XtrnlLimbConditionsModel? xtrnlLimbConditionsModel, LimbConditionsModel limbConditions)
+        public LimbConditionsViewModel(XtrnlLimbConditionsModel? xtrnlLimbConditionsModel, LimbConditionsModel limbConditions)
         {
             _xtrnlLimbConditions = xtrnlLimbConditionsModel;
             LimbConditionsModel = limbConditions;

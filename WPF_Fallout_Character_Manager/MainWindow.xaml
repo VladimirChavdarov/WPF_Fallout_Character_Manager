@@ -170,7 +170,7 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Conditions -->
-                                <panels:ConditionsPanel
+                                <panels:LimbConditionsPanel
                                     Grid.Row="0"
                                     DataContext="{Binding ConditionsViewModel}"/>
                                 <!-- -->
