@@ -9,7 +9,7 @@
              d:DesignHeight="380" d:DesignWidth="260">
     <Grid>
         <GroupBox
-            Header="Conditions"
+            Header="Limb Conditions"
             Grid.Row="0"
             Margin="5"
             Background="Black"
@@ -30,37 +30,43 @@
                             Margin="100 10 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            ButtonText="Head"/>
+                            ButtonText="Head"
+                            ConditionsAmount="{Binding LimbConditionsModel.HeadLimbConditions.Count, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="180 60 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            ButtonText="Eyes"/>
+                            ButtonText="Eyes"
+                            ConditionsAmount="{Binding LimbConditionsModel.EyesLimbConditions.Count, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="10 65 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            ButtonText="Arms"/>
+                            ButtonText="Arms"
+                            ConditionsAmount="{Binding LimbConditionsModel.ArmLimbConditions.Count, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="25 150 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            ButtonText="Torso"/>
+                            ButtonText="Torso"
+                            ConditionsAmount="{Binding LimbConditionsModel.TorsoLimbConditions.Count, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="180 170 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            ButtonText="Groin"/>
+                            ButtonText="Groin"
+                            ConditionsAmount="{Binding LimbConditionsModel.GroinLimbConditions.Count, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="60 245 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
-                            ButtonText="Legs"/>
+                            ButtonText="Legs"
+                            ConditionsAmount="{Binding LimbConditionsModel.LegLimbConditions.Count, Mode=OneWay}"/>
                     </Grid>
                 </Grid>
             </ScrollViewer>

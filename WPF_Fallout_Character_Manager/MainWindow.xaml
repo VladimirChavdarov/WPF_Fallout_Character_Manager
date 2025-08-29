@@ -171,7 +171,8 @@
 
                                 <!-- Conditions -->
                                 <panels:ConditionsPanel
-                                    Grid.Row="0"/>
+                                    Grid.Row="0"
+                                    DataContext="{Binding ConditionsViewModel}"/>
                                 <!-- -->
                             </Grid>
                             <!-- -->

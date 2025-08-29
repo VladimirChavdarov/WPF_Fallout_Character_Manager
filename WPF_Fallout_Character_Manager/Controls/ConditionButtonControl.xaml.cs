@@ -44,6 +44,30 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region ConditionsAmount
+        public static readonly DependencyProperty ConditionsAmountProperty =
+        DependencyProperty.Register("ConditionsAmount", typeof(int), typeof(ConditionButtonControl),
+            new FrameworkPropertyMetadata(5, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnConditionsAmountChanged)));
+
+        public int ConditionsAmount
+        {
+            get { return (int)GetValue(ConditionsAmountProperty); }
+            set { SetValue(ConditionsAmountProperty, value); }
+        }
+
+        private static void OnConditionsAmountChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ConditionButtonControl? ThisUserControl = d as ConditionButtonControl;
+            ThisUserControl.OnConditionsAmountChanged(e);
+        }
+
+        private void OnConditionsAmountChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
         public ConditionButtonControl()
         {
             InitializeComponent();

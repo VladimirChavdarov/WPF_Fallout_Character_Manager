@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models;
+using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
@@ -16,6 +17,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public SurvivalModel SurvivalModel { get; } = new SurvivalModel();
         public CombatModel CombatModel { get; } = new CombatModel();
         public SkillModel SkillModel { get; } = new SkillModel();
+        public LimbConditionsModel LimbConditionsModel { get; } = new LimbConditionsModel(); 
+        //
+
+        // External Data Models
+        public XtrnlLimbConditionsModel XtrnlLimbConditionsModel { get; } = new XtrnlLimbConditionsModel();
         //
 
         // All ViewModels
@@ -24,6 +30,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public SurvivalViewModel? SurvivalViewModel { get; }
         public CombatViewModel CombatViewModel { get; }
         public SkillViewModel SkillViewModel { get; }
+        public ConditionsViewModel ConditionsViewModel { get; }
         //
 
         // Constructor
@@ -34,6 +41,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SurvivalViewModel = new SurvivalViewModel(SurvivalModel, SPECIALModel);
             CombatViewModel = new CombatViewModel(CombatModel, SPECIALModel, BioModel);
             SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel);
+            ConditionsViewModel = new ConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
         }
         //
     }

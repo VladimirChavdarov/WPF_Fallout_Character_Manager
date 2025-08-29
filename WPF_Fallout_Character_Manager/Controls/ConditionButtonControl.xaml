@@ -20,7 +20,7 @@
             TextBoxBackground="Black"
             IsReadOnly="True"
             TextWrapping="NoWrap"
-            Text="1"/>
+            Text="{Binding ConditionsAmount, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"/>
         <Button
             Style="{StaticResource FalloutButton}"
             FontFamily="{StaticResource JH_Fallout}"
