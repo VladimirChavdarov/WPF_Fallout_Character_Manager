@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.ViewModels;
 
 namespace WPF_Fallout_Character_Manager.Controls
 {
@@ -71,6 +72,38 @@ namespace WPF_Fallout_Character_Manager.Controls
         public ConditionButtonControl()
         {
             InitializeComponent();
+
+            this.DataContextChanged += (s, e) =>
+            {
+                if (DataContext is LimbConditionsViewModel vm)
+                {
+                    vm.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName == nameof(LimbConditionsViewModel.IsModalOpen) && !vm.IsModalOpen)
+                        {
+                            ToggleBtn.IsChecked = false;
+                        }
+                    };
+                }
+            };
+        }
+
+        private void ConditionButtonControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is LimbConditionsViewModel vm)
+            {
+                vm.PropertyChanged += (s, args) =>
+                {
+                    if (args.PropertyName == nameof(LimbConditionsViewModel.IsModalOpen))
+                    {
+                        // Only untoggle when modal closes
+                        if (!vm.IsModalOpen)
+                        {
+                            ToggleBtn.Dispatcher.Invoke(() => ToggleBtn.IsChecked = false);
+                        }
+                    }
+                };
+            }
         }
     }
 }

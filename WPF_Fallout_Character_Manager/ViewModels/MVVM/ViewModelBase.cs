@@ -38,7 +38,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
         // Constructor
         public ViewModelBase()
         {
-            OpenModifierModalWindowCommand = new RelayCommand(OpenModal);
+            OpenModifierModalWindowCommand = new RelayCommand(OpenModifierModal);
         }
         //
 
@@ -47,7 +47,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
         // ChatGPT told me to do that in order to open the Modal through the View to follow the MVVM pattern. Double-check it.
         //public Action<object>? OnRequestOpenModifierModalWindow;
 
-        private void OpenModal(object modInt)
+        private void OpenModifierModal(object modInt)
         {
             // test (which works!)
             //MessageBox.Show("I triggered the OpenModifiedModalWindowCommand!");
@@ -70,7 +70,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
             }
             else
             {
-                MessageBox.Show("Invalid object passed to OpenModal — expected ModInt.");
+                MessageBox.Show("Invalid object passed to OpenModifierModal — expected ModInt.");
             }
         }
         //

@@ -13,7 +13,7 @@ using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlLimbConditionsModel : ModelBase
+    public class XtrnlLimbConditionsModel : ModelBase
     {
         // Constructor
         public XtrnlLimbConditionsModel()

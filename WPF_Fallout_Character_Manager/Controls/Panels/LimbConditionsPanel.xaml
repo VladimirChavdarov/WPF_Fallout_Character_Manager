@@ -31,7 +31,8 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Head"
-                            ConditionsAmount="{Binding LimbConditionsModel.HeadLimbConditions.Count, Mode=OneWay}"/>
+                            ConditionsAmount="{Binding LimbConditionsModel.HeadLimbConditions.Count, Mode=OneWay}"
+                            DataContext="{Binding}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="180 60 0 0"

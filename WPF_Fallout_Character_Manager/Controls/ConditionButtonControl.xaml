@@ -21,12 +21,15 @@
             IsReadOnly="True"
             TextWrapping="NoWrap"
             Text="{Binding ConditionsAmount, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"/>
-        <Button
-            Style="{StaticResource FalloutButton}"
+        <ToggleButton
+            x:Name="ToggleBtn"
+            Style="{StaticResource FalloutToggleButton}"
             FontFamily="{StaticResource JH_Fallout}"
             FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Content="{Binding ButtonText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
             BorderThickness="1 1 1 1"
-            BorderBrush="{StaticResource FalloutGreen}"/>
+            BorderBrush="{StaticResource FalloutGreen}"
+            Command="{Binding OpenLimbConditionsModalWindowCommand}"
+            CommandParameter="{Binding ButtonText, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
     </StackPanel>
 </UserControl>

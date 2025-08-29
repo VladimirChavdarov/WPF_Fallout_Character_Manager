@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WPF_Fallout_Character_Manager.Models.MVVM
 {
-    class ModelBase : INotifyPropertyChanged
+    public class ModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name) =>
