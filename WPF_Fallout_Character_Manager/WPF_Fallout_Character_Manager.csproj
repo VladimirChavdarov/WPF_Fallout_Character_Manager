@@ -23,6 +23,8 @@
     <None Remove="Resources\trashcan1.png" />
     <None Remove="Resources\Vault_Boy.png" />
     <None Remove="Resources\vault_boy_thumbsup.png" />
+    <None Remove="Resources\vault_boy_thumbsup_green.png" />
+    <None Remove="Resources\vault_boy_thumbsup_green_filled.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\vault_boy_thumbsup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\vault_boy_thumbsup_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\vault_boy_thumbsup_green_filled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
