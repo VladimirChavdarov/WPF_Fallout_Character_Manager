@@ -31,7 +31,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Head"
-                            ConditionsAmount="{Binding LimbConditionsModel.HeadLimbConditions.Count, Mode=OneWay}"
+                            ConditionsAmount="{Binding HeadConditionsCount, Mode=OneWay}"
                             DataContext="{Binding}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
@@ -39,35 +39,35 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Eyes"
-                            ConditionsAmount="{Binding LimbConditionsModel.EyesLimbConditions.Count, Mode=OneWay}"/>
+                            ConditionsAmount="{Binding EyesConditionsCount, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="10 65 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Arms"
-                            ConditionsAmount="{Binding LimbConditionsModel.ArmLimbConditions.Count, Mode=OneWay}"/>
+                            ConditionsAmount="{Binding ArmsConditionsCount, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="25 150 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Torso"
-                            ConditionsAmount="{Binding LimbConditionsModel.TorsoLimbConditions.Count, Mode=OneWay}"/>
+                            ConditionsAmount="{Binding TorsoConditionsCount, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="180 170 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Groin"
-                            ConditionsAmount="{Binding LimbConditionsModel.GroinLimbConditions.Count, Mode=OneWay}"/>
+                            ConditionsAmount="{Binding GroinConditionsCount, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
                             FontSize="10"
                             Margin="60 245 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             ButtonText="Legs"
-                            ConditionsAmount="{Binding LimbConditionsModel.LegLimbConditions.Count, Mode=OneWay}"/>
+                            ConditionsAmount="{Binding LegsConditionsCount, Mode=OneWay}"/>
                     </Grid>
                 </Grid>
             </ScrollViewer>

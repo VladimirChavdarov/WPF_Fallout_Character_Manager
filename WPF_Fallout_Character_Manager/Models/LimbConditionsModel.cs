@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
@@ -14,165 +15,53 @@ namespace WPF_Fallout_Character_Manager.Models
         // Constructor
         public LimbConditionsModel()
         {
-            EyesLimbConditions = new ObservableCollection<LimbCondition>();
-            HeadLimbConditions = new ObservableCollection<LimbCondition>();
-            ArmLimbConditions = new ObservableCollection<LimbCondition>();
-            TorsoLimbConditions = new ObservableCollection<LimbCondition>();
-            GroinLimbConditions = new ObservableCollection<LimbCondition>();
-            LegLimbConditions = new ObservableCollection<LimbCondition>();
-            ObjectLimbConditions = new ObservableCollection<LimbCondition>();
-
-            Console.WriteLine("Active Limb Conditions uploaded");
+            LimbConditions = new ObservableCollection<LimbCondition>();
         }
         //
 
         // Helpers
         public void AddLimbCondition(LimbCondition limbCondition)
         {
-            switch(limbCondition.Target)
-            {
-                case "Eyes":
-                    EyesLimbConditions.Add(limbCondition);
-                    break;
-                case "Head":
-                    HeadLimbConditions.Add(limbCondition);
-                    break;
-                case "Arms":
-                    ArmLimbConditions.Add(limbCondition);
-                    break;
-                case "Torso":
-                    TorsoLimbConditions.Add(limbCondition);
-                    break;
-                case "Groin":
-                    GroinLimbConditions.Add(limbCondition);
-                    break;
-                case "Legs":
-                    LegLimbConditions.Add(limbCondition);
-                    break;
-                case "Held or Carried Object":
-                    ObjectLimbConditions.Add(limbCondition);
-                    break;
-                default:
-                    break;
-            }
+            LimbConditions.Add(limbCondition);
         }
         //
 
+        // TODO: This might need reworking depending on how the drop-down for choosing a condition will work.
         public void AddEmptyLimbCondition(string target)
         {
             LimbCondition newLimbCondition = new LimbCondition();
             newLimbCondition.Target = target;
-            switch (target)
-            {
-                case "Eyes":
-                    EyesLimbConditions.Add(newLimbCondition);
-                    break;
-                case "Head":
-                    HeadLimbConditions.Add(newLimbCondition);
-                    break;
-                case "Arms":
-                    ArmLimbConditions.Add(newLimbCondition);
-                    break;
-                case "Torso":
-                    TorsoLimbConditions.Add(newLimbCondition);
-                    break;
-                case "Groin":
-                    GroinLimbConditions.Add(newLimbCondition);
-                    break;
-                case "Legs":
-                    LegLimbConditions.Add(newLimbCondition);
-                    break;
-                case "Held or Carried Object":
-                    ObjectLimbConditions.Add(newLimbCondition);
-                    break;
-                default:
-                    break;
-            }
+            LimbConditions.Add(newLimbCondition);
         }
 
         public void RemoveCondition(LimbCondition conditionToRemove)
         {
-            switch (conditionToRemove.Target)
-            {
-                case "Eyes":
-                    EyesLimbConditions.Remove(conditionToRemove);
-                    break;
-                case "Head":
-                    HeadLimbConditions.Remove(conditionToRemove);
-                    break;
-                case "Arms":
-                    ArmLimbConditions.Remove(conditionToRemove);
-                    break;
-                case "Torso":
-                    TorsoLimbConditions.Remove(conditionToRemove);
-                    break;
-                case "Groin":
-                    GroinLimbConditions.Remove(conditionToRemove);
-                    break;
-                case "Legs":
-                    LegLimbConditions.Remove(conditionToRemove);
-                    break;
-                case "Held or Carried Object":
-                    ObjectLimbConditions.Remove(conditionToRemove);
-                    break;
-                default:
-                    break;
-            }
+            LimbConditions.Remove(conditionToRemove);
+        }
+
+        public void RemoveCondition(string name, string target)
+        {
+            LimbCondition limbConditionToRemove = LimbConditions.FirstOrDefault(m => m.Name == name && m.Target == target);
+            if (limbConditionToRemove != null)
+                LimbConditions.Remove(limbConditionToRemove);
+            else
+                throw new Exception($"Limb condition with label '{name}' and target '{target}' not found.");
         }
 
         public void ReplaceLimbCondition(LimbCondition oldCondition, LimbCondition newCondition)
         {
-            switch (oldCondition.Target)
-            {
-                case "Eyes":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                case "Head":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                case "Arms":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                case "Torso":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                case "Groin":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                case "Legs":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                case "Held or Carried Object":
-                    ReplaceConditionInCollection(EyesLimbConditions, oldCondition, newCondition);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void ReplaceConditionInCollection(
-            ObservableCollection<LimbCondition>? collection,
-            LimbCondition oldCondition,
-            LimbCondition newCondition)
-        {
-            if (collection is null)
+            if (LimbConditions is null)
                 return;
 
-            int index = collection.IndexOf(oldCondition);
+            int index = LimbConditions.IndexOf(oldCondition);
             if (index >= 0)
             {
-                collection[index] = newCondition;
+                LimbConditions[index] = newCondition;
             }
         }
 
         // Data
-        public ObservableCollection<LimbCondition>? EyesLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? HeadLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? ArmLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? TorsoLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? GroinLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? LegLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? ObjectLimbConditions { get; }
+        public ObservableCollection<LimbCondition>? LimbConditions { get; }
         //
     }
 }

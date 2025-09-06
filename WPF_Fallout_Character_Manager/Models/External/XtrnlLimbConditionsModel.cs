@@ -18,13 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // Constructor
         public XtrnlLimbConditionsModel()
         {
-            EyesLimbConditions = new ObservableCollection<LimbCondition>();
-            HeadLimbConditions = new ObservableCollection<LimbCondition>();
-            ArmLimbConditions = new ObservableCollection<LimbCondition>();
-            TorsoLimbConditions = new ObservableCollection<LimbCondition>();
-            GroinLimbConditions = new ObservableCollection<LimbCondition>();
-            LegLimbConditions = new ObservableCollection<LimbCondition>();
-            ObjectLimbConditions = new ObservableCollection<LimbCondition>();
+            LimbConditions = new ObservableCollection<LimbCondition>();
 
             var lines = File.ReadAllLines("Resources/Spreadsheets/limb_conditions.csv");
 
@@ -45,47 +39,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     description: parts[5]
                     );
 
-                // distribute based on target
-                switch(parts[1])
-                {
-                    case "Eyes":
-                        EyesLimbConditions.Add(condition);
-                        break;
-                    case "Head":
-                        HeadLimbConditions.Add(condition);
-                        break;
-                    case "Arms":
-                        ArmLimbConditions.Add(condition);
-                        break;
-                    case "Torso":
-                        TorsoLimbConditions.Add(condition);
-                        break;
-                    case "Groin":
-                        GroinLimbConditions.Add(condition);
-                        break;
-                    case "Legs":
-                        LegLimbConditions.Add(condition);
-                        break;
-                    case "Held or Carried Object":
-                        ObjectLimbConditions.Add(condition);
-                        break;
-                    default:
-                        break;
-                }
-                //
+                LimbConditions.Add(condition);
             }
             Console.WriteLine("Limb Conditions uploaded");
         }
         //
 
         // Data
-        public ObservableCollection<LimbCondition>? EyesLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? HeadLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? ArmLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? TorsoLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? GroinLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? LegLimbConditions { get; }
-        public ObservableCollection<LimbCondition>? ObjectLimbConditions { get; }
+        public ObservableCollection<LimbCondition>? LimbConditions { get; }
         //
     }
 

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF_Fallout_Character_Manager.Controls;
+using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.ViewModels;
 
 namespace WPF_Fallout_Character_Manager.Windows
@@ -41,6 +42,17 @@ namespace WPF_Fallout_Character_Manager.Windows
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox && comboBox.SelectedItem is LimbCondition selectedCondition)
+            {
+                if (DataContext is LimbConditionsViewModel vm)
+                {
+                    vm.ReplaceLimbConditionCommand.Execute(selectedCondition);
+                }
             }
         }
     }
