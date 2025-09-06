@@ -58,7 +58,24 @@
             BorderThickness="1 1 1 1">
             <ScrollViewer>
                 <StackPanel Margin="5">
-
+                    
+                    <Grid>
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="Add"
+                            Margin="5 5 0 0"
+                            Padding="5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding DataContext.AddLimbCondition, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="Close"
+                            Padding="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Click="btnClose_Click"/>
+                    </Grid>
                 </StackPanel>
             </ScrollViewer>
         </Border>

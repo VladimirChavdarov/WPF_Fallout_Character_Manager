@@ -21,10 +21,10 @@ namespace WPF_Fallout_Character_Manager.Windows
     /// </summary>
     public partial class LimbConditionsWindow : Window
     {
-        public LimbConditionsWindow(LimbConditionsViewModel conditionsViewModel)
+        public LimbConditionsWindow(LimbConditionsViewModel limbConditionsViewModel)
         {
             InitializeComponent();
-            this.DataContext = conditionsViewModel;
+            this.DataContext = limbConditionsViewModel;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
