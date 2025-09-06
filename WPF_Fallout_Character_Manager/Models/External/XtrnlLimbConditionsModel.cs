@@ -54,7 +54,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     case "Head":
                         HeadLimbConditions.Add(condition);
                         break;
-                    case "Arm":
+                    case "Arms":
                         ArmLimbConditions.Add(condition);
                         break;
                     case "Torso":
@@ -63,7 +63,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     case "Groin":
                         GroinLimbConditions.Add(condition);
                         break;
-                    case "Leg":
+                    case "Legs":
                         LegLimbConditions.Add(condition);
                         break;
                     case "Held or Carried Object":
