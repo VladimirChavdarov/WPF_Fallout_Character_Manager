@@ -47,6 +47,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
                 if(XtrnlLimbConditionsObserved != null)
                     XtrnlLimbConditionsObserved.Refresh();
+                if(ActiveLimbConditionsObserved != null)
+                    ActiveLimbConditionsObserved.Refresh();
             }
         }
 
@@ -65,7 +67,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         public ICollectionView XtrnlLimbConditionsObserved { get; }
         //public ObservableCollection<LimbCondition> XtrnlLimbConditionsObserved { get; }  // the contents will change based on which limb list is opened
-        public ObservableCollection<LimbCondition> ActiveLimbConditionsObserved { get; } // the contents will change based on which limb list is opened
+        public ICollectionView ActiveLimbConditionsObserved { get; }
+        //public ObservableCollection<LimbCondition> ActiveLimbConditionsObserved { get; } // the contents will change based on which limb list is opened
         //
 
         // constructor
@@ -77,8 +80,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             IsModalOpen = false;
             XtrnlLimbConditionsObserved = CollectionViewSource.GetDefaultView(XtrnlLimbConditionsModel.LimbConditions);
             XtrnlLimbConditionsObserved.Filter = FilterByLimb;
-            //XtrnlLimbConditionsObserved = new ObservableCollection<LimbCondition>();
-            ActiveLimbConditionsObserved = new ObservableCollection<LimbCondition>();
+            ActiveLimbConditionsObserved = CollectionViewSource.GetDefaultView(LimbConditionsModel.LimbConditions);
+            ActiveLimbConditionsObserved.Filter = FilterByLimb;
 
             // Bind a function to the command so it executes every time the command is sent 
             OpenLimbConditionsModalWindowCommand = new RelayCommand(OpenLimbConditionsModal);
@@ -95,7 +98,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 newCondition.SelectedExternalCondition = template; // SelectedExternalCondition should always get its value from the XtrnlLimbConditions.
 
                 LimbConditionsModel.AddLimbCondition(newCondition);
-                //LimbConditionsModel.LimbConditions.Add(newCondition);
 
             });
 
@@ -137,10 +139,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _limbConditionsModel.LimbConditions.CollectionChanged += (s, e) =>
             {
                 RaiseAllCountsChanged();
-                UpdateObservedCollection();
             };
             //
         }
+
         //
 
         // Methods
@@ -152,28 +154,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OnPropertyChanged(nameof(TorsoConditionsCount));
             OnPropertyChanged(nameof(GroinConditionsCount));
             OnPropertyChanged(nameof(LegsConditionsCount));
-        }
-
-        // TODO: Make some checks to reduce the amount of times this gets called based on different use-cases.
-        private void UpdateObservedCollection()
-        {
-            //// Update available options for selecting a new condition
-            //XtrnlLimbConditionsObserved.Clear();
-            //foreach (LimbCondition lc in XtrnlLimbConditionsModel.LimbConditions)
-            //{
-            //    if (lc.Target == CurrentLimbName)
-            //        XtrnlLimbConditionsObserved.Add(lc);
-            //}
-            ////
-
-            // Update the active conditions only for the selected limb
-            ActiveLimbConditionsObserved.Clear();
-            foreach (LimbCondition lc in LimbConditionsModel.LimbConditions)
-            {
-                if (lc.Target == CurrentLimbName)
-                    ActiveLimbConditionsObserved.Add(lc);
-            }
-            //
         }
 
         private bool FilterByLimb(object obj)
@@ -196,8 +176,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             else
                 CurrentLimbName = "Invalid Limb Name";
 
-            UpdateObservedCollection();
-
             IsModalOpen = true;
 
             // Open Modal window
@@ -218,21 +196,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         // Replace Limb Condition
         public RelayCommand ReplaceLimbConditionCommand { get; }
-
-        //private void ReplaceLimbConditionVM(LimbCondition selectedCondition)
-        //{
-        //    if (selectedCondition == null)
-        //        return;
-
-        //    // Match the old condition to the one from the Active Limb conditions
-        //    var oldCondition = ActiveLimbConditionsObserved.FirstOrDefault(lc => lc.Target == selectedCondition.Target && lc.Name != selectedCondition.Name);
-
-        //    if (oldCondition != null)
-        //    {
-        //        LimbConditionsModel.ReplaceLimbCondition(oldCondition, selectedCondition);
-        //        UpdateObservedCollections();
-        //    }
-        //}
         //
     }
 }
