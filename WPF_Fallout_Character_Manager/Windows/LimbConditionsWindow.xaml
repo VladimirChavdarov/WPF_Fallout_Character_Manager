@@ -86,7 +86,8 @@
                                             FontSize="8"
                                             VerticalAlignment="Center"
                                             Content="Condition"/>
-                                        <ComboBox Width="135"
+                                        <ComboBox
+                                            Width="135"
                                             ItemsSource="{Binding DataContext.XtrnlLimbConditionsObserved, RelativeSource={RelativeSource AncestorType=Window}}"
                                             DisplayMemberPath="Name"
                                             SelectedItem="{Binding SelectedExternalCondition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

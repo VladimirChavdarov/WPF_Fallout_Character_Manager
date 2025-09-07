@@ -2,4 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="FalloutGreen" Color="#23ba03"/>
     <SolidColorBrush x:Key="FalloutGreenBackground" Color="#003300"/>
+    <SolidColorBrush x:Key="FalloutGreenFaded" Color="#1da300"/>
 </ResourceDictionary>
