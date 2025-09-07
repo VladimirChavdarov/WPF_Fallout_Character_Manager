@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -47,7 +48,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             get => _isModalOpen;
             set => Update(ref _isModalOpen, value);
         }
-        
+
         public int EyesConditionsCount => _limbConditionsModel.LimbConditions.Count(lc => lc.Target.Equals("eyes", StringComparison.OrdinalIgnoreCase));
         public int HeadConditionsCount => _limbConditionsModel.LimbConditions.Count(lc => lc.Target.Equals("head", StringComparison.OrdinalIgnoreCase));
         public int ArmsConditionsCount => _limbConditionsModel.LimbConditions.Count(lc => lc.Target.Equals("arms", StringComparison.OrdinalIgnoreCase));
@@ -72,12 +73,22 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             // Bind a function to the command so it executes every time the command is sent 
             OpenLimbConditionsModalWindowCommand = new RelayCommand(OpenLimbConditionsModal);
 
-            AddLimbConditionCommand = new RelayCommand(
-                _ =>
-                {
-                    LimbCondition lc = XtrnlLimbConditionsObserved.FirstOrDefault();
-                    LimbConditionsModel.AddLimbCondition(lc);
-                });
+            AddLimbConditionCommand = new RelayCommand(_ =>
+            {
+                // Pick a default template
+                LimbCondition? observedTemplate = XtrnlLimbConditionsObserved.FirstOrDefault();
+                LimbCondition? template = XtrnlLimbConditionsModel.LimbConditions.FirstOrDefault(lc => lc.Name == observedTemplate.Name && lc.Target == observedTemplate.Target);
+                if (template == null)
+                    return;
+
+                // Always create a new instance
+                LimbCondition? newCondition = template.Clone();
+                newCondition.SelectedExternalCondition = template; // SelectedExternalCondition should always get its value from the XtrnlLimbConditions.
+
+                LimbConditionsModel.AddLimbCondition(newCondition);
+                //LimbConditionsModel.LimbConditions.Add(newCondition);
+
+            });
 
             RemoveLimbConditionCommand = new RelayCommand(
                 param =>
@@ -88,14 +99,29 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     }
                 });
 
-            ReplaceLimbConditionCommand = new RelayCommand(
-                param =>
+            ReplaceLimbConditionCommand = new RelayCommand(param =>
+            {
+                if (param is LimbCondition activeCondition && activeCondition.SelectedExternalCondition != null)
                 {
-                    if (param is LimbCondition limbCondition)
-                    { 
-                        ReplaceLimbConditionVM(limbCondition);
-                    }
-                });
+                    LimbCondition oldLimbCondition = activeCondition.Clone();
+
+                    LimbCondition? selected = activeCondition.SelectedExternalCondition;
+
+                    // Copy all fields from the selected external template
+                    activeCondition.Name = selected.Name;
+                    activeCondition.Target = selected.Target;
+                    activeCondition.APCost = selected.APCost;
+                    activeCondition.Modifier = selected.Modifier;
+                    activeCondition.Effects = selected.Effects;
+                    activeCondition.Description = selected.Description;
+
+                    // Clear temporary selection
+                    activeCondition.SelectedExternalCondition = selected;
+
+                    LimbConditionsModel.ReplaceLimbCondition(oldLimbCondition, activeCondition);
+                }
+            });
+
             //
 
             // Update the counters of the limb conditions every time the observable collection in the Model changes.
@@ -119,22 +145,23 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OnPropertyChanged(nameof(LegsConditionsCount));
         }
 
+        // TODO: Make some checks to reduce the amount of times this gets called based on different use-cases.
         private void UpdateObservedCollections()
         {
             // Update available options for selecting a new condition
             XtrnlLimbConditionsObserved.Clear();
-            foreach(LimbCondition lc in XtrnlLimbConditionsModel.LimbConditions)
+            foreach (LimbCondition lc in XtrnlLimbConditionsModel.LimbConditions)
             {
-                if(lc.Target == CurrentLimbName)
+                if (lc.Target == CurrentLimbName)
                     XtrnlLimbConditionsObserved.Add(lc);
             }
             //
 
             // Update the active conditions only for the selected limb
             ActiveLimbConditionsObserved.Clear();
-            foreach(LimbCondition lc in LimbConditionsModel.LimbConditions)
+            foreach (LimbCondition lc in LimbConditionsModel.LimbConditions)
             {
-                if(lc.Target == CurrentLimbName)
+                if (lc.Target == CurrentLimbName)
                     ActiveLimbConditionsObserved.Add(lc);
             }
             //
@@ -174,20 +201,20 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // Replace Limb Condition
         public RelayCommand ReplaceLimbConditionCommand { get; }
 
-        private void ReplaceLimbConditionVM(LimbCondition selectedCondition)
-        {
-            if (selectedCondition == null)
-                return;
+        //private void ReplaceLimbConditionVM(LimbCondition selectedCondition)
+        //{
+        //    if (selectedCondition == null)
+        //        return;
 
-            // Match the old condition to the one from the Active Limb conditions
-            var oldCondition = ActiveLimbConditionsObserved.FirstOrDefault(lc => lc.Target == selectedCondition.Target && lc.Name != selectedCondition.Name);
+        //    // Match the old condition to the one from the Active Limb conditions
+        //    var oldCondition = ActiveLimbConditionsObserved.FirstOrDefault(lc => lc.Target == selectedCondition.Target && lc.Name != selectedCondition.Name);
 
-            if (oldCondition != null)
-            {
-                LimbConditionsModel.ReplaceLimbCondition(oldCondition, selectedCondition);
-                UpdateObservedCollections();
-            }
-        }
+        //    if (oldCondition != null)
+        //    {
+        //        LimbConditionsModel.ReplaceLimbCondition(oldCondition, selectedCondition);
+        //        UpdateObservedCollections();
+        //    }
+        //}
         //
     }
 }

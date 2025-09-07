@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.VisualBasic;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.MVVM;
@@ -22,6 +23,7 @@ namespace WPF_Fallout_Character_Manager.Models
         // Helpers
         public void AddLimbCondition(LimbCondition limbCondition)
         {
+            //LimbConditions.Add(limbCondition.Clone());
             LimbConditions.Add(limbCondition);
         }
         //
@@ -57,6 +59,19 @@ namespace WPF_Fallout_Character_Manager.Models
             if (index >= 0)
             {
                 LimbConditions[index] = newCondition;
+            }
+        }
+
+        public void ReplaceLimbCondition(string oldName, string oldTarget, LimbCondition newCondition)
+        {
+            if (LimbConditions is null)
+                return;
+
+            LimbCondition oldLimbCondition = LimbConditions.FirstOrDefault(m => m.Name == oldName && m.Target == oldTarget);
+            int index = LimbConditions.IndexOf(oldLimbCondition);
+            if (index >= 0)
+            {
+                LimbConditions[index] = newCondition.Clone();
             }
         }
 

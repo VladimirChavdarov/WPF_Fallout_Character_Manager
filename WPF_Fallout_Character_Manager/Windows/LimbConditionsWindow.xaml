@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
         xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="LimbConditionsWindow" Height="300" Width="500"
         WindowStyle="None"
@@ -74,24 +75,30 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel
+                                    VerticalAlignment="Top"
                                     Orientation="Horizontal">
-                                    <ComboBox Width="135"
+                                    <StackPanel
                                         Margin="2"
-                                        ItemsSource="{Binding DataContext.XtrnlLimbConditionsObserved, RelativeSource={RelativeSource AncestorType=Window}}"
-                                        DisplayMemberPath="Name"
-                                        SelectedItem="{Binding ., Mode=TwoWay}"
-                                        SelectionChanged="ComboBox_SelectionChanged"/>
-                                    <controls:TextBoxWithLabelControl
-                                        Margin="2"
-                                        Width="135"
-                                        VerticalAlignment="Top"
-                                        HorizontalContentAlignment="Left"
                                         Orientation="Vertical"
-                                        LabelFontSize="8"
-                                        LabelText="Condition"
-                                        FontSize="9"
-                                        CanOpenModal="false"
-                                        Text="{Binding Name}"/>
+                                        HorizontalAlignment="Left">
+                                        <Label
+                                            Style="{StaticResource FalloutDefaultLabel}"
+                                            FontSize="8"
+                                            VerticalAlignment="Center"
+                                            Content="Condition"/>
+                                        <ComboBox Width="135"
+                                            ItemsSource="{Binding DataContext.XtrnlLimbConditionsObserved, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SelectedExternalCondition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction
+                                                        Command="{Binding DataContext.ReplaceLimbConditionCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                        CommandParameter="{Binding}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ComboBox>
+                                    </StackPanel>
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"
                                         Width="290"

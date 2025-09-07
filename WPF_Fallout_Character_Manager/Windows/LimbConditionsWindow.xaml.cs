@@ -47,13 +47,16 @@ namespace WPF_Fallout_Character_Manager.Windows
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is ComboBox comboBox && comboBox.SelectedItem is LimbCondition selectedCondition)
-            {
-                if (DataContext is LimbConditionsViewModel vm)
-                {
-                    vm.ReplaceLimbConditionCommand.Execute(selectedCondition);
-                }
-            }
+            //if (e.AddedItems.Count == 0)
+            //    return; // ignore deselection events
+
+            //if (sender is ComboBox comboBox && comboBox.SelectedItem is LimbCondition selectedCondition)
+            //{
+            //    if (DataContext is LimbConditionsViewModel vm)
+            //    {
+            //        vm.ReplaceLimbConditionCommand.Execute(selectedCondition);
+            //    }
+            //}
         }
     }
 }

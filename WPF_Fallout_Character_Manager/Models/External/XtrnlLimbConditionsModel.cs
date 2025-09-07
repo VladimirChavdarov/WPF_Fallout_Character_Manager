@@ -111,5 +111,26 @@ namespace WPF_Fallout_Character_Manager.Models.External
             get => _description;
             set => Update(ref _description, value);
         }
+
+        private LimbCondition _selectedExternalCondition;
+        public LimbCondition SelectedExternalCondition
+        {
+            get => _selectedExternalCondition;
+            set => Update(ref _selectedExternalCondition, value);
+        }
+
+        // Methods
+        public LimbCondition Clone() => new LimbCondition
+        {
+            Name = this.Name,
+            Target = this.Target,
+            APCost = this.APCost,
+            Modifier = this.Modifier,
+            Effects = this.Effects,
+            Description = this.Description,
+
+            SelectedExternalCondition = this.SelectedExternalCondition,
+        };
+        //
     }
 }
