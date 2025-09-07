@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -40,7 +41,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public string CurrentLimbName
         {
             get => _currentLimbName;
-            set => Update(ref _currentLimbName, value);
+            set
+            {
+                Update(ref _currentLimbName, value);
+
+                if(XtrnlLimbConditionsObserved != null)
+                    XtrnlLimbConditionsObserved.Refresh();
+            }
         }
 
         public bool IsModalOpen
@@ -56,7 +63,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public int GroinConditionsCount => _limbConditionsModel.LimbConditions.Count(lc => lc.Target.Equals("groin", StringComparison.OrdinalIgnoreCase));
         public int LegsConditionsCount => _limbConditionsModel.LimbConditions.Count(lc => lc.Target.Equals("legs", StringComparison.OrdinalIgnoreCase));
 
-        public ObservableCollection<LimbCondition> XtrnlLimbConditionsObserved { get; }  // the contents will change based on which limb list is opened
+        public ICollectionView XtrnlLimbConditionsObserved { get; }
+        //public ObservableCollection<LimbCondition> XtrnlLimbConditionsObserved { get; }  // the contents will change based on which limb list is opened
         public ObservableCollection<LimbCondition> ActiveLimbConditionsObserved { get; } // the contents will change based on which limb list is opened
         //
 
@@ -67,7 +75,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             LimbConditionsModel = limbConditions;
             CurrentLimbName = "Placeholder Limb Name";
             IsModalOpen = false;
-            XtrnlLimbConditionsObserved = new ObservableCollection<LimbCondition>();
+            XtrnlLimbConditionsObserved = CollectionViewSource.GetDefaultView(XtrnlLimbConditionsModel.LimbConditions);
+            XtrnlLimbConditionsObserved.Filter = FilterByLimb;
+            //XtrnlLimbConditionsObserved = new ObservableCollection<LimbCondition>();
             ActiveLimbConditionsObserved = new ObservableCollection<LimbCondition>();
 
             // Bind a function to the command so it executes every time the command is sent 
@@ -76,8 +86,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             AddLimbConditionCommand = new RelayCommand(_ =>
             {
                 // Pick a default template
-                LimbCondition? observedTemplate = XtrnlLimbConditionsObserved.FirstOrDefault();
-                LimbCondition? template = XtrnlLimbConditionsModel.LimbConditions.FirstOrDefault(lc => lc.Name == observedTemplate.Name && lc.Target == observedTemplate.Target);
+                LimbCondition? template = XtrnlLimbConditionsModel.LimbConditions.FirstOrDefault(lc => lc.Target == CurrentLimbName);
                 if (template == null)
                     return;
 
@@ -128,7 +137,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _limbConditionsModel.LimbConditions.CollectionChanged += (s, e) =>
             {
                 RaiseAllCountsChanged();
-                UpdateObservedCollections();
+                UpdateObservedCollection();
             };
             //
         }
@@ -146,16 +155,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         }
 
         // TODO: Make some checks to reduce the amount of times this gets called based on different use-cases.
-        private void UpdateObservedCollections()
+        private void UpdateObservedCollection()
         {
-            // Update available options for selecting a new condition
-            XtrnlLimbConditionsObserved.Clear();
-            foreach (LimbCondition lc in XtrnlLimbConditionsModel.LimbConditions)
-            {
-                if (lc.Target == CurrentLimbName)
-                    XtrnlLimbConditionsObserved.Add(lc);
-            }
-            //
+            //// Update available options for selecting a new condition
+            //XtrnlLimbConditionsObserved.Clear();
+            //foreach (LimbCondition lc in XtrnlLimbConditionsModel.LimbConditions)
+            //{
+            //    if (lc.Target == CurrentLimbName)
+            //        XtrnlLimbConditionsObserved.Add(lc);
+            //}
+            ////
 
             // Update the active conditions only for the selected limb
             ActiveLimbConditionsObserved.Clear();
@@ -165,6 +174,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     ActiveLimbConditionsObserved.Add(lc);
             }
             //
+        }
+
+        private bool FilterByLimb(object obj)
+        {
+            if(obj is LimbCondition lc)
+            {
+                return lc.Target.Equals(CurrentLimbName, StringComparison.OrdinalIgnoreCase);
+            }
+            return false;
         }
         //
 
@@ -178,7 +196,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             else
                 CurrentLimbName = "Invalid Limb Name";
 
-            UpdateObservedCollections();
+            UpdateObservedCollection();
 
             IsModalOpen = true;
 
