@@ -23,7 +23,7 @@
                         HorizontalAlignment="Center"
                         Width="130"
                         Stretch="Uniform"
-                        Source="/Resources/vault_boy_thumbsup_green.png"/>
+                        Source="{Binding VaultBoyImage}"/>
                     <Grid>
                         <controls:ConditionButtonControl
                             FontSize="10"

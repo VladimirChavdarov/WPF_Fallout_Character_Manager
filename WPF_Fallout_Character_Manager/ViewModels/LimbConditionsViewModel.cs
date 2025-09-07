@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -23,6 +24,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private LimbConditionsModel _limbConditionsModel;
         private string _currentLimbName;
         private bool _isModalOpen = false;
+        private string _vaultBoyImgSource = "Resources/vault_boy_thumbsup_green.png";
+        private BitmapImage _vaultBoyImage;
         //
 
         // public variables
@@ -60,6 +63,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
+        public BitmapImage VaultBoyImage
+        {
+            get => _vaultBoyImage;
+            set => Update(ref _vaultBoyImage, value);
+        }
+
         public bool IsModalOpen
         {
             get => _isModalOpen;
@@ -91,6 +100,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ActiveLimbConditionsObserved = CollectionViewSource.GetDefaultView(LimbConditionsModel.LimbConditions);
             ActiveLimbConditionsObserved.Filter = FilterByLimb;
 
+            LoadVaultBoyImage(GetLimbConditionsCount(), true);
+
             // Bind a function to the command so it executes every time the command is sent 
             OpenLimbConditionsModalWindowCommand = new RelayCommand(OpenLimbConditionsModal);
 
@@ -107,6 +118,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
                 LimbConditionsModel.AddLimbCondition(newCondition);
 
+                LoadVaultBoyImage(GetLimbConditionsCount());
             });
 
             RemoveLimbConditionCommand = new RelayCommand(
@@ -140,7 +152,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     LimbConditionsModel.ReplaceLimbCondition(oldLimbCondition, activeCondition);
                 }
             });
-
             //
 
             // Update the counters of the limb conditions every time the observable collection in the Model changes.
@@ -150,7 +161,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             };
             //
         }
-
         //
 
         // Methods
@@ -171,6 +181,41 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 return lc.Target.Equals(CurrentLimbName, StringComparison.OrdinalIgnoreCase);
             }
             return false;
+        }
+
+        private int GetLimbConditionsCount()
+        {
+            return EyesConditionsCount + HeadConditionsCount + ArmsConditionsCount + TorsoConditionsCount + GroinConditionsCount + LegsConditionsCount;
+        }
+
+        private void LoadVaultBoyImage(int limbConditionsCount, bool forceLoad = false)
+        {
+            string oldPath = _vaultBoyImgSource;
+
+            if(limbConditionsCount <= 3)
+            {
+                _vaultBoyImgSource = "Resources/vault_boy_thumbsup_green.png";
+            }
+            else if(limbConditionsCount <= 6)
+            {
+                _vaultBoyImgSource = "Resources/vault_boy_sad_green.png";
+            }
+            else if(limbConditionsCount <= 8)
+            {
+                _vaultBoyImgSource = "Resources/vault_boy_dead_green.png";
+            }
+
+            // early out if we don't have to change the image.
+            if (oldPath == _vaultBoyImgSource && !forceLoad)
+                return;
+
+            // NOTE: This feels like a sketchy workaround. Learn how pack URI's work.
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _vaultBoyImgSource.Replace("/", "\\"));
+            VaultBoyImage = new BitmapImage();
+            VaultBoyImage.BeginInit();
+            VaultBoyImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+            VaultBoyImage.CacheOption = BitmapCacheOption.OnLoad;
+            VaultBoyImage.EndInit();
         }
         //
 
