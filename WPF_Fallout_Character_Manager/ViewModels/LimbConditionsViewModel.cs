@@ -49,6 +49,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     XtrnlLimbConditionsObserved.Refresh();
                 if(ActiveLimbConditionsObserved != null)
                     ActiveLimbConditionsObserved.Refresh();
+
+                // Re-apply the SelectedExternalCondition references in each item in the LimbConditionsModel.LimbConditions
+                foreach (LimbCondition limbCondition in LimbConditionsModel.LimbConditions)
+                {
+                    LimbCondition lcRef = XtrnlLimbConditionsModel.LimbConditions.FirstOrDefault(lc => lc.Name == limbCondition.Name && lc.Target == limbCondition.Target);
+                    limbCondition.SelectedExternalCondition = lcRef;
+                }
+                //
             }
         }
 
