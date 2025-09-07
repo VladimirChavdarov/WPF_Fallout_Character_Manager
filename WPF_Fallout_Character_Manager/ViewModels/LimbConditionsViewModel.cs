@@ -127,6 +127,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     if (param is LimbCondition limbCondition)
                     {
                         LimbConditionsModel.RemoveCondition(limbCondition);
+
+                        LoadVaultBoyImage(GetLimbConditionsCount());
                     }
                 });
 
