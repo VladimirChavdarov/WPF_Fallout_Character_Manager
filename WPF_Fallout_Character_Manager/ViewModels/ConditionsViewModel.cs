@@ -58,6 +58,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OpenConditionsModalWindowCommand = new RelayCommand(OpenConditionsModalWindow);
             AddConditionCommand = new RelayCommand(AddCondition);
             ResetSelectedConditionCommand = new RelayCommand(ResetSelectedCondition);
+            RemoveConditionCommand = new RelayCommand(RemoveCondition);
             //
         }
         //
@@ -84,6 +85,17 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if(ConditionToAdd != null)
                 ConditionsModel.Conditions.Add(ConditionToAdd.Clone());
             ResetConditionToAdd();
+        }
+        //
+
+        // Remove condition from ConditionsModel command
+        public RelayCommand RemoveConditionCommand {  get;private set; }
+        private void RemoveCondition(object param)
+        {
+            if(param is Condition conditionToRemove)
+            {
+                ConditionsModel.Conditions.Remove(conditionToRemove);
+            }
         }
         //
 
