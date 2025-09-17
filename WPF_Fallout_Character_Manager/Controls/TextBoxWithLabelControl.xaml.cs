@@ -187,6 +187,43 @@ namespace WPF_Fallout_Character_Manager.Controls
             CanOpenModal = (bool)GetValue(CanOpenModalProperty);
         }
         #endregion
+
+        #region TextWrapping
+        public static readonly DependencyProperty TextWrappingProperty =
+        DependencyProperty.Register(
+            nameof(TextWrapping),
+            typeof(TextWrapping),
+            typeof(TextBoxWithLabelControl),
+            new PropertyMetadata(TextWrapping.Wrap)); // default
+
+        public TextWrapping TextWrapping
+        {
+            get => (TextWrapping)GetValue(TextWrappingProperty);
+            set => SetValue(TextWrappingProperty, value);
+        }
+        #endregion
+
+        #region TextPadding
+        public static readonly DependencyProperty TextPaddingProperty =
+        DependencyProperty.Register("TextPadding", typeof(Thickness), typeof(TextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(new Thickness(2, 3, 2, 3), new PropertyChangedCallback(TextPaddingPropertyChanged)));
+
+        public Thickness TextPadding
+        {
+            get => (Thickness)GetValue(TextPaddingProperty);
+            set => SetValue(TextPaddingProperty, value);
+        }
+
+        private static void TextPaddingPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelControl? ThisUserControl = d as TextBoxWithLabelControl;
+            ThisUserControl.TextPaddingPropertyChanged(e);
+        }
+
+        private void TextPaddingPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public TextBoxWithLabelControl()

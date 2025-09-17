@@ -188,7 +188,7 @@
                         </StackPanel>
 
                         <controls:TextBoxWithLabelControl
-                            Grid.Row="1" Grid.Column="1"
+                            Grid.Row="0" Grid.Column="1"
                             Margin="0 0 0 20"
                             HorizontalAlignment="Center"
                             Orientation="Vertical"
@@ -199,7 +199,7 @@
                             ModInt="{Binding CombatModel.ArmorClass}"/>
                         
                         <controls:TextBoxWithLabelControl
-                            Grid.Row="2" Grid.Column="1"
+                            Grid.Row="1" Grid.Column="1"
                             Margin="0 0 0 20"
                             HorizontalAlignment="Center"
                             Orientation="Vertical"

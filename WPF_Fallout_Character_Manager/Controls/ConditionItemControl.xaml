@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="WPF_Fallout_Character_Manager.Controls.ConditionItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <controls:EnhancedTextBox
+                    Grid.Column="0"
+                    CanOpenModal="False"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1 1 1 0"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    TextPadding="5"
+                    Margin="0 0 3 0"
+                    MaxWidth="132"
+                    Width="132"
+                    TextBoxBackground="{StaticResource FalloutGreenBackground}"
+                    Background="{StaticResource FalloutGreenBackground}"
+                    IsReadOnly="{Binding IsReadOnly}"
+                    TextWrapping="Wrap"
+                    Text="{Binding Name}"/>
+                <ToggleButton
+                    x:Name="EditBtn"
+                    Grid.Column="1"
+                    Style="{StaticResource FalloutToggleButton}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1 1 1 0"
+                    Margin="0 0 3 0">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Border x:Name="PART_Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <Rectangle x:Name="PART_OverlayRect"
+                                    Margin="5"
+                                    Width="18"
+                                    Height="18">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="#23ba03"/>
+                                    </Rectangle.Fill>
+                                    <Rectangle.OpacityMask>
+                                        <ImageBrush ImageSource="/Resources/pen.png"/>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                    <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                </ToggleButton>
+                <Button
+                    x:Name="DeleteBtn"
+                    Grid.Column="2"
+                    Style="{StaticResource FalloutButton}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1 1 1 0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="PART_Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <Rectangle x:Name="PART_OverlayRect"
+                                    Margin="5"
+                                    Width="18"
+                                    Height="18">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="#23ba03"/>
+                                    </Rectangle.Fill>
+                                    <Rectangle.OpacityMask>
+                                        <ImageBrush ImageSource="/Resources/trashcan.png"/>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                    <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    
+                </Button>
+            </Grid>
+            <controls:EnhancedTextBox
+                Grid.Row="1"
+                CanOpenModal="False"
+                BorderBrush="{StaticResource FalloutGreen}"
+                BorderThickness="1 1 1 1"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                TextPadding="5"
+                FontSize="9"
+                Margin="0 0 0 0"
+                Width="198"
+                MaxWidth="198"
+                TextBoxBackground="Black"
+                Background="Black"
+                IsReadOnly="{Binding IsReadOnly}"
+                TextWrapping="Wrap"
+                Text="{Binding Description}"/>
+        </Grid>
+    </Grid>
+</UserControl>

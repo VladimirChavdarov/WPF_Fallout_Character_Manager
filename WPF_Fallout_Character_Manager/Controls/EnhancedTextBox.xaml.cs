@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -143,6 +144,28 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             get => (TextWrapping)GetValue(TextWrappingProperty);
             set => SetValue(TextWrappingProperty, value);
+        }
+        #endregion
+
+        #region TextPadding
+        public static readonly DependencyProperty TextPaddingProperty =
+        DependencyProperty.Register("TextPadding", typeof(Thickness), typeof(EnhancedTextBox),
+            new FrameworkPropertyMetadata(new Thickness(2, 3, 2, 3), new PropertyChangedCallback(TextPaddingPropertyChanged)));
+
+        public Thickness TextPadding
+        {
+            get => (Thickness)GetValue(TextPaddingProperty);
+            set => SetValue(TextPaddingProperty, value);
+        }
+
+        private static void TextPaddingPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
+            ThisUserControl.TextPaddingPropertyChanged(e);
+        }
+
+        private void TextPaddingPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
         }
         #endregion
         //

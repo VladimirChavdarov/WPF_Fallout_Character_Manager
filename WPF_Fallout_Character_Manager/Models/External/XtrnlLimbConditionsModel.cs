@@ -54,6 +54,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
     // use it here as well.
     public sealed class LimbCondition : ModTypeBase
     {
+        // constructor
         public LimbCondition(
             string name = "NewLimbCondition",
             string target = "None",
@@ -69,7 +70,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             _effects = effects;
             _description = description;
         }
+        //
 
+        // members
         private string _name;
         public string Name
         {
@@ -118,8 +121,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             get => _selectedExternalCondition;
             set => Update(ref _selectedExternalCondition, value);
         }
+        //
 
-        // Methods
+        // methods
         public LimbCondition Clone() => new LimbCondition
         {
             Name = this.Name,

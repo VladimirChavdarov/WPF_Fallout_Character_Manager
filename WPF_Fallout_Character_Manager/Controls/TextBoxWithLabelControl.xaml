@@ -14,6 +14,7 @@
             <Label
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="{Binding LabelFontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 VerticalAlignment="Center"
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 />
@@ -21,10 +22,12 @@
                 HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Padding="2, 3"
+                Padding="{Binding TextPadding, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                TextWrapping="{Binding TextWrapping, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FlowDirection="LeftToRight"
                 VerticalAlignment="Center"
                 ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"

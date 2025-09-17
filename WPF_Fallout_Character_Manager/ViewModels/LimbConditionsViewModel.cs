@@ -83,9 +83,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public int LegsConditionsCount => _limbConditionsModel.LimbConditions.Count(lc => lc.Target.Equals("legs", StringComparison.OrdinalIgnoreCase));
 
         public ICollectionView XtrnlLimbConditionsObserved { get; }
-        //public ObservableCollection<LimbCondition> XtrnlLimbConditionsObserved { get; }  // the contents will change based on which limb list is opened
         public ICollectionView ActiveLimbConditionsObserved { get; }
-        //public ObservableCollection<LimbCondition> ActiveLimbConditionsObserved { get; } // the contents will change based on which limb list is opened
         //
 
         // constructor

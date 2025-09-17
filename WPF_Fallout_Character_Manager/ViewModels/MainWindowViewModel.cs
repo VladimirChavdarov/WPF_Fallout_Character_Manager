@@ -18,10 +18,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public CombatModel CombatModel { get; } = new CombatModel();
         public SkillModel SkillModel { get; } = new SkillModel();
         public LimbConditionsModel LimbConditionsModel { get; } = new LimbConditionsModel(); 
+        public ConditionsModel ConditionsModel { get; } = new ConditionsModel();
         //
 
         // External Data Models
         public XtrnlLimbConditionsModel XtrnlLimbConditionsModel { get; } = new XtrnlLimbConditionsModel();
+        public XtrnlConditionsModel XtrnlConditionsModel { get; } = new XtrnlConditionsModel();
         //
 
         // All ViewModels
@@ -30,7 +32,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public SurvivalViewModel? SurvivalViewModel { get; }
         public CombatViewModel CombatViewModel { get; }
         public SkillViewModel SkillViewModel { get; }
-        public LimbConditionsViewModel ConditionsViewModel { get; }
+        public LimbConditionsViewModel LimbConditionsViewModel { get; }
+        public ConditionsViewModel ConditionsViewModel { get; }
         //
 
         // Constructor
@@ -41,7 +44,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SurvivalViewModel = new SurvivalViewModel(SurvivalModel, SPECIALModel);
             CombatViewModel = new CombatViewModel(CombatModel, SPECIALModel, BioModel);
             SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel);
-            ConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
+            LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
+            ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
         }
         //
     }

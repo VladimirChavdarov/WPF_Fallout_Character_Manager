@@ -41,7 +41,7 @@
                             ButtonText="Eyes"
                             ConditionsAmount="{Binding EyesConditionsCount, Mode=OneWay}"/>
                         <controls:ConditionButtonControl
-                            FontSize="10"
+                            FontSize="10"   
                             Margin="10 65 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"

@@ -21,7 +21,7 @@
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Padding="{Binding Padding, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Padding="{Binding TextPadding, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 CaretBrush="{StaticResource FalloutGreen}"
                 SelectionBrush="{StaticResource FalloutGreen}"
                 SelectionOpacity="0.3"

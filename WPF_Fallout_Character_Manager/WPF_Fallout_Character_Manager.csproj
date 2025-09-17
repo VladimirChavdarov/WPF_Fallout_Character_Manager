@@ -18,6 +18,8 @@
   <ItemGroup>
     <None Remove="Fonts\JH_FALLOUT.TTF" />
     <None Remove="Fonts\monofonto.ttf" />
+    <None Remove="Resources\pen.png" />
+    <None Remove="Resources\Spreadsheets\conditions.csv" />
     <None Remove="Resources\Spreadsheets\limb_conditions.csv" />
     <None Remove="Resources\trashcan.png" />
     <None Remove="Resources\trashcan1.png" />
@@ -30,6 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\pen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\conditions.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Spreadsheets\limb_conditions.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

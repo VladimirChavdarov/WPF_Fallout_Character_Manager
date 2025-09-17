@@ -1,0 +1,127 @@
+﻿<Window x:Class="WPF_Fallout_Character_Manager.Windows.ConditionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
+        xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="ConditionsWindow" Height="300" Width="350"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        MinWidth="50"
+        MinHeight="50"
+        AllowsTransparency="True"
+        Background="Black"
+        MouseDown="Window_MouseDown">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Bar -->
+        <Border Grid.Row="0"
+        Background="Black"
+        BorderBrush="#23ba03"
+        BorderThickness="1 1 1 1"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="18"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Add Condition"
+            Grid.Column="0"
+            Style="{StaticResource FalloutDefaultText}"
+            FontSize="9"
+            FontWeight="Bold"
+            FontStyle="Italic"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="10, 0, 0, 0"/>
+
+            <Button x:Name="Close"
+            Grid.Column="3"
+            VerticalAlignment="Center"
+            Content=" x "
+            Style="{StaticResource FalloutTopBarButton}"
+            Click="btnClose_Click"
+            Command="{Binding DataContext.ResetSelectedConditionCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </Grid>
+        <!-- -->
+
+        <Border
+        Grid.Row="1"
+        Background="Black"
+        BorderBrush="#23ba03"
+        BorderThickness="1 1 1 1">
+            <ScrollViewer>
+                <StackPanel Margin="5">
+                    <ComboBox
+                        Margin="5 5 0 25"
+                        HorizontalAlignment="Left"
+                        Width="160"
+                        ItemsSource="{Binding XtrnlConditionsModel.Conditions}"
+                        DisplayMemberPath="Name"
+                        SelectedItem="{Binding ConditionToAdd}"/>
+
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 20"
+                        Width="160"
+                        HorizontalAlignment="Center"
+                        Orientation="Vertical"
+                        LabelFontSize="8"
+                        LabelText="Name"
+                        FontSize="12"
+                        CanOpenModal="false"
+                        Text="{Binding ConditionToAdd.Name}"/>
+                    
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 20"
+                        Width="290"
+                        Height="100"
+                        HorizontalAlignment="Center"
+                        Orientation="Vertical"
+                        LabelFontSize="8"
+                        LabelText="Description"
+                        FontSize="9"
+                        CanOpenModal="false"
+                        Text="{Binding ConditionToAdd.Description}"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button
+                        Grid.Column="0"
+                        Style="{StaticResource FalloutButton}"
+                        Content="Cancel"
+                        Margin="0 0 10 0"
+                        Padding="5"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Click="btnClose_Click"
+                        Command="{Binding DataContext.ResetSelectedConditionCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        <Button
+                        Grid.Column="1"
+                        Style="{StaticResource FalloutHighlightedButton}"
+                        Content="Add"
+                        Margin="10 0 0 0"
+                        Padding="5"
+                        Width="50"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Click="btnClose_Click"
+                        Command="{Binding DataContext.AddConditionCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
