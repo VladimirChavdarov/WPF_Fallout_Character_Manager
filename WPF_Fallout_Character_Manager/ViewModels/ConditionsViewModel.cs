@@ -59,6 +59,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             AddConditionCommand = new RelayCommand(AddCondition);
             ResetSelectedConditionCommand = new RelayCommand(ResetSelectedCondition);
             RemoveConditionCommand = new RelayCommand(RemoveCondition);
+            SwitchVisibilityCommand = new RelayCommand(SwitchVisibility);
             //
         }
         //
@@ -104,6 +105,29 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void ResetSelectedCondition(object _ = null)
         {
             ResetConditionToAdd();
+        }
+        //
+
+        // Switch Visibility command (visible <-> collapsed)
+        public RelayCommand SwitchVisibilityCommand { get; private set; }
+        public void SwitchVisibility(object param)
+        {
+            if (param is Condition condition)
+            {
+                if (condition.IsReadOnly == false)
+                    return;
+
+                condition.DescriptionVisibility = condition.DescriptionVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+
+                //if(condition.DescriptionVisibility == Visibility.Visible)
+                //{
+                //    condition.DescriptionVisibility = Visibility.Collapsed;
+                //}
+                //else if(condition.DescriptionVisibility == Visibility.Collapsed)
+                //{
+                //    condition.DescriptionVisibility = Visibility.Visible;
+                //}
+            }
         }
         //
         //

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
@@ -46,11 +47,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class Condition : ModTypeBase
     {
         // constructor
-        public Condition(string name = "NewCondition", string description = "No Description", bool isReadOnly = true)
+        public Condition(string name = "NewCondition", string description = "No Description", bool isReadOnly = true, Visibility descriptionVisibility = Visibility.Visible)
         {
             _name = name;
             _description = description;
             _isReadOnly = isReadOnly;
+            _descriptionVisibility = descriptionVisibility;
         }
         //
 
@@ -73,7 +75,19 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public bool IsReadOnly
         {
             get => _isReadOnly;
-            set => Update(ref _isReadOnly, value);
+            set
+            {
+                Update(ref _isReadOnly, value);
+                if(value == false)
+                    DescriptionVisibility = Visibility.Visible; // automatically show the description if we enter edit mode.
+            } 
+        }
+
+        private Visibility _descriptionVisibility;
+        public Visibility DescriptionVisibility
+        {
+            get => _descriptionVisibility;
+            set => Update(ref _descriptionVisibility, value);
         }
         //
 
@@ -82,7 +96,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Name = this.Name,
             Description = this.Description,
-            IsReadOnly = this.IsReadOnly
+            IsReadOnly = this.IsReadOnly,
+            DescriptionVisibility = this.DescriptionVisibility,
         };
         //
     }

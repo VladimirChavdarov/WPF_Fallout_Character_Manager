@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
              xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="380" d:DesignWidth="260">
+
+    <UserControl.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBoolConverter"/>
+        <conv:VisibilitySwitcherConverter x:Key="VisibilitySwitcherConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <GroupBox
             Header="Conditions"
@@ -29,6 +36,7 @@
                                 <Grid
                                     Margin="0 0 0 12">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
@@ -57,14 +65,19 @@
                                             Background="{StaticResource FalloutGreenBackground}"
                                             IsReadOnly="{Binding IsReadOnly}"
                                             TextWrapping="Wrap"
-                                            Text="{Binding Name}"/>
+                                            Text="{Binding Name}"
+                                            PreviewMouseLeftButtonDown="EnhancedTextBox_PreviewMouseLeftButtonDown"
+                                            PreviewMouseMove="NameEnhancedTextBox_PreviewMouseMove"
+                                            MouseLeave="EnhancedTextBox_MouseLeave"/>
+
                                         <ToggleButton
                                             x:Name="EditBtn"
                                             Grid.Column="1"
                                             Style="{StaticResource FalloutToggleButton}"
                                             BorderBrush="{StaticResource FalloutGreen}"
                                             BorderThickness="1 1 1 0"
-                                            Margin="0 0 3 0">
+                                            Margin="0 0 3 0"
+                                            IsChecked="{Binding IsReadOnly, Mode=TwoWay, Converter={StaticResource InvertBoolConverter}}">
                                             <ToggleButton.Template>
                                                 <ControlTemplate TargetType="ToggleButton">
                                                     <Border x:Name="PART_Border"
@@ -85,6 +98,10 @@
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsPressed" Value="True">
+                                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="True">
                                                             <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
                                                             <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
                                                         </Trigger>
@@ -142,11 +159,34 @@
                                         Margin="0 0 0 0"
                                         Width="198"
                                         MaxWidth="198"
-                                        TextBoxBackground="Black"
-                                        Background="Black"
                                         IsReadOnly="{Binding IsReadOnly}"
                                         TextWrapping="Wrap"
-                                        Text="{Binding Description}"/>
+                                        Text="{Binding Description}"
+                                        Visibility="{Binding DescriptionVisibility}"
+                                        PreviewMouseMove="DescriptionEnhancedTextBox_PreviewMouseMove"
+                                        MouseLeave="EnhancedTextBox_MouseLeave">
+                                        <controls:EnhancedTextBox.Style>
+                                            <Style TargetType="{x:Type controls:EnhancedTextBox}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsReadOnly" Value="False">
+                                                        <Setter Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
+                                                        <Setter Property="TextBoxBackground" Value="{StaticResource FalloutGreenBackground}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsReadOnly" Value="True">
+                                                        <Setter Property="Background" Value="Black"/>
+                                                        <Setter Property="TextBoxBackground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </controls:EnhancedTextBox.Style>
+                                    </controls:EnhancedTextBox>
+                                    <Rectangle
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Left"
+                                        Height="10"
+                                        Width="198"
+                                        Fill="{StaticResource FalloutGreen}"
+                                        Visibility="{Binding DescriptionVisibility, Converter={StaticResource VisibilitySwitcherConverter}}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

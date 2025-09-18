@@ -132,6 +132,22 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region Foreground
+        public static readonly DependencyProperty TextBoxForegroundProperty =
+        DependencyProperty.Register(
+            nameof(TextBoxForeground),
+            typeof(Brush),
+            typeof(EnhancedTextBox),
+            new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#23ba03"))
+        ));
+
+        public Brush TextBoxForeground
+        {
+            get => (Brush)GetValue(TextBoxForegroundProperty);
+            set => SetValue(TextBoxForegroundProperty, value);
+        }
+        #endregion
+
         #region TextWrapping
         public static readonly DependencyProperty TextWrappingProperty =
         DependencyProperty.Register(

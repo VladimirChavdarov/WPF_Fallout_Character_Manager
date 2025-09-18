@@ -15,7 +15,7 @@
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Background="{Binding TextBoxBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                Foreground="{StaticResource FalloutGreen}"
+                Foreground="{Binding TextBoxForeground, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontFamily="{StaticResource JH_Fallout}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"

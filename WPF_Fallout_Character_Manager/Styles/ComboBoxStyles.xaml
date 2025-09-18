@@ -3,6 +3,8 @@
 
     <!-- Style for ComboBoxItems -->
     <Style TargetType="ComboBoxItem">
+        <Setter Property="FontFamily" Value="{StaticResource JH_Fallout}"/>
+        <Setter Property="FontSize" Value="9"/>
         <Setter Property="Foreground" Value="{StaticResource FalloutGreen}"/>
         <Setter Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
         <Setter Property="Padding" Value="2"/>
@@ -85,7 +87,9 @@
                         <!-- Content (Selected Item) -->
 
                         <TextBlock x:Name="TextBlock"
-                            Padding="2"
+                            FontFamily="{StaticResource JH_Fallout}"
+                            FontSize="9"
+                            Padding="2 5"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="{TemplateBinding Text}"
