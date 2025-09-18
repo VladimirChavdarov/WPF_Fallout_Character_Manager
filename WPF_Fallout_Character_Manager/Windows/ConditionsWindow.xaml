@@ -72,12 +72,13 @@
 
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 20"
-                        Width="160"
                         HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Center"
                         Orientation="Vertical"
                         LabelFontSize="8"
                         LabelText="Name"
                         FontSize="12"
+                        TextPadding="5"
                         CanOpenModal="false"
                         Text="{Binding ConditionToAdd.Name}"/>
                     
@@ -86,6 +87,7 @@
                         Width="290"
                         Height="100"
                         HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Left"
                         Orientation="Vertical"
                         LabelFontSize="8"
                         LabelText="Description"
