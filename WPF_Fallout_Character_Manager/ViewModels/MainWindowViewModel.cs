@@ -19,6 +19,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public SkillModel SkillModel { get; } = new SkillModel();
         public LimbConditionsModel LimbConditionsModel { get; } = new LimbConditionsModel(); 
         public ConditionsModel ConditionsModel { get; } = new ConditionsModel();
+        public AmmoModel AmmoModel { get; } = new AmmoModel();
         //
 
         // External Data Models
@@ -48,7 +49,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel);
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
-            AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel);
+            AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);
         }
         //
     }

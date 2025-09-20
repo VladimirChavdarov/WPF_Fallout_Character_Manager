@@ -155,21 +155,43 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         public string Name
         {
             get => _name;
-            set => Update(ref _name, value);
+            set
+            {
+                if (IsReadOnly)
+                    throw new InvalidOperationException("Cannot edit LabeledString.Name when in read-only mode");
+                Update(ref _name, value);
+            }
         }
 
         private string _value;
         public string Value
         {
             get => _value;
-            set => Update(ref _value, value);
+            set
+            {
+                if(IsReadOnly)
+                    throw new InvalidOperationException("Cannot edit LabeledString.Value when in read-only mode");
+                Update(ref _value, value);
+            }
         }
 
         private string _note;
         public string Note
         {
             get => _note;
-            set => Update(ref _note, value);
+            set
+            {
+                if (IsReadOnly)
+                    throw new InvalidOperationException("Cannot edit LabeledString.Note when in read-only mode");
+                Update(ref _note, value);
+            }
+        }
+
+        private bool _isReadOnly = false;
+        public bool IsReadOnly
+        {
+            get => _isReadOnly;
+            set => Update(ref _isReadOnly, value);
         }
         //
     }

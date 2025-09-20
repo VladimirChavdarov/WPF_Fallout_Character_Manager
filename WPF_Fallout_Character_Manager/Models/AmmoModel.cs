@@ -9,17 +9,17 @@ using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
-    class ConditionsModel : ModelBase
+    class AmmoModel : ModelBase
     {
         // constructor
-        public ConditionsModel()
+        public AmmoModel()
         {
-            Conditions = new ObservableCollection<Condition>();
+            Ammos = new ObservableCollection<Ammo>();
         }
         //
 
         // data
-        public ObservableCollection<Condition> Conditions { get; }
+        public ObservableCollection<Ammo> Ammos { get; set; }
         //
     }
 }
