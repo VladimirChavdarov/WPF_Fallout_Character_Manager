@@ -1,0 +1,23 @@
+Round Type;Cost Modifier;Effect;Type
+Armor Piercing;3;If the weapon’s damage is dealt to a creature’s hit points, it ignores up to 8 points of DT and the creature’s armor gains a level of decay.;.308, .50, 5.56mm, 5mm
+Bean Bag;0.5;"Damage is 1d4+1, no agility mod; target takes 1 fatigue. If it brings target to 0 HP, they heal 1 unless hit to head/eyes.";12 gauge
+Buck;0.75;Weapon’s range modifiers are both increased by 4 and it loses its spread property.;12 gauge, 20 gauge
+Buck Magnum;3;Damage +3, ignores 3 DT, range mods +4. Loses spread and gains decay every second attack.;12 gauge, 20 gauge
+Cap Shot;4;Gains Destructive and Mangle properties. Ignores 2 DT.;12 gauge
+Dragon’s Breath;2;Half damage, gains Incendiary.;12 gauge
+Explosive;6;3d6 explosive to each target in 5 ft, target prone unless Strength save.;.308, .50
+Flechette;2;Damage -1 but ignores up to 6 DT.;12 gauge
+FMJ, piercing;3;Damage +2. If target brought to 0 HP, hits next creature in line.;.308, .357, 5mm, 9mm, 10mm, 12.7mm
+Hollow Point;4;Deals extra crit damage if HP hit. If damage reduced by DT, loses crit bonus and is halved.;.308, .357, .44, .45, .45-70, 5mm, 5.56mm, 9mm, 10mm, 12.7mm
+JFP;3;Gains Destructive.;.357
+JSP;2;Gains Breakable and +3 damage.;.308, 5mm
+Incendiary;4;Gains Incendiary.;.50, Missile
+Match;2;+5 damage, short range mod -2.;.308, 5.56mm
+Magnum;3;+3 damage, ignores 3 DT, +2 to range mods. Gains decay every second attack.;12 gauge, 20 gauge
+Rubber;0.5;Damage 1d4+2, no agility mod. Target gets 1 fatigue. If brought to 0 HP, heals 1 unless to head/eyes.;9mm, 10mm, 5mm
+Slug;4;Range mods tripled, gains Accurate and Destructive, loses Spread and Powerful.;12 gauge, 20 gauge
+Pulse Slug;6;Same as Slug, but double damage to Robot/Power Armor.;12 gauge, 20 gauge
+Bulk;0.5;Damage -3. Gains Durable.;Energy Cell, Microfusion Cell
+Optimized;2;+1 damage, ignores 1 DT.;Energy Cell, Microfusion Cell
+Overcharged;3;+2 damage, ignores 2 DT. Gains Breakable.;Energy Cell, Microfusion Cell
+Max Charge;5;+4 damage, ignores 4 DT. Gains Breakable and decay every 3rd attack.;Energy Cell, Microfusion Cell
