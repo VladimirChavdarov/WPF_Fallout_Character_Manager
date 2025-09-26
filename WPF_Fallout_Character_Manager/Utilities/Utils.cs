@@ -27,7 +27,7 @@ namespace WPF_Fallout_Character_Manager.Utilities
         /// <param name="costMultiplier">The string you want to convert to a numeric value.</param>
         /// <param name="isFlatCost">True if the function output should be used as a flat cost increase. False if the function output should be used as a cost multiplier.</param>
         /// <returns></returns>
-        static float GetCostMultiplier(string costMultiplier, out bool isFlatCost)
+        public static float GetCostMultiplier(string costMultiplier, out bool isFlatCost)
         {
             if (costMultiplier.StartsWith("x"))
             {
@@ -43,6 +43,19 @@ namespace WPF_Fallout_Character_Manager.Utilities
             }
 
             throw new Exception($"CostModifier has a wrong format: {costMultiplier}");
+        }
+
+        public static bool GetRangeMultiplier(string ranges, out ValueTuple<int, int> result)
+        {
+            result = default;
+            if (!ranges.Contains('/'))
+                return false;
+            var rangeArr = ranges.Split('/');
+            string ss1 = rangeArr[0].Substring(1);
+            string ss2 = rangeArr[1].Substring(1);
+            result = new ValueTuple<int, int>(Int32.Parse(ss1), Int32.Parse(ss2));
+            return true;
+
         }
     }
 }

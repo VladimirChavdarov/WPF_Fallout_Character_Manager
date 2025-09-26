@@ -26,6 +26,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlLimbConditionsModel XtrnlLimbConditionsModel { get; } = new XtrnlLimbConditionsModel();
         public XtrnlConditionsModel XtrnlConditionsModel { get; } = new XtrnlConditionsModel();
         public XtrnlAmmoModel XtrnlAmmoModel { get; } = new XtrnlAmmoModel();
+        public XtrnlWeaponsModel XtrnlWeaponsModel { get; } // set in constructor
         //
 
         // All ViewModels
@@ -37,11 +38,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public LimbConditionsViewModel LimbConditionsViewModel { get; }
         public ConditionsViewModel ConditionsViewModel { get; }
         public AmmoViewModel AmmoViewModel { get; }
+        public WeaponsViewModel WeaponsViewModel { get; }
         //
 
         // Constructor
         public MainWindowViewModel()
         {
+            XtrnlWeaponsModel = new XtrnlWeaponsModel(XtrnlAmmoModel, AmmoModel);
+
             BioViewModel = new BioViewModel(BioModel);
             SPECIALViewModel = new SPECIALViewModel(SPECIALModel);
             SurvivalViewModel = new SurvivalViewModel(SurvivalModel, SPECIALModel);
@@ -50,6 +54,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
             AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);
+            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel);
         }
         //
     }

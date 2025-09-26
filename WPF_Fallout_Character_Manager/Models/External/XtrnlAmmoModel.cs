@@ -56,11 +56,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     value: parts[2]);
 
                 // compatible ammo types
+                effect.IsReadOnly = false;
                 var ammoTypes = parts[3].Split(", ");
                 foreach(var ammoType in ammoTypes)
                 {
                     effect.AddCompatibleAmmoType(ammoType);
                 }
+                effect.IsReadOnly = true;
                 //
 
                 AmmoEffects.Add(effect);

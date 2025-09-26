@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using Accessibility;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -16,35 +18,279 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class XtrnlWeaponsModel : ModelBase
     {
         // constructor
-        public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel)
+        public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel, AmmoModel ammoModel)
         {
+            Weapons = new ObservableCollection<Weapon>();
+            WeaponProperties = new ObservableCollection<WeaponProperty>();
+            WeaponUpgrades = new ObservableCollection<WeaponUpgrade>();
 
+            // upload melee weapon properties
+            var weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons_properties.csv");
+            foreach (var line in weaponPropLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 2)
+                    continue;
+
+                WeaponProperty property = new WeaponProperty(
+                    WeaponType.Melee,
+                    parts[0],
+                    parts[1]
+                    );
+                WeaponProperties.Add(property);
+            }
+            //
+            // upload ranged weapon properties
+            weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_properties.csv");
+            foreach (var lines in weaponPropLines.Skip(1))
+            {
+                var parts = lines.Split(";");
+                if (parts.Length < 2)
+                    continue;
+
+                WeaponProperty property = new WeaponProperty(
+                    weaponType: WeaponType.Ranged,
+                    name: parts[0],
+                    value: parts[1]
+                    );
+                WeaponProperties.Add(property);
+            }
+            //
+
+            // upload melee weapon upgrades
+            var weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons_upgrades.csv");
+            foreach (var line in weaponUpgLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 2)
+                    continue;
+
+                WeaponUpgrade upgrade = new WeaponUpgrade(
+                    weaponType: WeaponType.Melee,
+                    name: parts[0],
+                    costMultiplier: parts[1],
+                    timeToEquip: "5 minutes.",
+                    slotCost: Int32.Parse(parts[2]),
+                    value: parts[3],
+                    equipRequirement: "Any melee weapon."
+                    );
+                WeaponUpgrades.Add(upgrade);
+            }
+            //
+            // upload ranged weapon upgrades
+            weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_upgrades.csv");
+            foreach (var line in weaponUpgLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 2)
+                    continue;
+
+                WeaponUpgrade upgrade = new WeaponUpgrade(
+                    weaponType: WeaponType.Ranged,
+                    name: parts[0],
+                    costMultiplier: parts[1],
+                    timeToEquip: parts[2],
+                    slotCost: Int32.Parse(parts[3]),
+                    value: parts[4],
+                    equipRequirement: parts[5]
+                    );
+                WeaponUpgrades.Add(upgrade);
+            }
+            //
+            //
+
+            // upload melee weapons
+            var weaponLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons.csv");
+            foreach (var line in weaponLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 9)
+                    continue;
+
+                string[] critField = parts[5].Split(",");
+                foreach (string critValue in critField)
+                    critValue.Trim();
+
+                Weapon weapon = new Weapon(
+                    weaponType: WeaponType.Melee,
+                    name: parts[0],
+                    type: parts[1],
+                    cost: Int32.Parse(parts[2]),
+                    ap: Int32.Parse(parts[3]),
+                    damage: new ModString("Damage", parts[4], false),
+                    rangeMultiplier: "x0/x0",
+                    critChance: Int32.Parse(critField[0]),
+                    critDamage: critField[1],
+                    ammoType: null,
+                    ammoCapacity: 0,
+                    load: Utils.FloatFromString(parts[7]),
+                    strRequirement: Int32.Parse(parts[8])
+                    );
+                weapon.Properties = new ObservableCollection<WeaponProperty>();
+                weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
+
+                string[] properties = parts[6].Split(".");
+                foreach (string property in properties.SkipLast(1))
+                {
+                    string trimmedProperty = property.Trim();
+                    if (trimmedProperty.Contains("Thrown"))
+                    {
+                        // update rangeMultiplier
+                        string thrown = trimmedProperty.Replace("Thrown ", ""); // remove the word, leave only the values.
+                        thrown = thrown.Replace(".", ""); // remove dot at the end.
+                        //var separateValues = thrown.Split("/");
+                        weapon.RangeMultiplier = thrown;
+                    }
+
+                    if (trimmedProperty.Contains("Ammo"))
+                    {
+                        string ammoProperty = trimmedProperty.Replace("Ammo: ", "");
+                        var separateValues = ammoProperty.Split(", ");
+                        separateValues[0] = separateValues[0].Trim();
+                        separateValues[1] = separateValues[1].Trim();
+                        weapon.AmmoCapacity = Int32.Parse(separateValues[1].Replace(" rounds", ""));
+                        // check to see if we already have ammo of this type. If not, add it from the xtrnlAmmoModel to ammoModel with amount = 0.
+                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == separateValues[0]);
+                        if (ammoType != null)
+                            weapon.AmmoType = ammoType; // we just reference the object from ammoModel in the weapon's data.
+                        else
+                        {
+                            // if the user has no ammo of this type in AmmoModel.Ammos, we first add it there and then
+                            // we reference it in the weapon's data.
+                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name == separateValues[0]);
+                            if (ammoToAdd == null)
+                                throw new Exception("Cannot find this ammo type in XtrnlAmmoModel.Ammos... This ammo doesn't exist.");
+                            ammoModel.Ammos.Add(ammoToAdd.Clone());
+                            weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == separateValues[0]);
+                        }
+                    }
+
+                    if (trimmedProperty.Contains("Depleted"))
+                    {
+                        // TODO: When we add this to the ModString, we also need to make sure this modifier is always last for aesthetic purposes.
+                        // I still haven't added sorting of modifiers.
+                        string depleted = trimmedProperty.Replace("Depleted: ", "");
+                        weapon.Damage.AddModifier(new LabeledString("Depleted Damage", "| Depleted: " + depleted + "|", "Use this damage if the weapon has no ammo left."));
+                    }
+
+                    // TODO: complete this after adding the Weapon Properties first.
+                    WeaponProperty newProperty = WeaponProperties.FirstOrDefault(x => trimmedProperty.Contains(x.Name) && x.WeaponType == WeaponType.Melee);
+                    if (newProperty == null)
+                        throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
+                    weapon.Properties.Add(newProperty);
+                }
+
+                Weapons.Add(weapon);
+            }
+            //
+            // upload ranged weapons
+            weaponLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons.csv");
+            foreach (var line in weaponLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 11)
+                    continue;
+
+                string[] rangeField = parts[5].Split("/");
+                for (int i = 0; i < rangeField.Length; i++)
+                    rangeField[i] = rangeField[i].Trim();
+
+                string[] critField = parts[6].Split(",");
+                for (int i = 0; i < critField.Length; i++)
+                    critField[i] = critField[i].Trim();
+
+                Weapon weapon = new Weapon(
+                    weaponType: WeaponType.Ranged,
+                    name: parts[0],
+                    type: parts[1],
+                    cost: Int32.Parse(parts[2]),
+                    ap: Int32.Parse(parts[3]),
+                    damage: new ModString("Damage", parts[4], false),
+                    rangeMultiplier: parts[5],
+                    critChance: Int32.Parse(critField[0]),
+                    critDamage: critField[1],
+                    ammoType: null,
+                    ammoCapacity: 0,
+                    ammoPerAttack: 0,
+                    load: Utils.FloatFromString(parts[9]),
+                    strRequirement: Int32.Parse(parts[10])
+                    );
+                weapon.Properties = new ObservableCollection<WeaponProperty>();
+                weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
+
+                // set ammo type, capacity, and ammo per attack
+                string[] ammoField = parts[7].Split(",");
+                for (int i = 0; i < ammoField.Length; i++)
+                    ammoField[i] = ammoField[i].Trim();
+                // ammo type
+                Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == ammoField[0]);
+                if(ammoType != null)
+                    weapon.AmmoType = ammoType;
+                else
+                {
+                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name == ammoField[0]);
+                    if (ammoToAdd == null)
+                    {
+                        // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
+                        ammoToAdd = new Ammo(ammoField[0], 0, 0, 0.0f);
+                        xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
+                    }
+                    ammoModel.Ammos.Add(ammoToAdd.Clone());
+                    // make weapon.AmmoType reference the ammo in the model.
+                    weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == ammoField[0]);
+                    if(weapon.AmmoType == null)
+                        throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
+                }
+                // ammo capacity
+                ammoField[1] = ammoField[1].Replace(" rounds", "");
+                ammoField[1] = ammoField[1].Replace(" round", "");
+                weapon.AmmoCapacity = Int32.Parse(ammoField[1]);
+                // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
+                ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
+                weapon.AmmoPerAttack = 1.0f / (float)Int32.Parse(ammoField[2]);
+                //weapon.AmmoPerAttack = (float)weapon.AmmoCapacity / (float)Int32.Parse(ammoField[2]);
+                //
+
+                Weapons.Add(weapon);
+            }
+            //
         }
         //
 
         // data
-        
+        public ObservableCollection<Weapon> Weapons { get; set; }
+        public ObservableCollection<WeaponProperty> WeaponProperties { get; set; }
+        public ObservableCollection<WeaponUpgrade> WeaponUpgrades { get; set; }
         //
+    }
+    enum WeaponType
+    {
+        Melee,
+        Ranged
     }
 
     class Weapon : Item
     {
         // constructor
         public Weapon(
+            WeaponType weaponType = WeaponType.Melee,
             string name = "NewWeapon",
             string type = "NoType",
             int cost = 0,
             int ap = 0,
             ModString damage = null,
-            ValueTuple<int, int> rangeMultiplier = default,
+            string rangeMultiplier = "x0/x0",
             int critChance = 20,
             string critDamage = "None",
             Ammo ammoType = null,
             int ammoCapacity = 1,
+            float ammoPerAttack = 1.0f,
+            float load = 0.0f,
             int strRequirement = 0,
             int decay = 0
             )
         {
+            WeaponType = weaponType;
             Name = name;
             Type = type;
             Cost = cost;
@@ -61,6 +307,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             else
                 AmmoType = new Ammo("Invalid Ammo", 0, 0, 0.0f);
             AmmoCapacity = ammoCapacity;
+            AmmoPerAttack = ammoPerAttack;
+            Load = load;
             StrRequirement = strRequirement;
             Decay = decay;
         }
@@ -88,8 +336,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _damage, value);
         }
 
-        private ValueTuple<int, int> _rangeMultiplier;
-        public ValueTuple<int, int> RangeMultiplier
+        private string _rangeMultiplier;
+        public string RangeMultiplier
         {
             get => _rangeMultiplier;
             set => Update(ref _rangeMultiplier, value);
@@ -122,6 +370,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
             get => _ammoCapacity;
             set => Update(ref _ammoCapacity, value);
         }
+        private float _ammoPerAttack;
+        public float AmmoPerAttack
+        {
+            get => _ammoPerAttack;
+            set => Update(ref _ammoPerAttack, value);
+        }
 
         private int _strRequirement;
         public int StrRequirement
@@ -137,6 +391,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _decay, value);
         }
 
+        private WeaponType _weaponType;
+        public WeaponType WeaponType
+        {
+            get => _weaponType;
+            set => Update(ref _weaponType, value);
+        }
+
         public ObservableCollection<WeaponProperty> Properties;
         public ObservableCollection<WeaponUpgrade> Upgrades;
         //
@@ -144,67 +405,98 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public Weapon Clone() => new Weapon
         {
+            WeaponType = this.WeaponType,
             Name = this.Name,
             Type = this.Type,
             Cost = this.Cost,
             AP = this.AP,
             Damage = this.Damage,
-            RangeMultiplier = new ValueTuple<int, int>(this.RangeMultiplier.Item1, this.RangeMultiplier.Item2),
+            RangeMultiplier = this.RangeMultiplier,
             CritChance = this.CritChance,
             CritDamage = this.CritDamage,
             AmmoType = this.AmmoType.Clone(),
             AmmoCapacity = this.AmmoCapacity,
+            AmmoPerAttack = this.AmmoPerAttack,
             StrRequirement = this.StrRequirement,
             Decay = this.Decay,
-            Properties = new ObservableCollection<WeaponProperty>(this.Properties.Select(p => p.Clone())),
-            Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades.Select(u => u.Clone())),
+            Properties = new ObservableCollection<WeaponProperty>(this.Properties),
+            Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
         };
         //
     }
 
-    // Just a wrapper of LabeledString
+
     class WeaponProperty : LabeledString
     {
         // constructor
-        public WeaponProperty(string name = "NewProperty", string value = "") : base(name, value) { }
+        public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "") : base(name, value)
+        {
+            _weaponType = weaponType;
+        }
         //
 
-        // methods
-        public WeaponProperty Clone() => new WeaponProperty
+        // members
+        private WeaponType _weaponType;
+        public WeaponType WeaponType
         {
-            Name = this.Name,
-            Value = this.Value,
-            Note = this.Note
-        };
+            get => _weaponType;
+            set => Update(ref _weaponType, value);
+        }
         //
     }
 
     class WeaponUpgrade : LabeledString
     {
         // constructor
-        public WeaponUpgrade(string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", string value="", string equipRequirement="")
+        public WeaponUpgrade(WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
         {
+            WeaponType= weaponType;
             Name = name;
             CostMultiplier = costMultiplier;
             TimeToEquip = timeToEquip;
+            SlotCost = slotCost;
             Value = value;
             EquipRequirement = equipRequirement;
         }
         //
 
         // members
+        private WeaponType _weaponType;
+        public WeaponType WeaponType
+        {
+            get => _weaponType;
+            set => Update(ref _weaponType, value);
+        }
+
+        private int _slotCost;
+        public int SlotCost
+        {
+            get => _slotCost;
+            set => Update(ref _slotCost, value);
+        }
+
         private string _costMultiplier;
         public string CostMultiplier
         {
             get => _costMultiplier;
-            set => Update(ref _costMultiplier, value);
+            set
+            {
+                if (IsReadOnly)
+                    throw new InvalidOperationException("Cannot edit WeaponUpgrade.CostMultiplier when in read-only mode");
+                Update(ref _costMultiplier, value);
+            }
         }
 
         private string _timeToEquip;
         public string TimeToEquip
         {
             get => _timeToEquip;
-            set => Update(ref _timeToEquip, value);
+            set
+            {
+                if (IsReadOnly)
+                    throw new InvalidOperationException("Cannot edit WeaponUpgrade.TimeToEquip when in read-only mode");
+                Update(ref _timeToEquip, value);
+            }
         }
 
         // TODO: I will just show this as text for now and let the player read instead of applying automatic filters.
@@ -213,19 +505,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public string EquipRequirement
         {
             get => _equipRequirement;
-            set => Update(ref _equipRequirement, value);
+            set
+            {
+                if (IsReadOnly)
+                    throw new InvalidOperationException("Cannot edit WeaponUpgrade.EquipRequirement when in read-only mode");
+                Update(ref _equipRequirement, value);
+            }
         }
-        //
-
-        // methods
-        public WeaponUpgrade Clone() => new WeaponUpgrade
-        {
-            Name = this.Name,
-            CostMultiplier = this.CostMultiplier,
-            TimeToEquip = this.TimeToEquip,
-            Value = this.Value,
-            EquipRequirement = this.EquipRequirement,
-        };
         //
     }
 }
