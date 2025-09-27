@@ -65,7 +65,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region Hint
         public static readonly DependencyProperty HintProperty =
         DependencyProperty.Register("Hint", typeof(string), typeof(UpDownTextBoxControl),
-            new FrameworkPropertyMetadata("UpDownTextBoxControl lalala", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHintChanged)));
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHintChanged)));
 
         public string Hint
         {

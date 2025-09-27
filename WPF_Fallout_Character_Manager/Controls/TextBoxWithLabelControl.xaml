@@ -38,13 +38,6 @@
                 Hint="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 PreviewMouseRightButtonDown="EnhancedTextBox_PreviewMouseRightButtonDown">
 
-                <local:EnhancedTextBox.ToolTip>
-                    <ToolTip
-                        Content="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        Placement="Mouse"
-                        ToolTipService.InitialShowDelay="1000"/>
-                </local:EnhancedTextBox.ToolTip>
-
                 <local:EnhancedTextBox.InputBindings>
                     <MouseBinding Gesture="RightClick"
                         Command="{Binding OpenModifierModalWindowCommand}"

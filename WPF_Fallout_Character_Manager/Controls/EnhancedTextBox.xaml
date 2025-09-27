@@ -8,6 +8,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <conv:StringToBoolConverter x:Key="StringToBoolConverter"/>
+    </UserControl.Resources>
+
     <Grid x:Name="LayoutRoot">
         <TextBox x:Name="CustomTextBox" 
                 BorderThickness="0"
@@ -28,18 +32,27 @@
                 Margin="0"
                 Cursor="IBeam"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Tag="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                ToolTip="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                ToolTipService.InitialShowDelay="1000"
+                ToolTipService.InitialShowDelay="500"
                 ToolTipService.Placement="Mouse"
+                ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}"
                 PreviewMouseRightButtonDown="CustomTextBox_PreviewMouseRightButtonDown">
 
-            <TextBox.Resources>
-                <Style TargetType="ToolTip">
-                    <Setter Property="MaxWidth" Value="300"/>
-                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
-                </Style>
-            </TextBox.Resources>
+            <TextBox.ToolTip>
+                <ToolTip
+                    Background="{StaticResource FalloutGreenBackground}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1">
+                    <TextBlock
+                        FontFamily="{StaticResource JH_Fallout}"
+                        Foreground="{StaticResource FalloutGreen}"
+                        FontSize="9"
+                        Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"
+                        TextWrapping="Wrap"
+                        MaxWidth="300"/>
+                </ToolTip>
+            </TextBox.ToolTip>
 
             <TextBox.InputBindings>
                 <MouseBinding Gesture="RightClick"

@@ -18,9 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public ModInt(string name = "NewModInt", int value = 0, bool isBaseValueReadOnly = false, string description = "No Description")
         {
-            _name = name;
-
-            _baseValue = new LabeledInt(description, value);
+            _baseValue = new LabeledInt(name, value, description);
             _baseValue.PropertyChanged += BaseValue_PropertyChanged;
 
             _isBaseValueReadOnly = isBaseValueReadOnly;
@@ -132,15 +130,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 //Update(ref _baseValue, value);
                 UpdateTotal();
             }
-        }
-
-        protected string _name;
-        public string Name
-        {
-            get => _name;
-            // We don't need a setter for the name because the names of the parameters won't change dynamically. This value should only be set
-            // on construction.
-            //set => Update(ref _name, value);
         }
 
         protected bool _isBaseValueReadOnly;
