@@ -12,21 +12,21 @@ namespace WPF_Fallout_Character_Manager.Models
         // constructor
         public SurvivalModel()
         {
-            _hunger = new ModInt("Hunger", 0);
+            _hunger = new ModInt("Hunger", 0, false, "Whenever you roll a d20 (besides Luck), the total is subtracted by 1 for each level of hunger you have. At the end of each day, or after 24 hours, if you did not consume at least one food, you gain one level of hunger. When you gain your tenth level of hunger, you die.");
             _hunger.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Hunger));
-            _dehydration = new ModInt("Dehydration", 0);
+            _dehydration = new ModInt("Dehydration", 0, false, "Whenever you roll a d20 (besides Luck), the total is subtracted by 1 for each level of dehydration you have. At the end of each day, or every 24 hours, if you did not consume at least three drinks or a drink with the hydrating property, you gain three levels of dehydration. When you gain your tenth level of dehydration, you die.");
             _dehydration.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Dehydration));
-            _exhaustion = new ModInt("Exhaustion", 0);
+            _exhaustion = new ModInt("Exhaustion", 0, false, "Whenever you roll a d20 (besides Luck), the total is subtracted by 1 for each level of exhaustion you have. When you gain your tenth level of exhaustion, you die. If you are a human, ghoul, or super mutant; you can remove one level of exhaustion after resting for at least 6 hours. If you are a robot or gen-2 synth; you can remove one level of exhaustion after resting for at least 2 hours.");
             _exhaustion.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Exhaustion));
-            _radDc = new ModInt("RadDC", 0, true);
+            _radDc = new ModInt("RadDC", 0, true, "Your Radiation DC is equal to 12 - your Endurance ability modifier. Radiation DC is a measurement of how much you can resist radiation before taking levels of Rads. Whenever your character enters or starts their turn for the first time in an Irradiated Zone you must roll a d20 roll against your Radiation DC. If you fail, you take 1 level of radiation. If you succeed, your Radiation DC increases by 2 until you remove all your levels of Rads. All Irradiated Zones have a Radiation Severity Score that determines how often you must roll a d20 against your Radiation DC.");
             _radDc.PropertyChanged += (s, e) => OnPropertyChanged(nameof(RadDC));
-            _rads = new ModInt("Rads", 0);
+            _rads = new ModInt("Rads", 0, false, "Whenever you roll a d20 (besides Luck), the total is subtracted by 1 for each level of rads you have. Additionally, each time you gain a level of rads you take 1d4 radiation damage to your hit points and stamina points that cannot be healed until you no longer have any levels of rads. If this radiation damage reduces you to 0 hit points, or you would gain your 10th level of radiation; you die.");
             _rads.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Rads));
-            _passiveSense = new ModInt("Passive Sense", 0, true);
+            _passiveSense = new ModInt("Passive Sense", 0, true, "A measurement of your senses at all times. When you roll a Perception ability check, your character is actively trying to find something they may already be aware of. Creatures that sneak remain undetected if they roll higher than your passive sense score. Your passive sense score is equal to 12 + your Perception modifier.");
             _passiveSense.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PassiveSense));
-            _partyNerve = new ModInt("Party Nerve", 0);
+            _partyNerve = new ModInt("Party Nerve", 0, false, "Party Nerve is the manifestation of your infectious Charisma and strong leadership, allowing your party members to push their limits and survive. Your Party Nerve bonus is equal to every players character’s Charisma modifier added together, then halved (rounded down). Your Party Nerve bonus is added to your Death Saves. Additionally, whenever you roll combat sequence you gain temporary stamina points equal to your Party Nerve bonus.");
             _partyNerve.PropertyChanged += (s, e) => OnPropertyChanged(nameof(PartyNerve));
-            _groupSneak = new ModInt("Group Sneak", 5); //TODO: remove placeholder value
+            _groupSneak = new ModInt("Group Sneak", 0, false, "Player characters, while traveling, can move at half pace and use their Group Sneak to remain stealthy while traveling. Your Group Sneak is equal to each player character’s Sneak modifier divided by the number of player characters. (Simply put; Group Sneak is the mean, or average, Sneak modifier of each player character).");
             _groupSneak.PropertyChanged += (s, e) => OnPropertyChanged(nameof(GroupSneak));
         }
         //

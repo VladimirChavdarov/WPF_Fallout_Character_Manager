@@ -20,11 +20,12 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.RadDC.Name}"
+                        LabelText="{Binding SurvivalModel.RadDC.BaseValue.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.RadDC}"
                         Text="{Binding SurvivalModel.RadDC.Total, Mode=OneWay}"
+                        Hint="{Binding SurvivalModel.RadDC.BaseValue.Note}"
                         MinWidth="30"/>
                     <Label FontSize="10"/>
                     <controls:TextBoxWithLabelControl
@@ -32,44 +33,48 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.Rads.Name}"
+                        LabelText="{Binding SurvivalModel.Rads.BaseValue.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.Rads}"
                         Text="{Binding SurvivalModel.Rads.Total, Mode=OneWay}"
+                        Hint="{Binding SurvivalModel.Rads.BaseValue.Note}"
                         MinWidth="30"/>
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.Hunger.Name}"
+                        LabelText="{Binding SurvivalModel.Hunger.BaseValue.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.Hunger}"
                         Text="{Binding SurvivalModel.Hunger.Total, Mode=OneWay}"
+                        Hint="{Binding SurvivalModel.Hunger.BaseValue.Note}"
                         MinWidth="30"/>
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.Dehydration.Name}"
+                        LabelText="{Binding SurvivalModel.Dehydration.BaseValue.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.Dehydration}"
                         Text="{Binding SurvivalModel.Dehydration.Total, Mode=OneWay}"
+                        Hint="{Binding SurvivalModel.Dehydration.BaseValue.Note}"
                         MinWidth="30"/>
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.Exhaustion.Name}"
+                        LabelText="{Binding SurvivalModel.Exhaustion.BaseValue.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.Exhaustion}"
                         Text="{Binding SurvivalModel.Exhaustion.Total, Mode=OneWay}"
+                        Hint="{Binding SurvivalModel.Exhaustion.BaseValue.Note}"
                         MinWidth="30"/>
                 </StackPanel>
             </ScrollViewer>
