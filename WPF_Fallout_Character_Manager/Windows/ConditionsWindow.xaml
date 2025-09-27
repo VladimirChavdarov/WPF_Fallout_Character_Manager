@@ -67,7 +67,7 @@
                         HorizontalAlignment="Left"
                         Width="160"
                         ItemsSource="{Binding XtrnlConditionsModel.Conditions}"
-                        DisplayMemberPath="Name"
+                        DisplayMemberPath="BaseValue.Name"
                         SelectedItem="{Binding ConditionToAdd}"/>
 
                     <controls:TextBoxWithLabelControl
@@ -80,7 +80,7 @@
                         FontSize="12"
                         TextPadding="5"
                         CanOpenModal="false"
-                        Text="{Binding ConditionToAdd.Name}"/>
+                        Text="{Binding ConditionToAdd.BaseValue.Name}"/>
                     
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 20"
@@ -93,7 +93,7 @@
                         LabelText="Description"
                         FontSize="9"
                         CanOpenModal="false"
-                        Text="{Binding ConditionToAdd.Description}"/>
+                        Text="{Binding ConditionToAdd.BaseValue.Note}"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions>

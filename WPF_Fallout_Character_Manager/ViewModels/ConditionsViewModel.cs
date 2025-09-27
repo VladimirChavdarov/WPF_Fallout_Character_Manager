@@ -118,15 +118,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     return;
 
                 condition.DescriptionVisibility = condition.DescriptionVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-
-                //if(condition.DescriptionVisibility == Visibility.Visible)
-                //{
-                //    condition.DescriptionVisibility = Visibility.Collapsed;
-                //}
-                //else if(condition.DescriptionVisibility == Visibility.Collapsed)
-                //{
-                //    condition.DescriptionVisibility = Visibility.Visible;
-                //}
             }
         }
         //
@@ -135,7 +126,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // Methods
         private void ResetConditionToAdd()
         {
-            ConditionToAdd = XtrnlConditionsModel.Conditions.FirstOrDefault(x => x.Name.Contains("Custom"));
+            ConditionToAdd = XtrnlConditionsModel.Conditions.FirstOrDefault(x => x.BaseValue.Name.Contains("Custom"));
             if(ConditionToAdd == null)
             {
                 throw new Exception($"ConditionToAdd was null.");

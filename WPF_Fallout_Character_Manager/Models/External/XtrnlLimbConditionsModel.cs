@@ -119,7 +119,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public LimbCondition Clone() => new LimbCondition
         {
-            BaseValue = new LabeledString(BaseValue.Name, BaseValue.Value, BaseValue.Note),
+            BaseValue = new LabeledString(this.BaseValue.Name, this.BaseValue.Value, this.BaseValue.Note),
             Target = this.Target,
             APCost = this.APCost,
             Modifier = this.Modifier,

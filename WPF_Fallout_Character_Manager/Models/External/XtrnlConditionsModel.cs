@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
@@ -49,26 +50,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // constructor
         public Condition(string name = "NewCondition", string description = "No Description", bool isReadOnly = true, Visibility descriptionVisibility = Visibility.Visible)
         {
-            _name = name;
-            _description = description;
+            _baseValue = new LabeledString(name, description, description);
             _isReadOnly = isReadOnly;
             _descriptionVisibility = descriptionVisibility;
         }
         //
 
         // members
-        private string _name;
-        public string Name
+        private LabeledString _baseValue;
+        public LabeledString BaseValue
         {
-            get => _name;
-            set => Update(ref _name, value);
-        }
-
-        private string _description;
-        public string Description
-        {
-            get => _description;
-            set => Update(ref _description, value);
+            get => _baseValue;
+            set => Update(ref _baseValue, value);
         }
 
         private bool _isReadOnly;
@@ -94,8 +87,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public Condition Clone() => new Condition
         {
-            Name = this.Name,
-            Description = this.Description,
+            BaseValue = new LabeledString(this.BaseValue.Name, this.BaseValue.Value, this.BaseValue.Note),
             IsReadOnly = this.IsReadOnly,
             DescriptionVisibility = this.DescriptionVisibility,
         };

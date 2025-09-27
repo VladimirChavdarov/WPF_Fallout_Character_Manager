@@ -65,7 +65,7 @@
                                             Background="{StaticResource FalloutGreenBackground}"
                                             IsReadOnly="{Binding IsReadOnly}"
                                             TextWrapping="Wrap"
-                                            Text="{Binding Name}"
+                                            Text="{Binding BaseValue.Name}"
                                             PreviewMouseLeftButtonDown="EnhancedTextBox_PreviewMouseLeftButtonDown"
                                             PreviewMouseMove="NameEnhancedTextBox_PreviewMouseMove"
                                             MouseLeave="EnhancedTextBox_MouseLeave"/>
@@ -161,7 +161,7 @@
                                         MaxWidth="198"
                                         IsReadOnly="{Binding IsReadOnly}"
                                         TextWrapping="Wrap"
-                                        Text="{Binding Description}"
+                                        Text="{Binding BaseValue.Note}"
                                         Visibility="{Binding DescriptionVisibility}"
                                         PreviewMouseMove="DescriptionEnhancedTextBox_PreviewMouseMove"
                                         MouseLeave="EnhancedTextBox_MouseLeave">
