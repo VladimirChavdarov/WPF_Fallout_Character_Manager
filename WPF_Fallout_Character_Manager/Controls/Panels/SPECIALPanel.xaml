@@ -39,44 +39,51 @@
                             Grid.Column="0"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Strength}"
-                            StatLabel="{Binding SPECIALModel.Strength.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Strength.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Strength.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Strength.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Strength.BaseValue.Note}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="1"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Perception}"
-                            StatLabel="{Binding SPECIALModel.Perception.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Perception.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Perception.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Perception.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Perception.BaseValue.Note}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="2"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Endurance}"
-                            StatLabel="{Binding SPECIALModel.Endurance.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Endurance.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Endurance.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Endurance.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Endurance.BaseValue.Note}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="3"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Charisma}"
-                            StatLabel="{Binding SPECIALModel.Charisma.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Charisma.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Charisma.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Charisma.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Charisma.BaseValue.Note}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="4"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Intelligence}"
-                            StatLabel="{Binding SPECIALModel.Intelligence.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Intelligence.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Intelligence.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Intelligence.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Intelligence.BaseValue.Note}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="5"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Agility}"
-                            StatLabel="{Binding SPECIALModel.Agility.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Agility.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Agility.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Agility.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Agility.BaseValue.Note}"/>
                         <controls:SPECIALInputControl
                             Grid.Column="6"
                             Margin="5"
                             ModInt="{Binding SPECIALModel.Luck}"
-                            StatLabel="{Binding SPECIALModel.Luck.Name}"
-                            PrimaryStat="{Binding SPECIALModel.Luck.Total, Mode=OneWay}"/>
+                            StatLabel="{Binding SPECIALModel.Luck.BaseValue.Name}"
+                            PrimaryStat="{Binding SPECIALModel.Luck.Total, Mode=OneWay}"
+                            Hint="{Binding SPECIALModel.Luck.BaseValue.Note}"/>
                     </Grid>
 
                     <Grid Grid.Row="1"
@@ -99,8 +106,9 @@
                             Orientation="Vertical"
                             LabelFontSize="11"
                             IsReadOnly="{Binding CombatModel.ActionPoints.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.ActionPoints.Name}"
+                            LabelText="{Binding CombatModel.ActionPoints.BaseValue.Name}"
                             Text="{Binding CombatModel.ActionPoints.Total, Mode=OneWay}"
+                            Hint="{Binding CombatModel.ActionPoints.BaseValue.Note}"
                             ModInt="{Binding CombatModel.ActionPoints}"/>
 
                         <StackPanel
@@ -113,7 +121,7 @@
                                 Style="{StaticResource FalloutDefaultLabel}"
                                 FontSize="11"
                                 VerticalAlignment="Center"
-                                Content="{Binding CombatModel.StaminaPoints.Name}"/>
+                                Content="{Binding CombatModel.StaminaPoints.BaseValue.Name}"/>
                             <StackPanel
                                 FlowDirection="LeftToRight"
                                 Orientation="Horizontal"
@@ -125,7 +133,8 @@
                                     TextBoxSlot="1"
                                     MinValue="0"
                                     MaxValue="{Binding CombatModel.MaxStaminaPoints.Total}"
-                                    Text="{Binding CombatModel.StaminaPoints.BaseValue}"
+                                    Text="{Binding CombatModel.StaminaPoints.BaseValue.Value}"
+                                    Hint="{Binding CombatModel.StaminaPoints.BaseValue.Note}"
                                     IsReadOnly="{Binding CombatModel.StaminaPoints.IsBaseValueReadOnly}"
                                     ModInt="{Binding CombatModel.StaminaPoints}"
                                     CanOpenModal="False"/>
@@ -141,6 +150,7 @@
                                     FontSize="11"
                                     IsReadOnly="{Binding CombatModel.MaxStaminaPoints.IsBaseValueReadOnly}"
                                     Text="{Binding CombatModel.MaxStaminaPoints.Total, Mode=OneWay}"
+                                    Hint="{Binding CombatModel.MaxStaminaPoints.BaseValue.Note}"
                                     ModInt="{Binding CombatModel.MaxStaminaPoints}"/>
                             </StackPanel>
                         </StackPanel>
@@ -155,7 +165,7 @@
                                 Style="{StaticResource FalloutDefaultLabel}"
                                 FontSize="11"
                                 VerticalAlignment="Center"
-                                Content="{Binding CombatModel.HealthPoints.Name}"/>
+                                Content="{Binding CombatModel.HealthPoints.BaseValue.Name}"/>
                             <StackPanel
                                 FlowDirection="LeftToRight"
                                 Orientation="Horizontal"
@@ -167,7 +177,8 @@
                                     TextBoxSlot="1"
                                     MinValue="0"
                                     MaxValue="{Binding CombatModel.MaxHealthPoints.Total}"
-                                    Text="{Binding CombatModel.HealthPoints.BaseValue}"
+                                    Text="{Binding CombatModel.HealthPoints.BaseValue.Value}"
+                                    Hint="{Binding CombatModel.HealthPoints.BaseValue.Note}"
                                     IsReadOnly="{Binding CombatModel.HealthPoints.IsBaseValueReadOnly}"
                                     ModInt="{Binding CombatModel.HealthPoints}"
                                     CanOpenModal="False"/>
@@ -183,6 +194,7 @@
                                     FontSize="11"
                                     IsReadOnly="{Binding CombatModel.MaxHealthPoints.IsBaseValueReadOnly}"
                                     Text="{Binding CombatModel.MaxHealthPoints.Total, Mode=OneWay}"
+                                    Hint="{Binding CombatModel.MaxHealthPoints.BaseValue.Note}"
                                     ModInt="{Binding CombatModel.MaxHealthPoints}"/>
                             </StackPanel>
                         </StackPanel>
@@ -194,8 +206,9 @@
                             Orientation="Vertical"
                             LabelFontSize="11"
                             IsReadOnly="{Binding CombatModel.ArmorClass.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.ArmorClass.Name}"
+                            LabelText="{Binding CombatModel.ArmorClass.BaseValue.Name}"
                             Text="{Binding CombatModel.ArmorClass.Total, Mode=OneWay}"
+                            Hint="{Binding CombatModel.ArmorClass.BaseValue.Note}"
                             ModInt="{Binding CombatModel.ArmorClass}"/>
                         
                         <controls:TextBoxWithLabelControl
@@ -205,8 +218,9 @@
                             Orientation="Vertical"
                             LabelFontSize="11"
                             IsReadOnly="{Binding CombatModel.DamageThreshold.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.DamageThreshold.Name}"
+                            LabelText="{Binding CombatModel.DamageThreshold.BaseValue.Name}"
                             Text="{Binding CombatModel.DamageThreshold.Total, Mode=OneWay}"
+                            Hint="{Binding CombatModel.DamageThreshold.BaseValue.Note}"
                             ModInt="{Binding CombatModel.DamageThreshold}"/>
                         
                         <controls:TextBoxWithLabelControl
@@ -216,8 +230,9 @@
                             Orientation="Vertical"
                             LabelFontSize="11"
                             IsReadOnly="{Binding CombatModel.CombatSequence.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.CombatSequence.Name}"
+                            LabelText="{Binding CombatModel.CombatSequence.BaseValue.Name}"
                             Text="{Binding CombatModel.CombatSequence.Total, Mode=OneWay}"
+                            Hint="{Binding CombatModel.CombatSequence.BaseValue.Note}"
                             ModInt="{Binding CombatModel.CombatSequence}"/>
                         
                         <controls:TextBoxWithLabelControl
@@ -227,8 +242,9 @@
                             Orientation="Vertical"
                             LabelFontSize="11"
                             IsReadOnly="{Binding CombatModel.HealingRate.IsBaseValueReadOnly}"
-                            LabelText="{Binding CombatModel.HealingRate.Name}"
+                            LabelText="{Binding CombatModel.HealingRate.BaseValue.Name}"
                             Text="{Binding CombatModel.HealingRate.Total, Mode=OneWay}"
+                            Hint="{Binding CombatModel.HealingRate.BaseValue.Note}"
                             ModInt="{Binding CombatModel.HealingRate}"/>
 
                         <StackPanel
@@ -241,7 +257,7 @@
                                 Style="{StaticResource FalloutDefaultLabel}"
                                 FontSize="11"
                                 VerticalAlignment="Center"
-                                Content="{Binding CombatModel.Fatigue.Name}"/>
+                                Content="{Binding CombatModel.Fatigue.BaseValue.Name}"/>
                             <StackPanel
                                 FlowDirection="LeftToRight"
                                 Orientation="Horizontal"
@@ -252,7 +268,8 @@
                                     PlusButtonSlot="2"
                                     TextBoxSlot="1"
                                     MinValue="0"
-                                    Text="{Binding CombatModel.Fatigue.BaseValue}"
+                                    Text="{Binding CombatModel.Fatigue.BaseValue.Value}"
+                                    Hint="{Binding CombatModel.Fatigue.BaseValue.Note}"
                                     IsReadOnly="{Binding CombatModel.Fatigue.IsBaseValueReadOnly}"
                                     ModInt="{Binding CombatModel.Fatigue}"
                                     CanOpenModal="False"/>
