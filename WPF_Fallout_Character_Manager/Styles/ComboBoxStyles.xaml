@@ -34,6 +34,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="ToolTip" Value="{Binding BaseValue.Note}"/>
     </Style>
 
     <!-- ComboBox Template -->

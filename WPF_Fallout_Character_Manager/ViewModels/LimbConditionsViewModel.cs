@@ -56,7 +56,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 // Re-apply the SelectedExternalCondition references in each item in the LimbConditionsModel.LimbConditions
                 foreach (LimbCondition limbCondition in LimbConditionsModel.LimbConditions)
                 {
-                    LimbCondition lcRef = XtrnlLimbConditionsModel.LimbConditions.FirstOrDefault(lc => lc.Name == limbCondition.Name && lc.Target == limbCondition.Target);
+                    LimbCondition lcRef = XtrnlLimbConditionsModel.LimbConditions.FirstOrDefault(lc => lc.BaseValue.Name == limbCondition.BaseValue.Name && lc.Target == limbCondition.Target);
                     limbCondition.SelectedExternalCondition = lcRef;
                 }
                 //
@@ -139,12 +139,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     LimbCondition? selected = activeCondition.SelectedExternalCondition;
 
                     // Copy all fields from the selected external template
-                    activeCondition.Name = selected.Name;
+                    activeCondition.BaseValue = selected.BaseValue;
                     activeCondition.Target = selected.Target;
                     activeCondition.APCost = selected.APCost;
                     activeCondition.Modifier = selected.Modifier;
                     activeCondition.Effects = selected.Effects;
-                    activeCondition.Description = selected.Description;
 
                     // Clear temporary selection
                     activeCondition.SelectedExternalCondition = selected;

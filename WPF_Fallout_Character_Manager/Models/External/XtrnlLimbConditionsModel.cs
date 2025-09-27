@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
@@ -63,21 +64,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
             string effects = "None",
             string description = "No Description")
         {
-            _name = name;
+            _baseValue = new LabeledString(name, description, description);
             _target = target;
             _apCost = apCost;
             _modifier = modifier;
             _effects = effects;
-            _description = description;
         }
         //
 
         // members
-        private string _name;
-        public string Name
+        private LabeledString _baseValue;
+        public LabeledString BaseValue
         {
-            get => _name;
-            set => Update(ref _name, value);
+            get => _baseValue;
+            set => Update(ref _baseValue, value);
         }
 
         private string _target;
@@ -108,13 +108,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _effects, value);
         }
 
-        private string _description;
-        public string Description
-        {
-            get => _description;
-            set => Update(ref _description, value);
-        }
-
         private LimbCondition _selectedExternalCondition;
         public LimbCondition SelectedExternalCondition
         {
@@ -126,12 +119,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public LimbCondition Clone() => new LimbCondition
         {
-            Name = this.Name,
+            BaseValue = new LabeledString(BaseValue.Name, BaseValue.Value, BaseValue.Note),
             Target = this.Target,
             APCost = this.APCost,
             Modifier = this.Modifier,
             Effects = this.Effects,
-            Description = this.Description,
 
             SelectedExternalCondition = this.SelectedExternalCondition,
         };

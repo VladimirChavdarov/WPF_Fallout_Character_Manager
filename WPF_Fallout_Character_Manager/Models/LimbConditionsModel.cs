@@ -43,7 +43,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
         public void RemoveCondition(string name, string target)
         {
-            LimbCondition limbConditionToRemove = LimbConditions.FirstOrDefault(m => m.Name == name && m.Target == target);
+            LimbCondition limbConditionToRemove = LimbConditions.FirstOrDefault(m => m.BaseValue.Name == name && m.Target == target);
             if (limbConditionToRemove != null)
                 LimbConditions.Remove(limbConditionToRemove);
             else
@@ -67,7 +67,7 @@ namespace WPF_Fallout_Character_Manager.Models
             if (LimbConditions is null)
                 return;
 
-            LimbCondition oldLimbCondition = LimbConditions.FirstOrDefault(m => m.Name == oldName && m.Target == oldTarget);
+            LimbCondition oldLimbCondition = LimbConditions.FirstOrDefault(m => m.BaseValue.Name == oldName && m.Target == oldTarget);
             int index = LimbConditions.IndexOf(oldLimbCondition);
             if (index >= 0)
             {

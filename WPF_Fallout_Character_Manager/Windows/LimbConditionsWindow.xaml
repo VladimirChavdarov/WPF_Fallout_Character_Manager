@@ -89,7 +89,7 @@
                                         <ComboBox
                                             Width="135"
                                             ItemsSource="{Binding DataContext.XtrnlLimbConditionsObserved, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            DisplayMemberPath="Name"
+                                            DisplayMemberPath="BaseValue.Name"
                                             SelectedItem="{Binding SelectedExternalCondition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
@@ -98,6 +98,7 @@
                                                         CommandParameter="{Binding}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
+
                                         </ComboBox>
                                     </StackPanel>
                                     <controls:TextBoxWithLabelControl
@@ -109,7 +110,7 @@
                                         LabelText="Description"
                                         FontSize="9"
                                         CanOpenModal="false"
-                                        Text="{Binding Description}"/>
+                                        Text="{Binding BaseValue.Note}"/>
                                     <StackPanel Orientation="Vertical">
                                         <Label
                                             Style="{StaticResource FalloutDefaultLabel}"

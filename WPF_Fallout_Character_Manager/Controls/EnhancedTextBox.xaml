@@ -40,17 +40,9 @@
                 PreviewMouseRightButtonDown="CustomTextBox_PreviewMouseRightButtonDown">
 
             <TextBox.ToolTip>
-                <ToolTip
-                    Background="{StaticResource FalloutGreenBackground}"
-                    BorderBrush="{StaticResource FalloutGreen}"
-                    BorderThickness="1">
+                <ToolTip>
                     <TextBlock
-                        FontFamily="{StaticResource JH_Fallout}"
-                        Foreground="{StaticResource FalloutGreen}"
-                        FontSize="9"
-                        Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"
-                        TextWrapping="Wrap"
-                        MaxWidth="300"/>
+                        Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"/>
                 </ToolTip>
             </TextBox.ToolTip>
 
