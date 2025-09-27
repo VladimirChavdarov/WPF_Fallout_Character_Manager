@@ -4,8 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <conv:StringToBoolConverter x:Key="StringToBoolConverter"/>
+    </UserControl.Resources>
+
     <Grid>
         <StackPanel
             MinWidth="60">
@@ -40,13 +46,34 @@
                         HorizontalContentAlignment="Center"
                         HorizontalAlignment="Center"
                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        Text="{Binding PrimaryStat, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Tag="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        ToolTipService.InitialShowDelay="500"
+                        ToolTipService.Placement="Mouse"
+                        ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}">
+
+                        <TextBox.ToolTip>
+                            <ToolTip
+                            Background="{StaticResource FalloutGreenBackground}"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1">
+                            <TextBlock
+                                FontFamily="{StaticResource JH_Fallout}"
+                                Foreground="{StaticResource FalloutGreen}"
+                                FontSize="9"
+                                Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"
+                                TextWrapping="Wrap"
+                                MaxWidth="300"/>
+                            </ToolTip>
+                        </TextBox.ToolTip>
+
                         <TextBox.InputBindings>
                             <MouseBinding Gesture="RightClick"
                                 Command="{Binding OpenModifierModalWindowCommand}"
                                 CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         </TextBox.InputBindings>
                     </TextBox>
+                    
                     <ContentControl
                         Style="{StaticResource BracketBorderStyle}"
                         BorderBrush="{StaticResource FalloutGreen}"
@@ -62,15 +89,27 @@
                             HorizontalContentAlignment="Center"
                             HorizontalAlignment="Center"
                             IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Tag="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            ToolTipService.InitialShowDelay="500"
+                            ToolTipService.Placement="Mouse"
+                            ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}">
 
                             <TextBox.ToolTip>
                                 <ToolTip
-                                    Content="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    Placement="Mouse"
-                                    ToolTipService.InitialShowDelay="1000"/>
+                                    Background="{StaticResource FalloutGreenBackground}"
+                                    BorderBrush="{StaticResource FalloutGreen}"
+                                    BorderThickness="1">
+                                    <TextBlock
+                                        FontFamily="{StaticResource JH_Fallout}"
+                                        Foreground="{StaticResource FalloutGreen}"
+                                        FontSize="9"
+                                        Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"
+                                        TextWrapping="Wrap"
+                                        MaxWidth="300"/>
+                                </ToolTip>
                             </TextBox.ToolTip>
-                            
+
                             <TextBox.InputBindings>
                                 <MouseBinding Gesture="RightClick"
                                     Command="{Binding OpenModifierModalWindowCommand}"

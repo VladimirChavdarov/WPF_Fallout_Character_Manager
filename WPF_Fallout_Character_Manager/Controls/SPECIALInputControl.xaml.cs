@@ -74,7 +74,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         #region Hint
         public static readonly DependencyProperty HintProperty =
         DependencyProperty.Register("Hint", typeof(string), typeof(SPECIALInputControl),
-            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHintChanged)));
+            new FrameworkPropertyMetadata("", new PropertyChangedCallback(OnHintChanged)));
 
         public string Hint
         {
