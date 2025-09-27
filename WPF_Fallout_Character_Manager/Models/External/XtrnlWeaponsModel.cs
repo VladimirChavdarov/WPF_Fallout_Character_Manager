@@ -129,6 +129,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 weapon.Properties = new ObservableCollection<WeaponProperty>();
                 weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
 
+                // melee properties
                 string[] properties = parts[6].Split(".");
                 foreach (string property in properties.SkipLast(1))
                 {
@@ -150,18 +151,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         separateValues[1] = separateValues[1].Trim();
                         weapon.AmmoCapacity = Int32.Parse(separateValues[1].Replace(" rounds", ""));
                         // check to see if we already have ammo of this type. If not, add it from the xtrnlAmmoModel to ammoModel with amount = 0.
-                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == separateValues[0]);
+                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == separateValues[0]);
                         if (ammoType != null)
                             weapon.AmmoType = ammoType; // we just reference the object from ammoModel in the weapon's data.
                         else
                         {
                             // if the user has no ammo of this type in AmmoModel.Ammos, we first add it there and then
                             // we reference it in the weapon's data.
-                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name == separateValues[0]);
+                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.Name == separateValues[0]);
                             if (ammoToAdd == null)
                                 throw new Exception("Cannot find this ammo type in XtrnlAmmoModel.Ammos... This ammo doesn't exist.");
                             ammoModel.Ammos.Add(ammoToAdd.Clone());
-                            weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == separateValues[0]);
+                            weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == separateValues[0]);
                         }
                     }
 
@@ -179,6 +180,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
                     weapon.Properties.Add(newProperty);
                 }
+                //
 
                 Weapons.Add(weapon);
             }
@@ -223,12 +225,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 for (int i = 0; i < ammoField.Length; i++)
                     ammoField[i] = ammoField[i].Trim();
                 // ammo type
-                Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == ammoField[0]);
+                Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == ammoField[0]);
                 if(ammoType != null)
                     weapon.AmmoType = ammoType;
                 else
                 {
-                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name == ammoField[0]);
+                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.Name == ammoField[0]);
                     if (ammoToAdd == null)
                     {
                         // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
@@ -237,7 +239,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     }
                     ammoModel.Ammos.Add(ammoToAdd.Clone());
                     // make weapon.AmmoType reference the ammo in the model.
-                    weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name == ammoField[0]);
+                    weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == ammoField[0]);
                     if(weapon.AmmoType == null)
                         throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
                 }
@@ -248,7 +250,31 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
                 ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
                 weapon.AmmoPerAttack = 1.0f / (float)Int32.Parse(ammoField[2]);
-                //weapon.AmmoPerAttack = (float)weapon.AmmoCapacity / (float)Int32.Parse(ammoField[2]);
+                //
+
+                // properties
+                string[] properties = parts[8].Split(".");
+                foreach (string property in properties.SkipLast(1))
+                {
+                    string trimmedProperty = property.Trim();
+
+                    WeaponProperty newProperty = WeaponProperties.FirstOrDefault(x => trimmedProperty.Contains(x.Name) && x.WeaponType == WeaponType.Ranged);
+                    if (newProperty == null)
+                        throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
+                    if(newProperty.Name != trimmedProperty)
+                    {
+                        // add a copy with the specific name taken from the weapons table.
+                        // NOTE: I don't know how much I like the idea of some properties being copies, and others references.
+                        // with the current setup, there will be duplicates. Take "Automatic" for example. A weapon will have a
+                        // property "Automatic" (reference) and a property "Automatic: 2" (copy)
+                        WeaponProperty propertyToAdd = newProperty.Clone;
+                        propertyToAdd.Name = trimmedProperty;
+                        weapon.Properties.Add(propertyToAdd);
+                    }
+                    // add a direct reference to the master list.
+                    // NOTE: maybe put in an else.
+                    weapon.Properties.Add(newProperty);
+                }
                 //
 
                 Weapons.Add(weapon);
@@ -291,7 +317,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             )
         {
             WeaponType = weaponType;
-            Name = name;
+            Name = new LabeledString(name);
             Type = type;
             Cost = cost;
             AP = ap;
@@ -443,6 +469,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _weaponType, value);
         }
         //
+
+        public WeaponProperty Clone => new WeaponProperty(this.WeaponType, this.Name, this.Value);
     }
 
     class WeaponUpgrade : LabeledString

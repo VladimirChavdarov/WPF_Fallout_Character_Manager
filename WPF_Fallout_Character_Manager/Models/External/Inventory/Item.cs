@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 {
     class Item : ModTypeBase
     {
-        // constructor
-        public Item(string name = "ItemName", int cost = 0, int amount = 0, float load = 0.0f)
+        // constructors
+        public Item(string name = "ItemName", int cost = 0, int amount = 0, float load = 0.0f, string description = "")
         {
-            _name = name;
+            _name = new LabeledString(name, "", description);
             _cost = cost;
             _amount = amount;
             _load = load;
@@ -20,11 +21,11 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         //
 
         // members
-        private string _name;
-        public string Name
+        private LabeledString _name;
+        public LabeledString Name
         {
             get => _name;
-            set => Update(ref  _name, value);
+            set => Update(ref _name, value);
         }
 
         private int _cost;
@@ -64,7 +65,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 
         public int TotalLoad => (int)(Amount * Load);
         public int TotalCost => (int)(Amount * Cost);
-        public string NameAmount => ("(" + Amount + ") " + Name);
+        public string NameAmount => ("(" + Amount + ") " + Name.Name);
         //
     }
 }

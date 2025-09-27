@@ -79,28 +79,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
     class Ammo : Item
     {
-        // constructors
-        public Ammo() : base()
-        {
-            Effects = new ObservableCollection<AmmoEffect>();
-            Effects.CollectionChanged += Effects_CollectionChanged;
-            PropertyChanged += Ammo_PropertyChanged;
-        }
-
-        public Ammo(AmmoEffect effect) : base()
-        {
-            Effects = new ObservableCollection<AmmoEffect>();
-            Effects.CollectionChanged += Effects_CollectionChanged;
-            PropertyChanged += Ammo_PropertyChanged;
-            Effects.Add(effect);
-        }
-        public Ammo(string name = "NewAmmo", int cost = 0, int amount = 0, float load = 0.0f) : base(name, cost, amount, load)
-        {
-            Effects = new ObservableCollection<AmmoEffect>();
-            Effects.CollectionChanged += Effects_CollectionChanged;
-            PropertyChanged += Ammo_PropertyChanged;
-        }
-        public Ammo(string name = "NewAmmo", int cost = 0, int amount = 0, float load = 0.0f, AmmoEffect effect = null) : base(name, cost, amount, load)
+        // constructor
+        public Ammo(string name = "NewAmmo", int cost = 0, int amount = 0, float load = 0.0f, AmmoEffect effect = null, string description = "") : base(name, cost, amount, load, description)
         {
             Effects = new ObservableCollection<AmmoEffect>();
             Effects.CollectionChanged += Effects_CollectionChanged;
@@ -171,6 +151,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Name = name;
             Value = value;
+            Note = value;
             CostMultiplier = costMultiplier;
             IsReadOnly = true;
             _compatibleAmmo = new ObservableCollection<string>();
