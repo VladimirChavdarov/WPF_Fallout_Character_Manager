@@ -47,6 +47,30 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region Hint
+        public static readonly DependencyProperty HintProperty =
+        DependencyProperty.Register("Hint", typeof(string), typeof(EnhancedTextBox),
+            new FrameworkPropertyMetadata("EnhancedTextBox Lalala"/*, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault*/, new PropertyChangedCallback(OnHintChanged)));
+
+        public string Hint
+        {
+            get { return (string)GetValue(HintProperty); }
+            set { SetValue(HintProperty, value); }
+        }
+
+        private static void OnHintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
+            ThisUserControl.OnHintChanged(e);
+        }
+
+        private void OnHintChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
         #region ReadOnly
         public static readonly DependencyProperty IsReadOnlyProperty =
         DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(EnhancedTextBox),
@@ -89,6 +113,29 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
 
         private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region ModString
+        public static readonly DependencyProperty ModStringProperty =
+            DependencyProperty.Register("ModString", typeof(ModString), typeof(EnhancedTextBox),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModStringPropertyChanged)));
+
+        public ModString ModString
+        {
+            get => (ModString)GetValue(ModStringProperty);
+            set => SetValue(ModStringProperty, value);
+        }
+
+        private static void ModStringPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
+            ThisUserControl.ModStringPropertyChanged(e);
+        }
+
+        private void ModStringPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
 
         }

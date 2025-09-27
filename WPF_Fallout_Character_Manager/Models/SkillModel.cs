@@ -86,7 +86,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
         public void CalculateSkill(Skill skill, int specialModifier, int luckModifier/*, bool isTagged*/)
         {
-            _skills[skill].BaseValue = specialModifier + luckModifier;
+            _skills[skill].BaseValue.Value = specialModifier + luckModifier;
         }
 
         public ModIntSkill GetSkill(Skill skill) { return _skills[skill]; }

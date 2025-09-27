@@ -43,12 +43,12 @@ namespace WPF_Fallout_Character_Manager.Models
 
         void CalculateRadDC(int enduranceModifier)
         {
-            RadDC.BaseValue = 12 - enduranceModifier;
+            RadDC.BaseValue.Value = 12 - enduranceModifier;
         }
 
         void CalculatePassiveSense(int perceptionModifier)
         {
-            PassiveSense.BaseValue = 12 + perceptionModifier;
+            PassiveSense.BaseValue.Value = 12 + perceptionModifier;
         }
         //
 

@@ -16,16 +16,28 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class ModInt : ModTypeBase
     {
         // constructor
-        public ModInt(string name, int value, bool isBaseValueReadOnly = false)
+        public ModInt(string name = "NewModInt", int value = 0, bool isBaseValueReadOnly = false, string description = "No Description")
         {
             _name = name;
-            _baseValue = value;
+
+            _baseValue = new LabeledInt(description, value);
+            _baseValue.PropertyChanged += BaseValue_PropertyChanged;
+
             _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledInt>();
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
 
             UpdateTotal();
         }
+
+        private void BaseValue_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(LabeledInt.Value))
+            {
+                UpdateTotal();
+            }
+        }
+
         //
 
         //
@@ -63,7 +75,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // helpers
         public void UpdateTotal()
         {
-            int sum = BaseValue;
+            int sum = BaseValue.Value;
             for (int i = 0; i < Modifiers.Count; i++)
             {
                 sum += Modifiers[i].Value;
@@ -107,8 +119,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             private set => Update(ref _total, value);
         }
 
-        protected int _baseValue;
-        public int BaseValue
+        protected LabeledInt _baseValue;
+        public LabeledInt BaseValue
         {
             get => _baseValue;
             set

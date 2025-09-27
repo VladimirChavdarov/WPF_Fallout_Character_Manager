@@ -68,7 +68,8 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             CanOpenModal="False"
-                            Text="{Binding BioModel.Level.BaseValue}"
+                            Text="{Binding BioModel.Level.BaseValue.Value}"
+                            Hint="{Binding BioModel.Level.BaseValue.Name}"
                             ModInt="{Binding BioModel.Level}"
                             IsReadOnly="{Binding BioModel.Level.IsBaseValueReadOnly}"/>
                         </Grid>
@@ -90,7 +91,8 @@
                                 FontSize="11"
                                 VerticalAlignment="Center"
                                 CanOpenModal="False"
-                                Text="{Binding BioModel.XP.BaseValue}"
+                                Text="{Binding BioModel.XP.BaseValue.Value}"
+                                Hint="{Binding BioModel.XP.BaseValue.Name}"
                                 ModInt="{Binding BioModel.XP}"
                                 IsReadOnly="{Binding BioModel.XP.IsBaseValueReadOnly}"/>
                         </Grid>

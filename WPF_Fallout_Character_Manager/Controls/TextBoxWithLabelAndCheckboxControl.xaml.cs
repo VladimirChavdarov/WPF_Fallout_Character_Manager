@@ -72,6 +72,30 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region Hint
+        public static readonly DependencyProperty HintProperty =
+        DependencyProperty.Register("Hint", typeof(string), typeof(TextBoxWithLabelAndCheckboxControl),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHintChanged)));
+
+        public string Hint
+        {
+            get { return (string)GetValue(HintProperty); }
+            set { SetValue(HintProperty, value); }
+        }
+
+        private static void OnHintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelAndCheckboxControl? ThisUserControl = d as TextBoxWithLabelAndCheckboxControl;
+            ThisUserControl.OnHintChanged(e);
+        }
+
+        private void OnHintChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
         #region ModIntSkill
         public static readonly DependencyProperty ModIntSkillProperty =
             DependencyProperty.Register("ModIntSkill", typeof(ModIntSkill), typeof(TextBoxWithLabelAndCheckboxControl),

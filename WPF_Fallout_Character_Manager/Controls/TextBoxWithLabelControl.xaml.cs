@@ -70,6 +70,30 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region Hint
+        public static readonly DependencyProperty HintProperty =
+        DependencyProperty.Register("Hint", typeof(string), typeof(TextBoxWithLabelControl),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHintChanged)));
+
+        public string Hint
+        {
+            get { return (string)GetValue(HintProperty); }
+            set { SetValue(HintProperty, value); }
+        }
+
+        private static void OnHintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelControl? ThisUserControl = d as TextBoxWithLabelControl;
+            ThisUserControl.OnHintChanged(e);
+        }
+
+        private void OnHintChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
         #region ModInt
         public static readonly DependencyProperty ModIntProperty =
             DependencyProperty.Register("ModInt", typeof(ModInt), typeof(TextBoxWithLabelControl),
@@ -88,6 +112,29 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
 
         private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region ModString
+        public static readonly DependencyProperty ModStringProperty =
+            DependencyProperty.Register("ModString", typeof(ModString), typeof(TextBoxWithLabelControl),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModStringPropertyChanged)));
+
+        public ModString ModString
+        {
+            get => (ModString)GetValue(ModStringProperty);
+            set => SetValue(ModStringProperty, value);
+        }
+
+        private static void ModStringPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxWithLabelControl? ThisUserControl = d as TextBoxWithLabelControl;
+            ThisUserControl.ModStringPropertyChanged(e);
+        }
+
+        private void ModStringPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
 
         }

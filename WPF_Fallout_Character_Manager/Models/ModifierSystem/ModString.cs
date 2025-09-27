@@ -13,16 +13,25 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class ModString : ModTypeBase
     {
         // constructor
-        public ModString(string name, string value, bool isBaseValueReadOnly = false)
+        public ModString(string name = "NewModString", string value = "None", bool isBaseValueReadOnly = false, string description = "No Description")
         {
             _name = name;
-            _baseValue = value;
+
+            _baseValue = new LabeledString(description, value);
+            _baseValue.PropertyChanged += BaseValue_PropertyChanged;
+
             _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledString>();
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
 
             UpdateTotal();
         }
+
+        private void BaseValue_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            UpdateTotal();
+        }
+
         //
 
         //
@@ -60,7 +69,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // helpers
         public void UpdateTotal()
         {
-            string sum = BaseValue;
+            string sum = BaseValue.Value;
             for (int i = 0; i < Modifiers.Count; i++)
             {
                 sum += " " + Modifiers[i].Value;
@@ -104,8 +113,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             private set => Update(ref _total, value);
         }
 
-        protected string _baseValue;
-        public string BaseValue
+        protected LabeledString _baseValue;
+        public LabeledString BaseValue
         {
             get => _baseValue;
             set

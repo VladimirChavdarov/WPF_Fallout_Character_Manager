@@ -71,6 +71,30 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region Hint
+        public static readonly DependencyProperty HintProperty =
+        DependencyProperty.Register("Hint", typeof(string), typeof(SPECIALInputControl),
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHintChanged)));
+
+        public string Hint
+        {
+            get { return (string)GetValue(HintProperty); }
+            set { SetValue(HintProperty, value); }
+        }
+
+        private static void OnHintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SPECIALInputControl? ThisUserControl = d as SPECIALInputControl;
+            ThisUserControl.OnHintChanged(e);
+        }
+
+        private void OnHintChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
         // ---------------------
 
         #region StatLabel

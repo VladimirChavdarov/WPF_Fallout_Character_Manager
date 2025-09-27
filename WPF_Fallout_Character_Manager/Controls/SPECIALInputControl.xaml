@@ -63,6 +63,14 @@
                             HorizontalAlignment="Center"
                             IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                             Text="{Binding StatModifier, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+                            <TextBox.ToolTip>
+                                <ToolTip
+                                    Content="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    Placement="Mouse"
+                                    ToolTipService.InitialShowDelay="1000"/>
+                            </TextBox.ToolTip>
+                            
                             <TextBox.InputBindings>
                                 <MouseBinding Gesture="RightClick"
                                     Command="{Binding OpenModifierModalWindowCommand}"

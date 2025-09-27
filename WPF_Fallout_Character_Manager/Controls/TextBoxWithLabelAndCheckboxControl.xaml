@@ -43,6 +43,7 @@
                 CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 LabelText="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Hint="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 />
 
             <ItemsControl ItemsSource="{Binding ModIntSkill.SkillModifiers, RelativeSource={RelativeSource AncestorType=UserControl}}">

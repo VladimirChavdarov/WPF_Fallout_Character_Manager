@@ -31,10 +31,20 @@
                 FlowDirection="LeftToRight"
                 VerticalAlignment="Center"
                 ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                ModString="{Binding ModString, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Hint="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 PreviewMouseRightButtonDown="EnhancedTextBox_PreviewMouseRightButtonDown">
+
+                <local:EnhancedTextBox.ToolTip>
+                    <ToolTip
+                        Content="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        Placement="Mouse"
+                        ToolTipService.InitialShowDelay="1000"/>
+                </local:EnhancedTextBox.ToolTip>
+
                 <local:EnhancedTextBox.InputBindings>
                     <MouseBinding Gesture="RightClick"
                         Command="{Binding OpenModifierModalWindowCommand}"

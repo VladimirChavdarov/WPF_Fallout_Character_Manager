@@ -29,7 +29,18 @@
                 Cursor="IBeam"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                ToolTip="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                ToolTipService.InitialShowDelay="1000"
+                ToolTipService.Placement="Mouse"
                 PreviewMouseRightButtonDown="CustomTextBox_PreviewMouseRightButtonDown">
+
+            <TextBox.Resources>
+                <Style TargetType="ToolTip">
+                    <Setter Property="MaxWidth" Value="300"/>
+                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                </Style>
+            </TextBox.Resources>
+
             <TextBox.InputBindings>
                 <MouseBinding Gesture="RightClick"
                     Command="{Binding OpenModifierModalWindowCommand}"
