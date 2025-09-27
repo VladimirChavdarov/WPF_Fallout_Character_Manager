@@ -5,11 +5,9 @@
         <Setter Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource FalloutGreen}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="TextBlock.Foreground" Value="{StaticResource FalloutGreen}"/>
-        <Setter Property="TextBlock.FontFamily" Value="{StaticResource JH_Fallout}"/>
-        <Setter Property="TextBlock.FontSize" Value="9"/>
-        <Setter Property="TextBlock.MaxWidth" Value="300"/>
-        <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+        <Setter Property="Foreground" Value="{StaticResource FalloutGreen}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JH_Fallout}"/>
+        <Setter Property="FontSize" Value="9"/>
     </Style>
 
 </ResourceDictionary>

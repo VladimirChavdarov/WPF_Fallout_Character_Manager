@@ -42,6 +42,8 @@
             <TextBox.ToolTip>
                 <ToolTip>
                     <TextBlock
+                        MaxWidth="300"
+                        TextWrapping="Wrap"
                         Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"/>
                 </ToolTip>
             </TextBox.ToolTip>

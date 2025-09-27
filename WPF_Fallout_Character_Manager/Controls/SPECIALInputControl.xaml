@@ -53,14 +53,8 @@
                         ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}">
 
                         <TextBox.ToolTip>
-                            <ToolTip
-                            Background="{StaticResource FalloutGreenBackground}"
-                            BorderBrush="{StaticResource FalloutGreen}"
-                            BorderThickness="1">
+                            <ToolTip>
                             <TextBlock
-                                FontFamily="{StaticResource JH_Fallout}"
-                                Foreground="{StaticResource FalloutGreen}"
-                                FontSize="9"
                                 Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"
                                 TextWrapping="Wrap"
                                 MaxWidth="300"/>
@@ -96,14 +90,8 @@
                             ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}">
 
                             <TextBox.ToolTip>
-                                <ToolTip
-                                    Background="{StaticResource FalloutGreenBackground}"
-                                    BorderBrush="{StaticResource FalloutGreen}"
-                                    BorderThickness="1">
+                                <ToolTip>
                                     <TextBlock
-                                        FontFamily="{StaticResource JH_Fallout}"
-                                        Foreground="{StaticResource FalloutGreen}"
-                                        FontSize="9"
                                         Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"
                                         TextWrapping="Wrap"
                                         MaxWidth="300"/>
