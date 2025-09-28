@@ -53,5 +53,5 @@ Gauss rifle;Energy;865;3;1d12 ballistic;x10/x20;20, 4d12.;2mm EC, 1 round, 6 att
 Gatling laser;Energy;1100;6;2d10 laser;x30/x30;20, 1d10. Applies burning.;Fusion Core, 1 round, 100 attacks per ammo;Automatic: 4. Destructive. Energy Weapon. Unwieldy.;50;5
 Flamer;Big Gun;240;6;2d10 fire;60 ft. line, 10 feet wide. or a 20 ft cone.;0, None;Fuel, 5 rounds, 1 attacks per ammo;Area of Effect. Incendiary. Slow Reload. Two Handed.;60;7
 Missile Launcher;Big Gun;670;6;10d6 explosive in a 10ft. radius.;x40;0, None;Missile, 1 round, 1 attacks per ammo;Area of Effect. Destructive. Durable. Slow. Two Handed.;50;7
-Minigun;Big Gun;1650;6;5d6 ballistic;x15/x40;20, 2d6.;5mm, 120 rounds, 12 attacks per ammo;Automatic: 2. Destructive. Durable. Slow Reload. Spread. Two Handed.;90;9
+Minigun;Big Gun;1650;6;5d6 ballistic;x15/x40;20, 2d6.;5mm, 120 rounds, 0.1 attacks per ammo;Automatic: 2. Destructive. Durable. Slow Reload. Spread. Two Handed.;90;9
 Fat-Man;Big Gun;665;6;12d10 explosive in a 30ft. Radius and two levels of radiation in a 60ft. radius.;x25;0, None;Mini nuke, 1 round, 1 attacks per ammo;Area of Effect. Destructive. Durable. Slow. Two Handed.;30;5

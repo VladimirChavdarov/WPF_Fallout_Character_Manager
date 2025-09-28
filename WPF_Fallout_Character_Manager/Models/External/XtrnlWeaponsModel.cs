@@ -249,7 +249,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 weapon.AmmoCapacity = Int32.Parse(ammoField[1]);
                 // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
                 ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
-                weapon.AmmoPerAttack = 1.0f / (float)Int32.Parse(ammoField[2]);
+                weapon.AmmoPerAttack = 1.0f / Utils.FloatFromString(ammoField[2]);
                 //
 
                 // properties
