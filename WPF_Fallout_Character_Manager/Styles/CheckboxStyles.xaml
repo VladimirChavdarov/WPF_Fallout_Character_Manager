@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="FalloutSkillCheckbox" TargetType="CheckBox">
+        <Setter Property="FontFamily" Value="{StaticResource JH_Fallout}"/>
+        <Setter Property="Foreground" Value="{StaticResource FalloutGreen}"/>
         <Setter Property="Background" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{StaticResource FalloutGreen}"/>

@@ -77,7 +77,7 @@
                 BorderThickness="1 1 1 1">
 
             <ScrollViewer>
-                <TabControl>
+                <TabControl Style="{StaticResource FalloutTabControl}">
                     
                     <!-- Character Tab -->
                     <TabItem Header="Character">
@@ -122,8 +122,8 @@
                             <Grid
                                 Grid.Column="1">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="456"/>
-                                    <RowDefinition Height="304"/>
+                                    <RowDefinition Height="450"/>
+                                    <RowDefinition Height="310"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
@@ -143,6 +143,10 @@
                                     BorderThickness="1">
 
                                 </GroupBox>
+
+                                <panels:EquippablePanel
+                                    Grid.Row="1"
+                                    DataContext="{Binding}"/>
                                 <!-- -->
                             </Grid>
                             <!-- -->
