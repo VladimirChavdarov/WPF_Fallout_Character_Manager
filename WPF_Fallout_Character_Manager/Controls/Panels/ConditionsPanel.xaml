@@ -197,7 +197,8 @@
                         Content="Add"
                         Margin="5 10 0 5"
                         Padding="5"
-                        Width="60"
+                        Width="70"
+                        FontSize="11"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
