@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="238" d:DesignWidth="530">
     <Grid
@@ -31,7 +32,9 @@
                 HorizontalAlignment="Left"
                 MinWidth="160"
                 Width="Auto"
-                ItemsSource="{Binding WeaponsModel.Weapons}">
+                ItemsSource="{Binding WeaponsModel.Weapons}"
+                DisplayMemberPath="NameAmount"
+                SelectedItem="{Binding SelectedWeapon}">
             </ComboBox>
 
             <StackPanel
@@ -74,7 +77,11 @@
                 TextWrapping="NoWrap"
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
-                LabelText="AP:"/>
+                LabelText="AP:"
+                IsReadOnly="{Binding SelectedWeapon.AP.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.AP}"
+                Text="{Binding SelectedWeapon.AP.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.AP.Note}"/>
 
             <control:TextBoxWithLabelControl
                 Grid.Column="1"
@@ -85,7 +92,11 @@
                 TextWrapping="NoWrap"
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
-                LabelText="To Hit:"/>
+                LabelText="To Hit:"
+                IsReadOnly="{Binding SelectedWeapon.ToHit.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.ToHit}"
+                Text="{Binding SelectedWeapon.ToHit.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.ToHit.Note}"/>
 
             <control:TextBoxWithLabelControl
                 Grid.Column="2"
@@ -96,18 +107,53 @@
                 TextWrapping="NoWrap"
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
-                LabelText="Damage:"/>
+                LabelText="Damage:"
+                IsReadOnly="{Binding SelectedWeapon.Damage.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.Damage}"
+                Text="{Binding SelectedWeapon.Damage.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.Damage.Note}"/>
 
-            <control:TextBoxWithLabelControl
+            <StackPanel
                 Grid.Column="3"
                 Orientation="Vertical"
                 Margin="5"
                 VerticalAlignment="Top"
-                MinWidth="80"
-                TextWrapping="NoWrap"
-                HorizontalContentAlignment="Left"
-                LabelFontSize="11"
-                LabelText="Crit:"/>
+                MinWidth="80">
+                <Label
+                    Style="{StaticResource FalloutDefaultLabel}"
+                    FontSize="11"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Content="Crit:"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="55"/>
+                    </Grid.ColumnDefinitions>
+
+                    <control:EnhancedTextBox
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="25"
+                        TextWrapping="NoWrap"
+                        IsReadOnly="{Binding SelectedWeapon.CritChance.IsBaseValueReadOnly}"
+                        ModInt="{Binding SelectedWeapon.CritChance}"
+                        Text="{Binding SelectedWeapon.CritChance.BaseValue}"
+                        Hint="{Binding SelectedWeapon.CritChance.Note}"/>
+
+                    <control:EnhancedTextBox
+                        Grid.Column="1"
+                        HorizontalContentAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="50"
+                        TextWrapping="NoWrap"
+                        IsReadOnly="{Binding SelectedWeapon.CritDamage.IsBaseValueReadOnly}"
+                        ModInt="{Binding SelectedWeapon.CritDamage}"
+                        Text="{Binding SelectedWeapon.CritDamage.BaseValue}"
+                        Hint="{Binding SelectedWeapon.CritDamage.Note}"/>
+                </Grid>
+            </StackPanel>
 
             <control:TextBoxWithLabelControl
                 Grid.Column="4"
@@ -118,7 +164,11 @@
                 TextWrapping="NoWrap"
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
-                LabelText="Range:"/>
+                LabelText="Range:"
+                IsReadOnly="{Binding SelectedWeapon.RangeMultiplier.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.RangeMultiplier}"
+                Text="{Binding SelectedWeapon.RangeMultiplier.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.RangeMultiplier.Note}"/>
 
         </Grid>
 
@@ -137,7 +187,11 @@
                 VerticalAlignment="Top"
                 MinWidth="45"
                 LabelFontSize="11"
-                LabelText="Cost:"/>
+                LabelText="Cost:"
+                IsReadOnly="{Binding SelectedWeapon.Cost.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.Cost}"
+                Text="{Binding SelectedWeapon.Cost.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.Cost.Note}"/>
 
             <StackPanel
                 Grid.Column="1"
@@ -153,8 +207,9 @@
                     HorizontalAlignment="Left"
                     MinWidth="130"
                     Width="Auto"
-                    ItemsSource="{Binding SelectedWeapon.AvailableAmmos}">
-                </ComboBox>
+                    ItemsSource="{Binding SelectedWeapon.CompatibleAmmos, diag:PresentationTraceSources.TraceLevel=High}"
+                    DisplayMemberPath="NameAmount"
+                    SelectedItem="{Binding SelectedAmmo}"/>
             </StackPanel>
 
         </Grid>
@@ -174,7 +229,11 @@
                 VerticalAlignment="Top"
                 MinWidth="45"
                 LabelFontSize="11"
-                LabelText="Load:"/>
+                LabelText="Load:"
+                IsReadOnly="{Binding SelectedWeapon.Load.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.Load}"
+                Text="{Binding SelectedWeapon.Load.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.Load.Note}"/>
 
             <Grid
                 Grid.Column="1"
@@ -216,7 +275,17 @@
                 HorizontalAlignment="Right"
                 MinWidth="130"
                 Width="Auto"
-                ItemsSource="{Binding SelectedWeapon.AvailableAmmos}">
+                ItemsSource="{Binding SelectedWeapon.Properties}"
+                DisplayMemberPath="Name"
+                Text="Properties"
+                IsReadOnly="True"
+                IsEditable="True"
+                SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                        <Setter Property="Tag" Value="{Binding Note}"/>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
             </ComboBox>
         </Grid>
 
@@ -235,7 +304,11 @@
                 VerticalAlignment="Top"
                 MinWidth="45"
                 LabelFontSize="11"
-                LabelText="STR Req:"/>
+                LabelText="STR Req:"
+                IsReadOnly="{Binding SelectedWeapon.StrRequirement.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.StrRequirement}"
+                Text="{Binding SelectedWeapon.StrRequirement.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.StrRequirement.Note}"/>
 
             <!-- Bullets -->
             <Grid
@@ -255,7 +328,7 @@
                 HorizontalAlignment="Right">
                 <Label
                     Style="{StaticResource FalloutDefaultLabel}"
-                    Content="3/6 slots"
+                    Content="{Binding SelectedWeapon.UpgradeSlotVisualization}"
                     FontSize="9"
                     VerticalAlignment="Top"/>
                 <ComboBox
@@ -264,7 +337,18 @@
                     HorizontalAlignment="Right"
                     MinWidth="130"
                     Width="Auto"
-                    ItemsSource="{Binding SelectedWeapon.AvailableAmmos}"/>
+                    ItemsSource="{Binding SelectedWeapon.Upgrades}"
+                    DisplayMemberPath="Name"
+                    Text="Upgrades"
+                    IsReadOnly="True"
+                    IsEditable="False"
+                    SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                            <Setter Property="Tag" Value="{Binding Note}"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                </ComboBox>
             </StackPanel>
         </Grid>
 
@@ -283,7 +367,11 @@
                 VerticalAlignment="Top"
                 MinWidth="45"
                 LabelFontSize="11"
-                LabelText="Decay:"/>
+                LabelText="Decay:"
+                IsReadOnly="{Binding SelectedWeapon.Decay.IsBaseValueReadOnly}"
+                ModInt="{Binding SelectedWeapon.Decay}"
+                Text="{Binding SelectedWeapon.Decay.Total, Mode=OneWay}"
+                Hint="{Binding SelectedWeapon.Decay.Note}"/>
         </Grid>
     </Grid>
 </UserControl>

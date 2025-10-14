@@ -13,16 +13,16 @@ using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
-    public class ModInt : ModTypeBase
+    public class ModFloat : ModTypeBase
     {
         // constructor
-        public ModInt(string name = "NewModInt", int value = 0, bool isBaseValueReadOnly = false, string hint = "No Hint")
+        public ModFloat(string name = "NewModFloat", float value = 0, bool isBaseValueReadOnly = false, string hint = "No Hint")
         {
-            _baseValueObject = new LabeledInt(name, value, hint);
+            _baseValueObject = new LabeledFloat(name, value, hint);
             _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
 
             _isBaseValueReadOnly = isBaseValueReadOnly;
-            Modifiers = new ObservableCollection<LabeledInt>();
+            Modifiers = new ObservableCollection<LabeledFloat>();
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
 
             UpdateTotal();
@@ -30,7 +30,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 
         private void BaseValue_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(LabeledInt.Value))
+            if (e.PropertyName == nameof(LabeledFloat.Value))
             {
                 UpdateTotal();
             }
@@ -41,19 +41,19 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         //
         // TODO: Find someone and ask if this is too much redundant calls of UpdateTotal().
         // Maybe not actually. UpdateTotal() gets called when the size of the ObservableCollection changes
-        // or when a LabeledInt's value changes.
+        // or when a LabeledFloat's value changes.
         protected void Modifiers_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            if(e.NewItems != null)
+            if (e.NewItems != null)
             {
-                foreach(LabeledInt mod in  e.NewItems)
+                foreach (LabeledFloat mod in e.NewItems)
                 {
                     mod.PropertyChanged += Modifiers_PropertyChanged;
                 }
             }
-            if(e.OldItems != null)
+            if (e.OldItems != null)
             {
-                foreach(LabeledInt mod in e.OldItems)
+                foreach (LabeledFloat mod in e.OldItems)
                 {
                     mod.PropertyChanged -= Modifiers_PropertyChanged;
                 }
@@ -63,7 +63,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 
         protected void Modifiers_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(LabeledInt.Value))
+            if (e.PropertyName == nameof(LabeledFloat.Value))
             {
                 UpdateTotal();
             }
@@ -73,7 +73,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // helpers
         public void UpdateTotal()
         {
-            int sum = BaseValueObject.Value;
+            float sum = BaseValueObject.Value;
             for (int i = 0; i < Modifiers.Count; i++)
             {
                 sum += Modifiers[i].Value;
@@ -81,7 +81,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             Total = sum;
         }
 
-        public void AddModifier(LabeledInt newModifier)
+        public void AddModifier(LabeledFloat newModifier)
         {
             Modifiers.Add(newModifier);
         }
@@ -92,23 +92,23 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
         //
 
-        public void RemoveModifier(LabeledInt modifierToRemove)
+        public void RemoveModifier(LabeledFloat modifierToRemove)
         {
             Modifiers.Remove(modifierToRemove);
         }
 
         public void RemoveModifier(string modifierName)
         {
-            LabeledInt modifierToRemove = Modifiers?.FirstOrDefault(m => m.Name == modifierName);
-            if(modifierToRemove != null)
+            LabeledFloat modifierToRemove = Modifiers?.FirstOrDefault(m => m.Name == modifierName);
+            if (modifierToRemove != null)
                 Modifiers.Remove(modifierToRemove);
             else
                 throw new Exception($"Modifier with label '{modifierName}' not found.");
         }
 
         // Data
-        protected int _total;
-        public int Total
+        protected float _total;
+        public float Total
         {
             get => _total;
             // This shouldn't be set explicitly. It's always calculated via UpdateTotal().
@@ -117,8 +117,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             private set => Update(ref _total, value);
         }
 
-        protected LabeledInt _baseValueObject;
-        public LabeledInt BaseValueObject
+        protected LabeledFloat _baseValueObject;
+        public LabeledFloat BaseValueObject
         {
             get => _baseValueObject;
             set
@@ -143,7 +143,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 }
             }
         }
-        public int BaseValue
+        public float BaseValue
         {
             get => _baseValueObject.Value;
             set
@@ -175,14 +175,14 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
 
-        public ObservableCollection<LabeledInt>? Modifiers { get; }
+        public ObservableCollection<LabeledFloat>? Modifiers { get; }
         //
     }
 
-    public sealed class LabeledInt : ModTypeBase
+    public sealed class LabeledFloat : ModTypeBase
     {
         // constructor
-        public LabeledInt(string name = "NewNumericValue", int value = 0, string note = "")
+        public LabeledFloat(string name = "NewNumericValue", float value = 0, string note = "")
         {
             _name = name;
             _value = value;
@@ -198,8 +198,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             set => Update(ref _name, value);
         }
 
-        private int _value;
-        public int Value
+        private float _value;
+        public float Value
         {
             get => _value;
             set => Update(ref _value, value);

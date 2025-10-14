@@ -146,7 +146,7 @@
 
                                 <panels:EquippablePanel
                                     Grid.Row="1"
-                                    DataContext="{Binding}"/>
+                                    DataContext="{Binding EquippableViewModel}"/>
                                 <!-- -->
                             </Grid>
                             <!-- -->

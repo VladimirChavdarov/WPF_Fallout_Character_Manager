@@ -11,7 +11,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class ModIntSkill : ModInt
     {
         // constructor
-        public ModIntSkill(string name, int value, ObservableCollection<SPECIAL> skillModifiers, bool isBaseValueReadOnly = false, string description = "") : base(name, value, isBaseValueReadOnly, description)
+        public ModIntSkill(string name, int value, ObservableCollection<SPECIAL> skillModifiers, bool isBaseValueReadOnly = false, string hint = "") : base(name, value, isBaseValueReadOnly, hint)
         {
             _isTagged = false;
             SkillModifiers = skillModifiers;

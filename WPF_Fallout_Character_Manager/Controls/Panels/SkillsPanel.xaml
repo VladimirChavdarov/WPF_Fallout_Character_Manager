@@ -21,7 +21,7 @@
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Barter.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Barter.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -30,14 +30,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Barter"
                         Text="{Binding SkillModel.Barter.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Barter.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Barter.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Breach.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Breach.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -46,14 +46,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Breach"
                         Text="{Binding SkillModel.Breach.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Breach.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Breach.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Crafting.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Crafting.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -62,14 +62,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Crafting"
                         Text="{Binding SkillModel.Crafting.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Crafting.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Crafting.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.EnergyWeapons.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.EnergyWeapons.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -78,14 +78,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="EnergyWeapons"
                         Text="{Binding SkillModel.EnergyWeapons.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.EnergyWeapons.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.EnergyWeapons.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Explosives.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Explosives.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -94,14 +94,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Explosives"
                         Text="{Binding SkillModel.Explosives.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Explosives.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Explosives.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Guns.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Guns.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -110,14 +110,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Guns"
                         Text="{Binding SkillModel.Guns.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Guns.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Guns.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Intimidation.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Intimidation.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -126,14 +126,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Intimidation"
                         Text="{Binding SkillModel.Intimidation.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Intimidation.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Intimidation.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Medicine.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Medicine.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -142,14 +142,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Medicine"
                         Text="{Binding SkillModel.Medicine.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Medicine.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Medicine.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.MeleeWeapons.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.MeleeWeapons.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -158,14 +158,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="MeleeWeapons"
                         Text="{Binding SkillModel.MeleeWeapons.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.MeleeWeapons.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.MeleeWeapons.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Science.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Science.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -174,14 +174,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Science"
                         Text="{Binding SkillModel.Science.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Science.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Science.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Sneak.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Sneak.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -190,14 +190,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Sneak"
                         Text="{Binding SkillModel.Sneak.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Sneak.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Sneak.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Speech.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Speech.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -206,14 +206,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Speech"
                         Text="{Binding SkillModel.Speech.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Speech.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Speech.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Survival.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Survival.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -222,14 +222,14 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Survival"
                         Text="{Binding SkillModel.Survival.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Survival.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Survival.Note}"/>
                     <controls:TextBoxWithLabelAndCheckboxControl
                         Margin="0 0 0 5"
                         FlowDirection="RightToLeft"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="15"
-                        LabelText="{Binding SkillModel.Unarmed.BaseValue.Name}"
+                        LabelText="{Binding SkillModel.Unarmed.Name}"
                         FontSize="15"
                         CheckboxSize="20"
                         MinWidth="40"
@@ -238,7 +238,7 @@
                         SkillViewModel="{Binding}"
                         SkillKey="Unarmed"
                         Text="{Binding SkillModel.Unarmed.Total, Mode=OneWay}"
-                        Hint="{Binding SkillModel.Unarmed.BaseValue.Note}"/>
+                        Hint="{Binding SkillModel.Unarmed.Note}"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

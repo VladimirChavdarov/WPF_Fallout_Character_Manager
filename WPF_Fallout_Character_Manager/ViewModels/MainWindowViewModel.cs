@@ -21,7 +21,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public ConditionsModel ConditionsModel { get; } = new ConditionsModel();
         public AmmoModel AmmoModel { get; } = new AmmoModel();
 
-        public WeaponsModel WeaponsModel { get; } = new WeaponsModel();
+        //public WeaponsModel WeaponsModel { get; } = new WeaponsModel();
+        public WeaponsModel WeaponsModel { get; }
         //
 
         // External Data Models
@@ -41,12 +42,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public ConditionsViewModel ConditionsViewModel { get; }
         public AmmoViewModel AmmoViewModel { get; }
         public WeaponsViewModel WeaponsViewModel { get; }
+
+        public EquippableViewModel EquippableViewModel { get; }
         //
 
         // Constructor
         public MainWindowViewModel()
         {
             XtrnlWeaponsModel = new XtrnlWeaponsModel(XtrnlAmmoModel, AmmoModel);
+            WeaponsModel = new WeaponsModel(XtrnlWeaponsModel);
 
             BioViewModel = new BioViewModel(BioModel);
             SPECIALViewModel = new SPECIALViewModel(SPECIALModel);
@@ -56,7 +60,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
             AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);
-            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel);
+            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel);
+            EquippableViewModel = new EquippableViewModel(WeaponsViewModel);
         }
         //
     }

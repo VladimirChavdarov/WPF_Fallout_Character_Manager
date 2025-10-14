@@ -68,7 +68,13 @@
                         Width="160"
                         ItemsSource="{Binding XtrnlConditionsModel.Conditions}"
                         DisplayMemberPath="BaseValue.Name"
-                        SelectedItem="{Binding ConditionToAdd}"/>
+                        SelectedItem="{Binding ConditionToAdd}">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding BaseValue.Note}" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
 
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 20"

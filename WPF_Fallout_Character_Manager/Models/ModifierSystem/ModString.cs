@@ -13,10 +13,10 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class ModString : ModTypeBase
     {
         // constructor
-        public ModString(string name = "NewModString", string value = "None", bool isBaseValueReadOnly = false, string description = "No Description")
+        public ModString(string name = "NewModString", string value = "None", bool isBaseValueReadOnly = false, string hint = "No Hint")
         {
-            _baseValue = new LabeledString(name, value, description);
-            _baseValue.PropertyChanged += BaseValue_PropertyChanged;
+            _baseValueObject = new LabeledString(name, value, hint);
+            _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
 
             _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledString>();
@@ -67,7 +67,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // helpers
         public void UpdateTotal()
         {
-            string sum = BaseValue.Value;
+            string sum = BaseValueObject.Value;
             for (int i = 0; i < Modifiers.Count; i++)
             {
                 sum += " " + Modifiers[i].Value;
@@ -111,27 +111,62 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             private set => Update(ref _total, value);
         }
 
-        protected LabeledString _baseValue;
-        public LabeledString BaseValue
+        protected LabeledString _baseValueObject;
+        public LabeledString BaseValueObject
         {
-            get => _baseValue;
+            get => _baseValueObject;
             set
             {
-                if (_baseValue != value)
+                if (_baseValueObject != value)
                 {
-                    _baseValue = value;
+                    _baseValueObject = value;
                 }
-                //Update(ref _baseValue, value);
+                //Update(ref _baseValueObject, value);
                 UpdateTotal();
             }
         }
+        // QoL
+        public string Name
+        {
+            get => _baseValueObject.Name;
+            set
+            {
+                if (_baseValueObject.Name != value)
+                {
+                    _baseValueObject.Name = value;
+                }
+            }
+        }
+        public string BaseValue
+        {
+            get => _baseValueObject.Value;
+            set
+            {
+                if (_baseValueObject.Value != value)
+                {
+                    _baseValueObject.Value = value;
+                }
+                UpdateTotal();
+            }
+        }
+        public string Note
+        {
+            get => _baseValueObject.Note;
+            set
+            {
+                if (_baseValueObject.Note != value)
+                {
+                    _baseValueObject.Note = value;
+                }
+            }
+        }
+        //
 
         protected bool _isBaseValueReadOnly;
         public bool IsBaseValueReadOnly
         {
             get => _isBaseValueReadOnly;
         }
-
 
         public ObservableCollection<LabeledString>? Modifiers { get; }
         //

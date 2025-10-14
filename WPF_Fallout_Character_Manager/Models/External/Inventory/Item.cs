@@ -13,23 +13,23 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         // constructors
         public Item(string name = "ItemName", int cost = 0, int amount = 0, float load = 0.0f, string description = "")
         {
-            _name = new LabeledString(name, "", description);
-            _cost = cost;
-            _amount = amount;
-            _load = load;
+            _name = new ModString("Name", name, false, description);
+            _cost = new ModInt("Cost", cost);
+            _amount = new ModInt("Amount", amount);
+            _load = new ModFloat("Cost", load);
         }
         //
 
         // members
-        private LabeledString _name;
-        public LabeledString Name
+        private ModString _name;
+        public ModString Name
         {
             get => _name;
             set => Update(ref _name, value);
         }
 
-        private int _cost;
-        public int Cost
+        private ModInt _cost;
+        public ModInt Cost
         {
             get => _cost;
             set
@@ -39,8 +39,8 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             }
         }
 
-        private float _load;
-        public float Load
+        private ModFloat _load;
+        public ModFloat Load
         {
             get => _load;
             set
@@ -50,8 +50,8 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             }
         }
 
-        private int _amount;
-        public int Amount
+        private ModInt _amount;
+        public ModInt Amount
         {
             get => _amount;
             set
@@ -63,9 +63,9 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             }
         }
 
-        public int TotalLoad => (int)(Amount * Load);
-        public int TotalCost => (int)(Amount * Cost);
-        public string NameAmount => ("(" + Amount + ") " + Name.Name);
+        public int TotalLoad => (int)(Amount.Total * Load.Total);
+        public int TotalCost => (int)(Amount.Total * Cost.Total);
+        public string NameAmount => ("(" + Amount.Total + ") " + Name.Total);
         //
     }
 }

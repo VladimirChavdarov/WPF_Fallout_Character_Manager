@@ -91,6 +91,12 @@
                                             ItemsSource="{Binding DataContext.XtrnlLimbConditionsObserved, RelativeSource={RelativeSource AncestorType=Window}}"
                                             DisplayMemberPath="BaseValue.Name"
                                             SelectedItem="{Binding SelectedExternalCondition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <ComboBox.ItemContainerStyle>
+                                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                                    <Setter Property="Tag" Value="{Binding BaseValue.Note}" />
+                                                </Style>
+                                            </ComboBox.ItemContainerStyle>
+                                            
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
                                                     <i:InvokeCommandAction
@@ -98,7 +104,6 @@
                                                         CommandParameter="{Binding}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
-
                                         </ComboBox>
                                     </StackPanel>
                                     <controls:TextBoxWithLabelControl

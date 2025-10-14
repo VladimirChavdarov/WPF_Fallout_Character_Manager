@@ -124,10 +124,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     ammoType: null,
                     ammoCapacity: 0,
                     load: Utils.FloatFromString(parts[7]),
-                    strRequirement: Int32.Parse(parts[8])
+                    strRequirement: Int32.Parse(parts[8]),
+                    decay: 0,
+                    availableUpgradeSlots: 1
                     );
                 weapon.Properties = new ObservableCollection<WeaponProperty>();
                 weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
+                weapon.CompatibleAmmos = new ObservableCollection<Ammo>();
 
                 // melee properties
                 string[] properties = parts[6].Split(".");
@@ -139,8 +142,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         // update rangeMultiplier
                         string thrown = trimmedProperty.Replace("Thrown ", ""); // remove the word, leave only the values.
                         thrown = thrown.Replace(".", ""); // remove dot at the end.
-                        //var separateValues = thrown.Split("/");
-                        weapon.RangeMultiplier = thrown;
+                        weapon.RangeMultiplier.BaseValue = thrown;
                     }
 
                     if (trimmedProperty.Contains("Ammo"))
@@ -149,20 +151,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         var separateValues = ammoProperty.Split(", ");
                         separateValues[0] = separateValues[0].Trim();
                         separateValues[1] = separateValues[1].Trim();
-                        weapon.AmmoCapacity = Int32.Parse(separateValues[1].Replace(" rounds", ""));
+                        weapon.AmmoCapacity.BaseValue = Int32.Parse(separateValues[1].Replace(" rounds", ""));
                         // check to see if we already have ammo of this type. If not, add it from the xtrnlAmmoModel to ammoModel with amount = 0.
-                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == separateValues[0]);
+                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == separateValues[0]);
                         if (ammoType != null)
-                            weapon.AmmoType = ammoType; // we just reference the object from ammoModel in the weapon's data.
+                            weapon.CompatibleAmmos.Add(ammoType); // we just reference the object from ammoModel in the weapon's data.
                         else
                         {
                             // if the user has no ammo of this type in AmmoModel.Ammos, we first add it there and then
                             // we reference it in the weapon's data.
-                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.Name == separateValues[0]);
+                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == separateValues[0]);
                             if (ammoToAdd == null)
                                 throw new Exception("Cannot find this ammo type in XtrnlAmmoModel.Ammos... This ammo doesn't exist.");
                             ammoModel.Ammos.Add(ammoToAdd.Clone());
-                            weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == separateValues[0]);
+                            weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == separateValues[0]));
                         }
                     }
 
@@ -215,22 +217,25 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     ammoCapacity: 0,
                     ammoPerAttack: 0,
                     load: Utils.FloatFromString(parts[9]),
-                    strRequirement: Int32.Parse(parts[10])
+                    strRequirement: Int32.Parse(parts[10]),
+                    decay: 0,
+                    availableUpgradeSlots: 6
                     );
                 weapon.Properties = new ObservableCollection<WeaponProperty>();
                 weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
+                weapon.CompatibleAmmos = new ObservableCollection<Ammo>();
 
                 // set ammo type, capacity, and ammo per attack
                 string[] ammoField = parts[7].Split(",");
                 for (int i = 0; i < ammoField.Length; i++)
                     ammoField[i] = ammoField[i].Trim();
                 // ammo type
-                Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == ammoField[0]);
+                Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
                 if(ammoType != null)
-                    weapon.AmmoType = ammoType;
+                    weapon.CompatibleAmmos.Add(ammoType);
                 else
                 {
-                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.Name == ammoField[0]);
+                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
                     if (ammoToAdd == null)
                     {
                         // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
@@ -239,17 +244,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     }
                     ammoModel.Ammos.Add(ammoToAdd.Clone());
                     // make weapon.AmmoType reference the ammo in the model.
-                    weapon.AmmoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.Name == ammoField[0]);
-                    if(weapon.AmmoType == null)
+                    weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
+                    if (weapon.CompatibleAmmos.FirstOrDefault() == null)
                         throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
                 }
                 // ammo capacity
                 ammoField[1] = ammoField[1].Replace(" rounds", "");
                 ammoField[1] = ammoField[1].Replace(" round", "");
-                weapon.AmmoCapacity = Int32.Parse(ammoField[1]);
+                weapon.AmmoCapacity.BaseValue = Int32.Parse(ammoField[1]);
                 // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
                 ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
-                weapon.AmmoPerAttack = 1.0f / Utils.FloatFromString(ammoField[2]);
+                weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
                 //
 
                 // properties
@@ -313,46 +318,53 @@ namespace WPF_Fallout_Character_Manager.Models.External
             float ammoPerAttack = 1.0f,
             float load = 0.0f,
             int strRequirement = 0,
-            int decay = 0
+            int decay = 0,
+            int availableUpgradeSlots = 0
             )
         {
             WeaponType = weaponType;
-            Name = new LabeledString(name);
-            Type = type;
-            Cost = cost;
-            AP = ap;
+            Name = new ModString("Name", name);
+            Type = new ModString("Weapon Type", type, true);
+            Cost = new ModInt("Cost", cost, true);
+            AP = new ModInt("AP", ap, true);
+            ToHit = new ModInt("To Hit", 0, true);
             if (damage != null)
                 Damage = damage;
             else
-                Damage = new ModString("Damage", "None", false);
-            RangeMultiplier = rangeMultiplier;
-            CritChance = critChance;
-            CritDamage = critDamage;
-            if (ammoType != null)
-                AmmoType = ammoType;
-            else
-                AmmoType = new Ammo("Invalid Ammo", 0, 0, 0.0f);
-            AmmoCapacity = ammoCapacity;
-            AmmoPerAttack = ammoPerAttack;
-            Load = load;
-            StrRequirement = strRequirement;
-            Decay = decay;
+                Damage = new ModString("Damage", "None", true);
+            RangeMultiplier = new ModString("Range", rangeMultiplier, true);
+            CritChance = new ModInt("Crit Chance", critChance, true);
+            CritDamage = new ModString("Crit Damage", critDamage, true);
+            AmmoCapacity = new ModInt("Ammo Capacity", ammoCapacity, true);
+            AmmoPerAttack = new ModFloat("Ammo per Attack", ammoPerAttack, true);
+            Load = new ModFloat("Load", load, true);
+            StrRequirement = new ModInt("Strength Requirement", strRequirement, true);
+            Decay = new ModInt("Decay", decay, true);
+            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
+            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
         }
         //
 
         // members
-        private string _type;
-        public string Type
+        private ModString _type;
+        public ModString Type
         {
             get => _type;
             set => Update(ref _type, value);
         }
 
-        private int _ap;
-        public int AP
+        private ModInt _ap;
+        public ModInt AP
         {
             get => _ap;
             set => Update(ref _ap, value);
+        }
+
+        private ModInt _toHit;
+        public ModInt ToHit
+        {
+            get => _toHit;
+            set => Update(ref _toHit, value);
         }
 
         private ModString _damage;
@@ -362,56 +374,50 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _damage, value);
         }
 
-        private string _rangeMultiplier;
-        public string RangeMultiplier
+        private ModString _rangeMultiplier;
+        public ModString RangeMultiplier
         {
             get => _rangeMultiplier;
             set => Update(ref _rangeMultiplier, value);
         }
 
-        private int _critChance;
-        public int CritChance
+        private ModInt _critChance;
+        public ModInt CritChance
         {
             get => _critChance;
             set => Update(ref _critChance, value);
         }
 
-        public string _critDamage;
-        public string CritDamage
+        public ModString _critDamage;
+        public ModString CritDamage
         {
             get => _critDamage;
             set => Update(ref _critDamage, value);
         }
 
-        private Ammo _ammoType;
-        public Ammo AmmoType
-        {
-            get => _ammoType;
-            set => Update(ref _ammoType, value);
-        }
-
-        private int _ammoCapacity;
-        public int AmmoCapacity
+        private ModInt _ammoCapacity;
+        public ModInt AmmoCapacity
         {
             get => _ammoCapacity;
             set => Update(ref _ammoCapacity, value);
         }
-        private float _ammoPerAttack;
-        public float AmmoPerAttack
+
+        private ModFloat _ammoPerAttack;
+        public ModFloat AmmoPerAttack
         {
             get => _ammoPerAttack;
             set => Update(ref _ammoPerAttack, value);
         }
 
-        private int _strRequirement;
-        public int StrRequirement
+        private ModInt _strRequirement;
+        public ModInt StrRequirement
         {
             get => _strRequirement;
             set => Update(ref _strRequirement, value);
         }
 
-        private int _decay;
-        public int Decay
+        private ModInt _decay;
+        public ModInt Decay
         {
             get => _decay;
             set => Update(ref _decay, value);
@@ -424,8 +430,25 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _weaponType, value);
         }
 
-        public ObservableCollection<WeaponProperty> Properties;
-        public ObservableCollection<WeaponUpgrade> Upgrades;
+        private ModInt _availableUpgradeSlots;
+        public ModInt AvailableUpgradeSlots
+        {
+            get => _availableUpgradeSlots;
+            set => Update(ref _availableUpgradeSlots, value);
+        }
+
+        private ModInt takenUpgradeSlots;
+        public ModInt TakenUpgradeSlots
+        {
+            get => takenUpgradeSlots;
+            set => Update(ref takenUpgradeSlots, value);
+        }
+
+        public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString();
+
+        public ObservableCollection<WeaponProperty> Properties { get; set; }
+        public ObservableCollection<WeaponUpgrade> Upgrades { get; set; }
+        public ObservableCollection<Ammo> CompatibleAmmos { get; set; }
         //
 
         // methods
@@ -440,13 +463,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
             RangeMultiplier = this.RangeMultiplier,
             CritChance = this.CritChance,
             CritDamage = this.CritDamage,
-            AmmoType = this.AmmoType.Clone(),
             AmmoCapacity = this.AmmoCapacity,
             AmmoPerAttack = this.AmmoPerAttack,
             StrRequirement = this.StrRequirement,
             Decay = this.Decay,
+            AvailableUpgradeSlots = this.AvailableUpgradeSlots,
+            takenUpgradeSlots = this.takenUpgradeSlots,
             Properties = new ObservableCollection<WeaponProperty>(this.Properties),
             Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
+            CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
         };
         //
     }
@@ -455,7 +480,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class WeaponProperty : LabeledString
     {
         // constructor
-        public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "") : base(name, value)
+        public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "") : base(name, value, value)
         {
             _weaponType = weaponType;
         }
@@ -484,6 +509,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TimeToEquip = timeToEquip;
             SlotCost = slotCost;
             Value = value;
+            Note = value;
             EquipRequirement = equipRequirement;
         }
         //

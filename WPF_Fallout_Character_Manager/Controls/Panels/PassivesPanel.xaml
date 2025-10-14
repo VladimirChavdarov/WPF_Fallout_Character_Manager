@@ -20,36 +20,36 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.PassiveSense.BaseValue.Name}"
+                        LabelText="{Binding SurvivalModel.PassiveSense.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.PassiveSense}"
                         Text="{Binding SurvivalModel.PassiveSense.Total, Mode=OneWay}"
-                        Hint="{Binding SurvivalModel.PassiveSense.BaseValue.Note}"
+                        Hint="{Binding SurvivalModel.PassiveSense.Note}"
                         MinWidth="30"/>
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.PartyNerve.BaseValue.Name}"
+                        LabelText="{Binding SurvivalModel.PartyNerve.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.PartyNerve}"
                         Text="{Binding SurvivalModel.PartyNerve.Total, Mode=OneWay}"
-                        Hint="{Binding SurvivalModel.PartyNerve.BaseValue.Note}"
+                        Hint="{Binding SurvivalModel.PartyNerve.Note}"
                         MinWidth="30"/>
                     <controls:TextBoxWithLabelControl
                         Margin="0 0 0 2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         LabelFontSize="10"
-                        LabelText="{Binding SurvivalModel.GroupSneak.BaseValue.Name}"
+                        LabelText="{Binding SurvivalModel.GroupSneak.Name}"
                         FontSize="11"
                         IsReadOnly="True"
                         ModInt="{Binding SurvivalModel.GroupSneak}"
                         Text="{Binding SurvivalModel.GroupSneak.Total, Mode=OneWay}"
-                        Hint="{Binding SurvivalModel.GroupSneak.BaseValue.Note}"
+                        Hint="{Binding SurvivalModel.GroupSneak.Note}"
                         MinWidth="30"/>
                 </StackPanel>
             </ScrollViewer>

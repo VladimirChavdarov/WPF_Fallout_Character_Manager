@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,19 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
         public WeponsPanel()
         {
             InitializeComponent();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(sender is ComboBox comboBox)
+            {
+                string name = comboBox.Text;
+                // ay ay ay. This is an ugly way to handle it and there is a twitch when selecting a property or an upgrade but it will do.
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    comboBox.Text = name;
+                }), System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
     }
 }

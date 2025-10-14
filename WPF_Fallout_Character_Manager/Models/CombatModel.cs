@@ -52,29 +52,29 @@ namespace WPF_Fallout_Character_Manager.Models
 
         public void CalculateActionPoints(int agilityModifier)
         {
-            ActionPoints.BaseValue.Value = 10 + agilityModifier;
+            ActionPoints.BaseValue = 10 + agilityModifier;
         }
 
         public void CalculateMaxStaminaPoints(int agilityModifier, int level)
         {
             //TODO: Apply the correct formula when you upload the datatables from the rulebook.
-            MaxStaminaPoints.BaseValue.Value = 10 + agilityModifier + level;
+            MaxStaminaPoints.BaseValue = 10 + agilityModifier + level;
         }
 
         public void CalculateMaxHealthPoints(int enduranceModifier, int level)
         {
             //TODO: Apply the correct formula when you upload the datatables from the rulebook.
-            MaxHealthPoints.BaseValue.Value = 10 + enduranceModifier + level;
+            MaxHealthPoints.BaseValue = 10 + enduranceModifier + level;
         }
 
         public void CalculateCombatSequence(int perceptionModifier)
         {
-            CombatSequence.BaseValue.Value = perceptionModifier;
+            CombatSequence.BaseValue = perceptionModifier;
         }
 
         public void CalculateHealingRate(int enduranceScore, int level)
         {
-            HealingRate.BaseValue.Value = (enduranceScore + level) / 2;
+            HealingRate.BaseValue = (enduranceScore + level) / 2;
         }
         //
 
