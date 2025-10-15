@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="18"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="{Binding ModInt.Name, Mode=OneWay}"
+            <TextBlock Text="{Binding ModValue.Name, Mode=OneWay}"
                Grid.Column="0"
                Style="{StaticResource FalloutDefaultText}"
                FontSize="9"
@@ -67,13 +67,13 @@
                         LabelFontSize="10"
                         LabelText="Base Value"
                         FontSize="11"
-                        Text="{Binding ModInt.BaseValue}"
-                        ModInt="{Binding ModInt}"
-                        IsReadOnly="{Binding ModInt.IsBaseValueReadOnly}"
+                        Text="{Binding ModValue.BaseValue}"
+                        ModValue="{Binding ModValue}"
+                        IsReadOnly="{Binding ModValue.IsBaseValueReadOnly}"
                         CanOpenModal="False"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{StaticResource FalloutGreen}"/>
-                    <ListView ItemsSource="{Binding ModInt.Modifiers}"
+                    <ListView ItemsSource="{Binding ModValue.Modifiers}"
                               HorizontalAlignment="Left"
                               Background="Black"
                               Height="200"

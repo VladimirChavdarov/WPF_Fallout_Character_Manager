@@ -18,6 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
             Weapon w1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle").Clone();
             w1.Amount.BaseValue++;
+            w1.Load.BaseValue = 5.5f;
             Weapon w2 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "5.56mm pistol").Clone();
             w2.Amount.BaseValue++;
             Weapon w3 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Crowbar").Clone();

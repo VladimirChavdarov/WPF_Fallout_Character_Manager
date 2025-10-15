@@ -47,7 +47,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
         // ChatGPT told me to do that in order to open the Modal through the View to follow the MVVM pattern. Double-check it.
         //public Action<object>? OnRequestOpenModifierModalWindow;
 
-        private void OpenModifierModal(object modInt)
+        private void OpenModifierModal(object modValue)
         {
             // test (which works!)
             //MessageBox.Show("I triggered the OpenModifiedModalWindowCommand!");
@@ -59,19 +59,34 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
             //}
 
             // Summon the window directly from this command.
-            if (modInt is ModInt typedModInt)
-            {
-                var window = new ModifiersWindow(new ModifierSystem.ModIntViewModel(typedModInt));
-                var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
-                window.Left = mousePoint.X + 100;
-                window.Top = mousePoint.Y + 100;
+            Window? window = null;
 
-                window.ShowDialog();
-            }
-            else
+            switch(modValue)
             {
-                MessageBox.Show("Invalid object passed to OpenModifierModal — expected ModInt.");
+                case ModValue<int> modInt:
+                {
+                    window = new ModifiersWindow(new ModifierSystem.ModValueViewModel<int>(modInt));
+                    break;
+                }
+                case ModValue<float> modFloat:
+                {
+                    window = new ModifiersWindow(new ModifierSystem.ModValueViewModel<float>(modFloat));
+                    break;
+                }
+                case ModValue<string> modString:
+                {
+                    window = new ModifiersWindow(new ModifierSystem.ModValueViewModel<string>(modString));
+                    break;
+                }
+                default:
+                    MessageBox.Show("Invalid object passed to OpenModifierModal — expected ModValue<T>.");
+                    break;
             }
+
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+            window.Left = mousePoint.X + 100;
+            window.Top = mousePoint.Y + 100;
+            window.ShowDialog();
         }
         //
     }

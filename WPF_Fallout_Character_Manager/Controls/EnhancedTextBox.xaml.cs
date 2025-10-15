@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Controls
 {
@@ -95,47 +96,24 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
-        #region ModInt
-        public static readonly DependencyProperty ModIntProperty =
-            DependencyProperty.Register("ModInt", typeof(ModInt), typeof(EnhancedTextBox),
-                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModIntPropertyChanged)));
+        #region ModValue
+        public static readonly DependencyProperty ModValueProperty =
+            DependencyProperty.Register("ModValue", typeof(ModTypeBase), typeof(EnhancedTextBox),
+                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModValuePropertyChanged)));
 
-        public ModInt ModInt
+        public ModTypeBase ModValue
         {
-            get => (ModInt)GetValue(ModIntProperty);
-            set => SetValue(ModIntProperty, value);
+            get => (ModTypeBase)GetValue(ModValueProperty);
+            set => SetValue(ModValueProperty, value);
         }
 
-        private static void ModIntPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
-            ThisUserControl.ModIntPropertyChanged(e);
-        }
-
-        private void ModIntPropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-
-        }
-        #endregion
-
-        #region ModString
-        public static readonly DependencyProperty ModStringProperty =
-            DependencyProperty.Register("ModString", typeof(ModString), typeof(EnhancedTextBox),
-                new FrameworkPropertyMetadata(null, new PropertyChangedCallback(ModStringPropertyChanged)));
-
-        public ModString ModString
-        {
-            get => (ModString)GetValue(ModStringProperty);
-            set => SetValue(ModStringProperty, value);
-        }
-
-        private static void ModStringPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ModValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
-            ThisUserControl.ModStringPropertyChanged(e);
+            ThisUserControl.ModValuePropertyChanged(e);
         }
 
-        private void ModStringPropertyChanged(DependencyPropertyChangedEventArgs e)
+        private void ModValuePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
 
         }

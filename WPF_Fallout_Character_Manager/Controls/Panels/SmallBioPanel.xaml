@@ -70,7 +70,7 @@
                             CanOpenModal="False"
                             Text="{Binding BioModel.Level.BaseValue}"
                             Hint="{Binding BioModel.Level.Note}"
-                            ModInt="{Binding BioModel.Level}"
+                            ModValue="{Binding BioModel.Level}"
                             IsReadOnly="{Binding BioModel.Level.IsBaseValueReadOnly}"/>
                         </Grid>
                         <Grid Grid.Column="1">
@@ -93,7 +93,7 @@
                                 CanOpenModal="False"
                                 Text="{Binding BioModel.XP.BaseValue}"
                                 Hint="{Binding BioModel.XP.Note}"
-                                ModInt="{Binding BioModel.XP}"
+                                ModValue="{Binding BioModel.XP}"
                                 IsReadOnly="{Binding BioModel.XP.IsBaseValueReadOnly}"/>
                         </Grid>
                     </Grid>

@@ -38,7 +38,7 @@
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 
-                ModInt="{Binding ModIntSkill, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                ModValue="{Binding ModIntSkill, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 LabelText="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

@@ -20,11 +20,18 @@ namespace WPF_Fallout_Character_Manager.Windows
     /// </summary>
     public partial class ModifiersWindow : Window
     {
-        public ModifiersWindow(ModIntViewModel modIntViewModel)
+        public ModifiersWindow(object modValueViewModel)
         {
             InitializeComponent();
 
-            this.DataContext = modIntViewModel;
+            if (!(modValueViewModel is ModValueViewModel<int>) &&
+                !(modValueViewModel is ModValueViewModel<float>) &&
+                !(modValueViewModel is ModValueViewModel<string>))
+            {
+                throw new Exception("modValueViewModel is not a correct type.");
+            }
+
+            this.DataContext = modValueViewModel;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

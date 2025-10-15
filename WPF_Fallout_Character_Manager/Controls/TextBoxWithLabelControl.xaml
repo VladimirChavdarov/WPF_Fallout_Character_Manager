@@ -30,8 +30,7 @@
                 TextWrapping="{Binding TextWrapping, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FlowDirection="LeftToRight"
                 VerticalAlignment="Center"
-                ModInt="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                ModString="{Binding ModString, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                ModValue="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -41,7 +40,7 @@
                 <local:EnhancedTextBox.InputBindings>
                     <MouseBinding Gesture="RightClick"
                         Command="{Binding OpenModifierModalWindowCommand}"
-                        CommandParameter="{Binding ModInt, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </local:EnhancedTextBox.InputBindings>
             </local:EnhancedTextBox>
         </StackPanel>
