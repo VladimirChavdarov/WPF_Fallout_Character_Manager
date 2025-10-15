@@ -52,7 +52,8 @@
                     Margin="0 2 0 0"
                     FontSize="18"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Right"/>
+                    HorizontalAlignment="Right"
+                    IsChecked="{Binding SelectedWeapon.Equipped}"/>
             </StackPanel>
 
         </Grid>

@@ -342,6 +342,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Decay = new ModInt("Decay", decay, true);
             AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
             TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
+            Equipped = false;
         }
         //
 
@@ -444,6 +445,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref takenUpgradeSlots, value);
         }
 
+        private bool _equipped;
+        public bool Equipped
+        {
+            get => _equipped;
+            set => Update(ref _equipped, value);
+        }
+
         public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString();
 
         public ObservableCollection<WeaponProperty> Properties { get; set; }
@@ -465,6 +473,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             CritDamage = this.CritDamage,
             AmmoCapacity = this.AmmoCapacity,
             AmmoPerAttack = this.AmmoPerAttack,
+            Load = this.Load,
             StrRequirement = this.StrRequirement,
             Decay = this.Decay,
             AvailableUpgradeSlots = this.AvailableUpgradeSlots,
