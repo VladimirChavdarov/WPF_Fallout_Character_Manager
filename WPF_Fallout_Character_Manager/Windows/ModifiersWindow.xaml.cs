@@ -24,11 +24,11 @@ namespace WPF_Fallout_Character_Manager.Windows
         {
             InitializeComponent();
 
-            if (!(modValueViewModel is ModValueViewModel<int>) &&
-                !(modValueViewModel is ModValueViewModel<float>) &&
-                !(modValueViewModel is ModValueViewModel<string>))
+            if (!(modValueViewModel is ModIntViewModel) &&
+                !(modValueViewModel is ModFloatViewModel) &&
+                !(modValueViewModel is ModStringViewModel))
             {
-                throw new Exception("modValueViewModel is not a correct type.");
+                throw new Exception("modValueViewModel is not of a correct type.");
             }
 
             this.DataContext = modValueViewModel;

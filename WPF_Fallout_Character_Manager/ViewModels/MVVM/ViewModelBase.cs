@@ -63,19 +63,19 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
 
             switch(modValue)
             {
-                case ModValue<int> modInt:
+                case ModInt modInt:
                 {
-                    window = new ModifiersWindow(new ModifierSystem.ModValueViewModel<int>(modInt));
+                    window = new ModifiersWindow(new ModifierSystem.ModIntViewModel(modInt));
                     break;
                 }
-                case ModValue<float> modFloat:
+                case ModFloat modFloat:
                 {
-                    window = new ModifiersWindow(new ModifierSystem.ModValueViewModel<float>(modFloat));
+                    window = new ModifiersWindow(new ModifierSystem.ModFloatViewModel(modFloat));
                     break;
                 }
-                case ModValue<string> modString:
+                case ModString modString:
                 {
-                    window = new ModifiersWindow(new ModifierSystem.ModValueViewModel<string>(modString));
+                    window = new ModifiersWindow(new ModifierSystem.ModStringViewModel(modString));
                     break;
                 }
                 default:

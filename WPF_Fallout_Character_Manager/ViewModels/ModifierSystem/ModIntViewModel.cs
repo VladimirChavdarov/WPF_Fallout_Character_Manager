@@ -34,7 +34,22 @@ namespace WPF_Fallout_Character_Manager.ViewModels.ModifierSystem
         public ModValueViewModel(ModValue<T> modValue)
         {
             _modValue = modValue;
-            AddModifierCommand = new RelayCommand(_ => ModValue.AddModifier(new LabeledValue<T>()));
+            AddModifierCommand = new RelayCommand(_ =>
+            {
+                LabeledValue<T> newModifier;
+
+                if (typeof(T) == typeof(float))
+                    newModifier = new LabeledValue<T>("NewFloatModifier", (T)(object)5.5f);
+                else if (typeof(T) == typeof(int))
+                    newModifier = new LabeledValue<T>("NewIntModifier", (T)(object)0);
+                else if (typeof(T) == typeof(string))
+                    newModifier = new LabeledValue<T>("NewStringModifier", (T)(object)string.Empty);
+                else
+                    newModifier = new LabeledValue<T>();
+
+                ModValue.AddModifier(newModifier);
+            });
+
             RemoveModifierCommand = new RelayCommand(
                 param =>
                 {
@@ -46,19 +61,18 @@ namespace WPF_Fallout_Character_Manager.ViewModels.ModifierSystem
         }
         //
     }
+    public class ModIntViewModel : ModValueViewModel<int>
+    {
+        public ModIntViewModel(ModInt modInt) : base(modInt) { }
+    }
 
-    //public class ModIntViewModel : ModValueViewModel<int>
-    //{
-    //    public ModIntViewModel(ModInt modInt) : base(modInt) { }
-    //}
+    public class ModFloatViewModel : ModValueViewModel<float>
+    {
+        public ModFloatViewModel(ModFloat modFloat) : base(modFloat) { }
+    }
 
-    //public class ModFloatViewModel : ModValueViewModel<float>
-    //{
-    //    public ModFloatViewModel(ModFloat modFloat) : base(modFloat) { }
-    //}
-
-    //public class ModStringViewModel : ModValueViewModel<string>
-    //{
-    //    public ModStringViewModel(ModString modString) : base(modString) { }
-    //}
+    public class ModStringViewModel : ModValueViewModel<string>
+    {
+        public ModStringViewModel(ModString modString) : base(modString) { }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,19 +43,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void OnTextChanged(DependencyPropertyChangedEventArgs e)
         {
-            // This overrides the field and doesn't allow a new value to appear if the Model changed.
-            //CustomTextBox.Text = e.NewValue.ToString();
-            if (e.NewValue is string newText && int.TryParse(newText, out int newValue))
-            {
-                if(newValue < MinValue)
-                {
-                    CustomEnhancedTextBox.Text = MinValue.ToString();
-                }
-                else if(newValue > MaxValue)
-                {
-                    CustomEnhancedTextBox.Text = MaxValue.ToString();
-                }
-            }
+            
         }
         #endregion
 
@@ -76,6 +65,30 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
 
         private void OnHintChanged(DependencyPropertyChangedEventArgs e)
+        {
+            // This overrides the field and doesn't allow a new value to appear if the Model changed.
+            //CustomTextBox.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region IsValueFloat
+        public static readonly DependencyProperty IsValueFloatProperty =
+        DependencyProperty.Register("IsValueFloat", typeof(bool), typeof(UpDownTextBoxControl),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsValueFloatChanged)));
+
+        public bool IsValueFloat
+        {
+            get { return (bool)GetValue(IsValueFloatProperty); }
+            set { SetValue(IsValueFloatProperty, value); }
+        }
+
+        private static void OnIsValueFloatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxControl? ThisUserControl = d as UpDownTextBoxControl;
+            ThisUserControl.OnIsValueFloatChanged(e);
+        }
+
+        private void OnIsValueFloatChanged(DependencyPropertyChangedEventArgs e)
         {
             // This overrides the field and doesn't allow a new value to appear if the Model changed.
             //CustomTextBox.Text = e.NewValue.ToString();
@@ -280,10 +293,6 @@ namespace WPF_Fallout_Character_Manager.Controls
                         value = MinValue;
                     Text = value.ToString();
                 }
-                else
-                {
-                    Text = "0";
-                }
             }
         }
 
@@ -300,10 +309,18 @@ namespace WPF_Fallout_Character_Manager.Controls
                         value = MinValue;
                     Text = value.ToString();
                 }
-                else
-                {
-                    Text = "0";
-                }
+            }
+        }
+
+        private void CustomEnhancedTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter && sender is EnhancedTextBox textbox)
+            {
+                BindingExpression binding = textbox.GetBindingExpression(EnhancedTextBox.TextProperty);
+                binding?.UpdateSource();
+
+                Keyboard.ClearFocus();
+                e.Handled = true;
             }
         }
     }
