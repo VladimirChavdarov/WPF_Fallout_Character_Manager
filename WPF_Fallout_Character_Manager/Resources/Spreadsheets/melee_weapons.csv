@@ -40,13 +40,13 @@ Board with a nail;Blunt;125;4;1d8 + 1 bludgeoning;20, 1d8.;Weighted. Breakable. 
 Protest Sign;Blunt;50;5;1d4 bludgeoning;20, Pushed back 5 feet.;Two Handed. Breakable.;8;3
 Stop Sign;Blunt;75;6;3d8 bludgeoning or slashing. Applies Dazed.;20, x3.;Two Handed. Reach.;45;9
 War Drum;Blunt;100;4;1d10 bludgeoning;20, 1d10. Deafens for 1 round.;Two Handed. Breakable.;10;6
-Cattle Prod;Mechanical;210;4;1d4 bludgeoning 2d8 electricity.;20, Dazed.;Ammo: Energy Cell, 10 rounds. Depleted: 1d4 bludgeoning.;5;3
-Ripper;Mechanical;475;3;3d8 slashing.;20, 3d8.;Debilitating. Mangle. Ammo: Energy Cell, 10 rounds. Depleted: 1d4 bludgeoning.;5;6
-Handy buzz blade;Mechanical;220;5;1d10 slashing;20, x3.;Weighted. Mangle. Ammo: Energy Cell, 10 rounds. Depleted: 1d6 slashing.;10;5
-Chainsaw;Mechanical;670;6;6d8 slashing.;20, 6d8.;Debilitating. Two Handed. Mangle. Ammo: Energy Cell, 5 rounds. Depleted: 1d8 bludgeoning.;20;8
-Drill;Mechanical;190;4;1d8 slashing.;19, None;Debilitating. Mangle. Precise. Ammo: Energy Cell, 20 rounds. Depleted: 1d4 piercing.;8;5
-Plasma Cutter;Mechanical;750;5;4d8 plasma;20, Applies severe limb conditions of your choice.;Dismember. Ammo: Microfusion Cell, 5 rounds. Depleted: 1d6 bludgeoning.;12;5
-Shishkebab;Mechanical;690;4;2d6 slashing, 2d6 fire.;20, x2. Applies Burning.;Debilitating. Dismember. Defensive. Ammo: Fuel, 10 rounds. Depleted: 2d6 slashing.;18;5
+Cattle Prod;Mechanical;210;4;1d4 bludgeoning 2d8 electricity.;20, Dazed.;Ammo: Energy Cell, 1 round, 10 attacks per ammo. Depleted: 1d4 bludgeoning.;5;3
+Ripper;Mechanical;475;3;3d8 slashing.;20, 3d8.;Debilitating. Mangle. Ammo: Energy Cell, 1 round, 10 attacks per ammo. Depleted: 1d4 bludgeoning.;5;6
+Handy buzz blade;Mechanical;220;5;1d10 slashing;20, x3.;Weighted. Mangle. Ammo: Energy Cell, 1 round, 10 attacks per ammo. Depleted: 1d6 slashing.;10;5
+Chainsaw;Mechanical;670;6;6d8 slashing.;20, 6d8.;Debilitating. Two Handed. Mangle. Ammo: Energy Cell, 1 round, 5 attacks per ammo. Depleted: 1d8 bludgeoning.;20;8
+Drill;Mechanical;190;4;1d8 slashing.;19, None;Debilitating. Mangle. Precise. Ammo: Energy Cell, 1 round, 20 attacks per ammo. Depleted: 1d4 piercing.;8;5
+Plasma Cutter;Mechanical;750;5;4d8 plasma;20, Applies severe limb conditions of your choice.;Dismember. Ammo: Microfusion Cell, 1 round, 5 attacks per ammo. Depleted: 1d6 bludgeoning.;12;5
+Shishkebab;Mechanical;690;4;2d6 slashing, 2d6 fire.;20, x2. Applies Burning.;Debilitating. Dismember. Defensive. Ammo: Fuel, 1 round, 10 attacks per ammo. Depleted: 2d6 slashing.;18;5
 Brass Knuckles;Unarmed;150;4;1d4 + 1 bludgeoning.;20, 4d4.;Unarmed. Durable. Weighted.;2;5
 Spiked Knuckles;Unarmed;120;4;1d4 + 1 piercing.;19, None;Unarmed. Precise.;2;4
 Boxing Gloves;Unarmed;115;4;1d4 bludgeoning.;20, 1d4. Applies dazed.;Unarmed. Defensive. Sturdy.;6;3
@@ -54,4 +54,4 @@ Bear Skull Arm;Unarmed;190;6;3d6 piercing or slashing.;20, x2.;Unarmed. Debilita
 Deathclaw Gauntlet;Unarmed;280;6;3d12 slashing.;20, 1d12.;Unarmed. Debilitating. Mangle. Defensive.;10;5
 Hunting Trap Fist;Unarmed;265;5;4d4 piercing.;20, x2.;Unarmed. Clasp. Debilitating. Defensive. Mangle.;20;8
 Bear Trap Fist;Unarmed;320;6;3d12 piercing.;20, x2.;Unarmed. Clasp. Debilitating. Defensive. Mangle.;40;10
-Power Fist;Unarmed;350;4;4d6 bludgeoning.;20, x2. Prone or knockback 15 feet.;Unarmed. Debilitating. Weighted. Ammo: Energy Cell, 20 rounds. Depleted: 1d6 bludgeoning.;12;6
+Power Fist;Unarmed;350;4;4d6 bludgeoning.;20, x2. Prone or knockback 15 feet.;Unarmed. Debilitating. Weighted. Ammo: Energy Cell, 1 round, 20 attacks per ammo. Depleted: 1d6 bludgeoning.;12;6

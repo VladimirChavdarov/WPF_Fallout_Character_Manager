@@ -8,341 +8,279 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="238" d:DesignWidth="530">
-    <Grid
-        >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
-        </Grid.RowDefinitions>
-
-
+    <ScrollViewer>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100"/>
-            </Grid.ColumnDefinitions>
-            
-            <ComboBox
-                Grid.Column="0"
-                Margin="5"
-                HorizontalAlignment="Left"
-                MinWidth="160"
-                Width="Auto"
-                ItemsSource="{Binding WeaponsModel.Weapons}"
-                DisplayMemberPath="NameAmount"
-                SelectedItem="{Binding SelectedWeapon}">
-            </ComboBox>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <StackPanel
-                Grid.Column="1"
-                Margin="5"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right">
-                <Label
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    Content="Equipped:"
-                    FontSize="9"
-                    VerticalAlignment="Top"/>
-                <CheckBox
-                    Style="{StaticResource FalloutSkillCheckbox}"
-                    Margin="0 2 0 0"
-                    FontSize="18"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Right"
-                    IsChecked="{Binding SelectedWeapon.Equipped}"/>
-            </StackPanel>
 
-        </Grid>
-
-        <Grid
-            
-            Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="65"/>
-                <ColumnDefinition Width="85"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90"/>
-            </Grid.ColumnDefinitions>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="0"
-                Orientation="Vertical"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="55"
-                TextWrapping="NoWrap"
-                HorizontalContentAlignment="Left"
-                LabelFontSize="11"
-                LabelText="AP:"
-                IsReadOnly="{Binding SelectedWeapon.AP.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.AP}"
-                Text="{Binding SelectedWeapon.AP.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.AP.Note}"/>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="1"
-                Orientation="Vertical"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="75"
-                TextWrapping="NoWrap"
-                HorizontalContentAlignment="Left"
-                LabelFontSize="11"
-                LabelText="To Hit:"
-                IsReadOnly="{Binding SelectedWeapon.ToHit.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.ToHit}"
-                Text="{Binding SelectedWeapon.ToHit.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.ToHit.Note}"/>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="2"
-                Orientation="Vertical"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="190"
-                TextWrapping="NoWrap"
-                HorizontalContentAlignment="Left"
-                LabelFontSize="11"
-                LabelText="Damage:"
-                IsReadOnly="{Binding SelectedWeapon.Damage.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.Damage}"
-                Text="{Binding SelectedWeapon.Damage.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.Damage.Note}"/>
-
-            <StackPanel
-                Grid.Column="3"
-                Orientation="Vertical"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="80">
-                <Label
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    FontSize="11"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Content="Crit:"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="55"/>
-                    </Grid.ColumnDefinitions>
-
-                    <control:EnhancedTextBox
-                        Grid.Column="0"
-                        HorizontalContentAlignment="Left"
-                        VerticalAlignment="Top"
-                        Width="25"
-                        TextWrapping="NoWrap"
-                        IsReadOnly="{Binding SelectedWeapon.CritChance.IsBaseValueReadOnly}"
-                        ModValue ="{Binding SelectedWeapon.CritChance}"
-                        Text="{Binding SelectedWeapon.CritChance.BaseValue}"
-                        Hint="{Binding SelectedWeapon.CritChance.Note}"/>
-
-                    <control:EnhancedTextBox
-                        Grid.Column="1"
-                        HorizontalContentAlignment="Left"
-                        VerticalAlignment="Top"
-                        Width="50"
-                        TextWrapping="NoWrap"
-                        IsReadOnly="{Binding SelectedWeapon.CritDamage.IsBaseValueReadOnly}"
-                        ModValue ="{Binding SelectedWeapon.CritDamage}"
-                        Text="{Binding SelectedWeapon.CritDamage.BaseValue}"
-                        Hint="{Binding SelectedWeapon.CritDamage.Note}"/>
-                </Grid>
-            </StackPanel>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="4"
-                Orientation="Vertical"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="80"
-                TextWrapping="NoWrap"
-                HorizontalContentAlignment="Left"
-                LabelFontSize="11"
-                LabelText="Range:"
-                IsReadOnly="{Binding SelectedWeapon.RangeMultiplier.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.RangeMultiplier}"
-                Text="{Binding SelectedWeapon.RangeMultiplier.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.RangeMultiplier.Note}"/>
-
-        </Grid>
-
-        <Grid
-            Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="180"/>
-            </Grid.ColumnDefinitions>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="0"
-                Orientation="Horizontal"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="45"
-                LabelFontSize="11"
-                LabelText="Cost:"
-                IsReadOnly="{Binding SelectedWeapon.Cost.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.Cost}"
-                Text="{Binding SelectedWeapon.Cost.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.Cost.Note}"/>
-
-            <StackPanel
-                Grid.Column="1"
-                Margin="5"
-                Orientation="Horizontal">
-                <Label
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    Content="Ammo:"
-                    FontSize="11"
-                    VerticalAlignment="Top"/>
-                <ComboBox
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    MinWidth="130"
-                    Width="Auto"
-                    ItemsSource="{Binding SelectedWeapon.CompatibleAmmos, diag:PresentationTraceSources.TraceLevel=High}"
-                    DisplayMemberPath="NameAmount"
-                    SelectedItem="{Binding SelectedAmmo}"/>
-            </StackPanel>
-
-        </Grid>
-
-        <Grid
-            Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="180"/>
-            </Grid.ColumnDefinitions>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="0"
-                Orientation="Horizontal"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="45"
-                LabelFontSize="11"
-                LabelText="Load:"
-                IsReadOnly="{Binding SelectedWeapon.Load.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.Load}"
-                Text="{Binding SelectedWeapon.Load.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.Load.Note}"/>
-
-            <Grid
-                Grid.Column="1"
-                Margin="5">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-
-                <Label
+            
+                <ComboBox
                     Grid.Column="0"
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    Content="Magazine"
-                    FontSize="9"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left"/>
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    MinWidth="160"
+                    Width="Auto"
+                    ItemsSource="{Binding WeaponsModel.Weapons}"
+                    DisplayMemberPath="NameAmount"
+                    SelectedItem="{Binding SelectedWeapon}">
+                </ComboBox>
+
                 <StackPanel
                     Grid.Column="1"
+                    Margin="5"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-                    <Button
-                        Style="{StaticResource FalloutButton}"
-                        Content="Shoot"
-                        Padding="5"
-                        Margin="0 0 5 0"
-                        VerticalAlignment="center"/>
-                    <Button
-                        Style="{StaticResource FalloutButton}"
-                        Content="Reload"
-                        Padding="5"
-                        VerticalAlignment="center"/>
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="Equipped:"
+                        FontSize="9"
+                        VerticalAlignment="Top"/>
+                    <CheckBox
+                        Style="{StaticResource FalloutSkillCheckbox}"
+                        Margin="0 2 0 0"
+                        FontSize="18"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        IsChecked="{Binding SelectedWeapon.Equipped}"/>
+                </StackPanel>
+
+            </Grid>
+
+            <Grid
+            
+                Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="55"
+                    TextWrapping="NoWrap"
+                    HorizontalContentAlignment="Left"
+                    LabelFontSize="11"
+                    LabelText="AP:"
+                    IsReadOnly="{Binding SelectedWeapon.AP.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedWeapon.AP}"
+                    Text="{Binding SelectedWeapon.AP.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedWeapon.AP.Note}"/>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="1"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="75"
+                    TextWrapping="NoWrap"
+                    HorizontalContentAlignment="Left"
+                    LabelFontSize="11"
+                    LabelText="To Hit:"
+                    IsReadOnly="{Binding SelectedWeapon.ToHit.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedWeapon.ToHit}"
+                    Text="{Binding SelectedWeapon.ToHit.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedWeapon.ToHit.Note}"/>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="2"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="190"
+                    TextWrapping="NoWrap"
+                    HorizontalContentAlignment="Left"
+                    LabelFontSize="11"
+                    LabelText="Damage:"
+                    IsReadOnly="{Binding SelectedWeapon.Damage.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedWeapon.Damage}"
+                    Text="{Binding SelectedWeapon.Damage.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedWeapon.Damage.Note}"/>
+
+                <StackPanel
+                    Grid.Column="3"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="80">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="11"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Content="Crit:"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="55"/>
+                        </Grid.ColumnDefinitions>
+
+                        <control:EnhancedTextBox
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="25"
+                            TextWrapping="NoWrap"
+                            IsReadOnly="{Binding SelectedWeapon.CritChance.IsBaseValueReadOnly}"
+                            ModValue ="{Binding SelectedWeapon.CritChance}"
+                            Text="{Binding SelectedWeapon.CritChance.BaseValue}"
+                            Hint="{Binding SelectedWeapon.CritChance.Note}"/>
+
+                        <control:EnhancedTextBox
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="50"
+                            TextWrapping="NoWrap"
+                            IsReadOnly="{Binding SelectedWeapon.CritDamage.IsBaseValueReadOnly}"
+                            ModValue ="{Binding SelectedWeapon.CritDamage}"
+                            Text="{Binding SelectedWeapon.CritDamage.BaseValue}"
+                            Hint="{Binding SelectedWeapon.CritDamage.Note}"/>
+                    </Grid>
+                </StackPanel>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="4"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="80"
+                    TextWrapping="NoWrap"
+                    HorizontalContentAlignment="Left"
+                    LabelFontSize="11"
+                    LabelText="Range:"
+                    IsReadOnly="{Binding SelectedWeapon.RangeMultiplier.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedWeapon.RangeMultiplier}"
+                    Text="{Binding SelectedWeapon.RangeMultiplier.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedWeapon.RangeMultiplier.Note}"/>
+
+            </Grid>
+
+            <Grid
+                Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="45"
+                    LabelFontSize="11"
+                    LabelText="Cost:"
+                    IsReadOnly="{Binding SelectedWeapon.Cost.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedWeapon.Cost}"
+                    Text="{Binding SelectedWeapon.Cost.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedWeapon.Cost.Note}"/>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="5"
+                    Orientation="Horizontal">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="Ammo:"
+                        FontSize="11"
+                        VerticalAlignment="Top"/>
+                    <ComboBox
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        MinWidth="130"
+                        Width="Auto"
+                        DisplayMemberPath="NameAmount"
+                        ItemsSource="{Binding SelectedWeapon.CompatibleAmmos, diag:PresentationTraceSources.TraceLevel=High}"
+                        SelectedItem="{Binding SelectedAmmo}">
+
+                    </ComboBox>
                 </StackPanel>
             </Grid>
 
-            <ComboBox
-                Grid.Column="2"
-                Margin="5"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Right"
-                MinWidth="130"
-                Width="Auto"
-                ItemsSource="{Binding SelectedWeapon.Properties}"
-                DisplayMemberPath="Name"
-                Text="Properties"
-                IsReadOnly="True"
-                IsEditable="True"
-                SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBox.ItemContainerStyle>
-                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
-                        <Setter Property="Tag" Value="{Binding Note}"/>
-                    </Style>
-                </ComboBox.ItemContainerStyle>
-            </ComboBox>
-        </Grid>
-
-        <Grid
-            Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="180"/>
-            </Grid.ColumnDefinitions>
-
-            <control:TextBoxWithLabelControl
-                Grid.Column="0"
-                Orientation="Horizontal"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="45"
-                LabelFontSize="11"
-                LabelText="STR Req:"
-                IsReadOnly="{Binding SelectedWeapon.StrRequirement.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.StrRequirement}"
-                Text="{Binding SelectedWeapon.StrRequirement.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.StrRequirement.Note}"/>
-
-            <!-- Bullets -->
             <Grid
-                Grid.Column="1"
-                Height="70">
+                Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
 
-            </Grid>
-        </Grid>
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="45"
+                    LabelFontSize="11"
+                    LabelText="Load:"
+                    IsReadOnly="{Binding SelectedWeapon.Load.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedWeapon.Load}"
+                    Text="{Binding SelectedWeapon.Load.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedWeapon.Load.Note}"/>
 
-        <!-- Upgrades -->
-        <Grid
-            Grid.Row="4"
-            Grid.Column="2"
-            Grid.RowSpan="2">
-            <StackPanel
-                Margin="5"
-                HorizontalAlignment="Right">
-                <Label
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    Content="{Binding SelectedWeapon.UpgradeSlotVisualization}"
-                    FontSize="9"
-                    VerticalAlignment="Top"/>
+                <Grid
+                    Grid.Column="1"
+                    Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="Magazine"
+                        FontSize="9"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"/>
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="Shoot"
+                            Padding="5"
+                            Margin="0 0 5 0"
+                            VerticalAlignment="center"
+                            Command="{Binding DataContext.ShootCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="Reload"
+                            Padding="5"
+                            VerticalAlignment="center"
+                            Command="{Binding DataContext.ReloadCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    </StackPanel>
+                </Grid>
+
                 <ComboBox
                     Grid.Column="2"
+                    Margin="5"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
                     MinWidth="130"
                     Width="Auto"
-                    ItemsSource="{Binding SelectedWeapon.Upgrades}"
+                    ItemsSource="{Binding SelectedWeapon.Properties}"
                     DisplayMemberPath="Name"
-                    Text="Upgrades"
-                    IsReadOnly="True"
-                    IsEditable="False"
+                    Tag="Properties"
                     SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -350,29 +288,104 @@
                         </Style>
                     </ComboBox.ItemContainerStyle>
                 </ComboBox>
-            </StackPanel>
-        </Grid>
+            </Grid>
 
-        <Grid
-            Grid.Row="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="180"/>
-            </Grid.ColumnDefinitions>
+            <Grid
+                Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
 
-            <control:TextBoxWithLabelControl
-                Grid.Column="0"
-                Orientation="Horizontal"
-                Margin="5"
-                VerticalAlignment="Top"
-                MinWidth="45"
-                LabelFontSize="11"
-                LabelText="Decay:"
-                IsReadOnly="{Binding SelectedWeapon.Decay.IsBaseValueReadOnly}"
-                ModValue ="{Binding SelectedWeapon.Decay}"
-                Text="{Binding SelectedWeapon.Decay.Total, Mode=OneWay}"
-                Hint="{Binding SelectedWeapon.Decay.Note}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="45"
+                        LabelFontSize="11"
+                        LabelText="STR Req:"
+                        IsReadOnly="{Binding SelectedWeapon.StrRequirement.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedWeapon.StrRequirement}"
+                        Text="{Binding SelectedWeapon.StrRequirement.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedWeapon.StrRequirement.Note}"/>
+
+                    <StackPanel
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Content="Decay:"/>
+                        <control:UpDownTextBoxControl x:Name="Decay"
+                            FontSize="11"
+                            MinusButtonSlot="0"
+                            PlusButtonSlot="2"
+                            TextBoxSlot="1"
+                            MinValue="0"
+                            MaxValue="10"
+                            IsReadOnly="{Binding SelectedWeapon.Decay.IsBaseValueReadOnly}"
+                            ModValue="{Binding SelectedWeapon.Decay}"
+                            Text="{Binding SelectedWeapon.Decay.Total, Mode=OneWay}"
+                            Hint="{Binding SelectedWeapon.Decay.Note}"
+                            CanOpenModal="False"/>
+                    </StackPanel>
+                </Grid>
+
+                <ItemsControl
+                    Grid.Column="1"
+                    ItemsSource="{Binding SelectedWeapon.BulletSlots}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                Style="{StaticResource FalloutSkillCheckbox}"
+                                IsChecked="{Binding Value}"
+                                Margin="0 2 0 2"
+                                FontSize="15"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <StackPanel
+                    Grid.Column="2"
+                    Margin="5"
+                    HorizontalAlignment="Right">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="{Binding SelectedWeapon.UpgradeSlotVisualization}"
+                        FontSize="9"
+                        VerticalAlignment="Top"/>
+                    <ComboBox
+                        Grid.Column="2"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        MinWidth="130"
+                        ItemsSource="{Binding SelectedWeapon.Upgrades}"
+                        DisplayMemberPath="Name"
+                        Tag="Upgrades"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

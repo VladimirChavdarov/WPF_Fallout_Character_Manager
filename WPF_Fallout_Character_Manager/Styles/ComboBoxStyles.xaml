@@ -49,6 +49,8 @@
     <!-- ComboBox Template -->
     <Style TargetType="ComboBox">
         <Setter Property="Foreground" Value="{StaticResource FalloutGreen}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JH_Fallout}"/>
+        <Setter Property="FontSize" Value="9"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
@@ -95,16 +97,24 @@
                         </ToggleButton>
 
                         <!-- Content (Selected Item) -->
-
-                        <TextBlock x:Name="TextBlock"
-                            FontFamily="{StaticResource JH_Fallout}"
-                            FontSize="9"
-                            Padding="2 5"
-                            HorizontalAlignment="Left"
+                        <ContentPresenter
+                            x:Name="ContentSite"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="2 5"
                             VerticalAlignment="Center"
-                            Text="{TemplateBinding Text}"
-                            TextWrapping="Wrap"
-                            Foreground="{StaticResource FalloutGreen}"/>
+                            HorizontalAlignment="Left"/>
+
+                        <TextBlock
+                            x:Name="PlaceholderText"
+                            Text="{TemplateBinding Tag}"
+                            Margin="2 5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"/>
 
                         <!-- Dropdown -->
                         <Popup x:Name="Popup" 

@@ -1,12 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WPF_Fallout_Character_Manager.Utilities
 {
+    // https://stackoverflow.com/questions/17810092/how-to-bind-an-observablecollectionbool-to-a-listbox-of-checkboxes-in-wpf
+    public class TypeWrap<T> : INotifyPropertyChanged
+    {
+        private T value;
+        public T Value
+        {
+            get { return value; }
+            set
+            {
+                {
+                    this.value = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public static implicit operator TypeWrap<T>(T value)
+        {
+            return new TypeWrap<T> { value = value };
+        }
+        public static implicit operator T(TypeWrap<T> wrapper)
+        {
+            return wrapper.value;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
     static class Utils
     {
         public static float FloatFromString(string s)

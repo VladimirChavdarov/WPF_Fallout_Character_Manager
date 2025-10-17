@@ -28,14 +28,15 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(sender is ComboBox comboBox)
+            if (sender is ComboBox comboBox)
             {
-                string name = comboBox.Text;
-                // ay ay ay. This is an ugly way to handle it and there is a twitch when selecting a property or an upgrade but it will do.
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    comboBox.Text = name;
-                }), System.Windows.Threading.DispatcherPriority.Background);
+                comboBox.SelectedItem = null;
+                //string name = comboBox.Text;
+                //// ay ay ay. This is an ugly way to handle it and there is a twitch when selecting a property or an upgrade but it will do.
+                //Dispatcher.BeginInvoke(new Action(() =>
+                //{
+                //    comboBox.Text = name;
+                //}), System.Windows.Threading.DispatcherPriority.Background);
             }
         }
     }

@@ -21,8 +21,10 @@
                 Margin="5"
                 FontSize="10">
                 <TabItem Header="Weapons">
-                    <panel:WeponsPanel
-                        DataContext="{Binding WeaponsViewModel}"/>
+                    <ScrollViewer>
+                        <panel:WeponsPanel
+                            DataContext="{Binding WeaponsViewModel}"/>
+                    </ScrollViewer>
                 </TabItem>
 
                 <TabItem Header="Armor">

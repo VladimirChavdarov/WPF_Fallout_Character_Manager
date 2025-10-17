@@ -34,7 +34,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public Weapon SelectedWeapon
         {
             get => _selectedWeapon;
-            set => Update(ref _selectedWeapon, value);
+            set
+            {
+                Update(ref _selectedWeapon, value);
+                SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+            }
         }
 
         public Ammo SelectedAmmo
@@ -52,6 +56,73 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
             SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+
+            ShootCommand = new RelayCommand(Shoot);
+            ReloadCommand = new RelayCommand(Reload);
+        }
+        //
+
+        // methods
+        private static void ReloadWeapon(Weapon weapon, Ammo ammo)
+        {
+            int availableAttacks = (int)(ammo.Amount.BaseValue / weapon.AmmoPerAttack.BaseValue);
+            int ammoAmountToAdd = Math.Clamp(availableAttacks, 0, weapon.NumberOfAttacks.BaseValue);
+            for(int i = 0; i < ammoAmountToAdd; i++)
+            {
+                weapon.BulletSlots[i] = true;
+            }
+        }
+        //
+
+        // commands
+        public RelayCommand ShootCommand { get; private set; }
+        private void Shoot(object _ = null)
+        {
+            if(SelectedAmmo == null)
+            {
+                return;
+            }
+
+            if(SelectedAmmo.Amount.BaseValue < SelectedWeapon.AmmoPerAttack.BaseValue)
+            {
+                return; // doesn't have enough ammo to shoot
+            }
+
+            if(SelectedWeapon.BulletSlots.Count(x => x) < 1)
+            {
+                return; // there are not enough bullets in the chamber to make the attack
+            }
+
+            int lastBulletIndex = -1;
+            for(int i = SelectedWeapon.BulletSlots.Count - 1;  i >= 0; i--)
+            {
+                if (SelectedWeapon.BulletSlots[i] == true)
+                {
+                    lastBulletIndex = i;
+                    break;
+                }
+            }
+            SelectedWeapon.BulletSlots[lastBulletIndex] = false;
+            SelectedWeapon.UsedAmmoFirepower += SelectedWeapon.AmmoPerAttack.BaseValue;
+
+            if(SelectedWeapon.UsedAmmoFirepower >= 1.0f)
+            {
+                SelectedAmmo.Amount.BaseValue -= (int) SelectedWeapon.UsedAmmoFirepower;
+                SelectedWeapon.UsedAmmoFirepower = 0.0f;
+
+            }
+            OnPropertyChanged(nameof(SelectedAmmo));
+        }
+
+        public RelayCommand ReloadCommand { get; private set; }
+        private void Reload(object _ = null)
+        {
+            if (SelectedAmmo == null)
+            {
+                return;
+            }
+
+            ReloadWeapon(SelectedWeapon, SelectedAmmo);
         }
         //
     }

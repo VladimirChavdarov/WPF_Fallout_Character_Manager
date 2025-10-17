@@ -128,9 +128,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     decay: 0,
                     availableUpgradeSlots: 1
                     );
-                weapon.Properties = new ObservableCollection<WeaponProperty>();
-                weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
-                weapon.CompatibleAmmos = new ObservableCollection<Ammo>();
 
                 // melee properties
                 string[] properties = parts[6].Split(".");
@@ -148,24 +145,38 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     if (trimmedProperty.Contains("Ammo"))
                     {
                         string ammoProperty = trimmedProperty.Replace("Ammo: ", "");
-                        var separateValues = ammoProperty.Split(", ");
-                        separateValues[0] = separateValues[0].Trim();
-                        separateValues[1] = separateValues[1].Trim();
-                        weapon.AmmoCapacity.BaseValue = Int32.Parse(separateValues[1].Replace(" rounds", ""));
-                        // check to see if we already have ammo of this type. If not, add it from the xtrnlAmmoModel to ammoModel with amount = 0.
-                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == separateValues[0]);
+                        string[] ammoField = ammoProperty.Split(",");
+                        for (int i = 0; i < ammoField.Length; i++)
+                            ammoField[i] = ammoField[i].Trim();
+                        // ammo type
+                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
                         if (ammoType != null)
-                            weapon.CompatibleAmmos.Add(ammoType); // we just reference the object from ammoModel in the weapon's data.
+                            weapon.CompatibleAmmos.Add(ammoType);
                         else
                         {
-                            // if the user has no ammo of this type in AmmoModel.Ammos, we first add it there and then
-                            // we reference it in the weapon's data.
-                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == separateValues[0]);
+                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
                             if (ammoToAdd == null)
-                                throw new Exception("Cannot find this ammo type in XtrnlAmmoModel.Ammos... This ammo doesn't exist.");
+                            {
+                                // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
+                                ammoToAdd = new Ammo(ammoField[0], 0, 0, 0.0f);
+                                xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
+                            }
+                            ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
                             ammoModel.Ammos.Add(ammoToAdd.Clone());
-                            weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == separateValues[0]));
+                            // make weapon.AmmoType reference the ammo in the model.
+                            weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
+                            if (weapon.CompatibleAmmos.FirstOrDefault() == null)
+                                throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
                         }
+                        // ammo capacity
+                        ammoField[1] = ammoField[1].Replace(" rounds", "");
+                        ammoField[1] = ammoField[1].Replace(" round", "");
+                        weapon.AmmoCapacity.BaseValue = Int32.Parse(ammoField[1]);
+                        // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
+                        ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
+                        weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
+                        weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
+                        weapon.InitializeBulletSlots();
                     }
 
                     if (trimmedProperty.Contains("Depleted"))
@@ -216,14 +227,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     ammoType: null,
                     ammoCapacity: 0,
                     ammoPerAttack: 0,
+                    numberOfAttacks: 0,
                     load: Utils.FloatFromString(parts[9]),
                     strRequirement: Int32.Parse(parts[10]),
                     decay: 0,
                     availableUpgradeSlots: 6
                     );
-                weapon.Properties = new ObservableCollection<WeaponProperty>();
-                weapon.Upgrades = new ObservableCollection<WeaponUpgrade>();
-                weapon.CompatibleAmmos = new ObservableCollection<Ammo>();
 
                 // set ammo type, capacity, and ammo per attack
                 string[] ammoField = parts[7].Split(",");
@@ -242,6 +251,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         ammoToAdd = new Ammo(ammoField[0], 0, 0, 0.0f);
                         xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
                     }
+                    ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
                     ammoModel.Ammos.Add(ammoToAdd.Clone());
                     // make weapon.AmmoType reference the ammo in the model.
                     weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
@@ -255,6 +265,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
                 ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
                 weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
+                weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
+                weapon.InitializeBulletSlots();
                 //
 
                 // properties
@@ -316,12 +328,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Ammo ammoType = null,
             int ammoCapacity = 1,
             float ammoPerAttack = 1.0f,
+            int numberOfAttacks = 0,
             float load = 0.0f,
             int strRequirement = 0,
             int decay = 0,
             int availableUpgradeSlots = 0
             )
         {
+            Properties = new ObservableCollection<WeaponProperty>();
+            Upgrades = new ObservableCollection<WeaponUpgrade>();
+            CompatibleAmmos = new ObservableCollection<Ammo>();
+            BulletSlots = new ObservableCollection<TypeWrap<bool>>();
+
             WeaponType = weaponType;
             Name = new ModString("Name", name);
             Type = new ModString("Weapon Type", type, true);
@@ -337,9 +355,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             CritDamage = new ModString("Crit Damage", critDamage, true);
             AmmoCapacity = new ModInt("Ammo Capacity", ammoCapacity, true);
             AmmoPerAttack = new ModFloat("Ammo per Attack", ammoPerAttack, true);
+            NumberOfAttacks = new ModInt("Number of Attacks", numberOfAttacks, true);
+            UsedAmmoFirepower = 0.0f;
             Load = new ModFloat("Load", load, true);
             StrRequirement = new ModInt("Strength Requirement", strRequirement, true);
-            Decay = new ModInt("Decay", decay, true);
+            Decay = new ModInt("Decay", decay, false);
             AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
             TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
             Equipped = false;
@@ -410,6 +430,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _ammoPerAttack, value);
         }
 
+        private ModInt _numberOfAttacks;
+        public ModInt NumberOfAttacks
+        {
+            get => _numberOfAttacks;
+            set => Update(ref _numberOfAttacks, value);
+        }
+
+        private float _usedAmmoFirepower; // accumulates ammoPerAttack and resets when it reaches >= 1.
+        public float UsedAmmoFirepower
+        {
+            get => _usedAmmoFirepower;
+            set => Update(ref _usedAmmoFirepower, value);
+        }
+
         private ModInt _strRequirement;
         public ModInt StrRequirement
         {
@@ -457,6 +491,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public ObservableCollection<WeaponProperty> Properties { get; set; }
         public ObservableCollection<WeaponUpgrade> Upgrades { get; set; }
         public ObservableCollection<Ammo> CompatibleAmmos { get; set; }
+
+        public ObservableCollection<TypeWrap<bool>> BulletSlots { get; set; }
         //
 
         // methods
@@ -473,6 +509,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             CritDamage = this.CritDamage,
             AmmoCapacity = this.AmmoCapacity,
             AmmoPerAttack = this.AmmoPerAttack,
+            NumberOfAttacks = this.NumberOfAttacks,
             Load = this.Load,
             StrRequirement = this.StrRequirement,
             Decay = this.Decay,
@@ -481,7 +518,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Properties = new ObservableCollection<WeaponProperty>(this.Properties),
             Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
             CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
+            BulletSlots = new ObservableCollection<TypeWrap<bool>>(this.BulletSlots),
         };
+
+        public void InitializeBulletSlots()
+        {
+            BulletSlots.Clear();
+            for (int i = 0; i < NumberOfAttacks.BaseValue; i++)
+            {
+                BulletSlots.Add(false);
+            }
+        }
         //
     }
 

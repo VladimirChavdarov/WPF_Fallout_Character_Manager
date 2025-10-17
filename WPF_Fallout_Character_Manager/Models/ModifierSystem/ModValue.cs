@@ -132,10 +132,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             get => _baseValueObject.Name;
             set
             {
-                if (_baseValueObject.Name != value)
-                {
-                    _baseValueObject.Name = value;
-                }
+                BaseValueObject.Name = value;
             }
         }
         public T BaseValue
@@ -143,8 +140,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             get => _baseValueObject.Value;
             set
             {
-                _baseValueObject.Value = value;
-                UpdateTotal();
+                BaseValueObject.Value = value;
+                //UpdateTotal();
             }
         }
         public string Note
@@ -152,10 +149,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             get => _baseValueObject.Note;
             set
             {
-                if (_baseValueObject.Note != value)
-                {
-                    _baseValueObject.Note = value;
-                }
+                BaseValueObject.Note = value;
             }
         }
         //
