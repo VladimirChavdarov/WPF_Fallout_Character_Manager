@@ -117,7 +117,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     type: parts[1],
                     cost: Int32.Parse(parts[2]),
                     ap: Int32.Parse(parts[3]),
-                    damage: new ModString("Damage", parts[4], false),
+                    damage: new ModString("Damage", parts[4], true),
                     rangeMultiplier: "x0/x0",
                     critChance: Int32.Parse(critField[0]),
                     critDamage: critField[1],
@@ -220,7 +220,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     type: parts[1],
                     cost: Int32.Parse(parts[2]),
                     ap: Int32.Parse(parts[3]),
-                    damage: new ModString("Damage", parts[4], false),
+                    damage: new ModString("Damage", parts[4], true),
                     rangeMultiplier: parts[5],
                     critChance: Int32.Parse(critField[0]),
                     critDamage: critField[1],
@@ -363,6 +363,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
             TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
             Equipped = false;
+
+            _decay.PropertyChanged += Decay_PropertyChanged;
         }
         //
 
@@ -409,7 +411,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _critChance, value);
         }
 
-        public ModString _critDamage;
+        private ModString _critDamage;
         public ModString CritDamage
         {
             get => _critDamage;
@@ -483,7 +485,26 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public bool Equipped
         {
             get => _equipped;
-            set => Update(ref _equipped, value);
+            set
+            {
+                Update(ref _equipped, value);
+                OnPropertyChanged(nameof(EquippedNameAmount));
+            }
+        }
+
+        public string EquippedNameAmount
+        {
+            get
+            {
+                if(Equipped)
+                {
+                    return "[X] " + NameAmount;
+                }
+                else
+                {
+                    return "[  ] " + NameAmount;
+                }
+            }
         }
 
         public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString();
@@ -503,6 +524,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Type = this.Type,
             Cost = this.Cost,
             AP = this.AP,
+            ToHit = this.ToHit,
             Damage = this.Damage,
             RangeMultiplier = this.RangeMultiplier,
             CritChance = this.CritChance,
@@ -510,8 +532,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             AmmoCapacity = this.AmmoCapacity,
             AmmoPerAttack = this.AmmoPerAttack,
             NumberOfAttacks = this.NumberOfAttacks,
+            UsedAmmoFirepower = this.UsedAmmoFirepower,
             Load = this.Load,
             StrRequirement = this.StrRequirement,
+            Amount = this.Amount,
             Decay = this.Decay,
             AvailableUpgradeSlots = this.AvailableUpgradeSlots,
             takenUpgradeSlots = this.takenUpgradeSlots,
@@ -528,6 +552,38 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 BulletSlots.Add(false);
             }
+        }
+
+        private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ScaleWeaponWithDecay();
+        }
+
+        private void ScaleWeaponWithDecay()
+        {
+            int decay = Decay.Total;
+
+            ApplyDecay(ToHit, decay, -decay);
+            ApplyDecay(Damage, decay, "-" + decay.ToString());
+            float newCost =  -Cost.BaseValue * (float)(decay / 10.0f);
+            ApplyDecay(Cost, decay, (int)newCost);
+        }
+
+        private void ApplyDecay<T>(ModValue<T> modValue, int decay, T newValue) where T : IComparable, IConvertible, IEquatable<T>
+        {
+            LabeledValue<T> decayModifier = modValue.Modifiers.FirstOrDefault(x => x.Name == "Decay");
+
+            if(decay == 0 && decayModifier != null) // remove the modifier if the weapon is in pristine condition
+            {
+                modValue.RemoveModifier(decayModifier);
+            }
+
+            if (decayModifier == null) // add the decay modifier if it doesn't exist
+            {
+                decayModifier = new LabeledValue<T>("Decay", default, "This modifier automatically updates as Decay level changes.");
+                modValue.AddModifier(decayModifier);
+            }
+            decayModifier.Value = newValue;
         }
         //
     }

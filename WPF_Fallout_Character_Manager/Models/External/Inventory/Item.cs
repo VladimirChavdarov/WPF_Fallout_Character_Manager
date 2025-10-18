@@ -96,7 +96,6 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         // methods
         private void SubscribeToChildPropertyChanges()
         {
-            // Subscribe to Amount, Cost, and Load changes
             Amount.PropertyChanged += Child_PropertyChanged;
             Cost.PropertyChanged += Child_PropertyChanged;
             Load.PropertyChanged += Child_PropertyChanged;

@@ -32,7 +32,7 @@
                     MinWidth="160"
                     Width="Auto"
                     ItemsSource="{Binding WeaponsModel.Weapons}"
-                    DisplayMemberPath="NameAmount"
+                    DisplayMemberPath="EquippedNameAmount"
                     SelectedItem="{Binding SelectedWeapon}">
                 </ComboBox>
 
@@ -52,7 +52,8 @@
                         FontSize="18"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
-                        IsChecked="{Binding SelectedWeapon.Equipped}"/>
+                        IsChecked="{Binding SelectedWeapon.Equipped}"
+                        Command="{Binding DataContext.UnequipOtherWeaponsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </StackPanel>
 
             </Grid>
@@ -335,7 +336,7 @@
                             MaxValue="10"
                             IsReadOnly="{Binding SelectedWeapon.Decay.IsBaseValueReadOnly}"
                             ModValue="{Binding SelectedWeapon.Decay}"
-                            Text="{Binding SelectedWeapon.Decay.Total, Mode=OneWay}"
+                            Text="{Binding SelectedWeapon.Decay.BaseValue}"
                             Hint="{Binding SelectedWeapon.Decay.Note}"
                             CanOpenModal="False"/>
                     </StackPanel>

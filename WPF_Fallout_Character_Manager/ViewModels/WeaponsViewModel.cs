@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
@@ -14,6 +15,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // local variables
         private XtrnlWeaponsModel _xtrnlWeaponsModel;
         private WeaponsModel _weaponsModel;
+        private SkillModel _skillModel;
+
         private Weapon _selectedWeapon;
         private Ammo _selectedAmmo;
         //
@@ -31,6 +34,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set => Update(ref _weaponsModel, value);
         }
 
+        public SkillModel SkillModel
+        {
+            get => _skillModel;
+            set => Update(ref _skillModel, value);
+        }
+
         public Weapon SelectedWeapon
         {
             get => _selectedWeapon;
@@ -38,6 +47,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 Update(ref _selectedWeapon, value);
                 SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+                SetToHitBaseValue(SelectedWeapon);
             }
         }
 
@@ -49,16 +59,25 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // constructor
-        public WeaponsViewModel(XtrnlWeaponsModel xtrnlWeaponsModel, WeaponsModel weaponsModel)
+        public WeaponsViewModel(XtrnlWeaponsModel xtrnlWeaponsModel, WeaponsModel weaponsModel, SkillModel skillModel)
         {
             _xtrnlWeaponsModel = xtrnlWeaponsModel;
             _weaponsModel = weaponsModel;
+            _skillModel = skillModel;
 
             SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
             SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
 
             ShootCommand = new RelayCommand(Shoot);
             ReloadCommand = new RelayCommand(Reload);
+            UnequipOtherWeaponsCommand = new RelayCommand(UnequipOtherWeapons);
+
+            _skillModel.PropertyChanged += SkillModel_PropertyChanged;
+        }
+
+        private void SkillModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SetToHitBaseValue(SelectedWeapon);
         }
         //
 
@@ -71,6 +90,59 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 weapon.BulletSlots[i] = true;
             }
+        }
+
+        private void SetToHitBaseValue(Weapon weapon)
+        {
+            switch (weapon.Type.BaseValue)
+            {
+                case "Bladed":
+                    SetToHitBaseValue(Skill.MeleeWeapons);
+                    break;
+                case "Blunt":
+                    SetToHitBaseValue(Skill.MeleeWeapons);
+                    break;
+                case "Mechanical":
+                    SetToHitBaseValue(Skill.MeleeWeapons);
+                    break;
+
+                case "Unarmed":
+                    SetToHitBaseValue(Skill.Unarmed);
+                    break;
+
+                case "Handgun":
+                    SetToHitBaseValue(Skill.Guns);
+                    break;
+                case "Revolver":
+                    SetToHitBaseValue(Skill.Guns);
+                    break;
+                case "Submachine Gun":
+                    SetToHitBaseValue(Skill.Guns);
+                    break;
+                case "Rifle":
+                    SetToHitBaseValue(Skill.Guns);
+                    break;
+                case "Shotgun":
+                    SetToHitBaseValue(Skill.Guns);
+                    break;
+                case "Big Gun":
+                    SetToHitBaseValue(Skill.Guns);
+                    break;
+
+                case "Energy":
+                    SetToHitBaseValue(Skill.EnergyWeapons);
+                    break;
+            }
+        }
+
+        private void SetToHitBaseValue(Skill skill)
+        {
+            SetToHitBaseValue(SkillModel.GetSkill(skill).Total);
+        }
+
+        private void SetToHitBaseValue(int skillModifier)
+        {
+            SelectedWeapon.ToHit.BaseValue = skillModifier;
         }
         //
 
@@ -123,6 +195,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
 
             ReloadWeapon(SelectedWeapon, SelectedAmmo);
+        }
+
+        public RelayCommand UnequipOtherWeaponsCommand {  get; private set; }
+        private void UnequipOtherWeapons(object _ = null)
+        {
+            List<Weapon> uneqiuppedWeapons = WeaponsModel.Weapons.Where(x => x != SelectedWeapon).ToList();
+            foreach(Weapon weapon in uneqiuppedWeapons)
+            {
+                weapon.Equipped = false;
+            }
         }
         //
     }
