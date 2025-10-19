@@ -301,9 +301,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Name = new ModString("Name", name, true);
             Cost = new ModInt("Cost", cost, true);
             AC = new ModInt("AC", ac, true);
-            DP = new ModInt("DT", dp, true);
+            DP = new ModInt("DP", dp, true);
             AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
             TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
+            Load = new ModFloat("Load", load, true);
             RepairDC = new ModInt("Repair DC", repairDC);
             AllottedTime = new ModInt("Allotted Time", allottedTime, true);
             Decay = new ModInt("Decay", decay, false);

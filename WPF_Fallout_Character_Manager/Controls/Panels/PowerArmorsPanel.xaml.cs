@@ -24,5 +24,13 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
         {
             InitializeComponent();
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(sender is ComboBox comboBox)
+            {
+                comboBox.SelectedItem = null;
+            }
+        }
     }
 }

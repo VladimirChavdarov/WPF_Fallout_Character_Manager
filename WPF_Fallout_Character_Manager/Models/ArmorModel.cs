@@ -27,6 +27,14 @@ namespace WPF_Fallout_Character_Manager.Models
             Armors.Add(a1);
             Armors.Add(a2);
             Armors.Add(a3);
+
+            PowerArmor p1 = xtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == "T-45");
+            p1.Amount.BaseValue++;
+            PowerArmor p2 = xtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == "X-02");
+            p2.Amount.BaseValue++;
+
+            PowerArmors.Add(p1);
+            PowerArmors.Add(p2);
         }
         //
 
