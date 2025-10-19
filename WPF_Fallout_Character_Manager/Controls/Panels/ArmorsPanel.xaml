@@ -4,9 +4,216 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="238" d:DesignWidth="530">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox
+                    Grid.Column="0"
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    MinWidth="160"
+                    Width="Auto"
+                    ItemsSource="{Binding ArmorsModel.Armors}"
+                    DisplayMemberPath="EquippedNameAmount"
+                    SelectedItem="{Binding SelectedArmor}">
+                </ComboBox>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="Equipped:"
+                        FontSize="9"
+                        VerticalAlignment="Top"/>
+                    <CheckBox
+                        Style="{StaticResource FalloutSkillCheckbox}"
+                        Margin="0 2 0 0"
+                        FontSize="18"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        IsChecked="{Binding SelectedArmor.Equipped}"
+                        Command="{Binding DataContext.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid
+                Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="85"/>
+                </Grid.ColumnDefinitions>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="55"
+                    TextWrapping="NoWrap"
+                    HorizontalContentAlignment="Left"
+                    LabelFontSize="11"
+                    LabelText="AC:"
+                    IsReadOnly="{Binding SelectedArmor.AC.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedArmor.AC}"
+                    Text="{Binding SelectedArmor.AC.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedArmor.AC.Note}"/>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="1"
+                    Orientation="Vertical"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="75"
+                    TextWrapping="NoWrap"
+                    HorizontalContentAlignment="Left"
+                    LabelFontSize="11"
+                    LabelText="DT:"
+                    IsReadOnly="{Binding SelectedArmor.DT.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedArmor.DT}"
+                    Text="{Binding SelectedArmor.DT.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedArmor.DT.Note}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="45"
+                    LabelFontSize="11"
+                    LabelText="Cost:"
+                    IsReadOnly="{Binding SelectedArmor.Cost.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedArmor.Cost}"
+                    Text="{Binding SelectedArmor.Cost.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedArmor.Cost.Note}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    MinWidth="45"
+                    LabelFontSize="11"
+                    LabelText="Load:"
+                    IsReadOnly="{Binding SelectedArmor.Load.IsBaseValueReadOnly}"
+                    ModValue ="{Binding SelectedArmor.Load}"
+                    Text="{Binding SelectedArmor.Load.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedArmor.Load.Note}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Row="0"
+                        Orientation="Horizontal"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="45"
+                        LabelFontSize="11"
+                        LabelText="STR Req:"
+                        IsReadOnly="{Binding SelectedArmor.StrRequirement.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedArmor.StrRequirement}"
+                        Text="{Binding SelectedArmor.StrRequirement.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedArmor.StrRequirement.Note}"/>
+
+                    <StackPanel
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="11"
+                            VerticalAlignment="Center"
+                            Content="Decay:"/>
+                        <control:UpDownTextBoxControl x:Name="Decay"
+                            FontSize="11"
+                            MinusButtonSlot="0"
+                            PlusButtonSlot="2"
+                            TextBoxSlot="1"
+                            MinValue="0"
+                            MaxValue="10"
+                            IsReadOnly="{Binding SelectedArmor.Decay.IsBaseValueReadOnly}"
+                            ModValue="{Binding SelectedArmor.Decay}"
+                            Text="{Binding SelectedArmor.Decay.BaseValue}"
+                            Hint="{Binding SelectedArmor.Decay.Note}"
+                            CanOpenModal="False"/>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel
+                    Grid.Column="2"
+                    Margin="5"
+                    HorizontalAlignment="Right">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="{Binding SelectedArmor.UpgradeSlotVisualization}"
+                        FontSize="9"
+                        VerticalAlignment="Top"/>
+                    <ComboBox
+                        Grid.Column="2"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        MinWidth="130"
+                        ItemsSource="{Binding SelectedArmor.Upgrades}"
+                        DisplayMemberPath="Name"
+                        Tag="Upgrades"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

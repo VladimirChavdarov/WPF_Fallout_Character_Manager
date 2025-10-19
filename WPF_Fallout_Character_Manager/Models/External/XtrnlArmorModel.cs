@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -148,6 +150,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Equipped = false;
 
             _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
         //
 
@@ -173,11 +177,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _availableUpgradeSlots, value);
         }
 
-        private ModInt takenUpgradeSlots;
+        private ModInt _takenUpgradeSlots;
         public ModInt TakenUpgradeSlots
         {
-            get => takenUpgradeSlots;
-            set => Update(ref takenUpgradeSlots, value);
+            get => _takenUpgradeSlots;
+            set => Update(ref _takenUpgradeSlots, value);
         }
 
         private ModInt _strRequirement;
@@ -251,10 +255,28 @@ namespace WPF_Fallout_Character_Manager.Models.External
             int decay = Decay.Total;
             int halfDecay = decay / 2;
 
-            ApplyDecay(AC, decay, halfDecay);
-            ApplyDecay(DT, decay, halfDecay);
+            if(AC.BaseValue - halfDecay >= 10)
+            {
+                ApplyDecay(AC, decay, -halfDecay);
+            }
+
+            if (DT.BaseValue - halfDecay >= 0)
+            {
+                ApplyDecay(DT, decay, -halfDecay);
+            }
+
             float newCost = -Cost.BaseValue * (float)(decay / 10.0f);
             ApplyDecay(Cost, decay, (int)newCost);
+        }
+
+        private void Upgrades_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            TakenUpgradeSlots.BaseValue = Upgrades.Count;
+        }
+
+        private void TakenUpgradeSlots_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }
         //
     }
@@ -288,6 +310,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Equipped = false;
 
             _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
         //
 
@@ -399,9 +423,23 @@ namespace WPF_Fallout_Character_Manager.Models.External
             int decay = Decay.Total;
             int halfDecay = decay / 2;
 
-            ApplyDecay(AC, decay, halfDecay);
-            float newCost = -Cost.BaseValue * (float)(decay / 10.0f);
-            ApplyDecay(Cost, decay, (int)newCost);
+            if (AC.BaseValue - halfDecay >= 10)
+            {
+                ApplyDecay(AC, decay, -halfDecay);
+            }
+
+            float costReduction = -Cost.BaseValue * (float)(decay / 10.0f);
+            ApplyDecay(Cost, decay, (int)costReduction);
+        }
+
+        private void TakenUpgradeSlots_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            TakenUpgradeSlots.BaseValue = Upgrades.Count;
+        }
+
+        private void Upgrades_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }
         //
     }

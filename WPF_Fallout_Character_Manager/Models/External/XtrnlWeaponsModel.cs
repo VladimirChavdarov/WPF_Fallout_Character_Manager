@@ -365,6 +365,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Equipped = false;
 
             _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
         //
 
@@ -565,8 +567,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
             ApplyDecay(ToHit, decay, -decay);
             ApplyDecay(Damage, decay, "-" + decay.ToString());
-            float newCost =  -Cost.BaseValue * (float)(decay / 10.0f);
-            ApplyDecay(Cost, decay, (int)newCost);
+            float costReduction =  -Cost.BaseValue * (float)(decay / 10.0f);
+            ApplyDecay(Cost, decay, (int)costReduction);
+        }
+
+        private void Upgrades_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            TakenUpgradeSlots.BaseValue = Upgrades.Count;
+        }
+
+        private void TakenUpgradeSlots_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }
         //
     }

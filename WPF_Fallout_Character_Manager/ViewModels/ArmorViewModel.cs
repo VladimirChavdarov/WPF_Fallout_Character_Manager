@@ -56,6 +56,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             UnequipOtherArmorsCommand = new RelayCommand(UnequipOtherArmors);
             UnequipOtherPowerArmorsCommand = new RelayCommand(UnequipOtherPowerArmors);
+            AddUpgCommand = new RelayCommand(AddUpg);
+            RemoveUpgCommand = new RelayCommand(RemoveUpg);
         }
         //
 
@@ -78,6 +80,19 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 powerArmor.Equipped = false;
             }
+        }
+
+        public RelayCommand AddUpgCommand { get; private set; }
+        public void AddUpg(object _ = null)
+        {
+            ArmorUpgrade upg = XtrnlArmorModel.ArmorUpgrades.FirstOrDefault(x => x.Name.Contains("Fitted"));
+            SelectedArmor.Upgrades.Add(upg);
+        }
+
+        public RelayCommand RemoveUpgCommand { get; private set; }
+        public void RemoveUpg(object _ = null)
+        {
+            SelectedArmor.Upgrades.Clear();
         }
         //
     }
