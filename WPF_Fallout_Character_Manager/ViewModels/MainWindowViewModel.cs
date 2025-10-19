@@ -23,6 +23,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         //public WeaponsModel WeaponsModel { get; } = new WeaponsModel();
         public WeaponsModel WeaponsModel { get; }
+        public ArmorModel ArmorModel { get; }
         //
 
         // External Data Models
@@ -30,6 +31,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlConditionsModel XtrnlConditionsModel { get; } = new XtrnlConditionsModel();
         public XtrnlAmmoModel XtrnlAmmoModel { get; } = new XtrnlAmmoModel();
         public XtrnlWeaponsModel XtrnlWeaponsModel { get; } // set in constructor
+        public XtrnlArmorModel XtrnlArmorModel { get; } = new XtrnlArmorModel();
         //
 
         // All ViewModels
@@ -42,7 +44,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public ConditionsViewModel ConditionsViewModel { get; }
         public AmmoViewModel AmmoViewModel { get; }
         public WeaponsViewModel WeaponsViewModel { get; }
-
+        public ArmorViewModel ArmorViewModel { get; }
         public EquippableViewModel EquippableViewModel { get; }
         //
 
@@ -50,7 +52,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public MainWindowViewModel()
         {
             XtrnlWeaponsModel = new XtrnlWeaponsModel(XtrnlAmmoModel, AmmoModel);
+
             WeaponsModel = new WeaponsModel(XtrnlWeaponsModel);
+            ArmorModel = new ArmorModel(XtrnlArmorModel);
 
             BioViewModel = new BioViewModel(BioModel);
             SPECIALViewModel = new SPECIALViewModel(SPECIALModel);
@@ -61,7 +65,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
             AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);
             WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel,SkillModel);
-            EquippableViewModel = new EquippableViewModel(WeaponsViewModel);
+            ArmorViewModel = new ArmorViewModel(XtrnlArmorModel, ArmorModel);
+            EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);
         }
         //
     }

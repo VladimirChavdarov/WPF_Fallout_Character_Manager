@@ -118,6 +118,23 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
                 OnPropertyChanged(nameof(TotalLoad));
             }
         }
+
+        protected void ApplyDecay<T>(ModValue<T> modValue, int decay, T newValue) where T : IComparable, IConvertible, IEquatable<T>
+        {
+            LabeledValue<T> decayModifier = modValue.Modifiers.FirstOrDefault(x => x.Name == "Decay");
+
+            if (decay == 0 && decayModifier != null) // remove the modifier if the weapon is in pristine condition
+            {
+                modValue.RemoveModifier(decayModifier);
+            }
+
+            if (decayModifier == null) // add the decay modifier if it doesn't exist
+            {
+                decayModifier = new LabeledValue<T>("Decay", default, "This modifier automatically updates as Decay level changes.");
+                modValue.AddModifier(decayModifier);
+            }
+            decayModifier.Value = newValue;
+        }
         //
     }
 }

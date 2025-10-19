@@ -28,7 +28,17 @@
                 </TabItem>
 
                 <TabItem Header="Armor">
+                    <ScrollViewer>
+                        <panel:ArmorsPanel
+                            DataContext="{Binding ArmorsViewModel}"/>
+                    </ScrollViewer>
+                </TabItem>
 
+                <TabItem Header="Power Armor">
+                    <ScrollViewer>
+                        <panel:PowerArmorsPanel
+                            DataContext="{Binding ArmorsViewModel}"/>
+                    </ScrollViewer>
                 </TabItem>
             </TabControl>
             

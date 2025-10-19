@@ -11,6 +11,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
     {
         // local variables
         private WeaponsViewModel _weaponsViewModel;
+        private ArmorViewModel _armorsViewModel;
         //
 
         // public variables
@@ -19,12 +20,19 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             get => _weaponsViewModel;
             set => Update(ref _weaponsViewModel, value);
         }
+
+        public ArmorViewModel ArmorsViewModel
+        {
+            get => _armorsViewModel;
+            set => Update(ref _armorsViewModel, value);
+        }
         //
 
         // constructor
-        public EquippableViewModel(WeaponsViewModel weaponsViewModel)
+        public EquippableViewModel(WeaponsViewModel weaponsViewModel, ArmorViewModel armorsViewModel)
         {
             _weaponsViewModel = weaponsViewModel;
+            _armorsViewModel = armorsViewModel;
         }
         //
     }

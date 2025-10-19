@@ -507,7 +507,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
-        public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString();
+        public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString(); // probably doesn't update properly. See EquippedNameAmount.
 
         public ObservableCollection<WeaponProperty> Properties { get; set; }
         public ObservableCollection<WeaponUpgrade> Upgrades { get; set; }
@@ -567,23 +567,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
             ApplyDecay(Damage, decay, "-" + decay.ToString());
             float newCost =  -Cost.BaseValue * (float)(decay / 10.0f);
             ApplyDecay(Cost, decay, (int)newCost);
-        }
-
-        private void ApplyDecay<T>(ModValue<T> modValue, int decay, T newValue) where T : IComparable, IConvertible, IEquatable<T>
-        {
-            LabeledValue<T> decayModifier = modValue.Modifiers.FirstOrDefault(x => x.Name == "Decay");
-
-            if(decay == 0 && decayModifier != null) // remove the modifier if the weapon is in pristine condition
-            {
-                modValue.RemoveModifier(decayModifier);
-            }
-
-            if (decayModifier == null) // add the decay modifier if it doesn't exist
-            {
-                decayModifier = new LabeledValue<T>("Decay", default, "This modifier automatically updates as Decay level changes.");
-                modValue.AddModifier(decayModifier);
-            }
-            decayModifier.Value = newValue;
         }
         //
     }
