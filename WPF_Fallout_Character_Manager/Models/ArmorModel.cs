@@ -35,6 +35,8 @@ namespace WPF_Fallout_Character_Manager.Models
 
             PowerArmors.Add(p1);
             PowerArmors.Add(p2);
+
+
         }
         //
 
@@ -45,6 +47,20 @@ namespace WPF_Fallout_Character_Manager.Models
         // data
         public ObservableCollection<Armor> Armors { get; set; }
         public ObservableCollection<PowerArmor> PowerArmors { get; set; }
+
+        private Armor _equippedArmor;
+        public Armor EquippedArmor
+        {
+            get => _equippedArmor;
+            set => Update(ref _equippedArmor, value);
+        }
+
+        private PowerArmor _equippedPowerArmor;
+        public PowerArmor EquippedPowerArmor
+        {
+            get => _equippedPowerArmor;
+            set => Update(ref _equippedPowerArmor, value);
+        }
         //
     }
 }

@@ -63,20 +63,34 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public RelayCommand UnequipOtherArmorsCommand { get; private set; }
         private void UnequipOtherArmors(object _ = null)
         {
+            ArmorsModel.EquippedArmor = SelectedArmor;
             List<Armor> uneqiuppedArmors = ArmorsModel.Armors.Where(x => x != SelectedArmor).ToList();
             foreach (Armor armor in uneqiuppedArmors)
             {
                 armor.Equipped = false;
+            }
+
+            List<Armor> equippedArmors = ArmorsModel.Armors.Where(x => x.Equipped == true).ToList();
+            if(equippedArmors.Count <= 0)
+            {
+                ArmorsModel.EquippedArmor = null;
             }
         }
 
         public RelayCommand UnequipOtherPowerArmorsCommand { get; private set; }
         private void UnequipOtherPowerArmors(object _ = null)
         {
+            ArmorsModel.EquippedPowerArmor = SelectedPowerArmor;
             List<PowerArmor> uneqiuppedPowerArmors = ArmorsModel.PowerArmors.Where(x => x != SelectedPowerArmor).ToList();
             foreach (PowerArmor powerArmor in uneqiuppedPowerArmors)
             {
                 powerArmor.Equipped = false;
+            }
+
+            List<PowerArmor> equippedPowerArmors = ArmorsModel.PowerArmors.Where(x => x.Equipped == true).ToList();
+            if (equippedPowerArmors.Count <= 0)
+            {
+                ArmorsModel.EquippedPowerArmor = null;
             }
         }
         //

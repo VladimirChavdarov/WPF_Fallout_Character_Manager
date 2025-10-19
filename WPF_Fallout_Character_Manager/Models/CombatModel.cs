@@ -23,7 +23,7 @@ namespace WPF_Fallout_Character_Manager.Models
             _mhp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(MaxHealthPoints));
             _hp = new ModInt("Health Points", 0, false, "Hit points represent a combination of physical and mental durability, the will to live, and luck. Whenever a creature takes damage and has no stamina points, that damage is subtracted from its hit points. Creatures also take damage to their hit points if they are unconscious, unaware of their surroundings, or otherwise incapable of moving.");
             _hp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(HealthPoints));
-            _ac = new ModInt("Armor Class", 0, true, "A representation of how tough your armor is. Abbreviated to AC, while you wear armor your AC is equal to the number listed. Otherwise, your AC is 10 and cannot be lower than 10 unless another ability specifies.");
+            _ac = new ModInt("Armor Class", 10, true, "A representation of how tough your armor is. Abbreviated to AC, while you wear armor your AC is equal to the number listed. Otherwise, your AC is 10 and cannot be lower than 10 unless another ability specifies.");
             _ac.PropertyChanged += (s, e) => OnPropertyChanged(nameof(ArmorClass));
             _dt = new ModInt("Damage Threshold", 0, true, "The measurement of how much the armor protects you. Whenever you take damage to your hit points, the damage is reduced by a number equal to your DT. Armor with higher DT covers more of your body, protecting you from all attacks. Your DT can never be lower than 0.");
             _dt.PropertyChanged += (s, e) => OnPropertyChanged(nameof(DamageThreshold));

@@ -14,6 +14,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private SPECIALModel? _special;
         //
 
+        // public variables
         public SPECIALModel? SPECIALModel
         {
             get { return _special; }
@@ -23,6 +24,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 Update(ref _special, value);
             }
         }
+        //
 
         // constructor
         public SPECIALViewModel(SPECIALModel? special)
