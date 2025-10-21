@@ -28,7 +28,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
             ImageSource = "Resources/Vault_Boy.png";
 
-            KarmaCaps = new ObservableCollection<KarmaCap> { new KarmaCap(true), new KarmaCap(false), new KarmaCap(true) };
+            KarmaCaps = new ObservableCollection<KarmaCap> { new KarmaCap(true) };
         }
 
         private string _name;
