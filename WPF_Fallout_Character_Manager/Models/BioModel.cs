@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models
@@ -23,7 +25,10 @@ namespace WPF_Fallout_Character_Manager.Models
             _xp = new ModInt("XP", 543, false, "");
             _xp.Note = "The GM may award the players with XP at any time, but is typically awarded when the player characters spend any amount of time resting after completing a quest, encounter, or discovering something new. Whenever you gain XP, if your XP total is lower than any other player character’s total XP, you gain XP equal to the difference between your total and theirs. (Simply put: everyone shares the same amount of XP, defaulting to whoever has the highest). Additionally, the following modifiers are added to the total: Reaching 0 Hit points (10%), Death (1000 XP), Creature Discovery (20%), Location Discovery (20%)";
             _xp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(XP));
+
             ImageSource = "Resources/Vault_Boy.png";
+
+            KarmaCaps = new ObservableCollection<KarmaCap> { new KarmaCap(true), new KarmaCap(false), new KarmaCap(true) };
         }
 
         private string _name;
@@ -73,6 +78,26 @@ namespace WPF_Fallout_Character_Manager.Models
         {
             get => _imageSource;
             set => Update(ref _imageSource, value);
+        }
+
+        public ObservableCollection<KarmaCap> KarmaCaps { get; set; }
+
+        public string KarmaCapFrontImagePath => "/Resources/bottlecap_front.png";
+        public string KarmaCapBackImagePath => "/Resources/bottlecap_back.png";
+    }
+
+    public class KarmaCap : ModTypeBase
+    {
+        public KarmaCap(bool active)
+        {
+            IsActive = active;
+        }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set => Update(ref _isActive, value);
         }
     }
 }

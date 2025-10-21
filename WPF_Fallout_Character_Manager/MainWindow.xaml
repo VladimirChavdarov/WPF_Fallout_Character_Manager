@@ -155,7 +155,8 @@
                             <Grid
                                 Grid.Column="2">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="760"/>
+                                    <RowDefinition Height="480"/>
+                                    <RowDefinition Height="280"/>
                                 </Grid.RowDefinitions>
 
                                 <!-- Skills -->
@@ -163,6 +164,10 @@
                                     Grid.Row="0"
                                     DataContext="{Binding SkillViewModel}"/>
                                 <!-- -->
+
+                                <panels:KarmaCapPanel
+                                    Grid.Row="1"
+                                    DataContext="{Binding BioViewModel}"/>
                             </Grid>
                             <!-- -->
 
