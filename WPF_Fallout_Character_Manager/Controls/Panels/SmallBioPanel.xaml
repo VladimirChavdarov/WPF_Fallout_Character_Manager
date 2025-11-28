@@ -68,10 +68,10 @@
                             FontSize="11"
                             VerticalAlignment="Center"
                             CanOpenModal="False"
-                            Text="{Binding BioModel.Level.BaseValue}"
-                            Hint="{Binding BioModel.Level.Note}"
-                            ModValue="{Binding BioModel.Level}"
-                            IsReadOnly="{Binding BioModel.Level.IsBaseValueReadOnly}"/>
+                            Text="{Binding BioModel.LevelNum}"
+                            Hint="{Binding BioModel.Level.LevelModInt.BaseValue}"
+                            ModValue="{Binding BioModel.Level.LevelModInt}"
+                            IsReadOnly="{Binding BioModel.Level.LevelModInt.IsBaseValueReadOnly}"/>
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>

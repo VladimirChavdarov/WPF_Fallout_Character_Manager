@@ -134,16 +134,6 @@
                                 <!-- -->
 
                                 <!-- Equipped Items -->
-                                <GroupBox
-                                    Header="Equipped Items"
-                                    Grid.Row="1"
-                                    Margin="5"
-                                    Background="Black"
-                                    BorderBrush="#23ba03"
-                                    BorderThickness="1">
-
-                                </GroupBox>
-
                                 <panels:EquippablePanel
                                     Grid.Row="1"
                                     DataContext="{Binding EquippableViewModel}"/>
@@ -199,9 +189,63 @@
                     
                     <!-- Inventory Tab -->
                     <TabItem Header="Inventory">
-                        <TextBlock>
-                            Placeholder
-                        </TextBlock>
+                        <Grid
+                            Height="760"
+                            VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="250"/>
+                            </Grid.ColumnDefinitions>
+
+                            <GroupBox
+                                Header="Inventory"
+                                Grid.Column="0"
+                                Margin="5"
+                                Background="Black"
+                                BorderBrush="#23ba03"
+                                BorderThickness="1">
+
+                            </GroupBox>
+
+                            <Grid
+                                Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="500"/>
+                                    <RowDefinition Height="260"/>
+                                </Grid.RowDefinitions>
+                                
+                                <GroupBox
+                                    Header="Item Information"
+                                    Grid.Row="0"
+                                    Margin="5"
+                                    Background="Black"
+                                    BorderBrush="#23ba03"
+                                    BorderThickness="1">
+
+                                </GroupBox>
+
+                                <GroupBox
+                                    Header="Spend Junk"
+                                    Grid.Row="1"
+                                    Margin="5"
+                                    Background="Black"
+                                    BorderBrush="#23ba03"
+                                    BorderThickness="1">
+
+                                </GroupBox>
+                            </Grid>
+
+                            <GroupBox
+                                Header="Catalogue"
+                                Grid.Column="2"
+                                Margin="5"
+                                Background="Black"
+                                BorderBrush="#23ba03"
+                                BorderThickness="1">
+
+                            </GroupBox>
+                        </Grid>
                     </TabItem>
                     <!-- -->
 

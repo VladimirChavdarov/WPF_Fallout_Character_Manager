@@ -57,20 +57,20 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _bio.PropertyChanged += BioModel_PropertyChanged;
             _armorModel.PropertyChanged += ArmorModel_PropertyChanged;
 
-            CombatModel.UpdateModel(_special, _bio.Level.Total);
+            CombatModel.UpdateModel(_special, _bio.Level);
         }
 
         private void SPECIALModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SPECIALModel.Endurance))
             {
-                _combat.CalculateHealingRate(_special.Endurance.Total, _bio.Level.Total);
-                _combat.CalculateMaxHealthPoints(_special.GetModifier(SPECIAL.Endurance), _bio.Level.Total);
+                _combat.CalculateHealingRate(_special.Endurance.Total, _bio.Level);
+                _combat.CalculateMaxHealthPoints(_special.GetModifier(SPECIAL.Endurance), _bio.Level);
             }
             if(e.PropertyName == nameof(SPECIALModel.Agility))
             {
                 _combat.CalculateActionPoints(_special.GetModifier(SPECIAL.Agility));
-                _combat.CalculateMaxStaminaPoints(_special.GetModifier(SPECIAL.Agility), _bio.Level.Total);
+                _combat.CalculateMaxStaminaPoints(_special.GetModifier(SPECIAL.Agility), _bio.Level);
             }
             if (e.PropertyName == nameof(SPECIALModel.Perception))
             {
@@ -80,7 +80,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void BioModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            CombatModel.UpdateModel(_special, _bio.Level.Total);
+            CombatModel.UpdateModel(_special, _bio.Level);
         }
 
         private void ArmorModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)

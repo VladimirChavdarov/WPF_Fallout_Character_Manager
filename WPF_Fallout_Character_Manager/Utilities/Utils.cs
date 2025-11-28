@@ -45,6 +45,16 @@ namespace WPF_Fallout_Character_Manager.Utilities
 
     static class Utils
     {
+        // https://stackoverflow.com/questions/17252615/get-string-between-two-strings-in-a-string
+        public static string Between(string str, string firstString, string lastString)
+        {
+            string finalString;
+            int pos1 = firstString == "" ? 0 : str.IndexOf(firstString) + firstString.Length;
+            int pos2 = lastString == "" ? str.Length : str.IndexOf(lastString);
+            finalString = str.Substring(pos1, pos2 - pos1);
+            return finalString;
+        }
+
         public static float FloatFromString(string s)
         {
             if (float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out float result))

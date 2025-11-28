@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
@@ -38,7 +39,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
         // helpers
         // TODO: BaseValues of AC and DT should scale with the equipped armor. For now, these two will be fully calculated via modifiers
-        public void UpdateModel(SPECIALModel specialModel, int level)
+        public void UpdateModel(SPECIALModel specialModel, Level level)
         {
             CalculateActionPoints(specialModel.GetModifier(SPECIAL.Agility));
             CalculateMaxStaminaPoints(specialModel.GetModifier(SPECIAL.Agility), level);
@@ -55,16 +56,18 @@ namespace WPF_Fallout_Character_Manager.Models
             ActionPoints.BaseValue = 10 + agilityModifier;
         }
 
-        public void CalculateMaxStaminaPoints(int agilityModifier, int level)
+        public void CalculateMaxStaminaPoints(int agilityModifier, Level level)
         {
             //TODO: Apply the correct formula when you upload the datatables from the rulebook.
-            MaxStaminaPoints.BaseValue = 10 + agilityModifier + level;
+            //MaxStaminaPoints.BaseValue = 10 + agilityModifier + level;
+            MaxStaminaPoints.BaseValue = level.BaseSp + agilityModifier * level.SpMultiplier;
         }
 
-        public void CalculateMaxHealthPoints(int enduranceModifier, int level)
+        public void CalculateMaxHealthPoints(int enduranceModifier, Level level)
         {
             //TODO: Apply the correct formula when you upload the datatables from the rulebook.
-            MaxHealthPoints.BaseValue = 10 + enduranceModifier + level;
+            //MaxHealthPoints.BaseValue = 10 + enduranceModifier + level;
+            MaxHealthPoints.BaseValue = level.BaseHp + enduranceModifier * level.HpMultiplier;
         }
 
         public void CalculateCombatSequence(int perceptionModifier)
@@ -72,9 +75,9 @@ namespace WPF_Fallout_Character_Manager.Models
             CombatSequence.BaseValue = perceptionModifier;
         }
 
-        public void CalculateHealingRate(int enduranceScore, int level)
+        public void CalculateHealingRate(int enduranceScore, Level level)
         {
-            HealingRate.BaseValue = (enduranceScore + level) / 2;
+            HealingRate.BaseValue = (enduranceScore + level.LevelModInt.BaseValue) / 2;
         }
         //
 
