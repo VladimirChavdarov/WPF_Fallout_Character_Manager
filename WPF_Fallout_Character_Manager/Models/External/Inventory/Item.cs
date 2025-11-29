@@ -68,6 +68,9 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             }
         }
 
+        // Instead of creating instances of items and storing them in data structures, I decided to create singular objects and modify their amount.
+        // This makes armor and weapon handling a bit tricky when it comes to decay. If you have 10 Assault Rifles and want to decay one of them, you will
+        // decay the whole stack. Because of that, weapons and armor is best kept in separate stacks of 1.
         private ModInt _amount;
         public ModInt Amount
         {

@@ -17,6 +17,7 @@ namespace WPF_Fallout_Character_Manager.Models
             Armors = new ObservableCollection<Armor>();
             PowerArmors = new ObservableCollection<PowerArmor>();
 
+            // testing
             Armor a1 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Cloth");
             a1.Amount.BaseValue++;
             Armor a2 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Steel");
@@ -35,7 +36,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
             PowerArmors.Add(p1);
             PowerArmors.Add(p2);
-
+            //
 
         }
         //

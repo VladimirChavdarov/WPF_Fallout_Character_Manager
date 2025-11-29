@@ -26,6 +26,8 @@
     <None Remove="Resources\Spreadsheets\ammo_syringer.csv" />
     <None Remove="Resources\Spreadsheets\armor.csv" />
     <None Remove="Resources\Spreadsheets\armor_upgrades.csv" />
+    <None Remove="Resources\Spreadsheets\chems.csv" />
+    <None Remove="Resources\Spreadsheets\chem_properties.csv" />
     <None Remove="Resources\Spreadsheets\conditions.csv" />
     <None Remove="Resources\Spreadsheets\levels.csv" />
     <None Remove="Resources\Spreadsheets\limb_conditions.csv" />
@@ -70,6 +72,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\armor_upgrades.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\chems.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\chem_properties.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\conditions.csv">
