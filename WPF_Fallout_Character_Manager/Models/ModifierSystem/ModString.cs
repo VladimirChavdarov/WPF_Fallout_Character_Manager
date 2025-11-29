@@ -36,8 +36,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class LabeledString : LabeledValue<string>
     {
         // constructor
-        public LabeledString(string name = "NewStringValue", string value = "", string note = "")
-            : base(name, value, note) { }
+        public LabeledString(string name = "NewStringValue", string value = "", string note = "", bool isReadOnly = false)
+            : base(name, value, note, isReadOnly) { }
         //
     }
 }

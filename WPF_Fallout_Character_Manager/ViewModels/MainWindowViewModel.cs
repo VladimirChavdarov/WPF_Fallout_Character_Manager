@@ -61,7 +61,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SPECIALViewModel = new SPECIALViewModel(SPECIALModel);
             SurvivalViewModel = new SurvivalViewModel(SurvivalModel, SPECIALModel);
             CombatViewModel = new CombatViewModel(CombatModel, SPECIALModel, BioModel, ArmorModel);
-            SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel);
+            SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel, BioModel);
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
             AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);

@@ -91,6 +91,7 @@
                                         LabelText="Modifier"
                                         FontSize="9"
                                         CanOpenModal="false"
+                                        IsReadOnly="{Binding IsReadOnly}"
                                         Text="{Binding Name}"/>
                                     <controls:UpDownTextBoxWithLabelControl
                                         Margin="2"
@@ -99,6 +100,7 @@
                                         LabelFontSize="8"
                                         LabelText="Value"
                                         FontSize="9"
+                                        IsReadOnly="{Binding IsReadOnly}"
                                         Text="{Binding Value}"/>
                                     <controls:TextBoxWithLabelControl
                                         Margin="2"
@@ -110,6 +112,7 @@
                                         LabelText="Note"
                                         FontSize="9"
                                         CanOpenModal="False"
+                                        IsReadOnly="{Binding IsReadOnly}"
                                         Text="{Binding Note}"/>
                                     <StackPanel Orientation="Vertical">
                                         <Label

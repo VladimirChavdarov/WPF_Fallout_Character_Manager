@@ -108,6 +108,10 @@ namespace WPF_Fallout_Character_Manager.Models
 
         // Data
         private Dictionary<Skill, ModIntSkill> _skills;
+        public Dictionary<Skill, ModIntSkill> Skills
+        {
+            get => _skills;
+        }
 
         public ModIntSkill Barter
         {

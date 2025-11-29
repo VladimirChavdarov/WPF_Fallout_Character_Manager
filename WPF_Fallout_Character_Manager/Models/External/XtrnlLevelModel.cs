@@ -12,13 +12,6 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    enum SkillPointDecider
-    {
-        LowIntelligence = 0,
-        MediumIntelligence = 1,
-        HighIntelligence = 2,
-    }
-
     class XtrnlLevelModel : ModelBase
     {
         // constructor

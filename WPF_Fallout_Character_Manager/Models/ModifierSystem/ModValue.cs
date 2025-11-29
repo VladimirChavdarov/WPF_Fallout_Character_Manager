@@ -87,16 +87,23 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
         //
 
+        // This method will remove the modifier if it's not set to read-only.
         public void RemoveModifier(LabeledValue<T> modifierToRemove)
         {
-            Modifiers.Remove(modifierToRemove);
+            if(!modifierToRemove.IsReadOnly)
+                Modifiers.Remove(modifierToRemove);
+
         }
 
+        // This method will remove the modifier if it's not set to read-only.
         public void RemoveModifier(string modifierName)
         {
             LabeledValue<T> modifierToRemove = Modifiers?.FirstOrDefault(m => m.Name == modifierName);
             if (modifierToRemove != null)
-                Modifiers.Remove(modifierToRemove);
+            {
+                if (!modifierToRemove.IsReadOnly)
+                    Modifiers.Remove(modifierToRemove);
+            }
             else
                 throw new Exception($"Modifier with label '{modifierName}' not found.");
         }
@@ -168,11 +175,12 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class LabeledValue<T> : ModTypeBase
     {
         // constructor
-        public LabeledValue(string name = "NewModdableValue", T value = default, string note = "")
+        public LabeledValue(string name = "NewModdableValue", T value = default, string note = "", bool isReadOnly = false)
         {
             _name = name;
             _value = value;
             _note = note;
+            _isReadOnly = isReadOnly;
         }
         //
 

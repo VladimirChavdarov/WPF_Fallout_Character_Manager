@@ -21,6 +21,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         //
 
         // Data
+        public static string TaggedModifierName = "Tagged";
+
         private bool _isTagged;
         public bool IsTagged
         {
@@ -30,9 +32,13 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 _isTagged = value;
 
                 if (value)
-                    AddModifier(new LabeledInt("Tagged", 2, "(PLEASE DON'T RENAME THIS MODIFIER) You are proficient in this skill."));
+                    AddModifier(new LabeledInt(TaggedModifierName, 2, "You are proficient in this skill.", true));
                 else
-                    RemoveModifier("Tagged");
+                {
+                    LabeledInt modifierToRemove = (LabeledInt)Modifiers.FirstOrDefault(x => x.Name == TaggedModifierName);
+                    modifierToRemove.IsReadOnly = false;
+                    RemoveModifier(modifierToRemove);
+                }
 
                 UpdateTotal();
             }

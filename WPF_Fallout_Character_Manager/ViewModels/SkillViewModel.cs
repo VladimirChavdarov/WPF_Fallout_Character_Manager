@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
@@ -15,6 +16,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // local variables
         private SkillModel _skill;
         private SPECIALModel _special;
+        private BioModel _bio;
+        private int _availableSkillPoints;
         //
 
         public SkillModel SkillModel
@@ -37,12 +40,27 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
-        public SkillViewModel(SkillModel? skill, SPECIALModel? special)
+        public BioModel Bio
+        {
+            get => _bio;
+            set => Update(ref _bio, value);
+        }
+
+        public int AvailableSkillPoints
+        {
+            get => _availableSkillPoints;
+            set => Update(ref _availableSkillPoints, value);
+        }
+
+        public SkillViewModel(SkillModel? skill, SPECIALModel? special, BioModel? bio)
         {
             _skill = skill;
             _special = special;
+            _bio = bio;
 
             special.PropertyChanged += SPECIALModel_PropertyChanged;
+            skill.PropertyChanged += Skill_PropertyChanged;
+            bio.PropertyChanged += Bio_PropertyChanged;
 
             SkillModel.UpdateModel(_special);
         }
@@ -93,9 +111,40 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
+        private void Skill_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            CalculateAvailableSkillPoints();
+        }
+
+        private void Bio_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            CalculateAvailableSkillPoints();
+        }
+
         public void VMCalculateSkill(Skill skill)
         {
             _skill.CalculateSkill(skill, _special.GetModifier(_skill.GetSkill(skill).SelectedModifier), _special.GetClampedHalfLuckModifier());
+        }
+
+        private void CalculateAvailableSkillPoints()
+        {
+            int bonusSkillPointsSum = 0;
+            foreach (KeyValuePair<Skill, ModIntSkill> kvp in _skill.Skills)
+            {
+                foreach(LabeledValue<int> modifier in kvp.Value.Modifiers)
+                {
+                    if(modifier.Name != ModIntSkill.TaggedModifierName)
+                    {
+                        bonusSkillPointsSum += modifier.Value;
+                    }
+                }
+            }
+
+            int lowIntelligenceBorder = 4;
+            int allowedSkillPointsIndex = Math.Clamp(_special.Intelligence.Total - lowIntelligenceBorder, 0, 2);
+            int allowedSkillPoints = _bio.Level.AvailableSkillPoints[allowedSkillPointsIndex];
+
+            AvailableSkillPoints = allowedSkillPoints - bonusSkillPointsSum;
         }
     }
 }

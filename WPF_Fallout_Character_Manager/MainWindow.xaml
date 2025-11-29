@@ -145,8 +145,8 @@
                             <Grid
                                 Grid.Column="2">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="480"/>
-                                    <RowDefinition Height="280"/>
+                                    <RowDefinition Height="500"/>
+                                    <RowDefinition Height="260"/>
                                 </Grid.RowDefinitions>
 
                                 <!-- Skills -->

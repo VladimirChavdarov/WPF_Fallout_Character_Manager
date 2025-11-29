@@ -36,8 +36,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class LabeledFloat : LabeledValue<float>
     {
         // constructor
-        public LabeledFloat(string name = "NewFloatValue", float value = 0.0f, string note = "")
-            : base(name, value, note) { }
+        public LabeledFloat(string name = "NewFloatValue", float value = 0.0f, string note = "", bool isReadOnly = false)
+            : base(name, value, note, isReadOnly) { }
         //
     }
 }

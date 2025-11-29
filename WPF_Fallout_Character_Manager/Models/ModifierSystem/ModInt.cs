@@ -36,8 +36,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class LabeledInt : LabeledValue<int>
     {
         // constructor
-        public LabeledInt(string name = "NewIntegerValue", int value = 0, string note = "")
-            : base(name, value, note) { }
+        public LabeledInt(string name = "NewIntegerValue", int value = 0, string note = "", bool isReadOnly = false)
+            : base(name, value, note, isReadOnly) { }
         //
     }
 }
