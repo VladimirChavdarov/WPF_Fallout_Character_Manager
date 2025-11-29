@@ -16,6 +16,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class ModFloat : ModValue<float>
     {
         // constructor
+        public ModFloat() : base() { }
+
         public ModFloat(string name = "NewModFloat", float value = 0.0f, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
         //
@@ -36,6 +38,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class LabeledFloat : LabeledValue<float>
     {
         // constructor
+        public LabeledFloat() : base() { }
+
         public LabeledFloat(string name = "NewFloatValue", float value = 0.0f, string note = "", bool isReadOnly = false)
             : base(name, value, note, isReadOnly) { }
         //

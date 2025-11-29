@@ -17,7 +17,8 @@ namespace WPF_Fallout_Character_Manager.Models
             Weapons = new ObservableCollection<Weapon>();
 
             // testing
-            Weapon w1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle").Clone();
+            Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
+            Weapon w1 = xtrnlW1.Clone();
             w1.Amount.BaseValue++;
             Weapon w2 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "5.56mm pistol").Clone();
             w2.Amount.BaseValue++;

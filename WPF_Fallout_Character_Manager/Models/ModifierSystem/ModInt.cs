@@ -16,6 +16,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class ModInt : ModValue<int>
     {
         // constructor
+        public ModInt() : base() { }
+
         public ModInt(string name = "NewModInt", int value = 0, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
         //
@@ -36,6 +38,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public sealed class LabeledInt : LabeledValue<int>
     {
         // constructor
+        public LabeledInt() : base() { }
+
         public LabeledInt(string name = "NewIntegerValue", int value = 0, string note = "", bool isReadOnly = false)
             : base(name, value, note, isReadOnly) { }
         //

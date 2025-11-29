@@ -9,6 +9,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
@@ -27,6 +28,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 
             UpdateTotal();
         }
+        //
 
         private void BaseValue_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -35,8 +37,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 UpdateTotal();
             }
         }
-
-        //
 
         //
         // TODO: Find someone and ask if this is too much redundant calls of UpdateTotal().
@@ -175,6 +175,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class LabeledValue<T> : ModTypeBase
     {
         // constructor
+        public LabeledValue() { } // NOTE: this warning may cause issues with the cloning system.
+
         public LabeledValue(string name = "NewModdableValue", T value = default, string note = "", bool isReadOnly = false)
         {
             _name = name;

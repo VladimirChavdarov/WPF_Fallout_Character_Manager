@@ -315,6 +315,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class Weapon : Item
     {
         // constructor
+        public Weapon() { }
+
         public Weapon(
             WeaponType weaponType = WeaponType.Melee,
             string name = "NewWeapon",
@@ -519,33 +521,34 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public Weapon Clone() => new Weapon
-        {
-            WeaponType = this.WeaponType,
-            Name = this.Name,
-            Type = this.Type,
-            Cost = this.Cost,
-            AP = this.AP,
-            ToHit = this.ToHit,
-            Damage = this.Damage,
-            RangeMultiplier = this.RangeMultiplier,
-            CritChance = this.CritChance,
-            CritDamage = this.CritDamage,
-            AmmoCapacity = this.AmmoCapacity,
-            AmmoPerAttack = this.AmmoPerAttack,
-            NumberOfAttacks = this.NumberOfAttacks,
-            UsedAmmoFirepower = this.UsedAmmoFirepower,
-            Load = this.Load,
-            StrRequirement = this.StrRequirement,
-            Amount = this.Amount,
-            Decay = this.Decay,
-            AvailableUpgradeSlots = this.AvailableUpgradeSlots,
-            takenUpgradeSlots = this.takenUpgradeSlots,
-            Properties = new ObservableCollection<WeaponProperty>(this.Properties),
-            Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
-            CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
-            BulletSlots = new ObservableCollection<TypeWrap<bool>>(this.BulletSlots),
-        };
+        public Weapon Clone() => this.DeepClone();
+        //public Weapon Clone() => new Weapon
+        //{
+        //    WeaponType = this.WeaponType,
+        //    Name = this.Name,
+        //    Type = this.Type,
+        //    Cost = this.Cost,
+        //    AP = this.AP,
+        //    ToHit = this.ToHit,
+        //    Damage = this.Damage,
+        //    RangeMultiplier = this.RangeMultiplier,
+        //    CritChance = this.CritChance,
+        //    CritDamage = this.CritDamage,
+        //    AmmoCapacity = this.AmmoCapacity,
+        //    AmmoPerAttack = this.AmmoPerAttack,
+        //    NumberOfAttacks = this.NumberOfAttacks,
+        //    UsedAmmoFirepower = this.UsedAmmoFirepower,
+        //    Load = this.Load,
+        //    StrRequirement = this.StrRequirement,
+        //    Amount = this.Amount,
+        //    Decay = this.Decay,
+        //    AvailableUpgradeSlots = this.AvailableUpgradeSlots,
+        //    takenUpgradeSlots = this.takenUpgradeSlots,
+        //    Properties = new ObservableCollection<WeaponProperty>(this.Properties),
+        //    Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
+        //    CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
+        //    BulletSlots = new ObservableCollection<TypeWrap<bool>>(this.BulletSlots),
+        //};
 
         public void InitializeBulletSlots()
         {
@@ -587,6 +590,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class WeaponProperty : LabeledString
     {
         // constructor
+        public WeaponProperty() { }
+
         public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "") : base(name, value, value)
         {
             _weaponType = weaponType;
@@ -608,6 +613,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class WeaponUpgrade : LabeledString
     {
         // constructor
+        public WeaponUpgrade() { }
+
         public WeaponUpgrade(WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
         {
             WeaponType= weaponType;
