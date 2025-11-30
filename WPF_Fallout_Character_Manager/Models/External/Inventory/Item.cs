@@ -138,18 +138,5 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             }
             decayModifier.Value = newValue;
         }
-
-        //public void RebindEvents()
-        //{
-        //    // prevent double subscription
-        //    Amount.PropertyChanged -= Child_PropertyChanged;
-        //    Cost.PropertyChanged -= Child_PropertyChanged;
-        //    Load.PropertyChanged -= Child_PropertyChanged;
-
-        //    Amount.PropertyChanged += Child_PropertyChanged;
-        //    Cost.PropertyChanged += Child_PropertyChanged;
-        //    Load.PropertyChanged += Child_PropertyChanged;
-        //}
-        //
     }
 }

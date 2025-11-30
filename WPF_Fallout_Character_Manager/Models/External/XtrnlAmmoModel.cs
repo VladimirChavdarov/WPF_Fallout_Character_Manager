@@ -60,7 +60,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 var ammoTypes = parts[3].Split(", ");
                 foreach(var ammoType in ammoTypes)
                 {
-                    effect.AddCompatibleAmmoType(ammoType);
+                    effect.CompatibleAmmo.Add(ammoType);
                 }
                 effect.IsReadOnly = true;
                 //
@@ -154,8 +154,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Note = value;
             CostMultiplier = costMultiplier;
             IsReadOnly = true;
-            _compatibleAmmo = new ObservableCollection<string>();
-            CompatibleAmmo = new ReadOnlyObservableCollection<string>(_compatibleAmmo);
+            CompatibleAmmo = new ObservableCollection<string>();
         }
         //
 
@@ -172,32 +171,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
-        private ObservableCollection<string> _compatibleAmmo;
-        public ReadOnlyObservableCollection<string> CompatibleAmmo { get; }
-        //
-
-        // methods
-        public void AddCompatibleAmmoType(string type)
-        {
-            if (IsReadOnly)
-                throw new InvalidOperationException("Cannot edit AmmoEffect.CompatibleAmmo when in read-only mode");
-            _compatibleAmmo.Add(type);
-        }
-        public void RemoveCompatibleAmmoType(string type)
-        {
-            if (IsReadOnly)
-                throw new InvalidOperationException("Cannot edit AmmoEffect.CompatibleAmmo when in read-only mode");
-            _compatibleAmmo.Remove(type);
-        }
-        public void EditCompatibleAmmoType(string typeToEdit, string newType)
-        {
-            if (IsReadOnly)
-                throw new InvalidOperationException("Cannot edit AmmoEffect.CompatibleAmmo when in read-only mode");
-
-            int index = _compatibleAmmo.IndexOf(typeToEdit);
-            if(index >= 0)
-                _compatibleAmmo[index] = newType;
-        }
+        public ObservableCollection<string> CompatibleAmmo { get; set; }
         //
     }
 }
