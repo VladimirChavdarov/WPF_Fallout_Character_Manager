@@ -12,7 +12,7 @@ Pipe revolver;Revolver;215;5;1d6 ballistic;x6/x10;20, x2;.44, 6 rounds, 1 attack
 Walther PPK;Handgun;400;4;1d10 ballistic;x10/x14;20, 3d10;10mm, 12 rounds, 1 attacks per ammo;Semi-Automatic. Kickback.;3;3
 12.7mm pistol;Handgun;310;5;2d6 ballistic;x5/x10;20, 1d6;12.7mm, 7 rounds, 1 attacks per ammo;Semi-Automatic. Kickback.;8;5
 .45 Auto Pistol;Handgun;450;4;1d10 ballistic;x10/x16;20, x3;.45, 7 rounds, 1 attacks per ammo;Semi-Automatic. Kickback. Quick Reload.;6;3
-Ranger Sequoia revolver;Revolver;825;6;3d10 ballistic;x6/x18;20, x3;.45-70 Gov’t, 5 rounds, 1 attacks per ammo;Accurate. Destructive. Manual Reload.;8;5
+Ranger Sequoia revolver;Revolver;825;6;3d10 ballistic;x6/x18;20, x3;.45-70 Gov't, 5 rounds, 1 attacks per ammo;Accurate. Destructive. Manual Reload.;8;5
 H&H Tools nail gun;Submachine Gun;100;6;1 piercing;x3/x15;19, x3;Nails, 90 rounds, 1 attacks per ammo;Automatic: 2. Two Handed. Unstable.;6;4
 9mm SMG;Submachine Gun;190;6;1d4 ballistic;x4/x8;20, 1d4;9mm, 30 rounds, 1 attacks per ammo;Automatic: 2. Two Handed. Unstable.;6;5
 10mm SMG;Submachine Gun;250;6;1d6 ballistic;x4/x8;20, 1d6;10mm, 30 rounds, 1 attacks per ammo;Automatic: 2. Two Handed. Unstable.;8;5

@@ -53,7 +53,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // Constructor
         public MainWindowViewModel()
         {
-            XtrnlWeaponsModel = new XtrnlWeaponsModel(XtrnlAmmoModel, AmmoModel);
+            XtrnlWeaponsModel = new XtrnlWeaponsModel(XtrnlAmmoModel);
 
             BioModel = new BioModel(XtrnlLevelModel);
             WeaponsModel = new WeaponsModel(XtrnlWeaponsModel);

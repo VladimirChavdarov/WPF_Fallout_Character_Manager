@@ -138,15 +138,22 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 
             if (decay == 0 && decayModifier != null) // remove the modifier if the weapon is in pristine condition
             {
+                decayModifier.IsReadOnly = false;
                 modValue.RemoveModifier(decayModifier);
             }
 
-            if (decayModifier == null) // add the decay modifier if it doesn't exist
+            if (decay != 0 && decayModifier == null) // add the decay modifier if it doesn't exist
             {
-                decayModifier = new LabeledValue<T>("Decay", default, "This modifier automatically updates as Decay level changes.");
+                decayModifier = new LabeledValue<T>("Decay", default, "This modifier automatically updates as Decay level changes.", true);
                 modValue.AddModifier(decayModifier);
             }
-            decayModifier.Value = newValue;
+
+            if(decayModifier != null)
+            {
+                decayModifier.IsReadOnly = false;
+                decayModifier.Value = newValue;
+                decayModifier.IsReadOnly = true;
+            }
         }
     }
 }

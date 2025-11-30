@@ -87,9 +87,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             _skillModel.PropertyChanged += SkillModel_PropertyChanged;
 
+            // testing code
             Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
             Weapon w1 = xtrnlW1.Clone(ammoModel);
+            w1.Amount.BaseValue = 5;
+            w1.Name.BaseValue = "This is my custom assault rifle now";
+            w1.Equipped = true;
+            WeaponUpgrade wu1 = xtrnlWeaponsModel.WeaponUpgrades.FirstOrDefault(x => x.Name == "Bayonet");
+            w1.Upgrades.Add(wu1);
             WeaponsModel.Weapons.Add(w1);
+            //
 
             SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
             SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();

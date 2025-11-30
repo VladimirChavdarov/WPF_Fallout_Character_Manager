@@ -145,38 +145,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     if (trimmedProperty.Contains("Ammo"))
                     {
                         string ammoProperty = trimmedProperty.Replace("Ammo: ", "");
-                        string[] ammoField = ammoProperty.Split(",");
-                        for (int i = 0; i < ammoField.Length; i++)
-                            ammoField[i] = ammoField[i].Trim();
-                        // ammo type
-                        Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
-                        if (ammoType != null)
-                            weapon.CompatibleAmmos.Add(ammoType);
-                        else
-                        {
-                            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
-                            if (ammoToAdd == null)
-                            {
-                                // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
-                                ammoToAdd = new Ammo(ammoField[0], ammoField[0], 0, 0, 0.0f);
-                                xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
-                            }
-                            //ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
-                            ammoModel.Ammos.Add(ammoToAdd.Clone());
-                            // make weapon.AmmoType reference the ammo in the model.
-                            weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
-                            if (weapon.CompatibleAmmos.FirstOrDefault() == null)
-                                throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
-                        }
-                        // ammo capacity
-                        ammoField[1] = ammoField[1].Replace(" rounds", "");
-                        ammoField[1] = ammoField[1].Replace(" round", "");
-                        weapon.AmmoCapacity.BaseValue = Int32.Parse(ammoField[1]);
-                        // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
-                        ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
-                        weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
-                        weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
-                        weapon.InitializeBulletSlots();
+                        ProcessAmmo(weapon, ammoProperty, xtrnlAmmoModel);
                     }
 
                     if (trimmedProperty.Contains("Depleted"))
@@ -235,39 +204,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     );
 
                 // set ammo type, capacity, and ammo per attack
-                string[] ammoField = parts[7].Split(",");
-                for (int i = 0; i < ammoField.Length; i++)
-                    ammoField[i] = ammoField[i].Trim();
-                // ammo type
-                Ammo ammoType = ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
-                if(ammoType != null)
-                    weapon.CompatibleAmmos.Add(ammoType);
-                else
-                {
-                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue.Contains(ammoField[0]));
-                    if (ammoToAdd == null)
-                    {
-                        // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
-                        ammoToAdd = new Ammo(ammoField[0], ammoField[0], 0, 0, 0.0f);
-                        xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
-                    }
-                    //ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
-                    ammoModel.Ammos.Add(ammoToAdd.Clone());
-                    // make weapon.AmmoType reference the ammo in the model.
-                    weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
-                    if (weapon.CompatibleAmmos.FirstOrDefault() == null)
-                        throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
-                }
-                // ammo capacity
-                ammoField[1] = ammoField[1].Replace(" rounds", "");
-                ammoField[1] = ammoField[1].Replace(" round", "");
-                weapon.AmmoCapacity.BaseValue = Int32.Parse(ammoField[1]);
-                // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
-                ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
-                weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
-                weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
-                weapon.InitializeBulletSlots();
-                //
+                ProcessAmmo(weapon, parts[7], xtrnlAmmoModel);
 
                 // properties
                 string[] properties = parts[8].Split(".");
@@ -297,6 +234,40 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 Weapons.Add(weapon);
             }
             //
+        }
+        //
+
+        // methods
+        private void ProcessAmmo(Weapon weapon, string ammoStringUnprocessed, XtrnlAmmoModel xtrnlAmmoModel)
+        {
+            // process string
+            string[] ammoField = ammoStringUnprocessed.Split(",");
+            for (int i = 0; i < ammoField.Length; i++)
+                ammoField[i] = ammoField[i].Trim();
+
+            // ammo type
+            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Type.Contains(ammoField[0], StringComparison.InvariantCultureIgnoreCase));
+            if (ammoToAdd == null)
+            {
+                // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
+                ammoToAdd = new Ammo(ammoField[0], ammoField[0], 0, 0, 0.0f);
+                xtrnlAmmoModel.Ammos.Add(ammoToAdd);
+                xtrnlAmmoModel.AmmoTypes.Add(ammoField[0]);
+            }
+            weapon.CompatibleAmmos.Add(ammoToAdd);
+            if (weapon.CompatibleAmmos.FirstOrDefault() == null)
+                throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
+
+            // ammo capacity
+            ammoField[1] = ammoField[1].Replace(" rounds", "");
+            ammoField[1] = ammoField[1].Replace(" round", "");
+            weapon.AmmoCapacity.BaseValue = Int32.Parse(ammoField[1]);
+
+            // ammo per attack. We do this for the energy weapons which have x attacks per energy cell and for the minigun which expends 10 rounds per attack.
+            ammoField[2] = ammoField[2].Replace(" attacks per ammo", "");
+            weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
+            weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
+            weapon.InitializeBulletSlots();
         }
         //
 
@@ -384,6 +355,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (ammoInModel == null)
                 {
                     ammoInModel = ammo.Clone();
+                    ammoInModel.Amount.BaseValue = 300; // TODO: remove later, this is testing code. Right now, every newly added weapon will add 300 of its base ammo type.
                     ammoModel.Ammos.Add(ammoInModel);
                 }
 
@@ -414,6 +386,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             _decay.PropertyChanged += Decay_PropertyChanged;
             Upgrades.CollectionChanged += Upgrades_CollectionChanged;
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+
+            InitializeBulletSlots();
+            ScaleWeaponWithDecay();
         }
         //
 
