@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -102,6 +103,16 @@ namespace WPF_Fallout_Character_Manager.Utilities
             result = new ValueTuple<int, int>(Int32.Parse(ss1), Int32.Parse(ss2));
             return true;
 
+        }
+
+        public static void SortObservableCollection<T>(this ObservableCollection<T> collection, Func<T, object> predicate)
+        {
+            List<T> sorted = collection.OrderBy(predicate).ToList();
+            collection.Clear();
+            foreach(T item in sorted)
+            {
+                collection.Add(item);
+            }
         }
     }
 }

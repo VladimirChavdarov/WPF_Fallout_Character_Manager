@@ -9,6 +9,7 @@ using System.Windows;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
@@ -18,6 +19,26 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public XtrnlConditionsModel()
         {
             Conditions = new ObservableCollection<Condition>();
+
+            var diseasesLines = File.ReadAllLines("Resources/Spreadsheets/diseases.csv");
+
+            foreach (var line in diseasesLines.Skip(1))
+            {
+                var parts = line.Split(';');
+
+                // skip invalid rows
+                if (parts.Length < 4)
+                    continue;
+
+                string description = parts[1] + "\n\nDuration: " + parts[2] + "\n\nCure: " + parts[3];
+
+                Condition condition = new Condition(
+                    name: parts[0],
+                    description: description
+                    );
+
+                Conditions.Add(condition);
+            }
 
             var lines = File.ReadAllLines("Resources/Spreadsheets/conditions.csv");
 
@@ -36,7 +57,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Conditions.Add(condition);
             }
-            Console.WriteLine("Conditions uploaded");
+
+            Conditions.SortObservableCollection(x => x.BaseValue.Name);
+
+            Conditions.Add(new Condition("Custom...", "Enter your description here..."));
         }
         //
 
