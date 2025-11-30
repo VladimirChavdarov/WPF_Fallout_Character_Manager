@@ -91,18 +91,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 
         // helpers
         public abstract void UpdateTotal();
-        //public virtual void UpdateTotal()
-        //{
-        //    // override in inherited classes to avoid using the dynamic type,
-        //    // or if you want some custom functionality (for example adding a whitespace when concatenating strings).
+        public abstract object Clone();
 
-        //    dynamic sum = BaseValueObject.Value; // NOTE: using dynamic may be slow, test on very old machines. We can't have this app be slow. :)
-        //    for (int i = 0; i < Modifiers.Count; i++)
-        //    {
-        //        sum += Modifiers[i].Value;
-        //    }
-        //    Total = sum;
-        //}
 
         public void AddModifier(LabeledValue<T> newModifier)
         {
@@ -135,29 +125,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             else
                 throw new Exception($"Modifier with label '{modifierName}' not found.");
         }
-
-        public abstract object Clone();
-        //public object Clone()
-        //{
-        //    ModValue<T> clone = new ModValue<T>(this.Name, this.BaseValue, this.IsBaseValueReadOnly, this.Note);
-
-        //    // This shouldn't be needed because the constuctor already takes care of binding to PropertyChanged. If there are some niche issues in the future
-        //    // this can serve as a good hint.
-        //    //clone._baseValueObject = (LabeledValue<T>)this._baseValueObject.Clone();
-        //    //clone._baseValueObject.PropertyChanged += clone.BaseValue_PropertyChanged;
-
-        //    clone.Modifiers.Clear();
-        //    foreach(LabeledValue<T> mod in this.Modifiers)
-        //    {
-        //        LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
-        //        clone.Modifiers.Add(modifierClone);
-        //        modifierClone.PropertyChanged += Modifiers_PropertyChanged;
-        //    }
-
-        //    UpdateTotal();
-
-        //    return clone;
-        //}
 
         // Data
         protected T _total;
