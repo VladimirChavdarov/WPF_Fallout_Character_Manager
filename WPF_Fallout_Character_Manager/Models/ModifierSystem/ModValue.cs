@@ -138,7 +138,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
         protected LabeledValue<T> _baseValueObject;
-        public LabeledValue<T> BaseValueObject
+        protected LabeledValue<T> BaseValueObject
         {
             get => _baseValueObject;
             set

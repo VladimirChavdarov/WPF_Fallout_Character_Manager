@@ -67,7 +67,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
             AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);
-            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel,SkillModel);
+            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel, XtrnlAmmoModel, AmmoModel, SkillModel);
             ArmorViewModel = new ArmorViewModel(XtrnlArmorModel, ArmorModel);
             EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);
         }

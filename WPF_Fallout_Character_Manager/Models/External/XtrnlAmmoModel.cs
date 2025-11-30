@@ -21,6 +21,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // constructor
         public XtrnlAmmoModel()
         {
+            AmmoTypes = new ObservableCollection<string>();
             Ammos = new ObservableCollection<Ammo>();
             AmmoEffects = new ObservableCollection<AmmoEffect>();
 
@@ -32,8 +33,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (parts.Length < 3)
                     continue;
 
+                AmmoTypes.Add(parts[0]);
+
                 Ammo ammo = new Ammo(
                     name: parts[0],
+                    type: parts[0],
                     cost: Int32.Parse(parts[1]),
                     amount: 0,
                     load: (float)Int32.Parse(parts[2]) / 10.0f
@@ -72,6 +76,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
+        public ObservableCollection<string> AmmoTypes { get; set; }
         public ObservableCollection<Ammo>? Ammos { get; set; }
         public ObservableCollection<AmmoEffect>? AmmoEffects { get; set; }
         //
@@ -80,8 +85,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class Ammo : Item
     {
         // constructor
-        public Ammo(string name = "NewAmmo", int cost = 0, int amount = 0, float load = 0.0f, AmmoEffect effect = null, string description = "") : base(name, cost, amount, load, description)
+        public Ammo(string name = "NewAmmo", string type = "NoType", int cost = 0, int amount = 0, float load = 0.0f, AmmoEffect effect = null, string description = "") : base(name, cost, amount, load, description)
         {
+            Type = type;
+
             Effects = new ObservableCollection<AmmoEffect>();
             Effects.CollectionChanged += Effects_CollectionChanged;
             PropertyChanged += Ammo_PropertyChanged;
@@ -91,6 +98,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public Ammo(Ammo other) : base(other)
         {
+            Type = other.Type;
             Effects = new ObservableCollection<AmmoEffect>(other.Effects);
             CustomName = other.CustomName;
 
@@ -101,6 +109,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // members
         public ObservableCollection<AmmoEffect> Effects { get; set; }
+
+        private string _type;
+        public string Type
+        {
+            get => _type;
+            set => Update(ref _type, value);
+        }
 
         private bool _customName = false;
         public bool CustomName

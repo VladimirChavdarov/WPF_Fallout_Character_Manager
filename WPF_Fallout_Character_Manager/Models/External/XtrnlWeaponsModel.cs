@@ -18,7 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class XtrnlWeaponsModel : ModelBase
     {
         // constructor
-        public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel, AmmoModel ammoModel)
+        public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel/*, AmmoModel ammoModel*/)
         {
             Weapons = new ObservableCollection<Weapon>();
             WeaponProperties = new ObservableCollection<WeaponProperty>();
@@ -158,10 +158,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
                             if (ammoToAdd == null)
                             {
                                 // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
-                                ammoToAdd = new Ammo(ammoField[0], 0, 0, 0.0f);
+                                ammoToAdd = new Ammo(ammoField[0], ammoField[0], 0, 0, 0.0f);
                                 xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
                             }
-                            ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
+                            //ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
                             ammoModel.Ammos.Add(ammoToAdd.Clone());
                             // make weapon.AmmoType reference the ammo in the model.
                             weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
@@ -244,14 +244,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     weapon.CompatibleAmmos.Add(ammoType);
                 else
                 {
-                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]);
+                    Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue.Contains(ammoField[0]));
                     if (ammoToAdd == null)
                     {
                         // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
-                        ammoToAdd = new Ammo(ammoField[0], 0, 0, 0.0f);
+                        ammoToAdd = new Ammo(ammoField[0], ammoField[0], 0, 0, 0.0f);
                         xtrnlAmmoModel.Ammos.Add(ammoToAdd.Clone());
                     }
-                    ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
+                    //ammoToAdd.Amount.BaseValue = 300; // TODO: this is for testing. Remove later.
                     ammoModel.Ammos.Add(ammoToAdd.Clone());
                     // make weapon.AmmoType reference the ammo in the model.
                     weapon.CompatibleAmmos.Add(ammoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ammoField[0]));
@@ -342,7 +342,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
             WeaponType = weaponType;
             Name = new ModString("Name", name);
-            Type = new ModString("Weapon Type", type, true);
+            Type = type;
             Cost = new ModInt("Cost", cost, true);
             AP = new ModInt("AP", ap, true);
             ToHit = new ModInt("To Hit", 0, true);
@@ -368,11 +368,58 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Upgrades.CollectionChanged += Upgrades_CollectionChanged;
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
+
+        public Weapon(Weapon other, AmmoModel ammoModel) : base(other)
+        {
+            Properties = new ObservableCollection<WeaponProperty>(other.Properties);
+            Upgrades = new ObservableCollection<WeaponUpgrade>(other.Upgrades);
+            //CompatibleAmmos = new ObservableCollection<Ammo>(); // handle this one separately
+            BulletSlots = new ObservableCollection<TypeWrap<bool>>(); // we assume a new weapon always comes with an empty magazine
+
+            CompatibleAmmos = new ObservableCollection<Ammo>();
+            foreach (Ammo ammo in other.CompatibleAmmos)
+            {
+                Ammo ammoInModel = ammoModel.Ammos.FirstOrDefault(x => x == ammo);
+                // this means the weapon probably comes from the XtrnlWeaponModel and we need to add the ammo to its Model alongside the weapon
+                if (ammoInModel == null)
+                {
+                    ammoInModel = ammo.Clone();
+                    ammoModel.Ammos.Add(ammoInModel);
+                }
+
+                CompatibleAmmos.Add(ammoInModel);
+            }
+
+            WeaponType = other.WeaponType;
+            Type = other.Type;
+            AP = other.AP.Clone();
+            ToHit = other.ToHit.Clone();
+            if (other.Damage != null)
+                Damage = other.Damage.Clone();
+            else
+                Damage = new ModString("Damage", "None", true);
+            RangeMultiplier = other.RangeMultiplier.Clone();
+            CritChance = other.CritChance.Clone();
+            CritDamage = other.CritDamage.Clone();
+            AmmoCapacity = other.AmmoCapacity.Clone();
+            AmmoPerAttack = other.AmmoPerAttack.Clone();
+            NumberOfAttacks = other.NumberOfAttacks.Clone();
+            UsedAmmoFirepower = other.UsedAmmoFirepower;
+            StrRequirement = other.StrRequirement.Clone();
+            Decay = other.Decay.Clone();
+            AvailableUpgradeSlots = other.AvailableUpgradeSlots.Clone();
+            TakenUpgradeSlots = other.TakenUpgradeSlots.Clone();
+            Equipped = other.Equipped;
+
+            _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+        }
         //
 
         // members
-        private ModString _type;
-        public ModString Type
+        private string _type; // see if this won't need to be turned to a ModString later
+        public string Type
         {
             get => _type;
             set => Update(ref _type, value);
@@ -519,33 +566,34 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public Weapon Clone() => new Weapon
-        {
-            WeaponType = this.WeaponType,
-            Name = this.Name,
-            Type = this.Type,
-            Cost = this.Cost,
-            AP = this.AP,
-            ToHit = this.ToHit,
-            Damage = this.Damage,
-            RangeMultiplier = this.RangeMultiplier,
-            CritChance = this.CritChance,
-            CritDamage = this.CritDamage,
-            AmmoCapacity = this.AmmoCapacity,
-            AmmoPerAttack = this.AmmoPerAttack,
-            NumberOfAttacks = this.NumberOfAttacks,
-            UsedAmmoFirepower = this.UsedAmmoFirepower,
-            Load = this.Load,
-            StrRequirement = this.StrRequirement,
-            Amount = this.Amount,
-            Decay = this.Decay,
-            AvailableUpgradeSlots = this.AvailableUpgradeSlots,
-            takenUpgradeSlots = this.takenUpgradeSlots,
-            Properties = new ObservableCollection<WeaponProperty>(this.Properties),
-            Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
-            CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
-            BulletSlots = new ObservableCollection<TypeWrap<bool>>(this.BulletSlots),
-        };
+        public Weapon Clone(AmmoModel ammoModel) => new Weapon(this, ammoModel);
+        //public Weapon Clone() => new Weapon
+        //{
+        //    WeaponType = this.WeaponType,
+        //    Name = this.Name,
+        //    Type = this.Type,
+        //    Cost = this.Cost,
+        //    AP = this.AP,
+        //    ToHit = this.ToHit,
+        //    Damage = this.Damage,
+        //    RangeMultiplier = this.RangeMultiplier,
+        //    CritChance = this.CritChance,
+        //    CritDamage = this.CritDamage,
+        //    AmmoCapacity = this.AmmoCapacity,
+        //    AmmoPerAttack = this.AmmoPerAttack,
+        //    NumberOfAttacks = this.NumberOfAttacks,
+        //    UsedAmmoFirepower = this.UsedAmmoFirepower,
+        //    Load = this.Load,
+        //    StrRequirement = this.StrRequirement,
+        //    Amount = this.Amount,
+        //    Decay = this.Decay,
+        //    AvailableUpgradeSlots = this.AvailableUpgradeSlots,
+        //    takenUpgradeSlots = this.takenUpgradeSlots,
+        //    Properties = new ObservableCollection<WeaponProperty>(this.Properties),
+        //    Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
+        //    CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
+        //    BulletSlots = new ObservableCollection<TypeWrap<bool>>(this.BulletSlots),
+        //};
 
         public void InitializeBulletSlots()
         {

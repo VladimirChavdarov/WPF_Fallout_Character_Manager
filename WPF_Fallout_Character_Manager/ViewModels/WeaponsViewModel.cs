@@ -15,6 +15,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // local variables
         private XtrnlWeaponsModel _xtrnlWeaponsModel;
         private WeaponsModel _weaponsModel;
+        private XtrnlAmmoModel _xtrnlAmmoModel;
+        private AmmoModel _ammoModel;
         private SkillModel _skillModel;
 
         private Weapon _selectedWeapon;
@@ -32,6 +34,18 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             get => _weaponsModel;
             set => Update(ref _weaponsModel, value);
+        }
+
+        public XtrnlAmmoModel XtrnlAmmoModel
+        {
+            get => _xtrnlAmmoModel;
+            set => Update(ref _xtrnlAmmoModel, value);
+        }
+
+        public AmmoModel AmmoModel
+        {
+            get => _ammoModel;
+            set => Update(ref _ammoModel, value);
         }
 
         public SkillModel SkillModel
@@ -59,20 +73,26 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // constructor
-        public WeaponsViewModel(XtrnlWeaponsModel xtrnlWeaponsModel, WeaponsModel weaponsModel, SkillModel skillModel)
+        public WeaponsViewModel(XtrnlWeaponsModel xtrnlWeaponsModel, WeaponsModel weaponsModel, XtrnlAmmoModel xtrnlAmmoModel, AmmoModel ammoModel, SkillModel skillModel)
         {
             _xtrnlWeaponsModel = xtrnlWeaponsModel;
             _weaponsModel = weaponsModel;
+            _xtrnlAmmoModel = xtrnlAmmoModel;
+            _ammoModel = ammoModel;
             _skillModel = skillModel;
-
-            SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
-            SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
 
             ShootCommand = new RelayCommand(Shoot);
             ReloadCommand = new RelayCommand(Reload);
             UnequipOtherWeaponsCommand = new RelayCommand(UnequipOtherWeapons);
 
             _skillModel.PropertyChanged += SkillModel_PropertyChanged;
+
+            Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
+            Weapon w1 = xtrnlW1.Clone(ammoModel);
+            WeaponsModel.Weapons.Add(w1);
+
+            SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
+            SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
         }
 
         private void SkillModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -94,7 +114,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void SetToHitBaseValue(Weapon weapon)
         {
-            switch (weapon.Type.BaseValue)
+            switch (weapon.Type)
             {
                 case "Bladed":
                     SetToHitBaseValue(Skill.MeleeWeapons);
