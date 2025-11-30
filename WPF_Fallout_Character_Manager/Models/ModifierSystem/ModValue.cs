@@ -175,8 +175,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class LabeledValue<T> : ModTypeBase
     {
         // constructor
-        public LabeledValue() { } // NOTE: this warning may cause issues with the cloning system.
-
         public LabeledValue(string name = "NewModdableValue", T value = default, string note = "", bool isReadOnly = false)
         {
             _name = name;

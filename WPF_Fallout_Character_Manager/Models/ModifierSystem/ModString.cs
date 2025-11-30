@@ -16,8 +16,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class ModString : ModValue<string>
     {
         // constructor
-        public ModString() : base() { }
-
         public ModString(string name = "NewModString", string value = "None", bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
         //
@@ -38,8 +36,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class LabeledString : LabeledValue<string>
     {
         // constructor
-        public LabeledString() : base() { }
-
         public LabeledString(string name = "NewStringValue", string value = "", string note = "", bool isReadOnly = false)
             : base(name, value, note, isReadOnly) { }
         //
