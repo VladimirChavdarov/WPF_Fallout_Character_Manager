@@ -44,7 +44,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public SkillViewModel SkillViewModel { get; }
         public LimbConditionsViewModel LimbConditionsViewModel { get; }
         public ConditionsViewModel ConditionsViewModel { get; }
-        public AmmoViewModel AmmoViewModel { get; }
         public WeaponsViewModel WeaponsViewModel { get; }
         public ArmorViewModel ArmorViewModel { get; }
         public EquippableViewModel EquippableViewModel { get; }
@@ -66,7 +65,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel, BioModel);
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
-            AmmoViewModel = new AmmoViewModel(XtrnlAmmoModel, AmmoModel);
             WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel, XtrnlAmmoModel, AmmoModel, SkillModel);
             ArmorViewModel = new ArmorViewModel(XtrnlArmorModel, ArmorModel);
             EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);

@@ -87,6 +87,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             _skillModel.PropertyChanged += SkillModel_PropertyChanged;
 
+            _ammoModel.Ammos.CollectionChanged += AmmoModel_Ammos_CollectionChanged;
+
             // testing code
             Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
             Weapon w1 = xtrnlW1.Clone(ammoModel);
@@ -96,19 +98,42 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             WeaponUpgrade wu1 = xtrnlWeaponsModel.WeaponUpgrades.FirstOrDefault(x => x.Name == "Bayonet");
             w1.Upgrades.Add(wu1);
             WeaponsModel.Weapons.Add(w1);
+
+            Ammo xtrnlA1 = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == "5mm");
+            Ammo a1 = xtrnlA1.Clone();
+            a1.Amount.BaseValue = 50;
+            AmmoEffect ae1 = xtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Name == "Match");
+            a1.Effects.Add(ae1);
+            a1.Amount.BaseValue += 10;
+            AmmoModel.Ammos.Add(a1);
             //
 
             SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
             SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
         }
+        //
 
+        // methods
         private void SkillModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             SetToHitBaseValue(SelectedWeapon);
         }
-        //
 
-        // methods
+        private void AmmoModel_Ammos_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            foreach(Weapon weapon in WeaponsModel.Weapons)
+            {
+                weapon.CompatibleAmmos.Clear();
+                foreach(Ammo ammo in AmmoModel.Ammos)
+                {
+                    if(ammo.Type == weapon.AmmoType)
+                    {
+                        weapon.CompatibleAmmos.Add(ammo);
+                    }
+                }
+            }
+        }
+
         private static void ReloadWeapon(Weapon weapon, Ammo ammo)
         {
             int availableAttacks = (int)(ammo.Amount.BaseValue / weapon.AmmoPerAttack.BaseValue);

@@ -121,7 +121,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     rangeMultiplier: "x0/x0",
                     critChance: Int32.Parse(critField[0]),
                     critDamage: critField[1],
-                    ammoType: null,
                     ammoCapacity: 0,
                     load: Utils.FloatFromString(parts[7]),
                     strRequirement: Int32.Parse(parts[8]),
@@ -193,7 +192,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     rangeMultiplier: parts[5],
                     critChance: Int32.Parse(critField[0]),
                     critDamage: critField[1],
-                    ammoType: null,
                     ammoCapacity: 0,
                     ammoPerAttack: 0,
                     numberOfAttacks: 0,
@@ -255,6 +253,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 xtrnlAmmoModel.AmmoTypes.Add(ammoField[0]);
             }
             weapon.CompatibleAmmos.Add(ammoToAdd);
+            weapon.AmmoType = ammoToAdd.Type;
             if (weapon.CompatibleAmmos.FirstOrDefault() == null)
                 throw new Exception($"Weapon's ammo is null. Ammo name: {ammoField[0]}");
 
@@ -286,6 +285,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class Weapon : Item
     {
         // constructor
+
+        // the main constructor is usually used when filling the external Models from the spreadsheets.
         public Weapon(
             WeaponType weaponType = WeaponType.Melee,
             string name = "NewWeapon",
@@ -296,7 +297,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             string rangeMultiplier = "x0/x0",
             int critChance = 20,
             string critDamage = "None",
-            Ammo ammoType = null,
+            string ammoType = "None",
             int ammoCapacity = 1,
             float ammoPerAttack = 1.0f,
             int numberOfAttacks = 0,
@@ -324,6 +325,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             RangeMultiplier = new ModString("Range", rangeMultiplier, true);
             CritChance = new ModInt("Crit Chance", critChance, true);
             CritDamage = new ModString("Crit Damage", critDamage, true);
+            AmmoType = ammoType;
             AmmoCapacity = new ModInt("Ammo Capacity", ammoCapacity, true);
             AmmoPerAttack = new ModFloat("Ammo per Attack", ammoPerAttack, true);
             NumberOfAttacks = new ModInt("Number of Attacks", numberOfAttacks, true);
@@ -373,6 +375,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             RangeMultiplier = other.RangeMultiplier.Clone();
             CritChance = other.CritChance.Clone();
             CritDamage = other.CritDamage.Clone();
+            AmmoType = other.AmmoType;
             AmmoCapacity = other.AmmoCapacity.Clone();
             AmmoPerAttack = other.AmmoPerAttack.Clone();
             NumberOfAttacks = other.NumberOfAttacks.Clone();
@@ -440,6 +443,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             get => _critDamage;
             set => Update(ref _critDamage, value);
+        }
+
+        private string _ammoType;
+        public string AmmoType
+        {
+            get => _ammoType;
+            set => Update(ref _ammoType, value);
         }
 
         private ModInt _ammoCapacity;
@@ -542,33 +552,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Weapon Clone(AmmoModel ammoModel) => new Weapon(this, ammoModel);
-        //public Weapon Clone() => new Weapon
-        //{
-        //    WeaponType = this.WeaponType,
-        //    Name = this.Name,
-        //    Type = this.Type,
-        //    Cost = this.Cost,
-        //    AP = this.AP,
-        //    ToHit = this.ToHit,
-        //    Damage = this.Damage,
-        //    RangeMultiplier = this.RangeMultiplier,
-        //    CritChance = this.CritChance,
-        //    CritDamage = this.CritDamage,
-        //    AmmoCapacity = this.AmmoCapacity,
-        //    AmmoPerAttack = this.AmmoPerAttack,
-        //    NumberOfAttacks = this.NumberOfAttacks,
-        //    UsedAmmoFirepower = this.UsedAmmoFirepower,
-        //    Load = this.Load,
-        //    StrRequirement = this.StrRequirement,
-        //    Amount = this.Amount,
-        //    Decay = this.Decay,
-        //    AvailableUpgradeSlots = this.AvailableUpgradeSlots,
-        //    takenUpgradeSlots = this.takenUpgradeSlots,
-        //    Properties = new ObservableCollection<WeaponProperty>(this.Properties),
-        //    Upgrades = new ObservableCollection<WeaponUpgrade>(this.Upgrades),
-        //    CompatibleAmmos = new ObservableCollection<Ammo>(this.CompatibleAmmos),
-        //    BulletSlots = new ObservableCollection<TypeWrap<bool>>(this.BulletSlots),
-        //};
 
         public void InitializeBulletSlots()
         {
