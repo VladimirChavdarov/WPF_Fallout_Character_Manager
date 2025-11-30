@@ -22,6 +22,16 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 
             SubscribeToChildPropertyChanges();
         }
+
+        public Item(Item other)
+        {
+            Name = other.Name.Clone();
+            Cost = other.Cost.Clone();
+            Amount = other.Amount.Clone();
+            Load = other.Load.Clone();
+
+            SubscribeToChildPropertyChanges();
+        }
         //
 
         // members

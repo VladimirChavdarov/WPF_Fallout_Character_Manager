@@ -33,7 +33,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             Total = sum;
         }
 
-        public override object Clone() => new ModString(this);
+        public override ModString Clone() => new ModString(this);
         //
     }
 
@@ -46,6 +46,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         protected LabeledString(LabeledString other) : base(other) { }
         //
 
-        public override object Clone() => new LabeledString(this);
+        public override LabeledString Clone() => new LabeledString(this);
     }
 }

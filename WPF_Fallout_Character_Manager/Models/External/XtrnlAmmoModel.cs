@@ -88,6 +88,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
             if (effect != null)
                 Effects.Add(effect);
         }
+
+        public Ammo(Ammo other) : base(other)
+        {
+            Effects = new ObservableCollection<AmmoEffect>(other.Effects);
+            CustomName = other.CustomName;
+
+            Effects.CollectionChanged += Effects_CollectionChanged;
+            PropertyChanged += Ammo_PropertyChanged;
+        }
         //
 
         // members
@@ -119,15 +128,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public Ammo Clone() => new Ammo
-        {
-            Name = this.Name,
-            Cost = this.Cost,
-            Load = this.Load,
-            Amount = this.Amount,
-            Effects = new ObservableCollection<AmmoEffect>(this.Effects),
-            CustomName = this.CustomName,
-        };
+        public Ammo Clone() => new Ammo(this);
+        //public Ammo Clone() => new Ammo
+        //{
+        //    Name = this.Name,
+        //    Cost = this.Cost,
+        //    Load = this.Load,
+        //    Amount = this.Amount,
+        //    Effects = new ObservableCollection<AmmoEffect>(this.Effects),
+        //    CustomName = this.CustomName,
+        //};
 
         private void Effects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

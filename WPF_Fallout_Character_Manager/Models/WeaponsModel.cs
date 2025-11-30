@@ -41,7 +41,7 @@ namespace WPF_Fallout_Character_Manager.Models
 
             //ModInt testModInt = new ModInt("TestModInt", 42, false, "Some random testing hint");
             //testModInt.AddModifier(new LabeledValue<int>("FirstTestModifier", 5, "This modifier was added in the original object."));
-            //ModInt clonedTestModInt = (ModInt)testModInt.Clone();
+            //ModInt clonedTestModInt = testModInt.Clone();
             //clonedTestModInt.BaseValue = 69;
             //clonedTestModInt.Name = "ClonedTestModInt";
             //clonedTestModInt.AddModifier(new LabeledValue<int>("SecondTestModifier", 5, "This modifier was added in the cloned object."));

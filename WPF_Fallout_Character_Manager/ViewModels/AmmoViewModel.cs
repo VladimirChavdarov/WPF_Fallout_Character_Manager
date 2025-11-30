@@ -35,6 +35,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             _xtrnlAmmoModel = xtrnlAmmoModel;
             AmmoModel = ammoModel;
+
+            // testing code
+            //Ammo xtrnlA1 = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ".308");
+            //AmmoEffect xtrnlAE1 = xtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Name == "Armor Piercing");
+            //xtrnlA1.Effects.Add(xtrnlAE1);
+            //Ammo a1 = xtrnlA1.Clone();
+            //AmmoEffect ae1 = xtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Name == "Match");
+            //a1.Effects.Add(ae1);
+            //a1.Amount.BaseValue += 10;
+            //
         }
         //
     }

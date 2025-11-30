@@ -33,7 +33,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             Total = sum;
         }
 
-        public override object Clone() => new ModFloat(this);
+        public override ModFloat Clone() => new ModFloat(this);
         //
     }
 
@@ -46,6 +46,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         protected LabeledFloat(LabeledFloat other) : base(other) { }
         //
 
-        public override object Clone() => new LabeledFloat(this);
+        public override LabeledFloat Clone() => new LabeledFloat(this);
     }
 }
