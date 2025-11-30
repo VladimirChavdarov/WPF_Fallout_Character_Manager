@@ -153,6 +153,22 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Upgrades.CollectionChanged += Upgrades_CollectionChanged;
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
+
+        public Armor(Armor other) : base(other)
+        {
+            Upgrades = new ObservableCollection<ArmorUpgrade>(other.Upgrades);
+            AC = other.AC.Clone();
+            DT = other.DT.Clone();
+            AvailableUpgradeSlots = other.AvailableUpgradeSlots.Clone();
+            TakenUpgradeSlots = other.TakenUpgradeSlots.Clone();
+            StrRequirement = other.StrRequirement.Clone();
+            Decay = other.Decay.Clone();
+            Equipped = other.Equipped;
+
+            _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+        }
         //
 
         // members
@@ -230,20 +246,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public Armor Clone() => new Armor
-        {
-            Name = this.Name,
-            Cost = this.Cost,
-            Load = this.Load,
-            Amount = this.Amount,
-            AC = this.AC,
-            DT = this.DT,
-            AvailableUpgradeSlots = this.AvailableUpgradeSlots,
-            TakenUpgradeSlots = this.TakenUpgradeSlots,
-            StrRequirement = this.StrRequirement,
-            Decay = this.Decay,
-            Upgrades = new ObservableCollection<ArmorUpgrade>(this.Upgrades),
-        };
+        public Armor Clone() => new Armor(this);
 
         private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -309,6 +312,24 @@ namespace WPF_Fallout_Character_Manager.Models.External
             AllottedTime = new ModInt("Allotted Time", allottedTime, true);
             Decay = new ModInt("Decay", decay, false);
             Equipped = false;
+
+            _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+        }
+
+        public PowerArmor(PowerArmor other) : base(other)
+        {
+            Upgrades = new ObservableCollection<ArmorUpgrade>(other.Upgrades);
+
+            AC = other.AC.Clone();
+            DP = other.DP.Clone();
+            AvailableUpgradeSlots = other.AvailableUpgradeSlots.Clone();
+            TakenUpgradeSlots = other.TakenUpgradeSlots.Clone();
+            RepairDC = other.RepairDC.Clone();
+            AllottedTime = other.AllottedTime.Clone();
+            Decay = other.Decay.Clone();
+            Equipped = other.Equipped;
 
             _decay.PropertyChanged += Decay_PropertyChanged;
             Upgrades.CollectionChanged += Upgrades_CollectionChanged;
@@ -398,21 +419,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public PowerArmor Clone() => new PowerArmor
-        {
-            Name = this.Name,
-            Cost = this.Cost,
-            Load = this.Load,
-            Amount = this.Amount,
-            AC = this.AC,
-            DP = this.DP,
-            AvailableUpgradeSlots = this.AvailableUpgradeSlots,
-            TakenUpgradeSlots = this.TakenUpgradeSlots,
-            RepairDC = this.RepairDC,
-            AllottedTime = this.AllottedTime,
-            Decay = this.Decay,
-            Upgrades = new ObservableCollection<ArmorUpgrade>(this.Upgrades),
-        };
+        public PowerArmor Clone() => new PowerArmor(this);
 
         private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
