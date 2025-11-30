@@ -18,6 +18,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public ModInt(string name = "NewModInt", int value = 0, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
+
+        protected ModInt(ModInt other) : base(other) { }
         //
 
         // methods
@@ -30,6 +32,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             }
             Total = sum;
         }
+
+        public override object Clone() => new ModInt(this);
         //
     }
 
@@ -38,6 +42,10 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public LabeledInt(string name = "NewIntegerValue", int value = 0, string note = "", bool isReadOnly = false)
             : base(name, value, note, isReadOnly) { }
+
+        protected LabeledInt(LabeledInt other) : base(other) { }
         //
+
+        public override object Clone() => new LabeledInt(this);
     }
 }

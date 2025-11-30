@@ -14,7 +14,7 @@ using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
-    public class ModValue<T> : ModTypeBase, ICloneable where T : IComparable, IConvertible, IEquatable<T>
+    public abstract class ModValue<T> : ModTypeBase, ICloneable where T : IComparable, IConvertible, IEquatable<T>
     {
         // constructor
         public ModValue(string name = "NewModValue", T value = default, bool isBaseValueReadOnly = false, string hint = "No Hint")
@@ -25,6 +25,25 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             _isBaseValueReadOnly = isBaseValueReadOnly;
             Modifiers = new ObservableCollection<LabeledValue<T>>();
             Modifiers.CollectionChanged += Modifiers_CollectionChanged;
+
+            UpdateTotal();
+        }
+
+        protected ModValue(ModValue<T> other)
+        {
+            _baseValueObject = new LabeledValue<T>(other.Name, other.BaseValue, other.Note);
+            _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
+
+            _isBaseValueReadOnly = other.IsBaseValueReadOnly;
+            Modifiers = new ObservableCollection<LabeledValue<T>>();
+            Modifiers.CollectionChanged += Modifiers_CollectionChanged;
+
+            foreach (LabeledValue<T> mod in other.Modifiers)
+            {
+                LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
+                Modifiers.Add(modifierClone);
+                modifierClone.PropertyChanged += Modifiers_PropertyChanged;
+            }
 
             UpdateTotal();
         }
@@ -71,18 +90,19 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         //
 
         // helpers
-        public virtual void UpdateTotal()
-        {
-            // override in inherited classes to avoid using the dynamic type,
-            // or if you want some custom functionality (for example adding a whitespace when concatenating strings).
+        public abstract void UpdateTotal();
+        //public virtual void UpdateTotal()
+        //{
+        //    // override in inherited classes to avoid using the dynamic type,
+        //    // or if you want some custom functionality (for example adding a whitespace when concatenating strings).
 
-            dynamic sum = BaseValueObject.Value; // NOTE: using dynamic may be slow, test on very old machines. We can't have this app be slow. :)
-            for (int i = 0; i < Modifiers.Count; i++)
-            {
-                sum += Modifiers[i].Value;
-            }
-            Total = sum;
-        }
+        //    dynamic sum = BaseValueObject.Value; // NOTE: using dynamic may be slow, test on very old machines. We can't have this app be slow. :)
+        //    for (int i = 0; i < Modifiers.Count; i++)
+        //    {
+        //        sum += Modifiers[i].Value;
+        //    }
+        //    Total = sum;
+        //}
 
         public void AddModifier(LabeledValue<T> newModifier)
         {
@@ -116,27 +136,28 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 throw new Exception($"Modifier with label '{modifierName}' not found.");
         }
 
-        public object Clone()
-        {
-            ModValue<T> clone = new ModValue<T>(this.Name, this.BaseValue, this.IsBaseValueReadOnly, this.Note);
+        public abstract object Clone();
+        //public object Clone()
+        //{
+        //    ModValue<T> clone = new ModValue<T>(this.Name, this.BaseValue, this.IsBaseValueReadOnly, this.Note);
 
-            // This shouldn't be needed because the constuctor already takes care of binding to PropertyChanged. If there are some niche issues in the future
-            // this can serve as a good hint.
-            //clone._baseValueObject = (LabeledValue<T>)this._baseValueObject.Clone();
-            //clone._baseValueObject.PropertyChanged += clone.BaseValue_PropertyChanged;
+        //    // This shouldn't be needed because the constuctor already takes care of binding to PropertyChanged. If there are some niche issues in the future
+        //    // this can serve as a good hint.
+        //    //clone._baseValueObject = (LabeledValue<T>)this._baseValueObject.Clone();
+        //    //clone._baseValueObject.PropertyChanged += clone.BaseValue_PropertyChanged;
 
-            clone.Modifiers.Clear();
-            foreach(LabeledValue<T> mod in this.Modifiers)
-            {
-                LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
-                clone.Modifiers.Add(modifierClone);
-                modifierClone.PropertyChanged += Modifiers_PropertyChanged;
-            }
+        //    clone.Modifiers.Clear();
+        //    foreach(LabeledValue<T> mod in this.Modifiers)
+        //    {
+        //        LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
+        //        clone.Modifiers.Add(modifierClone);
+        //        modifierClone.PropertyChanged += Modifiers_PropertyChanged;
+        //    }
 
-            UpdateTotal();
+        //    UpdateTotal();
 
-            return clone;
-        }
+        //    return clone;
+        //}
 
         // Data
         protected T _total;
@@ -208,10 +229,18 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public LabeledValue(string name = "NewModdableValue", T value = default, string note = "", bool isReadOnly = false)
         {
-            _name = name;
-            _value = value;
-            _note = note;
-            _isReadOnly = isReadOnly;
+            Name = name;
+            Value = value;
+            Note = note;
+            IsReadOnly = isReadOnly;
+        }
+
+        protected LabeledValue(LabeledValue<T> other)
+        {
+            Name = other.Name;
+            Value = other.Value;
+            Note = other.Note;
+            IsReadOnly = other.IsReadOnly;
         }
         //
 
@@ -261,12 +290,13 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         //
 
         // methods
-        public object Clone()
-        {
-            LabeledValue<T> clone = new LabeledValue<T>(this.Name, this.Value, this.Note, this.IsReadOnly);
+        public virtual object Clone() => new LabeledValue<T>(this);
+        //public object Clone()
+        //{
+        //    LabeledValue<T> clone = new LabeledValue<T>(this.Name, this.Value, this.Note, this.IsReadOnly);
            
-            return clone;
-        }
+        //    return clone;
+        //}
         //
     }
 }

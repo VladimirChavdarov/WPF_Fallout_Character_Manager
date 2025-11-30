@@ -18,6 +18,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public ModFloat(string name = "NewModFloat", float value = 0.0f, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
+
+        protected ModFloat(ModFloat other) : base(other) { }
         //
 
         // methods
@@ -30,6 +32,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             }
             Total = sum;
         }
+
+        public override object Clone() => new ModFloat(this);
         //
     }
 
@@ -38,6 +42,10 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public LabeledFloat(string name = "NewFloatValue", float value = 0.0f, string note = "", bool isReadOnly = false)
             : base(name, value, note, isReadOnly) { }
+
+        protected LabeledFloat(LabeledFloat other) : base(other) { }
         //
+
+        public override object Clone() => new LabeledFloat(this);
     }
 }
