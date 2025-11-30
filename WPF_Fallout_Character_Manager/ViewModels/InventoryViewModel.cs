@@ -15,6 +15,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private InventoryModel _inventoryModel;
 
         private XtrnlChemsModel _xtrnlChemsModel;
+
+        private XtrnlExplosivesModel _xtrnlExplosivesModel;
         //
 
         // public variables
@@ -32,10 +34,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // constructor
-        public InventoryViewModel(InventoryModel inventoryModel, XtrnlChemsModel xtrnlChemsModel)
+        public InventoryViewModel(
+            InventoryModel inventoryModel,
+            XtrnlChemsModel xtrnlChemsModel,
+            XtrnlExplosivesModel xtrnlExplosivesModel)
         {
             _inventoryModel = inventoryModel;
             _xtrnlChemsModel = xtrnlChemsModel;
+            _xtrnlExplosivesModel = xtrnlExplosivesModel;
+            _xtrnlExplosivesModel = xtrnlExplosivesModel;
         }
         //
     }

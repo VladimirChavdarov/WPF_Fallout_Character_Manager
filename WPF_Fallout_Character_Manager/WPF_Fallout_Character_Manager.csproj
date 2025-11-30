@@ -30,6 +30,9 @@
     <None Remove="Resources\Spreadsheets\chem_properties.csv" />
     <None Remove="Resources\Spreadsheets\conditions.csv" />
     <None Remove="Resources\Spreadsheets\diseases.csv" />
+    <None Remove="Resources\Spreadsheets\explosives_placed.csv" />
+    <None Remove="Resources\Spreadsheets\explosives_properties.csv" />
+    <None Remove="Resources\Spreadsheets\explosives_thrown.csv" />
     <None Remove="Resources\Spreadsheets\levels.csv" />
     <None Remove="Resources\Spreadsheets\limb_conditions.csv" />
     <None Remove="Resources\Spreadsheets\melee_weapons.csv" />
@@ -85,6 +88,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\diseases.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\explosives_placed.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\explosives_properties.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\explosives_thrown.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\levels.csv">
