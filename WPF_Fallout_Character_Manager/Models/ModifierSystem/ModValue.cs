@@ -14,7 +14,7 @@ using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
-    public class ModValue<T> : ModTypeBase where T : IComparable, IConvertible, IEquatable<T>
+    public class ModValue<T> : ModTypeBase, ICloneable where T : IComparable, IConvertible, IEquatable<T>
     {
         // constructor
         public ModValue(string name = "NewModValue", T value = default, bool isBaseValueReadOnly = false, string hint = "No Hint")
@@ -73,7 +73,15 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // helpers
         public virtual void UpdateTotal()
         {
-            // override in inherited classes
+            // override in inherited classes to avoid using the dynamic type,
+            // or if you want some custom functionality (for example adding a whitespace when concatenating strings).
+
+            dynamic sum = BaseValueObject.Value; // NOTE: using dynamic may be slow, test on very old machines. We can't have this app be slow. :)
+            for (int i = 0; i < Modifiers.Count; i++)
+            {
+                sum += Modifiers[i].Value;
+            }
+            Total = sum;
         }
 
         public void AddModifier(LabeledValue<T> newModifier)
@@ -108,6 +116,28 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 throw new Exception($"Modifier with label '{modifierName}' not found.");
         }
 
+        public object Clone()
+        {
+            ModValue<T> clone = new ModValue<T>(this.Name, this.BaseValue, this.IsBaseValueReadOnly, this.Note);
+
+            // This shouldn't be needed because the constuctor already takes care of binding to PropertyChanged. If there are some niche issues in the future
+            // this can serve as a good hint.
+            //clone._baseValueObject = (LabeledValue<T>)this._baseValueObject.Clone();
+            //clone._baseValueObject.PropertyChanged += clone.BaseValue_PropertyChanged;
+
+            clone.Modifiers.Clear();
+            foreach(LabeledValue<T> mod in this.Modifiers)
+            {
+                LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
+                clone.Modifiers.Add(modifierClone);
+                modifierClone.PropertyChanged += Modifiers_PropertyChanged;
+            }
+
+            UpdateTotal();
+
+            return clone;
+        }
+
         // Data
         protected T _total;
         public T Total
@@ -133,6 +163,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
                 UpdateTotal();
             }
         }
+
         // QoL
         public string Name
         {
@@ -172,7 +203,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         //
     }
 
-    public class LabeledValue<T> : ModTypeBase
+    public class LabeledValue<T> : ModTypeBase, ICloneable
     {
         // constructor
         public LabeledValue(string name = "NewModdableValue", T value = default, string note = "", bool isReadOnly = false)
@@ -226,6 +257,15 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         {
             get => _isReadOnly;
             set => Update(ref _isReadOnly, value);
+        }
+        //
+
+        // methods
+        public object Clone()
+        {
+            LabeledValue<T> clone = new LabeledValue<T>(this.Name, this.Value, this.Note, this.IsReadOnly);
+           
+            return clone;
         }
         //
     }
