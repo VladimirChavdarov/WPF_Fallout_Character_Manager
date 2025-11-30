@@ -154,7 +154,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
 
-        public Armor(Armor other) : base(other)
+        protected Armor(Armor other) : base(other)
         {
             Upgrades = new ObservableCollection<ArmorUpgrade>(other.Upgrades);
             AC = other.AC.Clone();
@@ -318,7 +318,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
 
-        public PowerArmor(PowerArmor other) : base(other)
+        protected PowerArmor(PowerArmor other) : base(other)
         {
             Upgrades = new ObservableCollection<ArmorUpgrade>(other.Upgrades);
 

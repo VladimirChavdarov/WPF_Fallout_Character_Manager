@@ -18,7 +18,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlAmmoModel XtrnlAmmoModel { get; } = new XtrnlAmmoModel();
         public XtrnlWeaponsModel XtrnlWeaponsModel { get; } // set in constructor
         public XtrnlArmorModel XtrnlArmorModel { get; } = new XtrnlArmorModel();
-
         public XtrnlChemsModel XtrnlChemsModel { get; } = new XtrnlChemsModel();
         //
 
@@ -30,6 +29,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public LimbConditionsModel LimbConditionsModel { get; } = new LimbConditionsModel(); 
         public ConditionsModel ConditionsModel { get; } = new ConditionsModel();
         public AmmoModel AmmoModel { get; } = new AmmoModel();
+        public InventoryModel InventoryModel { get; } = new InventoryModel();
 
         public BioModel BioModel { get; }
         public WeaponsModel WeaponsModel { get; }
@@ -47,6 +47,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public WeaponsViewModel WeaponsViewModel { get; }
         public ArmorViewModel ArmorViewModel { get; }
         public EquippableViewModel EquippableViewModel { get; }
+        public InventoryViewModel InventoryViewModel { get; }
         //
 
         // Constructor
@@ -68,6 +69,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel, XtrnlAmmoModel, AmmoModel, SkillModel);
             ArmorViewModel = new ArmorViewModel(XtrnlArmorModel, ArmorModel);
             EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);
+            InventoryViewModel = new InventoryViewModel(
+                InventoryModel,
+                XtrnlChemsModel);
         }
         //
     }

@@ -342,7 +342,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
 
-        public Weapon(Weapon other, AmmoModel ammoModel) : base(other)
+        protected Weapon(Weapon other, AmmoModel ammoModel) : base(other)
         {
             Properties = new ObservableCollection<WeaponProperty>(other.Properties);
             Upgrades = new ObservableCollection<WeaponUpgrade>(other.Upgrades);

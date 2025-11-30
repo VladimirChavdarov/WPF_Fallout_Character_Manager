@@ -96,7 +96,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 Effects.Add(effect);
         }
 
-        public Ammo(Ammo other) : base(other)
+        protected Ammo(Ammo other) : base(other)
         {
             Type = other.Type;
             Effects = new ObservableCollection<AmmoEffect>(other.Effects);
