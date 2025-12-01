@@ -13,8 +13,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
     {
         // local variables
         private InventoryModel _inventoryModel;
+        private WeaponsModel _weaponsModel;
+        private ArmorModel _armorModel;
+        private AmmoModel _ammoModel;
 
-        private XtrnlAidModel _xtrnlChemsModel;
+        private XtrnlWeaponsModel _xtrnlWeaponsModel;
+        private XtrnlArmorModel _xtrnlArmorModel;
+        private XtrnlAmmoModel _xtrnlAmmoModel;
+        private XtrnlAidModel _xtrnlAidModel;
         private XtrnlExplosivesModel _xtrnlExplosivesModel;
         private XtrnlNourishmentModel _xtrnlNourishmentModel;
         private XtrnlGearModel _xtrnlGearModel;
@@ -24,44 +30,83 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public InventoryModel InventoryModel
         {
             get => _inventoryModel;
-            set => Update(ref _inventoryModel, value);
         }
 
-        public XtrnlAidModel XtrnlChemsModel
+        public WeaponsModel WeaponsModel
         {
-            get => _xtrnlChemsModel;
-            set => Update(ref _xtrnlChemsModel, value);
+            get => _weaponsModel;
+        }
+
+        public ArmorModel ArmorModel
+        {
+            get => _armorModel;
+        }
+
+        public AmmoModel AmmoModel
+        {
+            get => _ammoModel;
+        }
+
+        public XtrnlWeaponsModel XtrnlWeaponsModel
+        {
+            get => _xtrnlWeaponsModel;
+        }
+
+        public XtrnlArmorModel XtrnlArmorModel
+        {
+            get => _xtrnlArmorModel;
+        }
+
+        public XtrnlAmmoModel XtrnlAmmoModel
+        {
+            get => _xtrnlAmmoModel;
+        }
+
+        public XtrnlAidModel XtrnlAidModel
+        {
+            get => _xtrnlAidModel;
         }
 
         public XtrnlExplosivesModel XtrnlExplosivesModel
         {
             get => _xtrnlExplosivesModel;
-            set => Update(ref _xtrnlExplosivesModel, value);
         }
 
         public XtrnlNourishmentModel XtrnlNourishmentModel
         {
             get => _xtrnlNourishmentModel;
-            set => Update(ref _xtrnlNourishmentModel, value);
         }
 
         public XtrnlGearModel XtrnlGearModel
         {
             get => _xtrnlGearModel;
-            set => Update(ref _xtrnlGearModel, value);
         }
         //
 
         // constructor
         public InventoryViewModel(
             InventoryModel inventoryModel,
-            XtrnlAidModel xtrnlChemsModel,
+            WeaponsModel weaponsModel,
+            ArmorModel armorModel,
+            AmmoModel ammoModel,
+
+            XtrnlWeaponsModel xtrnlWeaponsModel,
+            XtrnlArmorModel xtrnlArmorModel,
+            XtrnlAmmoModel xtrnlAmmoModel,
+            XtrnlAidModel xtrnlAidModel,
             XtrnlExplosivesModel xtrnlExplosivesModel,
             XtrnlNourishmentModel xtrnlNourishmentModel,
             XtrnlGearModel xtrnlGearModel)
         {
             _inventoryModel = inventoryModel;
-            _xtrnlChemsModel = xtrnlChemsModel;
+            _weaponsModel = weaponsModel;
+            _armorModel = armorModel;
+            _ammoModel = ammoModel;
+
+            _xtrnlWeaponsModel = xtrnlWeaponsModel;
+            _xtrnlArmorModel = xtrnlArmorModel;
+            _xtrnlAmmoModel = xtrnlAmmoModel;
+            _xtrnlAidModel = xtrnlAidModel;
             _xtrnlExplosivesModel = xtrnlExplosivesModel;
             _xtrnlExplosivesModel = xtrnlExplosivesModel;
             _xtrnlNourishmentModel = xtrnlNourishmentModel;

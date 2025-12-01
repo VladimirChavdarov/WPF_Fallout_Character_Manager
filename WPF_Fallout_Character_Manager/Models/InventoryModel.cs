@@ -17,11 +17,17 @@ namespace WPF_Fallout_Character_Manager.Models
         public InventoryModel()
         {
             AidItems = new ObservableCollection<Aid>();
+            Explosives = new ObservableCollection<Explosive>();
+            Nourishment = new ObservableCollection<Nourishment>();
+            GearItems = new ObservableCollection<Gear>();
         }
         //
 
         // data
         public ObservableCollection<Aid> AidItems { get; set; }
+        public ObservableCollection<Explosive> Explosives { get; set; }
+        public ObservableCollection<Nourishment> Nourishment { get; set; }
+        public ObservableCollection<Gear> GearItems { get; set; }
         //
     }
 }

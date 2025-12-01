@@ -18,7 +18,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlAmmoModel XtrnlAmmoModel { get; } = new XtrnlAmmoModel();
         public XtrnlWeaponsModel XtrnlWeaponsModel { get; } // set in constructor
         public XtrnlArmorModel XtrnlArmorModel { get; } = new XtrnlArmorModel();
-        public XtrnlAidModel XtrnlChemsModel { get; } = new XtrnlAidModel();
+        public XtrnlAidModel XtrnlAidModel { get; } = new XtrnlAidModel();
         public XtrnlExplosivesModel XtrnlExplosivesModel { get; } = new XtrnlExplosivesModel();
         public XtrnlNourishmentModel XtrnlNourishmentModel { get; } = new XtrnlNourishmentModel();
         public XtrnlGearModel XtrnlGearModel { get; } = new XtrnlGearModel();
@@ -74,7 +74,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);
             InventoryViewModel = new InventoryViewModel(
                                      InventoryModel,
-                                     XtrnlChemsModel,
+                                     WeaponsModel,
+                                     ArmorModel,
+                                     AmmoModel,
+
+                                     XtrnlWeaponsModel,
+                                     XtrnlArmorModel,
+                                     XtrnlAmmoModel,
+                                     XtrnlAidModel,
                                      XtrnlExplosivesModel,
                                      XtrnlNourishmentModel,
                                      XtrnlGearModel);
