@@ -17,6 +17,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private XtrnlChemsModel _xtrnlChemsModel;
         private XtrnlExplosivesModel _xtrnlExplosivesModel;
         private XtrnlNourishmentModel _xtrnlNourishmentModel;
+        private XtrnlGearModel _xtrnlGearModel;
         //
 
         // public variables
@@ -43,6 +44,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             get => _xtrnlNourishmentModel;
             set => Update(ref _xtrnlNourishmentModel, value);
         }
+
+        public XtrnlGearModel XtrnlGearModel
+        {
+            get => _xtrnlGearModel;
+            set => Update(ref _xtrnlGearModel, value);
+        }
         //
 
         // constructor
@@ -50,13 +57,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             InventoryModel inventoryModel,
             XtrnlChemsModel xtrnlChemsModel,
             XtrnlExplosivesModel xtrnlExplosivesModel,
-            XtrnlNourishmentModel xtrnlNourishmentModel)
+            XtrnlNourishmentModel xtrnlNourishmentModel,
+            XtrnlGearModel xtrnlGearModel)
         {
             _inventoryModel = inventoryModel;
             _xtrnlChemsModel = xtrnlChemsModel;
             _xtrnlExplosivesModel = xtrnlExplosivesModel;
             _xtrnlExplosivesModel = xtrnlExplosivesModel;
             _xtrnlNourishmentModel = xtrnlNourishmentModel;
+            _xtrnlGearModel = xtrnlGearModel;
         }
         //
     }
