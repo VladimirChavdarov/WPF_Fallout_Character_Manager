@@ -20,6 +20,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlArmorModel XtrnlArmorModel { get; } = new XtrnlArmorModel();
         public XtrnlChemsModel XtrnlChemsModel { get; } = new XtrnlChemsModel();
         public XtrnlExplosivesModel XtrnlExplosivesModel { get; } = new XtrnlExplosivesModel();
+        public XtrnlNourishmentModel XtrnlNourishmentModel { get; } = new XtrnlNourishmentModel();
         //
 
         // All Models
@@ -73,7 +74,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             InventoryViewModel = new InventoryViewModel(
                 InventoryModel,
                 XtrnlChemsModel,
-                XtrnlExplosivesModel);
+                XtrnlExplosivesModel,
+                XtrnlNourishmentModel);
         }
         //
     }
