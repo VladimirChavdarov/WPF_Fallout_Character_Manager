@@ -18,6 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             GearItems = new ObservableCollection<Gear>();
 
+            // gear
             var gearLines = File.ReadAllLines("Resources/Spreadsheets/gear.csv");
             foreach (var line in gearLines.Skip(1))
             {
@@ -33,9 +34,29 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     loadEquippedOrFull: (float)Int32.Parse(parts[4])
                     );
 
+                GearItems.Add(gear);
+            }
+            //
+
+            // magazines
+            var magazineLines = File.ReadAllLines("Resources/Spreadsheets/magazine.csv");
+            foreach (var line in magazineLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 4)
+                    continue;
+
+                Gear gear = new Gear(
+                    name: parts[0],
+                    cost: Int32.Parse(parts[1]),
+                    description: parts[2],
+                    load: (float)Int32.Parse(parts[3]),
+                    loadEquippedOrFull: (float)Int32.Parse(parts[3])
+                    );
 
                 GearItems.Add(gear);
             }
+            //
         }
         //
 
