@@ -18,7 +18,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlAmmoModel XtrnlAmmoModel { get; } = new XtrnlAmmoModel();
         public XtrnlWeaponsModel XtrnlWeaponsModel { get; } // set in constructor
         public XtrnlArmorModel XtrnlArmorModel { get; } = new XtrnlArmorModel();
-        public XtrnlChemsModel XtrnlChemsModel { get; } = new XtrnlChemsModel();
+        public XtrnlAidModel XtrnlChemsModel { get; } = new XtrnlAidModel();
         public XtrnlExplosivesModel XtrnlExplosivesModel { get; } = new XtrnlExplosivesModel();
         public XtrnlNourishmentModel XtrnlNourishmentModel { get; } = new XtrnlNourishmentModel();
         public XtrnlGearModel XtrnlGearModel { get; } = new XtrnlGearModel();

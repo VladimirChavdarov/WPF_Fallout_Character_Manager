@@ -11,14 +11,15 @@ using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlChemsModel : ModelBase
+    class XtrnlAidModel : ModelBase
     {
         // constructor
-        public XtrnlChemsModel()
+        public XtrnlAidModel()
         {
-            Chems = new ObservableCollection<Chem>();
-            ChemProperties = new ObservableCollection<ChemProperty>();
+            AidItems = new ObservableCollection<Aid>();
+            AidProperties = new ObservableCollection<AidProperty>();
 
+            // Chems
             var chemPropertiesLines = File.ReadAllLines("Resources/Spreadsheets/chem_properties.csv");
             foreach (var line in chemPropertiesLines.Skip(1))
             {
@@ -26,11 +27,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (parts.Length < 2)
                     continue;
 
-                ChemProperty chemProperty = new ChemProperty(
+                AidProperty chemProperty = new AidProperty(
                     name: parts[0],
                     value: parts[1]
                     );
-                ChemProperties.Add(chemProperty);
+                AidProperties.Add(chemProperty);
             }
 
             var chemLines = File.ReadAllLines("Resources/Spreadsheets/chems.csv");
@@ -40,7 +41,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (parts.Length < 4)
                     continue;
 
-                Chem chem = new Chem(
+                Aid chem = new Aid(
                     name: parts[0],
                     cost: Int32.Parse(parts[1]),
                     load: (float)Int32.Parse(parts[3]) / 10.0f
@@ -52,61 +53,74 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 {
                     string trimmedProperty = property.Trim();
 
-                    ChemProperty newProperty = ChemProperties.FirstOrDefault(x => x.Name.Contains(trimmedProperty));
+                    AidProperty newProperty = AidProperties.FirstOrDefault(x => x.Name.Contains(trimmedProperty));
                     if (newProperty == null)
                         throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
                     chem.Properties.Add(newProperty);
                 }
 
-                Chems.Add(chem);
+                AidItems.Add(chem);
             }
+            //
+
+            // Medicine
+            var medicineLines = File.ReadAllLines("Resources/Spreadsheets/medicine.csv");
+            foreach (var line in medicineLines.Skip(1))
+            {
+                var parts = line.Split(';');
+                if (parts.Length < 4)
+                    continue;
+
+                Aid medicine = new Aid(
+                    name: parts[0],
+                    cost: Int32.Parse(parts[1]),
+                    description: parts[2],
+                    load: (float)Int32.Parse(parts[3]) / 10.0f
+                );
+
+                AidItems.Add(medicine);
+            }
+            //
         }
         //
 
         // data
-        ObservableCollection<Chem> Chems {  get; set; }
-        ObservableCollection<ChemProperty> ChemProperties { get; set; }
+        ObservableCollection<Aid> AidItems {  get; set; }
+        ObservableCollection<AidProperty> AidProperties { get; set; }
         //
     }
 
-    class Chem : Item
+    class Aid : Item
     {
         // constructor
-        public Chem(string name = "NewChem", int cost = 0, float load = 0.0f)
+        public Aid(string name = "NewAid", int cost = 0, string description = "", float load = 0.0f)
         {
-            Properties = new ObservableCollection<ChemProperty>();
+            Properties = new ObservableCollection<AidProperty>();
 
-            Name = new ModString("Name", name);
+            Name = new ModString("Name", name, false, description);
             Cost = new ModInt("Cost", cost);
             Load = new ModFloat("Load", load);
         }
 
-        protected Chem(Chem other) : base(other)
+        protected Aid(Aid other) : base(other)
         {
-            Properties = new ObservableCollection<ChemProperty>(other.Properties);
+            Properties = new ObservableCollection<AidProperty>(other.Properties);
         }
         //
 
         // members
-        public ObservableCollection<ChemProperty> Properties { get; set; }
+        public ObservableCollection<AidProperty> Properties { get; set; }
         //
 
         // methods
-        public Chem Clone() => new Chem(this);
-        //public Chem Clone => new Chem
-        //{
-        //    Name = this.Name,
-        //    Cost = this.Cost,
-        //    Load = this.Load,
-        //    Properties = new ObservableCollection<ChemProperty>(this.Properties),
-        //};
+        public Aid Clone() => new Aid(this);
         //
     }
 
-    class ChemProperty : LabeledString
+    class AidProperty : LabeledString
     {
         // constructor
-        public ChemProperty(string name = "NewChemProperty", string value = "") : base(name, value, value) { }
+        public AidProperty(string name = "NewAidProperty", string value = "") : base(name, value, value) { }
         //
     }
 }

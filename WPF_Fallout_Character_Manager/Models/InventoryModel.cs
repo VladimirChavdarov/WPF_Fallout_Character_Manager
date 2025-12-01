@@ -16,12 +16,12 @@ namespace WPF_Fallout_Character_Manager.Models
         // constructor
         public InventoryModel()
         {
-            Chems = new ObservableCollection<Chem>();
+            AidItems = new ObservableCollection<Aid>();
         }
         //
 
         // data
-        public ObservableCollection<Chem> Chems { get; set; }
+        public ObservableCollection<Aid> AidItems { get; set; }
         //
     }
 }

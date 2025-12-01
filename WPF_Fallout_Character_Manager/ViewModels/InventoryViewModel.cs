@@ -14,7 +14,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // local variables
         private InventoryModel _inventoryModel;
 
-        private XtrnlChemsModel _xtrnlChemsModel;
+        private XtrnlAidModel _xtrnlChemsModel;
         private XtrnlExplosivesModel _xtrnlExplosivesModel;
         private XtrnlNourishmentModel _xtrnlNourishmentModel;
         private XtrnlGearModel _xtrnlGearModel;
@@ -27,7 +27,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set => Update(ref _inventoryModel, value);
         }
 
-        public XtrnlChemsModel XtrnlChemsModel
+        public XtrnlAidModel XtrnlChemsModel
         {
             get => _xtrnlChemsModel;
             set => Update(ref _xtrnlChemsModel, value);
@@ -55,7 +55,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // constructor
         public InventoryViewModel(
             InventoryModel inventoryModel,
-            XtrnlChemsModel xtrnlChemsModel,
+            XtrnlAidModel xtrnlChemsModel,
             XtrnlExplosivesModel xtrnlExplosivesModel,
             XtrnlNourishmentModel xtrnlNourishmentModel,
             XtrnlGearModel xtrnlGearModel)
