@@ -193,9 +193,9 @@
                             Height="760"
                             VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="350"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="350"/>
                             </Grid.ColumnDefinitions>
 
                             <GroupBox
@@ -236,15 +236,9 @@
                                 </GroupBox>
                             </Grid>
 
-                            <GroupBox
-                                Header="Catalogue"
+                            <panels:CataloguePanel
                                 Grid.Column="2"
-                                Margin="5"
-                                Background="Black"
-                                BorderBrush="#23ba03"
-                                BorderThickness="1">
-
-                            </GroupBox>
+                                DataContext="{Binding InventoryViewModel}"/>
                         </Grid>
                     </TabItem>
                     <!-- -->

@@ -73,7 +73,8 @@
                         CanOpenModal="False"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{StaticResource FalloutGreen}"/>
-                    <ListView ItemsSource="{Binding ModValue.Modifiers}"
+                    <ListView Style="{StaticResource FalloutListView}"
+                              ItemsSource="{Binding ModValue.Modifiers}"
                               HorizontalAlignment="Left"
                               Background="Black"
                               Height="200"

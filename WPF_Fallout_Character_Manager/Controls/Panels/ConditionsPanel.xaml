@@ -25,6 +25,7 @@
             <ScrollViewer>
                 <StackPanel Margin="5">
                     <ListView
+                        Style="{StaticResource FalloutListView}"
                         ItemsSource="{Binding ConditionsModel.Conditions}"
                         Background="Black"
                         BorderBrush="{StaticResource FalloutGreen}"

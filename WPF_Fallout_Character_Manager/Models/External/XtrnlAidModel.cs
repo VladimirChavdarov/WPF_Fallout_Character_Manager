@@ -85,8 +85,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        ObservableCollection<Aid> AidItems {  get; set; }
-        ObservableCollection<AidProperty> AidProperties { get; set; }
+        public ObservableCollection<Aid> AidItems {  get; set; }
+        public ObservableCollection<AidProperty> AidProperties { get; set; }
         //
     }
 

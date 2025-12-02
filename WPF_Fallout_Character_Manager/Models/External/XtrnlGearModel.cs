@@ -61,7 +61,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        ObservableCollection<Gear> GearItems { get; set; }
+        public ObservableCollection<Gear> GearItems { get; set; }
         //
     }
 

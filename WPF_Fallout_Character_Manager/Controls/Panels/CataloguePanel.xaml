@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="WPF_Fallout_Character_Manager.Controls.Panels.CataloguePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="760" d:DesignWidth="350">
+    <GroupBox
+    Header="Catalogue"
+    Grid.Column="2"
+    Margin="5"
+    Background="Black"
+    BorderBrush="#23ba03"
+    BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <control:TextBoxWithLabelControl
+                Grid.Column="0"
+                Orientation="Horizontal"
+                Margin="5"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Left"
+                MinWidth="300"
+                LabelFontSize="11"
+                LabelText="Search"
+                CanOpenModal="False"
+                IsReadOnly="False"
+                Text="{Binding SearchText, Mode=TwoWay}"/>
+
+            <ListBox
+                Grid.Row="1"
+                Style="{StaticResource FalloutInventoryTabsListBox}"
+                ItemsSource="{Binding Categories}"
+                SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                Margin="0 0 0 0">
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemContainerStyle>
+                    <StaticResource ResourceKey="FalloutInventoryTabListBoxItem"/>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            FontSize="12"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ListBox
+                Grid.Row="2"
+                Style="{StaticResource FalloutInventoryTabsListBox}"
+                BorderBrush="{StaticResource FalloutGreen}"
+                BorderThickness="0 1 0 0"
+                Padding="0 5 0 0"
+                ItemsSource="{Binding CatalogueView}">
+
+                <ListBox.ItemContainerStyle>
+                    <StaticResource ResourceKey="FalloutInventoryListBoxItem"/>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding NameString}"
+                            FontSize="9"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </GroupBox>
+</UserControl>

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="{x:Type ListView}" TargetType="ListView">
+    <Style x:Key="FalloutListView" TargetType="ListView">
         <Setter Property="Background" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
@@ -18,11 +18,87 @@
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter />
                     </Border>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+    </Style>
+
+    <Style x:Key="FalloutInventoryTabsListBox" TargetType="ListBox">
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style x:Key="FalloutInventoryTabListBoxItem" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="ItemBorder"
+                        Background="Black"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="0"
+                        Margin="0">
+                        <ContentPresenter x:Name="ContentSite"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="12,6,12,6"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{StaticResource FalloutGreen}"
+                            TextElement.FontWeight="Bold"
+                            TextElement.FontFamily="{StaticResource JH_Fallout}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FalloutInventoryListBoxItem" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="ItemBorder"
+                    Background="Black"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="0"
+                    Margin="0">
+                        <ContentPresenter x:Name="ContentSite"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Margin="4"
+                        RecognizesAccessKey="True"
+                        TextElement.Foreground="{StaticResource FalloutGreen}"
+                        TextElement.FontWeight="Bold"
+                        TextElement.FontFamily="{StaticResource JH_Fallout}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource FalloutGreenBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

@@ -109,8 +109,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        ObservableCollection<Explosive> Explosives { get; set; }
-        ObservableCollection<ExplosiveProperty> ExplosiveProperties { get; set; }
+        public ObservableCollection<Explosive> Explosives { get; set; }
+        public ObservableCollection<ExplosiveProperty> ExplosiveProperties { get; set; }
         //
     }
 

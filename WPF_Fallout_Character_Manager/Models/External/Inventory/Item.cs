@@ -10,6 +10,19 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 {
+    //enum Category
+    //{
+    //    Weapon,
+    //    Armor,
+    //    Ammo,
+    //    Aid,
+    //    Explosives,
+    //    Nourishment,
+    //    Gear,
+    //    Junk,
+    //    None
+    //}
+
     class Item : ModTypeBase
     {
         // constructors
@@ -39,7 +52,19 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         public ModString Name
         {
             get => _name;
-            set => Update(ref _name, value);
+            set
+            {
+                if (_name != null)
+                    _name.PropertyChanged -= Child_PropertyChanged;
+
+                Update(ref _name, value);
+
+                if(value != null)
+                    _name.PropertyChanged += Child_PropertyChanged;
+
+                OnPropertyChanged(nameof(NameAmount));
+                OnPropertyChanged(nameof(NameString));
+            }
         }
 
         private ModInt _cost;
@@ -104,11 +129,13 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         public int TotalLoad => (int)(Amount.Total * Load.Total);
         public int TotalCost => (int)(Amount.Total * Cost.Total);
         public string NameAmount => $"({Amount.Total}) {Name.Total}";
+        public string NameString => Name.Total;
         //
 
         // methods
         private void SubscribeToChildPropertyChanges()
         {
+            Name.PropertyChanged += Child_PropertyChanged;
             Amount.PropertyChanged += Child_PropertyChanged;
             Cost.PropertyChanged += Child_PropertyChanged;
             Load.PropertyChanged += Child_PropertyChanged;
@@ -116,6 +143,11 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 
         private void Child_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if(sender == Name && e.PropertyName == nameof(ModInt.Total))
+            {
+                OnPropertyChanged(nameof(NameAmount));
+                OnPropertyChanged(nameof(NameString));
+            }
             if (sender == Amount && e.PropertyName == nameof(ModInt.Total))
             {
                 OnPropertyChanged(nameof(TotalCost));

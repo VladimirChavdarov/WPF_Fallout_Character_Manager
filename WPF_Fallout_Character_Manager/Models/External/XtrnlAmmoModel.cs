@@ -77,8 +77,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // data
         public ObservableCollection<string> AmmoTypes { get; set; }
-        public ObservableCollection<Ammo>? Ammos { get; set; }
-        public ObservableCollection<AmmoEffect>? AmmoEffects { get; set; }
+        public ObservableCollection<Ammo> Ammos { get; set; }
+        public ObservableCollection<AmmoEffect> AmmoEffects { get; set; }
         //
     }
 

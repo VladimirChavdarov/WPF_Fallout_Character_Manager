@@ -67,6 +67,7 @@
             <ScrollViewer>
                 <StackPanel Margin="5">
                     <ListView
+                        Style="{StaticResource FalloutListView}"
                         ItemsSource="{Binding ActiveLimbConditionsObserved}"
                         HorizontalAlignment="Left"
                         Background="Black"

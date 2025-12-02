@@ -72,8 +72,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        ObservableCollection<Nourishment> Nourishments { get; set; }
-        ObservableCollection<NourishmentProperty> NourishmentProperties { get; set; }
+        public ObservableCollection<Nourishment> Nourishments { get; set; }
+        public ObservableCollection<NourishmentProperty> NourishmentProperties { get; set; }
         //
     }
 
