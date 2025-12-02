@@ -28,6 +28,9 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         // constructors
         public Item(string name = "ItemName", int cost = 0, int amount = 0, float load = 0.0f, string description = "")
         {
+            if (description == "")
+                description = "No Hint";
+
             _name = new ModString("Name", name, false, description);
             _cost = new ModInt("Cost", cost);
             _amount = new ModInt("Amount", amount);
