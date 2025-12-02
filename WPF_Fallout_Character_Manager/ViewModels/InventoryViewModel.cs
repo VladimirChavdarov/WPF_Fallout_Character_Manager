@@ -24,6 +24,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private XtrnlExplosivesModel _xtrnlExplosivesModel;
         private XtrnlNourishmentModel _xtrnlNourishmentModel;
         private XtrnlGearModel _xtrnlGearModel;
+        private XtrnlJunkModel _xtrnlJunkModel;
         //
 
         // public variables
@@ -81,6 +82,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             get => _xtrnlGearModel;
         }
+
+        public XtrnlJunkModel XtrnlJunkModel
+        {
+            get => _xtrnlJunkModel;
+        }
         //
 
         // constructor
@@ -96,7 +102,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             XtrnlAidModel xtrnlAidModel,
             XtrnlExplosivesModel xtrnlExplosivesModel,
             XtrnlNourishmentModel xtrnlNourishmentModel,
-            XtrnlGearModel xtrnlGearModel)
+            XtrnlGearModel xtrnlGearModel,
+            XtrnlJunkModel xtrnlJunkModel)
         {
             _inventoryModel = inventoryModel;
             _weaponsModel = weaponsModel;
@@ -111,6 +118,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _xtrnlExplosivesModel = xtrnlExplosivesModel;
             _xtrnlNourishmentModel = xtrnlNourishmentModel;
             _xtrnlGearModel = xtrnlGearModel;
+            _xtrnlJunkModel = xtrnlJunkModel;
         }
         //
     }

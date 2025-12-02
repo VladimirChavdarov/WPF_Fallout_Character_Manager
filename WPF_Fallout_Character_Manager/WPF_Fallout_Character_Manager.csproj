@@ -36,6 +36,8 @@
     <None Remove="Resources\Spreadsheets\foods_drinks.csv" />
     <None Remove="Resources\Spreadsheets\foods_drinks_properties.csv" />
     <None Remove="Resources\Spreadsheets\gear.csv" />
+    <None Remove="Resources\Spreadsheets\junk.csv" />
+    <None Remove="Resources\Spreadsheets\junk_components.csv" />
     <None Remove="Resources\Spreadsheets\levels.csv" />
     <None Remove="Resources\Spreadsheets\limb_conditions.csv" />
     <None Remove="Resources\Spreadsheets\magazine.csv" />
@@ -111,6 +113,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\gear.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\junk.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\junk_components.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\levels.csv">

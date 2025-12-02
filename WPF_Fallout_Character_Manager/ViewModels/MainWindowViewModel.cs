@@ -22,6 +22,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlExplosivesModel XtrnlExplosivesModel { get; } = new XtrnlExplosivesModel();
         public XtrnlNourishmentModel XtrnlNourishmentModel { get; } = new XtrnlNourishmentModel();
         public XtrnlGearModel XtrnlGearModel { get; } = new XtrnlGearModel();
+        public XtrnlJunkModel XtrnlJunkModel { get; } = new XtrnlJunkModel();
         //
 
         // All Models
@@ -84,7 +85,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                                      XtrnlAidModel,
                                      XtrnlExplosivesModel,
                                      XtrnlNourishmentModel,
-                                     XtrnlGearModel);
+                                     XtrnlGearModel,
+                                     XtrnlJunkModel);
         }
         //
     }

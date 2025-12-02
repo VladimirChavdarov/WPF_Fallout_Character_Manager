@@ -20,6 +20,7 @@ namespace WPF_Fallout_Character_Manager.Models
             Explosives = new ObservableCollection<Explosive>();
             Nourishment = new ObservableCollection<Nourishment>();
             GearItems = new ObservableCollection<Gear>();
+            JunkItems = new ObservableCollection<Junk>();
         }
         //
 
@@ -28,6 +29,7 @@ namespace WPF_Fallout_Character_Manager.Models
         public ObservableCollection<Explosive> Explosives { get; set; }
         public ObservableCollection<Nourishment> Nourishment { get; set; }
         public ObservableCollection<Gear> GearItems { get; set; }
+        public ObservableCollection<Junk> JunkItems { get; set; }
         //
     }
 }
