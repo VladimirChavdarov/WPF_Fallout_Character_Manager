@@ -99,6 +99,16 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="ToolBar.ToolTip">
+            <Setter.Value>
+                <ToolTip>
+                    <TextBlock
+                MaxWidth="300"
+                TextWrapping="Wrap"
+                Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"/>
+                </ToolTip>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

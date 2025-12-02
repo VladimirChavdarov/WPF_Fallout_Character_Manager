@@ -70,7 +70,9 @@
                 ItemsSource="{Binding CatalogueView}">
 
                 <ListBox.ItemContainerStyle>
-                    <StaticResource ResourceKey="FalloutInventoryListBoxItem"/>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                        <Setter Property="Tag" Value="{Binding Name.Note}" />
+                    </Style>
                 </ListBox.ItemContainerStyle>
 
                 <ListBox.ItemTemplate>
