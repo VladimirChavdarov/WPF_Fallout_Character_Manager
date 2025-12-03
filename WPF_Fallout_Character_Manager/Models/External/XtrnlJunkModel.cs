@@ -35,6 +35,26 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     );
 
                 JunkComponents.Add(junkComponent);
+
+                Junk componentItem = new Junk(
+                    name: parts[0],
+                    cost: Int32.Parse(parts[1]),
+                    load: (float)Int32.Parse(parts[2]) / 10.0f
+                    );
+                SetComponentsOfJunk(componentItem, "x1 " + junkComponent.Name.Total);
+
+                string note = componentItem.Load.Total + " load\n";
+                foreach (JunkComponent component in componentItem.Components)
+                {
+                    note += "x" + component.Amount.Total + " " + component.Name.Total + ", ";
+                }
+                if (note != "")
+                {
+                    note = note.Remove(note.Length - 2);
+                }
+                componentItem.Name.Note = note;
+
+                JunkItems.Add(componentItem);
             }
 
             var junkLines = File.ReadAllLines("Resources/Spreadsheets/junk.csv");
@@ -53,7 +73,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetComponentsOfJunk(junk, parts[3]);
 
-                string note = "";
+                string note = junk.Load.Total + " load\n";
                 foreach(JunkComponent component in junk.Components)
                 {
                     note += "x" + component.Amount.Total + " " + component.Name.Total + ", ";
