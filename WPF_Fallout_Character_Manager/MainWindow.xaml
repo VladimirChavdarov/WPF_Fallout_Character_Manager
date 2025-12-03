@@ -198,15 +198,9 @@
                                 <ColumnDefinition Width="350"/>
                             </Grid.ColumnDefinitions>
 
-                            <GroupBox
-                                Header="Inventory"
+                            <panels:InventoryPanel
                                 Grid.Column="0"
-                                Margin="5"
-                                Background="Black"
-                                BorderBrush="#23ba03"
-                                BorderThickness="1">
-
-                            </GroupBox>
+                                DataContext="{Binding InventoryViewModel}"/>
 
                             <Grid
                                 Grid.Column="1">

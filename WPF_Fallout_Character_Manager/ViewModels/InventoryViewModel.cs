@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Shell;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
@@ -30,36 +31,77 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private XtrnlGearModel _xtrnlGearModel;
         private XtrnlJunkModel _xtrnlJunkModel;
 
-        private string _selectedCategory;
-        private string _searchText;
+        private string _selectedCatalogueCategory;
+        private string _searchCatalogueText;
+        private string _selectedInventoryCategory;
+        private string _searchInventoryText;
         private ObservableCollection<Item> Catalogue { get; } = new ObservableCollection<Item>();
-        public ICollectionView CatalogueView { get; }
+        private ObservableCollection<Item> FullInventory { get; } = new ObservableCollection<Item>();
+
+        private static readonly Dictionary<string, Type> CategoryTypeMap = new()
+        {
+            { "Weapon", typeof(Weapon) },
+            { "Armor", typeof(Armor) },
+            { "Ammo", typeof(Ammo) },
+            { "Aid", typeof(Aid) },
+            { "Explosive", typeof(Explosive) },
+            { "Nourishment", typeof(Nourishment) },
+            { "Gear", typeof(Gear) },
+            { "Junk", typeof(Junk) },
+        };
         //
 
         // public variables
         public IReadOnlyList<string> Categories { get; } = new List<string>() { "All", "Weapon", "Armor", "Ammo", "Aid", "Explosive", "Nourishment", "Gear", "Junk" };
+        public ICollectionView CatalogueView { get; }
+        public ICollectionView FullInventoryView { get; }
         
-        public string SelectedCategory
+        public string SelectedCatalogueCategory
         {
-            get => _selectedCategory;
+            get => _selectedCatalogueCategory;
             set
             {
-                Update(ref _selectedCategory, value);
-                if(_selectedCategory != null)
+                Update(ref _selectedCatalogueCategory, value);
+                if(_selectedCatalogueCategory != null)
                 {
                     RefreshCatalogueView();
                 }
             }
         }
-        public string SearchText
+        public string SearchCatalogueText
         {
-            get => _searchText;
+            get => _searchCatalogueText;
             set
             {
-                Update(ref _searchText, value);
-                if (_searchText != null)
+                Update(ref _searchCatalogueText, value);
+                if (_searchCatalogueText != null)
                 {
                     RefreshCatalogueView();
+                }
+            }
+        }
+
+        public string SelectedInventoryCategory
+        {
+            get => _selectedInventoryCategory;
+            set
+            {
+                Update(ref _selectedInventoryCategory, value);
+                if (_selectedInventoryCategory != null)
+                {
+                    RefreshInventoryView();
+                }
+            }
+        }
+        public string SearchInventoryText
+        {
+            get => _searchInventoryText;
+            set
+            {
+                Update(ref _searchInventoryText, value);
+                if (_searchInventoryText != null)
+                {
+                    RefreshInventoryView();
                 }
             }
         }
@@ -165,33 +207,66 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in XtrnlGearModel.GearItems) { Catalogue.Add(i); }
             foreach (Item i in XtrnlJunkModel.JunkItems) { Catalogue.Add(i); }
 
+            foreach(Item i in WeaponsModel.Weapons) { FullInventory.Add(i); }
+            foreach (Item i in ArmorModel.Armors) { FullInventory.Add(i); }
+            foreach (Item i in ArmorModel.PowerArmors) { FullInventory.Add(i); }
+            foreach (Item i in AmmoModel.Ammos) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.AidItems) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.Explosives) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.Nourishment) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
+
             CatalogueView = CollectionViewSource.GetDefaultView(Catalogue);
             CatalogueView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
 
-            _searchText = "";
-            SelectedCategory = Categories.First();
-            CatalogueView.Filter = FilterItem;
+            FullInventoryView = CollectionViewSource.GetDefaultView(FullInventory);
+            FullInventoryView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
+
+            _searchCatalogueText = "";
+            SelectedCatalogueCategory = Categories.First();
+            CatalogueView.Filter = FilterCatalogue;
+            _searchInventoryText = "";
+            SelectedInventoryCategory = Categories.First();
+            FullInventoryView.Filter = FilterInventory;
         }
         //
 
         // methods
         private void RefreshCatalogueView()
         {
-            CatalogueView.Filter = FilterItem;
+            CatalogueView.Filter = FilterCatalogue;
+        }
+        private void RefreshInventoryView()
+        {
+            FullInventoryView.Filter = FilterInventory;
         }
 
-        private bool FilterItem(object obj)
+        private bool FilterCatalogue(object obj)
         {
-            Item item = (Item)obj;
-            if (SelectedCategory == "All" && item.NameString.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase))
+            return FilterItem(obj, SearchCatalogueText, SelectedCatalogueCategory);
+        }
+        private bool FilterInventory(object obj)
+        {
+            return FilterItem(obj, SearchInventoryText, SelectedInventoryCategory);
+        }
+
+        private bool FilterItem(object obj, string searchText, string selectedCategory)
+        {
+            if (obj is not Item item)
+                return false;
+
+            bool passSearch = searchText.Length == 0 || item.NameString.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+
+            if (!passSearch)
+                return false;
+
+            if (selectedCategory == "All")
                 return true;
 
-            if (obj.GetType().Name.Contains(SelectedCategory))
+            if (CategoryTypeMap.TryGetValue(selectedCategory, out Type categoryType))
             {
-                if(item != null && item.NameString.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return true;
-                }
+                return categoryType.IsInstanceOfType(item);
             }
 
             return false;
