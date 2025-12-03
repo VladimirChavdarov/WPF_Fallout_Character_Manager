@@ -52,6 +52,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetPropertiesOfExplosive(explosive, parts[6]);
 
+                string note = "Placed Explosive\n";
+                foreach (ExplosiveProperty property in explosive.Properties)
+                {
+                    note += property.Name + ". ";
+                }
+                explosive.Name.Note = note;
+
                 Explosives.Add(explosive);
             }
 
@@ -74,6 +81,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     );
 
                 SetPropertiesOfExplosive(explosive, parts[6]);
+
+                string note = "Thrown Explosive\n";
+                foreach (ExplosiveProperty property in explosive.Properties)
+                {
+                    note += property.Name + ". ";
+                }
+                explosive.Name.Note = note;
 
                 Explosives.Add(explosive);
             }

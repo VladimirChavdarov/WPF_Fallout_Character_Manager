@@ -59,6 +59,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     chem.Properties.Add(newProperty);
                 }
 
+                string note = "";
+                foreach (AidProperty property in chem.Properties)
+                {
+                    note += property.Name + ". ";
+                }
+                chem.Name.Note = note;
+
                 AidItems.Add(chem);
             }
             //

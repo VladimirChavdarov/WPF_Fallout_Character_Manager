@@ -49,6 +49,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetNourishmentOfNourishment(nourishment, parts[2]);
 
+                string note = "";
+                foreach (NourishmentProperty property in nourishment.Properties)
+                {
+                    note += property.Name + ". ";
+                }
+                nourishment.Name.Note = note;
+
                 Nourishments.Add(nourishment);
             }
         }

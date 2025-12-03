@@ -18,7 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class XtrnlWeaponsModel : ModelBase
     {
         // constructor
-        public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel/*, AmmoModel ammoModel*/)
+        public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel)
         {
             Weapons = new ObservableCollection<Weapon>();
             WeaponProperties = new ObservableCollection<WeaponProperty>();
@@ -163,6 +163,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 //
 
+                // Note
+                string note = "Type: " + weapon.Type;
+                note += "\nProperties: ";
+                foreach(WeaponProperty property in weapon.Properties)
+                {
+                    note += property.Name + ". ";
+                }
+                weapon.Name.Note = note;
+                //
+
                 Weapons.Add(weapon);
             }
             //
@@ -229,6 +239,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 //
 
+                // Note
+                string note = "Type: " + weapon.Type;
+                note += "\nAmmo: " + weapon.AmmoType;
+                note += "\nProperties: ";
+                foreach (WeaponProperty property in weapon.Properties)
+                {
+                    note += property.Name + ". ";
+                }
+                weapon.Name.Note = note;
+                //
+
                 Weapons.Add(weapon);
             }
             //
@@ -290,6 +311,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Weapon(
             WeaponType weaponType = WeaponType.Melee,
             string name = "NewWeapon",
+            string description = "",
             string type = "NoType",
             int cost = 0,
             int ap = 0,
@@ -313,7 +335,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             BulletSlots = new ObservableCollection<TypeWrap<bool>>();
 
             WeaponType = weaponType;
-            Name = new ModString("Name", name);
+            Name = new ModString("Name", name, false, description);
             Type = type;
             Cost = new ModInt("Cost", cost, true);
             AP = new ModInt("AP", ap, true);

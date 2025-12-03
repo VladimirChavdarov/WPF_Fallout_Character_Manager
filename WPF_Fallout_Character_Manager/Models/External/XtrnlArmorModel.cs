@@ -86,6 +86,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     decay: 0
                     );
 
+                newArmor.Name.Note = parts[7];
+
                 Armors.Add(newArmor);
             }
             //
@@ -107,6 +109,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     allottedTime: Int32.Parse(parts[6]),
                     decay: 0
                     );
+
+                newPowerArmor.Name.Note = "Power Armor is heavy duty, hydraulically engineered, full body armor. Power Armor operates as an extremely complicated piece of machinery that opens from the back, allowing its operator to step inside and become enveloped by the thick metal plating, acting as a pilot to a tank-like suit. Adding about a foot to their height, and extending their limbs by about half a foot. Even the lower end models of Power Armor provide immense protection and power to its wearer.";
 
                 PowerArmors.Add(newPowerArmor);
             }

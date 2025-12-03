@@ -53,6 +53,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetComponentsOfJunk(junk, parts[3]);
 
+                string note = "";
+                foreach(JunkComponent component in junk.Components)
+                {
+                    note += "x" + component.Amount.Total + " " + component.Name.Total + ", ";
+                }
+                if(note != "")
+                {
+                    note = note.Remove(note.Length - 2);
+                }
+                junk.Name.Note = note;
+
                 JunkItems.Add(junk);
             }
         }
@@ -70,7 +81,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 componentString = componentString.Replace(amountString, "");
                 string componentName = componentString.Trim();
 
-                JunkComponent componentRef = JunkComponents.FirstOrDefault(x => componentName.Contains(x.Name.BaseValue, StringComparison.InvariantCultureIgnoreCase));
+                JunkComponent componentRef = JunkComponents.FirstOrDefault(x => x.Name.BaseValue.Contains(componentName, StringComparison.InvariantCultureIgnoreCase));
                 if (componentRef != null)
                 {
                     JunkComponent componentToAdd = componentRef.Clone();

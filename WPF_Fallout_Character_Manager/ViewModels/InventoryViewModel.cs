@@ -157,6 +157,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             foreach(Item i in XtrnlWeaponsModel.Weapons) { Catalogue.Add(i); }
             foreach(Item i in XtrnlArmorModel.Armors) { Catalogue.Add(i); }
+            foreach(Item i in XtrnlArmorModel.PowerArmors) { Catalogue.Add(i); }
             foreach (Item i in XtrnlAmmoModel.Ammos) { Catalogue.Add(i); }
             foreach (Item i in XtrnlAidModel.AidItems) { Catalogue.Add(i); }
             foreach (Item i in XtrnlExplosivesModel.Explosives) { Catalogue.Add(i); }
@@ -165,7 +166,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in XtrnlJunkModel.JunkItems) { Catalogue.Add(i); }
 
             CatalogueView = CollectionViewSource.GetDefaultView(Catalogue);
-            CatalogueView.SortDescriptions.Add(new SortDescription(nameof(Item.NameAmount), ListSortDirection.Ascending));
+            CatalogueView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
 
             _searchText = "";
             SelectedCategory = Categories.First();
@@ -185,7 +186,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (SelectedCategory == "All" && item.NameString.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase))
                 return true;
 
-            if (SelectedCategory.Contains(obj.GetType().Name))
+            if (obj.GetType().Name.Contains(SelectedCategory))
             {
                 if(item != null && item.NameString.Contains(SearchText, StringComparison.InvariantCultureIgnoreCase))
                 {
