@@ -91,7 +91,7 @@
                 Grid.Row="3"
                 Style="{StaticResource FalloutInventoryTabsListBox}"
                 BorderBrush="{StaticResource FalloutGreen}"
-                BorderThickness="0 1 0 0"
+                BorderThickness="0 1 0 1"
                 Padding="0 5 0 0"
                 ItemsSource="{Binding FullInventoryView}">
 
@@ -112,17 +112,17 @@
 
                             <TextBlock
                                 Grid.Column="0"
-                                Text="{Binding NameString}"
+                                Text="{Binding NameAmount}"
                                 FontSize="9"
                                 TextWrapping="Wrap"
                                 Padding="0 0 10 0"/>
                             <TextBlock
                                 Grid.Column="1"
-                                Text="{Binding Cost.Total}"
+                                Text="{Binding TotalCost}"
                                 FontSize="9"/>
                             <TextBlock
                                 Grid.Column="2"
-                                Text="{Binding Load.Total}"
+                                Text="{Binding TotalLoad}"
                                 FontSize="9"/>
                         </Grid>
                     </DataTemplate>
