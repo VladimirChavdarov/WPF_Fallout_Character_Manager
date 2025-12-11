@@ -264,10 +264,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (selectedCategory == "All")
                 return true;
 
-            if (CategoryTypeMap.TryGetValue(selectedCategory, out Type categoryType))
-            {
-                return categoryType.IsInstanceOfType(item);
-            }
+            if (obj.GetType().Name.Contains(selectedCategory))
+                return true;
 
             return false;
         }
