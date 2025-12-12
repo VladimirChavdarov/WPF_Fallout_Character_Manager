@@ -301,15 +301,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void OpenAddToInventoryWindow(object obj)
         {
             dynamic dynamicItem = obj;
-            // the Clone function of the weapon also needs the AmmoModel
-            if (dynamicItem.GetType() == typeof(Weapon))
-            {
-                ItemToAddToInventory = dynamicItem.Clone(AmmoModel);
-            }
-            else
-            {
-                ItemToAddToInventory= dynamicItem.Clone();
-            }
+            ItemToAddToInventory= dynamicItem.Clone();
 
 
             ItemToAddToInventory.Amount.BaseValue += 1;

@@ -91,7 +91,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             // testing code
             Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
-            Weapon w1 = xtrnlW1.Clone(ammoModel);
+            Weapon w1 = xtrnlW1.Clone();
             w1.Amount.BaseValue = 5;
             w1.Name.BaseValue = "This is my custom assault rifle now";
             w1.Equipped = true;
@@ -99,7 +99,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             w1.Upgrades.Add(wu1);
             WeaponsModel.Weapons.Add(w1);
 
-            Ammo xtrnlA1 = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == "5mm");
+            Ammo xtrnlA1 = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ".308");
             Ammo a1 = xtrnlA1.Clone();
             a1.Amount.BaseValue = 50;
             AmmoEffect ae1 = xtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Name == "Match");

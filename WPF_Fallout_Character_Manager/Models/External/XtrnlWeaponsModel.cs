@@ -364,27 +364,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
         }
 
-        protected Weapon(Weapon other, AmmoModel ammoModel) : base(other)
+        protected Weapon(Weapon other) : base(other)
         {
             Properties = new ObservableCollection<WeaponProperty>(other.Properties);
             Upgrades = new ObservableCollection<WeaponUpgrade>(other.Upgrades);
-            //CompatibleAmmos = new ObservableCollection<Ammo>(); // handle this one separately
             BulletSlots = new ObservableCollection<TypeWrap<bool>>(); // we assume a new weapon always comes with an empty magazine
-
             CompatibleAmmos = new ObservableCollection<Ammo>();
-            foreach (Ammo ammo in other.CompatibleAmmos)
-            {
-                Ammo ammoInModel = ammoModel.Ammos.FirstOrDefault(x => x == ammo);
-                // this means the weapon probably comes from the XtrnlWeaponModel and we need to add the ammo to its Model alongside the weapon
-                if (ammoInModel == null)
-                {
-                    ammoInModel = ammo.Clone();
-                    ammoInModel.Amount.BaseValue = 300; // TODO: remove later, this is testing code. Right now, every newly added weapon will add 300 of its base ammo type.
-                    ammoModel.Ammos.Add(ammoInModel);
-                }
-
-                CompatibleAmmos.Add(ammoInModel);
-            }
 
             WeaponType = other.WeaponType;
             Type = other.Type;
@@ -573,7 +558,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public Weapon Clone(AmmoModel ammoModel) => new Weapon(this, ammoModel);
+        public Weapon Clone() => new Weapon(this);
 
         public void InitializeBulletSlots()
         {
