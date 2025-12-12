@@ -303,7 +303,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             dynamic dynamicItem = obj;
             ItemToAddToInventory= dynamicItem.Clone();
 
-
             ItemToAddToInventory.Amount.BaseValue += 1;
 
             var window = new AddToInventoryWindow();
@@ -323,7 +322,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (_typeToCollectionMap.TryGetValue(itemType, out IList collection))
             {
                 collection.Add(ItemToAddToInventory);
-                FullInventory.Add(ItemToAddToInventory); // Optional: also add to the master inventory view
+                FullInventory.Add(ItemToAddToInventory);
                 FullInventoryView.Refresh();
             }
             else
