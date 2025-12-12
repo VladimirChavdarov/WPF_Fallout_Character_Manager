@@ -10,27 +10,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_Fallout_Character_Manager.Controls.Panels
+namespace WPF_Fallout_Character_Manager.Windows
 {
     /// <summary>
-    /// Interaction logic for CataloguePanel.xaml
+    /// Interaction logic for AddToInventoryWindow.xaml
     /// </summary>
-    public partial class CataloguePanel : UserControl
+    public partial class AddToInventoryWindow : Window
     {
-        public CataloguePanel()
+        public AddToInventoryWindow()
         {
             InitializeComponent();
         }
 
-        private void ListBoxItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is ListBoxItem item && item.ContextMenu != null)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                item.ContextMenu.DataContext = this.DataContext; // UserControl's VM
+                DragMove();
             }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

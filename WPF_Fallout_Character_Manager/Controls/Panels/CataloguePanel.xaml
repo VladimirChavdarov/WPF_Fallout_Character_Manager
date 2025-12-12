@@ -98,13 +98,13 @@
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
                         <Setter Property="Tag" Value="{Binding Name.Note}" />
+                        <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
                         <Setter Property="ContextMenu">
                             <Setter.Value>
                                 <ContextMenu>
                                     <MenuItem Header="Add to Inventory"
-                                        Command="{Binding DataContext.EditCommand,
-                                        RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        CommandParameter="{Binding}"/>
+                                        Command="{Binding OpenAddToInventoryWindowCommand}"
+                                        CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                                 </ContextMenu>
                             </Setter.Value>
                         </Setter>

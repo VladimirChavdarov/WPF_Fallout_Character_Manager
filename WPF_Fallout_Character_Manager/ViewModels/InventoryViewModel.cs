@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Shell;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
+using WPF_Fallout_Character_Manager.Windows;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
@@ -38,17 +41,20 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private ObservableCollection<Item> Catalogue { get; } = new ObservableCollection<Item>();
         private ObservableCollection<Item> FullInventory { get; } = new ObservableCollection<Item>();
 
-        private static readonly Dictionary<string, Type> CategoryTypeMap = new()
-        {
-            { "Weapon", typeof(Weapon) },
-            { "Armor", typeof(Armor) },
-            { "Ammo", typeof(Ammo) },
-            { "Aid", typeof(Aid) },
-            { "Explosive", typeof(Explosive) },
-            { "Nourishment", typeof(Nourishment) },
-            { "Gear", typeof(Gear) },
-            { "Junk", typeof(Junk) },
-        };
+        private dynamic _itemToAddToInventory;
+
+        private Dictionary<Type, System.Collections.IList> _typeToCollectionMap { get; } = new Dictionary<Type, System.Collections.IList>();
+        //private readonly Dictionary<Type, IList<Item>> _typeToCollectionMap = new Dictionary<Type, IList<Item>>()
+        //{
+        //    { typeof(Weapon), WeaponsModel.Weapons },
+        //    { typeof(Armor), ArmorModel.Armors },
+        //    { typeof(Ammo), AmmoModel.Ammos },
+        //    { typeof(Aid), InventoryModel.AidItems },
+        //    { typeof(Explosive), InventoryModel.Explosives },
+        //    { typeof(Nourishment), InventoryModel.Nourishment },
+        //    { typeof(Gear), InventoryModel.GearItems },
+        //    { typeof(Junk), InventoryModel.JunkItems }
+        //};
         //
 
         // public variables
@@ -104,6 +110,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     RefreshInventoryView();
                 }
             }
+        }
+
+        public dynamic ItemToAddToInventory
+        {
+            get => _itemToAddToInventory;
+            set => Update(ref _itemToAddToInventory, value);
         }
 
         public InventoryModel InventoryModel
@@ -217,11 +229,24 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
             foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
 
+            _typeToCollectionMap.Add(typeof(Weapon), WeaponsModel.Weapons);
+            _typeToCollectionMap.Add(typeof(Armor), ArmorModel.Armors);
+            _typeToCollectionMap.Add(typeof(PowerArmor), ArmorModel.PowerArmors);
+            _typeToCollectionMap.Add(typeof(Ammo), AmmoModel.Ammos);
+            _typeToCollectionMap.Add(typeof(Aid), InventoryModel.AidItems);
+            _typeToCollectionMap.Add(typeof(Explosive), InventoryModel.Explosives);
+            _typeToCollectionMap.Add(typeof(Nourishment), InventoryModel.Nourishment);
+            _typeToCollectionMap.Add(typeof(Gear), InventoryModel.GearItems);
+            _typeToCollectionMap.Add(typeof(Junk), InventoryModel.JunkItems);
+
             CatalogueView = CollectionViewSource.GetDefaultView(Catalogue);
             CatalogueView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
 
             FullInventoryView = CollectionViewSource.GetDefaultView(FullInventory);
             FullInventoryView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
+
+            OpenAddToInventoryWindowCommand = new RelayCommand(OpenAddToInventoryWindow);
+            AddToInventoryCommand = new RelayCommand(AddToInventory);
 
             _searchCatalogueText = "";
             SelectedCatalogueCategory = Categories.First();
@@ -268,6 +293,51 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 return true;
 
             return false;
+        }
+        //
+
+        // commands
+        public RelayCommand OpenAddToInventoryWindowCommand { get; private set; }
+        private void OpenAddToInventoryWindow(object obj)
+        {
+            dynamic dynamicItem = obj;
+            // the Clone function of the weapon also needs the AmmoModel
+            if (dynamicItem.GetType() == typeof(Weapon))
+            {
+                ItemToAddToInventory = dynamicItem.Clone(AmmoModel);
+            }
+            else
+            {
+                ItemToAddToInventory= dynamicItem.Clone();
+            }
+
+
+            ItemToAddToInventory.Amount.BaseValue += 1;
+
+            var window = new AddToInventoryWindow();
+            window.DataContext = this;
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+            window.Left = mousePoint.X;
+            window.Top = mousePoint.Y;
+
+            window.ShowDialog();
+        }
+
+        public RelayCommand AddToInventoryCommand { get; private set; }
+        private void AddToInventory(object _ = null)
+        {
+            Type itemType = ItemToAddToInventory.GetType();
+
+            if (_typeToCollectionMap.TryGetValue(itemType, out IList collection))
+            {
+                collection.Add(ItemToAddToInventory);
+                FullInventory.Add(ItemToAddToInventory); // Optional: also add to the master inventory view
+                FullInventoryView.Refresh();
+            }
+            else
+            {
+                throw new Exception($"No collection found for item type {itemType.Name}");
+            }
         }
         //
     }

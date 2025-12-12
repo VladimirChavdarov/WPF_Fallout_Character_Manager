@@ -87,6 +87,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
         }
         //
 
+        // methods
+        public Gear Clone() => new Gear(this);
+        //
+
         // members
         private ModFloat _loadEquippedOrFull;
         public ModFloat LoadEquippedOrFull
