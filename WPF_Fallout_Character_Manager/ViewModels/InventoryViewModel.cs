@@ -44,6 +44,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private ObservableCollection<Item> FullInventory { get; } = new ObservableCollection<Item>();
 
         private dynamic _itemToAddToInventory;
+        private dynamic _selectedCatalogueItem;
+        private dynamic _selectedInventoryItem;
 
         private Dictionary<Type, IList> _typeToCollectionMap { get; } = new Dictionary<Type, IList>();
         //
@@ -109,9 +111,36 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set => Update(ref _itemToAddToInventory, value);
         }
 
+        public dynamic SelectedCatalogueItem
+        {
+            get => _selectedCatalogueItem;
+            set
+            {
+                Update(ref _selectedCatalogueItem, value);
+                if (_selectedCatalogueItem != null)
+                {
+                    SelectedInventoryItem = null;
+                }
+            }
+        }
+
+        public dynamic SelectedInventoryItem
+        {
+            get => _selectedInventoryItem;
+            set
+            {
+                Update(ref _selectedInventoryItem, value);
+                if (_selectedInventoryItem != null)
+                {
+                    SelectedCatalogueItem = null;
+                }
+            }
+        }
+
         public InventoryModel InventoryModel
         {
             get => _inventoryModel;
+            set => Update(ref _inventoryModel, value);
         }
 
         public WeaponsModel WeaponsModel
@@ -323,7 +352,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void OpenAddToInventoryWindow(object obj)
         {
             dynamic dynamicItem = obj;
-            ItemToAddToInventory= dynamicItem.Clone();
+            ItemToAddToInventory = dynamicItem.Clone();
 
             ItemToAddToInventory.Amount.BaseValue += 1;
 
