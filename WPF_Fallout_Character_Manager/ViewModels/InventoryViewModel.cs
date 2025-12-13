@@ -272,6 +272,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             OpenAddToInventoryWindowCommand = new RelayCommand(OpenAddToInventoryWindow);
             AddToInventoryCommand = new RelayCommand(AddToInventory);
+            AddPropertyCommand = new RelayCommand(AddProperty);
+            RemovePropertyCommand = new RelayCommand(RemoveProperty);
+            AddUpgradeCommand = new RelayCommand(AddUpgrade);
+            RemoveUpgradeCommand = new RelayCommand(RemoveUpgrade);
 
             _searchCatalogueText = "";
             SelectedCatalogueCategory = Categories.First();
@@ -382,6 +386,46 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 throw new Exception($"No collection found for item type {itemType.Name}");
             }
+        }
+
+        public RelayCommand AddPropertyCommand { get; private set; }
+        private void AddProperty(object obj)
+        {
+            if (obj == null)
+                return;
+
+            dynamic item = SelectedItem;
+            item.AddProperty(obj);
+        }
+
+        public RelayCommand RemovePropertyCommand { get; private set; }
+        private void RemoveProperty(object obj)
+        {
+            if (obj == null)
+                return;
+
+            dynamic item = SelectedItem;
+            item.RemoveProperty(obj);
+        }
+
+        public RelayCommand AddUpgradeCommand { get; private set; }
+        private void AddUpgrade(object obj)
+        {
+            if (obj == null)
+                return;
+
+            dynamic item = SelectedItem;
+            item.AddUpgrade(obj);
+        }
+
+        public RelayCommand RemoveUpgradeCommand { get; private set; }
+        private void RemoveUpgrade(object obj)
+        {
+            if (obj == null)
+                return;
+
+            dynamic item = SelectedItem;
+            item.RemoveUpgrade(obj);
         }
         //
     }

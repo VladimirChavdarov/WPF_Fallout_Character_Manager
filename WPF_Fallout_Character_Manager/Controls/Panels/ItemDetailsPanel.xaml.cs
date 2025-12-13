@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.ViewModels;
 
 namespace WPF_Fallout_Character_Manager.Controls.Panels
 {
@@ -23,6 +24,23 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
         public ItemDetailsPanel()
         {
             InitializeComponent();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // NOTE: Make sure this doesn't cause a race condition with the command bound to the combo boxes for adding properties and upgrades
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.SelectedItem = null;
+            }
+        }
+
+        private void ListBoxItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (sender is ListBoxItem item && item.ContextMenu != null)
+            {
+                item.ContextMenu.DataContext = this.DataContext;
+            }
         }
     }
 }

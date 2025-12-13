@@ -569,6 +569,59 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
+        public void AddProperty(object obj)
+        {
+            if(obj is  WeaponProperty propertyToAdd)
+            {
+                Properties.Add(propertyToAdd);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveProperty(object obj)
+        {
+            if (obj is WeaponProperty propertyToRemove)
+            {
+                Properties.Remove(propertyToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void AddUpgrade(object obj)
+        {
+            if (obj is WeaponUpgrade upgradeToAdd)
+            {
+                if(TakenUpgradeSlots.Total + upgradeToAdd.SlotCost > AvailableUpgradeSlots.Total)
+                {
+                    return;
+                }
+
+                Upgrades.Add(upgradeToAdd);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveUpgrade(object obj)
+        {
+            if (obj is WeaponUpgrade upgradeToRemove)
+            {
+                Upgrades.Remove(upgradeToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
         private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ScaleWeaponWithDecay();
@@ -586,7 +639,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void Upgrades_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            TakenUpgradeSlots.BaseValue = Upgrades.Count;
+            TakenUpgradeSlots.BaseValue = 0;
+            foreach (WeaponUpgrade upgrade in Upgrades)
+            {
+                TakenUpgradeSlots.BaseValue += upgrade.SlotCost;
+            }
         }
 
         private void TakenUpgradeSlots_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -155,7 +155,7 @@
                         HorizontalAlignment="Center"
                         Text="{Binding InventoryModel.Caps.Total, Mode=OneWay}"
                         Hint="{Binding InventoryModel.Caps.Note}"
-                        IsReadOnly="{Binding InventoryModel.Caps.IsBaseValueReadOnly}"
+                        IsReadOnly="True"
                         ModValue="{Binding InventoryModel.Caps}"/>
                 </StackPanel>
                 

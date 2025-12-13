@@ -98,7 +98,7 @@
 
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
-                        <Setter Property="Tag" Value="{Binding Name.Note}" />
+                        <Setter Property="Tag" Value="{Binding Name.Note}"/>
                         <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
                         <Setter Property="ContextMenu">
                             <Setter.Value>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              xmlns:xtrnl="clr-namespace:WPF_Fallout_Character_Manager.Models.External"
@@ -15,8 +16,7 @@
         <DataTemplate DataType="{x:Type xtrnl:Weapon}">
             <StackPanel
                 DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                <Grid
-                    Grid.Row="1">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="85"/>
                         <ColumnDefinition Width="105"/>
@@ -126,6 +126,264 @@
                         ModValue ="{Binding SelectedItem.RangeMultiplier}"
                         Text="{Binding SelectedItem.RangeMultiplier.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.RangeMultiplier.Note}"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Column="0"
+                        Margin="5 10 5 0">
+                        <StackPanel
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                Content="Decay:"/>
+                            <control:UpDownTextBoxControl x:Name="Decay"
+                                FontSize="11"
+                                MinusButtonSlot="0"
+                                PlusButtonSlot="2"
+                                TextBoxSlot="1"
+                                MinValue="0"
+                                MaxValue="10"
+                                IsReadOnly="{Binding SelectedItem.Decay.IsBaseValueReadOnly}"
+                                ModValue="{Binding SelectedItem.Decay}"
+                                Text="{Binding SelectedItem.Decay.BaseValue}"
+                                Hint="{Binding SelectedItem.Decay.Note}"
+                                CanOpenModal="False"/>
+                        </StackPanel>
+
+                        <control:TextBoxWithLabelControl
+                            Orientation="Horizontal"
+                            Margin="0 10 0 0"
+                            VerticalAlignment="Top"
+                            MinWidth="45"
+                            LabelFontSize="11"
+                            LabelText="STR Req:"
+                            IsReadOnly="{Binding SelectedItem.StrRequirement.IsBaseValueReadOnly}"
+                            ModValue ="{Binding SelectedItem.StrRequirement}"
+                            Text="{Binding SelectedItem.StrRequirement.Total, Mode=OneWay}"
+                            Hint="{Binding SelectedItem.StrRequirement.Note}"/>
+
+                        <control:TextBoxWithLabelControl
+                            Orientation="Horizontal"
+                            Margin="0 15 0 0"
+                            VerticalAlignment="Top"
+                            MinWidth="45"
+                            LabelFontSize="11"
+                            LabelText="Ammo Capacity:"
+                            IsReadOnly="{Binding SelectedItem.NumberOfAttacks.IsBaseValueReadOnly}"
+                            ModValue ="{Binding SelectedItem.NumberOfAttacks}"
+                            Text="{Binding SelectedItem.NumberOfAttacks.Total, Mode=OneWay}"
+                            Hint="{Binding SelectedItem.NumberOfAttacks.Note}"/>
+
+                        <StackPanel
+                            Orientation="Vertical"
+                            Margin="0 15 0 0">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="11"
+                                Content="Compatible Ammo: "/>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="9"
+                                Content="{Binding SelectedItem.AmmoType}"/>
+                        </StackPanel>
+                        
+                        <ListBox
+                            Style="{StaticResource FalloutInventoryTabsListBox}"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1"
+                            Padding="5"
+                            Height="100"
+                            ItemsSource="{Binding SelectedItem.CompatibleAmmos}">
+                            
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                    <Setter Property="Tag" Value="{Binding Name.Note}"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Text="{Binding NameAmountEffects}"
+                                        FontSize="9"
+                                        TextWrapping="Wrap"
+                                        Padding="0 0 10 0"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="5 10 5 0">
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            Content="Properties"/>
+
+                        <ListBox
+                            Style="{StaticResource FalloutInventoryTabsListBox}"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1"
+                            Padding="5"
+                            Height="160"
+                            ItemsSource="{Binding SelectedItem.Properties}">
+
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                    <Setter Property="Tag" Value="{Binding Note}"/>
+                                    <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <ContextMenu>
+                                                <MenuItem Header="Delete"
+                                                    Command="{Binding RemovePropertyCommand}"
+                                                    CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                            </ContextMenu>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Text="{Binding Name}"
+                                        FontSize="9"
+                                        Width="160"
+                                        TextWrapping="Wrap"
+                                        Padding="0 0 10 0"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            Margin="0 15 0 0"
+                            Content="Add Property:"/>
+
+                        <ComboBox
+                            Margin="5"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            MinWidth="180"
+                            Width="Auto"
+                            ItemsSource="{Binding XtrnlWeaponsModel.WeaponProperties}"
+                            DisplayMemberPath="Name"
+                            Tag="Properties"
+                            SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                    <Setter Property="Tag" Value="{Binding Note}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding AddPropertyCommand}"
+                                        CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="5 10 5 0">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                Content="Upgrades: "
+                                FontSize="10"/>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                Content="{Binding SelectedItem.UpgradeSlotVisualization}"
+                                FontSize="10"/>
+                        </StackPanel>
+
+                        <ListBox
+                            Style="{StaticResource FalloutInventoryTabsListBox}"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1"
+                            Padding="5"
+                            Height="160"
+                            ItemsSource="{Binding SelectedItem.Upgrades}">
+
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                    <Setter Property="Tag" Value="{Binding Note}"/>
+                                    <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <ContextMenu>
+                                                <MenuItem Header="Delete"
+                                                    Command="{Binding RemoveUpgradeCommand}"
+                                                    CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                            </ContextMenu>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Text="{Binding Name}"
+                                        FontSize="9"
+                                        Width="160"
+                                        TextWrapping="Wrap"
+                                        Padding="0 0 10 0"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="10"
+                            Margin="0 15 0 0"
+                            Content="Add Upgrade:"/>
+
+                        <ComboBox
+                            Margin="5"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            MinWidth="180"
+                            Width="Auto"
+                            ItemsSource="{Binding XtrnlWeaponsModel.WeaponUpgrades}"
+                            DisplayMemberPath="Name"
+                            Tag="Upgrades"
+                            SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                    <Setter Property="Tag" Value="{Binding Note}"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding AddUpgradeCommand}"
+                                        CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </DataTemplate>

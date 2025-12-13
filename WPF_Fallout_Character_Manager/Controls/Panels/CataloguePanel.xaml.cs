@@ -29,7 +29,7 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
         {
             if (sender is ListBoxItem item && item.ContextMenu != null)
             {
-                item.ContextMenu.DataContext = this.DataContext; // UserControl's VM
+                item.ContextMenu.DataContext = this.DataContext;
             }
         }
     }
