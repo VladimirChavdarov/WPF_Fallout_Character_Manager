@@ -11,21 +11,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="BaseItemTemplate">
+        <!--<DataTemplate x:Key="BaseItemTemplate">
             <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Margin="8">
                 <control:EnhancedTextBox
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Padding="2, 3"
                     FontSize="15"
-                    IsReadOnly="{Binding Name.IsBaseValueReadOnly}"
-                    Text="{Binding Name.Total, Mode=OneWay}"
-                    Hint="{Binding Name.Note}"
-                    ModValue="{Binding Name}"/>
+                    IsReadOnly="True"
+                    Text="{Binding SelectedItem.Name.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedItem.Name.Note}"
+                    ModValue="{Binding SelectedItem.Name}"/>
 
                 <Grid
-                    Margin="0 10 0 0">
+                    Margin="0 15 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="200"/>
@@ -37,53 +38,54 @@
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         LabelFontSize="11"
-                        IsReadOnly="{Binding Amount.IsBaseValueReadOnly}"
-                        LabelText="{Binding Amount.Name}"
-                        Text="{Binding Amount.Total, Mode=OneWay}"
-                        Hint="{Binding Amount.Note}"
-                        ModValue="{Binding Amount}"/>
+                        IsReadOnly="{Binding SelectedItem.Amount.IsBaseValueReadOnly}"
+                        LabelText="{Binding SelectedItem.Amount.Name}"
+                        Text="{Binding SelectedItem.Amount.BaseValue}"
+                        Hint="{Binding SelectedItem.Amount.Note}"
+                        ModValue="{Binding SelectedItem.Amount}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="1"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         LabelFontSize="11"
-                        IsReadOnly="{Binding Cost.IsBaseValueReadOnly}"
-                        LabelText="{Binding Cost.Name}"
-                        Text="{Binding Cost.Total, Mode=OneWay}"
-                        Hint="{Binding Cost.Note}"
-                        ModValue="{Binding Cost}"/>
+                        IsReadOnly="{Binding SelectedItem.Cost.IsBaseValueReadOnly}"
+                        LabelText="{Binding SelectedItem.Cost.Name}"
+                        Text="{Binding SelectedItem.Cost.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.Cost.Note}"
+                        ModValue="{Binding SelectedItem.Cost}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="2"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         LabelFontSize="11"
-                        IsReadOnly="{Binding Load.IsBaseValueReadOnly}"
-                        LabelText="{Binding Load.Name}"
-                        Text="{Binding Load.Total, Mode=OneWay}"
-                        Hint="{Binding Load.Note}"
-                        ModValue="{Binding Load}"/>
+                        IsReadOnly="{Binding SelectedItem.Load.IsBaseValueReadOnly}"
+                        LabelText="{Binding SelectedItem.Load.Name}"
+                        Text="{Binding SelectedItem.Load.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.Load.Note}"
+                        ModValue="{Binding SelectedItem.Load}"/>
                 </Grid>
 
                 <ContentControl x:Name="DerivedContent"
                     Content="{Binding}"/>
             </StackPanel>
-        </DataTemplate>
+        </DataTemplate>-->
 
         <DataTemplate DataType="{x:Type xtrnl:Weapon}">
-            <ContentControl Content="{Binding}"
-                    ContentTemplate="{StaticResource BaseItemTemplate}">
-                <ContentControl.Resources>
-
-                    <DataTemplate DataType="{x:Type xtrnl:Weapon}">
-                        <StackPanel Margin="8">
-
-                        </StackPanel>
-                    </DataTemplate>
-
-                </ContentControl.Resources>
-            </ContentControl>
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Margin="8">
+                <control:TextBoxWithLabelControl
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    LabelFontSize="11"
+                    IsReadOnly="{Binding SelectedItem.AP.IsBaseValueReadOnly}"
+                    LabelText="{Binding SelectedItem.AP.Name}"
+                    Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
+                    Hint="{Binding SelectedItem.AP.Note}"
+                    ModValue="{Binding SelectedItem.AP}"/>
+            </StackPanel>
         </DataTemplate>
 
     </UserControl.Resources>
@@ -96,7 +98,65 @@
         BorderThickness="1">
         <ScrollViewer>
             <Grid>
-                <ContentControl Content="{Binding SelectedItem}"/>
+                <StackPanel>
+                    <StackPanel
+                        Margin="8">
+                        <control:EnhancedTextBox
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Padding="2, 3"
+                            FontSize="15"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedItem.Name.Total, Mode=OneWay}"
+                            Hint="{Binding SelectedItem.Name.Note}"
+                            ModValue="{Binding SelectedItem.Name}"/>
+
+                        <Grid
+                            Margin="0 15 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+
+                            <control:TextBoxWithLabelControl
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal"
+                                LabelFontSize="11"
+                                IsReadOnly="{Binding SelectedItem.Amount.IsBaseValueReadOnly}"
+                                LabelText="{Binding SelectedItem.Amount.Name}"
+                                Text="{Binding SelectedItem.Amount.BaseValue}"
+                                Hint="{Binding SelectedItem.Amount.Note}"
+                                ModValue="{Binding SelectedItem.Amount}"/>
+
+                            <control:TextBoxWithLabelControl
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                LabelFontSize="11"
+                                IsReadOnly="{Binding SelectedItem.Cost.IsBaseValueReadOnly}"
+                                LabelText="{Binding SelectedItem.Cost.Name}"
+                                Text="{Binding SelectedItem.Cost.Total, Mode=OneWay}"
+                                Hint="{Binding SelectedItem.Cost.Note}"
+                                ModValue="{Binding SelectedItem.Cost}"/>
+
+                            <control:TextBoxWithLabelControl
+                                Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                LabelFontSize="11"
+                                IsReadOnly="{Binding SelectedItem.Load.IsBaseValueReadOnly}"
+                                LabelText="{Binding SelectedItem.Load.Name}"
+                                Text="{Binding SelectedItem.Load.Total, Mode=OneWay}"
+                                Hint="{Binding SelectedItem.Load.Note}"
+                                ModValue="{Binding SelectedItem.Load}"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <ContentControl Content="{Binding SelectedItem}"/>
+                </StackPanel>
+                
             </Grid>
         </ScrollViewer>
     </GroupBox>
