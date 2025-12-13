@@ -180,7 +180,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 case "Big Gun":
                     SetToHitBaseValue(Skill.Guns);
                     break;
-
                 case "Energy":
                     SetToHitBaseValue(Skill.EnergyWeapons);
                     break;

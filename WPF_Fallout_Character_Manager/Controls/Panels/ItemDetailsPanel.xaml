@@ -15,15 +15,118 @@
         <DataTemplate DataType="{x:Type xtrnl:Weapon}">
             <StackPanel
                 DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                <control:TextBoxWithLabelControl
-                    HorizontalAlignment="Left"
-                    Orientation="Horizontal"
-                    LabelFontSize="11"
-                    IsReadOnly="{Binding SelectedItem.AP.IsBaseValueReadOnly}"
-                    LabelText="{Binding SelectedItem.AP.Name}"
-                    Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
-                    Hint="{Binding SelectedItem.AP.Note}"
-                    ModValue="{Binding SelectedItem.AP}"/>
+                <Grid
+                    Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="105"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="0"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="55"
+                        TextWrapping="NoWrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="AP:"
+                        IsReadOnly="{Binding SelectedItem.AP.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.AP}"
+                        Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.AP.Note}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="75"
+                        TextWrapping="NoWrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="To Hit:"
+                        IsReadOnly="{Binding SelectedItem.ToHit.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.ToHit}"
+                        Text="{Binding SelectedItem.ToHit.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.ToHit.Note}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="2"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="190"
+                        TextWrapping="NoWrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Damage:"
+                        IsReadOnly="{Binding SelectedItem.Damage.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.Damage}"
+                        Text="{Binding SelectedItem.Damage.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.Damage.Note}"/>
+
+                    <StackPanel
+                        Grid.Column="3"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="80">
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="11"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Content="Crit:"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition Width="55"/>
+                            </Grid.ColumnDefinitions>
+
+                            <control:EnhancedTextBox
+                                Grid.Column="0"
+                                HorizontalContentAlignment="Left"
+                                VerticalAlignment="Top"
+                                Width="35"
+                                TextWrapping="NoWrap"
+                                IsReadOnly="{Binding SelectedItem.CritChance.IsBaseValueReadOnly}"
+                                ModValue ="{Binding SelectedItem.CritChance}"
+                                Text="{Binding SelectedItem.CritChance.BaseValue}"
+                                Hint="{Binding SelectedItem.CritChance.Note}"/>
+
+                            <control:EnhancedTextBox
+                                Grid.Column="1"
+                                HorizontalContentAlignment="Left"
+                                VerticalAlignment="Top"
+                                Width="50"
+                                TextWrapping="NoWrap"
+                                IsReadOnly="{Binding SelectedItem.CritDamage.IsBaseValueReadOnly}"
+                                ModValue ="{Binding SelectedItem.CritDamage}"
+                                Text="{Binding SelectedItem.CritDamage.BaseValue}"
+                                Hint="{Binding SelectedItem.CritDamage.Note}"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="4"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="80"
+                        TextWrapping="NoWrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Range:"
+                        IsReadOnly="{Binding SelectedItem.RangeMultiplier.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.RangeMultiplier}"
+                        Text="{Binding SelectedItem.RangeMultiplier.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.RangeMultiplier.Note}"/>
+                </Grid>
             </StackPanel>
         </DataTemplate>
 
@@ -59,18 +162,18 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <control:TextBoxWithLabelControl
+                            <control:UpDownTextBoxWithLabelControl
                                 Grid.Column="0"
                                 Margin="5"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
                                 LabelFontSize="11"
-                                IsReadOnly="{Binding SelectedItem.Amount.IsBaseValueReadOnly}"
                                 LabelText="{Binding SelectedItem.Amount.Name}"
                                 Text="{Binding SelectedItem.Amount.BaseValue}"
-                                Hint="{Binding SelectedItem.Amount.Note}"
-                                ModValue="{Binding SelectedItem.Amount}"/>
+                                ModValue="{Binding SelectedItem.Amount}"
+                                IsReadOnly="{Binding SelectedItem.Amount.IsBaseValueReadOnly}"
+                                CanOpenModal="False"/>
 
                             <StackPanel
                                 Grid.Column="1"
