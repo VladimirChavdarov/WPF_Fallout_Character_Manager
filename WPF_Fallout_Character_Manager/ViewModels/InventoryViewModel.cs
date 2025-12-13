@@ -137,6 +137,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
+        public object SelectedItem => SelectedInventoryItem ?? SelectedCatalogueItem;
+
         public InventoryModel InventoryModel
         {
             get => _inventoryModel;

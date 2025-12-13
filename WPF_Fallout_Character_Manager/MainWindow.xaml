@@ -208,16 +208,10 @@
                                     <RowDefinition Height="500"/>
                                     <RowDefinition Height="260"/>
                                 </Grid.RowDefinitions>
-                                
-                                <GroupBox
-                                    Header="Item Information"
-                                    Grid.Row="0"
-                                    Margin="5"
-                                    Background="Black"
-                                    BorderBrush="#23ba03"
-                                    BorderThickness="1">
 
-                                </GroupBox>
+                                <panels:ItemDetailsPanel
+                                    Grid.Row="0"
+                                    DataContext="{Binding InventoryViewModel}"/>
 
                                 <GroupBox
                                     Header="Spend Junk"
