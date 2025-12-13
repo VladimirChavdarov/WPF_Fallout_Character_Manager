@@ -86,7 +86,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                                      XtrnlExplosivesModel,
                                      XtrnlNourishmentModel,
                                      XtrnlGearModel,
-                                     XtrnlJunkModel);
+                                     XtrnlJunkModel,
+                                     SPECIALModel);
         }
         //
     }

@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <control:TextBoxWithLabelControl
@@ -128,6 +129,71 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <Grid
+                Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    FlowDirection="LeftToRight"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="0 5 0 0">
+                    <Image
+                        Source="/Resources/bottlecap_currency_icon.png"
+                        Width="25"
+                        Height="25"
+                        Margin="0 0 5 0"/>
+                    <control:EnhancedTextBox
+                        FontSize="13"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Text="{Binding InventoryModel.Caps.Total, Mode=OneWay}"
+                        Hint="{Binding InventoryModel.Caps.Note}"
+                        IsReadOnly="{Binding InventoryModel.Caps.IsBaseValueReadOnly}"
+                        ModValue="{Binding InventoryModel.Caps}"/>
+                </StackPanel>
+                
+                <StackPanel
+                    Grid.Column="1"
+                    FlowDirection="LeftToRight"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0 5 0 0">
+                    <Image
+                        Source="/Resources/carry_load_icon.png"
+                        Width="25"
+                        Height="25"
+                        Margin="0 0 5 0"/>
+                    <control:EnhancedTextBox
+                        FontSize="13"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Text="{Binding InventoryModel.CurrentLoad.Total, Mode=OneWay}"
+                        Hint="{Binding InventoryModel.CurrentLoad.Note}"
+                        IsReadOnly="{Binding InventoryModel.CurrentLoad.IsBaseValueReadOnly}"
+                        ModValue="{Binding InventoryModel.CurrentLoad}"
+                        CanOpenModal="False"/>
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="13"
+                        VerticalAlignment="Center"
+                        Content="/"/>
+                    <control:EnhancedTextBox x:Name="MaxHealthPoints"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Padding="2, 3"
+                        FontSize="13"
+                        IsReadOnly="{Binding InventoryModel.CarryLoad.IsBaseValueReadOnly}"
+                        Text="{Binding InventoryModel.CarryLoad.Total, Mode=OneWay}"
+                        Hint="{Binding InventoryModel.CarryLoad.Note}"
+                        ModValue="{Binding InventoryModel.CarryLoad}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </GroupBox>
 </UserControl>

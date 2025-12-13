@@ -34,6 +34,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private XtrnlGearModel _xtrnlGearModel;
         private XtrnlJunkModel _xtrnlJunkModel;
 
+        private SPECIALModel _specialModel;
+
         private string _selectedCatalogueCategory;
         private string _searchCatalogueText;
         private string _selectedInventoryCategory;
@@ -43,18 +45,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private dynamic _itemToAddToInventory;
 
-        private Dictionary<Type, System.Collections.IList> _typeToCollectionMap { get; } = new Dictionary<Type, System.Collections.IList>();
-        //private readonly Dictionary<Type, IList<Item>> _typeToCollectionMap = new Dictionary<Type, IList<Item>>()
-        //{
-        //    { typeof(Weapon), WeaponsModel.Weapons },
-        //    { typeof(Armor), ArmorModel.Armors },
-        //    { typeof(Ammo), AmmoModel.Ammos },
-        //    { typeof(Aid), InventoryModel.AidItems },
-        //    { typeof(Explosive), InventoryModel.Explosives },
-        //    { typeof(Nourishment), InventoryModel.Nourishment },
-        //    { typeof(Gear), InventoryModel.GearItems },
-        //    { typeof(Junk), InventoryModel.JunkItems }
-        //};
+        private Dictionary<Type, IList> _typeToCollectionMap { get; } = new Dictionary<Type, IList>();
         //
 
         // public variables
@@ -193,7 +184,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             XtrnlExplosivesModel xtrnlExplosivesModel,
             XtrnlNourishmentModel xtrnlNourishmentModel,
             XtrnlGearModel xtrnlGearModel,
-            XtrnlJunkModel xtrnlJunkModel)
+            XtrnlJunkModel xtrnlJunkModel,
+            SPECIALModel specialModel)
         {
             _inventoryModel = inventoryModel;
             _weaponsModel = weaponsModel;
@@ -209,9 +201,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _xtrnlGearModel = xtrnlGearModel;
             _xtrnlJunkModel = xtrnlJunkModel;
 
-            foreach(Item i in XtrnlWeaponsModel.Weapons) { Catalogue.Add(i); }
-            foreach(Item i in XtrnlArmorModel.Armors) { Catalogue.Add(i); }
-            foreach(Item i in XtrnlArmorModel.PowerArmors) { Catalogue.Add(i); }
+            _specialModel = specialModel;
+
+            foreach (Item i in XtrnlWeaponsModel.Weapons) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlArmorModel.Armors) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlArmorModel.PowerArmors) { Catalogue.Add(i); }
             foreach (Item i in XtrnlAmmoModel.Ammos) { Catalogue.Add(i); }
             foreach (Item i in XtrnlAidModel.AidItems) { Catalogue.Add(i); }
             foreach (Item i in XtrnlExplosivesModel.Explosives) { Catalogue.Add(i); }
@@ -219,7 +213,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in XtrnlGearModel.GearItems) { Catalogue.Add(i); }
             foreach (Item i in XtrnlJunkModel.JunkItems) { Catalogue.Add(i); }
 
-            foreach(Item i in WeaponsModel.Weapons) { FullInventory.Add(i); }
+            foreach (Item i in WeaponsModel.Weapons) { FullInventory.Add(i); }
             foreach (Item i in ArmorModel.Armors) { FullInventory.Add(i); }
             foreach (Item i in ArmorModel.PowerArmors) { FullInventory.Add(i); }
             foreach (Item i in AmmoModel.Ammos) { FullInventory.Add(i); }
@@ -254,6 +248,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _searchInventoryText = "";
             SelectedInventoryCategory = Categories.First();
             FullInventoryView.Filter = FilterInventory;
+
+            _specialModel.PropertyChanged += _specialModel_PropertyChanged;
+            InventoryModel.CarryLoad.BaseValue = _specialModel.Strength.Total * 10.0f;
+
+            FullInventory.CollectionChanged += FullInventory_CollectionChanged;
+            CalculateCurrentLoad();
         }
         //
 
@@ -293,6 +293,28 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 return true;
 
             return false;
+        }
+
+        private void CalculateCurrentLoad()
+        {
+            InventoryModel.CurrentLoad.BaseValue = 0.0f;
+            foreach (Item item in FullInventory)
+            {
+                InventoryModel.CurrentLoad.BaseValue += item.TotalLoad;
+            }
+        }
+
+        private void _specialModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SPECIALModel.Strength))
+            {
+                InventoryModel.CarryLoad.BaseValue = _specialModel.Strength.Total * 10.0f;
+            }
+        }
+
+        private void FullInventory_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            CalculateCurrentLoad();
         }
         //
 
