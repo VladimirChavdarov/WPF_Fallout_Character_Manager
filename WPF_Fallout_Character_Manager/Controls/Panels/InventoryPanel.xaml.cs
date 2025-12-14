@@ -24,5 +24,13 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
         {
             InitializeComponent();
         }
+
+        private void ListBoxItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (sender is ListBoxItem item && item.ContextMenu != null)
+            {
+                item.ContextMenu.DataContext = this.DataContext;
+            }
+        }
     }
 }

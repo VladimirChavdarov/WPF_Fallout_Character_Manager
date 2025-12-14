@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <control:TextBoxWithLabelControl
@@ -139,6 +140,18 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <Button
+                Grid.Row="4"
+                Style="{StaticResource FalloutHighlightedButton}"
+                Content="New Item Template"
+                Margin="10"
+                Padding="5"
+                Width="150"
+                FontSize="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Command="{Binding DataContext.AddToInventoryCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
         </Grid>
     </GroupBox>
 </UserControl>

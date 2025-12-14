@@ -298,6 +298,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             OpenAddToInventoryWindowCommand = new RelayCommand(OpenAddToInventoryWindow);
             AddToInventoryCommand = new RelayCommand(AddToInventory);
+            RemoveFromInventoryCommand = new RelayCommand(RemoveFromInventory);
+
             AddPropertyCommand = new RelayCommand(AddProperty);
             RemovePropertyCommand = new RelayCommand(RemoveProperty);
             AddUpgradeCommand = new RelayCommand(AddUpgrade);
@@ -454,6 +456,21 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             else
             {
                 throw new Exception($"No collection found for item type {itemType.Name}");
+            }
+        }
+
+        public RelayCommand RemoveFromInventoryCommand { get; private set; }
+        private void RemoveFromInventory(object _ = null)
+        {
+            Type itemType = SelectedItem.GetType();
+
+            if (_typeToCollectionMap.TryGetValue(itemType, out IList collection))
+            {
+                collection.Remove(SelectedItem);
+                if(SelectedItem is  Item item)
+                {
+                    FullInventory.Remove(item);
+                }
             }
         }
 
