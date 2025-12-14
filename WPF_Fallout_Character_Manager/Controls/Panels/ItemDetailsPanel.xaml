@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              xmlns:xtrnl="clr-namespace:WPF_Fallout_Character_Manager.Models.External"
              xmlns:inventory="clr-namespace:WPF_Fallout_Character_Manager.Models.External.Inventory"
@@ -12,6 +13,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
+        
+        <conv:InvertBoolConverter x:Key="InvertBoolConverter"/>
+        <conv:VisibilitySwitcherConverter x:Key="VisibilitySwitcherConverter"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
         <DataTemplate DataType="{x:Type xtrnl:Weapon}">
             <StackPanel
@@ -38,7 +43,8 @@
                         IsReadOnly="{Binding SelectedItem.AP.IsBaseValueReadOnly}"
                         ModValue ="{Binding SelectedItem.AP}"
                         Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
-                        Hint="{Binding SelectedItem.AP.Note}"/>
+                        Hint="{Binding SelectedItem.AP.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="1"
@@ -53,7 +59,8 @@
                         IsReadOnly="{Binding SelectedItem.ToHit.IsBaseValueReadOnly}"
                         ModValue ="{Binding SelectedItem.ToHit}"
                         Text="{Binding SelectedItem.ToHit.Total, Mode=OneWay}"
-                        Hint="{Binding SelectedItem.ToHit.Note}"/>
+                        Hint="{Binding SelectedItem.ToHit.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="2"
@@ -68,7 +75,8 @@
                         IsReadOnly="{Binding SelectedItem.Damage.IsBaseValueReadOnly}"
                         ModValue ="{Binding SelectedItem.Damage}"
                         Text="{Binding SelectedItem.Damage.Total, Mode=OneWay}"
-                        Hint="{Binding SelectedItem.Damage.Note}"/>
+                        Hint="{Binding SelectedItem.Damage.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                     <StackPanel
                         Grid.Column="3"
@@ -97,7 +105,8 @@
                                 IsReadOnly="{Binding SelectedItem.CritChance.IsBaseValueReadOnly}"
                                 ModValue ="{Binding SelectedItem.CritChance}"
                                 Text="{Binding SelectedItem.CritChance.BaseValue}"
-                                Hint="{Binding SelectedItem.CritChance.Note}"/>
+                                Hint="{Binding SelectedItem.CritChance.Note}"
+                                CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                             <control:EnhancedTextBox
                                 Grid.Column="1"
@@ -108,7 +117,8 @@
                                 IsReadOnly="{Binding SelectedItem.CritDamage.IsBaseValueReadOnly}"
                                 ModValue ="{Binding SelectedItem.CritDamage}"
                                 Text="{Binding SelectedItem.CritDamage.BaseValue}"
-                                Hint="{Binding SelectedItem.CritDamage.Note}"/>
+                                Hint="{Binding SelectedItem.CritDamage.Note}"
+                                CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
                         </Grid>
                     </StackPanel>
 
@@ -125,7 +135,8 @@
                         IsReadOnly="{Binding SelectedItem.RangeMultiplier.IsBaseValueReadOnly}"
                         ModValue ="{Binding SelectedItem.RangeMultiplier}"
                         Text="{Binding SelectedItem.RangeMultiplier.Total, Mode=OneWay}"
-                        Hint="{Binding SelectedItem.RangeMultiplier.Note}"/>
+                        Hint="{Binding SelectedItem.RangeMultiplier.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
                 </Grid>
 
                 <Grid>
@@ -153,7 +164,7 @@
                                 TextBoxSlot="1"
                                 MinValue="0"
                                 MaxValue="10"
-                                IsReadOnly="{Binding SelectedItem.Decay.IsBaseValueReadOnly}"
+                                IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                 ModValue="{Binding SelectedItem.Decay}"
                                 Text="{Binding SelectedItem.Decay.BaseValue}"
                                 Hint="{Binding SelectedItem.Decay.Note}"
@@ -170,7 +181,8 @@
                             IsReadOnly="{Binding SelectedItem.StrRequirement.IsBaseValueReadOnly}"
                             ModValue ="{Binding SelectedItem.StrRequirement}"
                             Text="{Binding SelectedItem.StrRequirement.Total, Mode=OneWay}"
-                            Hint="{Binding SelectedItem.StrRequirement.Note}"/>
+                            Hint="{Binding SelectedItem.StrRequirement.Note}"
+                            CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                         <control:TextBoxWithLabelControl
                             Orientation="Horizontal"
@@ -182,7 +194,8 @@
                             IsReadOnly="{Binding SelectedItem.NumberOfAttacks.IsBaseValueReadOnly}"
                             ModValue ="{Binding SelectedItem.NumberOfAttacks}"
                             Text="{Binding SelectedItem.NumberOfAttacks.Total, Mode=OneWay}"
-                            Hint="{Binding SelectedItem.NumberOfAttacks.Note}"/>
+                            Hint="{Binding SelectedItem.NumberOfAttacks.Note}"
+                            CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                         <StackPanel
                             Orientation="Vertical"
@@ -273,6 +286,7 @@
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             Margin="0 15 0 0"
+                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                             Content="Add Property:"/>
 
                         <ComboBox
@@ -284,6 +298,7 @@
                             ItemsSource="{Binding XtrnlWeaponsModel.WeaponProperties}"
                             DisplayMemberPath="Name"
                             Tag="Properties"
+                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                             SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -357,6 +372,7 @@
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             Margin="0 15 0 0"
+                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                             Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -368,6 +384,7 @@
                             ItemsSource="{Binding XtrnlWeaponsModel.WeaponUpgrades}"
                             DisplayMemberPath="Name"
                             Tag="Upgrades"
+                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                             SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -400,15 +417,66 @@
             <Grid>
                 <StackPanel
                     Margin="8">
-                    <control:EnhancedTextBox
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Padding="2, 3"
-                        FontSize="15"
-                        IsReadOnly="True"
-                        Text="{Binding SelectedItem.Name.Total, Mode=OneWay}"
-                        Hint="{Binding SelectedItem.Name.Note}"
-                        ModValue="{Binding SelectedItem.Name}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <control:EnhancedTextBox
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            TextPadding="8"
+                            Padding="2, 3"
+                            FontSize="15"
+                            IsReadOnly="True"
+                            Text="{Binding SelectedItem.Name.Total, Mode=OneWay}"
+                            Hint="{Binding SelectedItem.Name.Note}"
+                            ModValue="{Binding SelectedItem.Name}"
+                            CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                        <ToggleButton
+                            x:Name="EditBtn"
+                            Grid.Column="1"
+                            Style="{StaticResource FalloutToggleButton}"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1"
+                            Margin="10 0 3 0"
+                            HorizontalAlignment="Right"
+                            IsChecked="{Binding SelectedItem.IsInEditMode, Mode=TwoWay}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="PART_Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Rectangle x:Name="PART_OverlayRect"
+                                            Margin="5"
+                                            Width="30"
+                                            Height="30">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="#23ba03"/>
+                                            </Rectangle.Fill>
+                                            <Rectangle.OpacityMask>
+                                                <ImageBrush ImageSource="/Resources/pen.png"/>
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                    </Grid>
 
                     <Border
                         BorderBrush="{StaticResource FalloutGreen}"
@@ -426,11 +494,12 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"
+                                MinValue="0"
                                 LabelFontSize="11"
                                 LabelText="{Binding SelectedItem.Amount.Name}"
                                 Text="{Binding SelectedItem.Amount.BaseValue}"
                                 ModValue="{Binding SelectedItem.Amount}"
-                                IsReadOnly="{Binding SelectedItem.Amount.IsBaseValueReadOnly}"
+                                IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                 CanOpenModal="False"/>
 
                             <StackPanel
@@ -447,7 +516,8 @@
                                     LabelText="{Binding SelectedItem.Cost.Name}"
                                     Text="{Binding SelectedItem.Cost.Total, Mode=OneWay}"
                                     Hint="{Binding SelectedItem.Cost.Note}"
-                                    ModValue="{Binding SelectedItem.Cost}"/>
+                                    ModValue="{Binding SelectedItem.Cost}"
+                                    CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
 
                                 <control:TextBoxWithLabelControl
                                     Margin="5"
@@ -458,7 +528,8 @@
                                     LabelText="{Binding SelectedItem.Load.Name}"
                                     Text="{Binding SelectedItem.Load.Total, Mode=OneWay}"
                                     Hint="{Binding SelectedItem.Load.Note}"
-                                    ModValue="{Binding SelectedItem.Load}"/>
+                                    ModValue="{Binding SelectedItem.Load}"
+                                    CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
                             </StackPanel>
                         </Grid>
                     </Border>

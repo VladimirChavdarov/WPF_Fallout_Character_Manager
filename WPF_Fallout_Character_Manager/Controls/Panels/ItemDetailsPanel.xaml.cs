@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.ViewModels;
 
 namespace WPF_Fallout_Character_Manager.Controls.Panels
@@ -37,9 +38,21 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
 
         private void ListBoxItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            if (sender is ListBoxItem item && item.ContextMenu != null)
+            if(DataContext is InventoryViewModel vm)
             {
-                item.ContextMenu.DataContext = this.DataContext;
+                if(vm.SelectedItem is Item gameItem)
+                {
+                    if(!gameItem.IsInEditMode)
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+            }
+
+            if (sender is ListBoxItem listBoxItem && listBoxItem.ContextMenu != null)
+            {
+                listBoxItem.ContextMenu.DataContext = this.DataContext;
             }
         }
     }

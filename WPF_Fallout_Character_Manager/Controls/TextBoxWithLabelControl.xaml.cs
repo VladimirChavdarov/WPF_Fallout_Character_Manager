@@ -209,7 +209,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CanOpenModalPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            CanOpenModal = (bool)GetValue(CanOpenModalProperty);
+            //CanOpenModal = (bool)GetValue(CanOpenModalProperty);
         }
         #endregion
 

@@ -36,6 +36,8 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             _amount = new ModInt("Amount", amount);
             _load = new ModFloat("Load", load);
 
+            IsInEditMode = false;
+
             SubscribeToChildPropertyChanges();
         }
 
@@ -126,6 +128,18 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
                 OnPropertyChanged(nameof(TotalLoad));
                 OnPropertyChanged(nameof(TotalCost));
                 OnPropertyChanged(nameof(NameAmount));
+            }
+        }
+
+        private bool _isReadOnly;
+        public bool IsInEditMode
+        {
+            get => _isReadOnly;
+            set
+            {
+                bool oldValue = _isReadOnly;
+                Update(ref _isReadOnly, value);
+                bool newValue = _isReadOnly;
             }
         }
 
