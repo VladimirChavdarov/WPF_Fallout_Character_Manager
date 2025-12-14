@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -273,6 +275,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
             foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
 
+            foreach (Item i in FullInventory)
+            {
+                i.PropertyChanged += IventoryItem_PropertyChanged;
+            }
+
             _typeToCollectionMap.Add(typeof(Weapon), WeaponsModel.Weapons);
             _typeToCollectionMap.Add(typeof(Armor), ArmorModel.Armors);
             _typeToCollectionMap.Add(typeof(PowerArmor), ArmorModel.PowerArmors);
@@ -349,6 +356,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             return false;
         }
 
+        // NOTE: This scales badly.
         private void CalculateCurrentLoad()
         {
             InventoryModel.CurrentLoad.BaseValue = 0.0f;
@@ -356,6 +364,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 InventoryModel.CurrentLoad.BaseValue += item.TotalLoad;
             }
+        }
+
+        private void AddToCurrentLoad(float loadToAdd)
+        {
+            InventoryModel.CurrentLoad.BaseValue += loadToAdd;
         }
 
         private void _specialModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -368,7 +381,37 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void FullInventory_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            CalculateCurrentLoad();
+            float loadToAdd = 0.0f;
+
+            switch(e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach(Item item in e.NewItems)
+                    {
+                        loadToAdd += item.TotalLoad;
+                    }
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (Item item in e.OldItems)
+                    {
+                        loadToAdd -= item.TotalLoad;
+                    }
+                    break;
+            }
+
+            AddToCurrentLoad(loadToAdd);
+        }
+
+        private void IventoryItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is Item item)
+            {
+                if (e.PropertyName == nameof(Item.TotalLoad))
+                {
+                    CalculateCurrentLoad();
+                }
+            }
         }
         //
 
@@ -399,6 +442,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 ItemToAddToInventory.CanBeEdited = true;
                 ItemToAddToInventory.IsInEditMode = true;
+                if(ItemToAddToInventory is Item item)
+                {
+                    item.PropertyChanged += IventoryItem_PropertyChanged;
+                }
+
                 collection.Add(ItemToAddToInventory);
                 FullInventory.Add(ItemToAddToInventory);
                 FullInventoryView.Refresh();
