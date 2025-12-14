@@ -66,8 +66,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 {
                     effect.CompatibleAmmo.Add(ammoType);
                 }
-                effect.IsReadOnly = true;
                 //
+
+                // note
+                effect.Note += "\nCompatibility: ";
+                foreach (string compatibleAmmo in effect.CompatibleAmmo)
+                {
+                    effect.Note += compatibleAmmo + ". ";
+                }
+                //
+
+                effect.IsReadOnly = true;
 
                 AmmoEffects.Add(effect);
             }
@@ -85,7 +94,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class Ammo : Item
     {
         // constructor
-        public Ammo(string name = "NewAmmo", string type = "NoType", int cost = 0, int amount = 0, float load = 0.0f, AmmoEffect effect = null, string description = "") : base(name, cost, amount, load, description)
+        public Ammo(string name = "NewAmmo", string type = "NoType", int cost = 0, int amount = 0, float load = 0.0f, AmmoEffect effect = null, string description = "")
+            : base(name, cost, amount, load, description)
         {
             Type = type;
 
@@ -144,15 +154,33 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Ammo Clone() => new Ammo(this);
-        //public Ammo Clone() => new Ammo
-        //{
-        //    Name = this.Name,
-        //    Cost = this.Cost,
-        //    Load = this.Load,
-        //    Amount = this.Amount,
-        //    Effects = new ObservableCollection<AmmoEffect>(this.Effects),
-        //    CustomName = this.CustomName,
-        //};
+
+        public void AddProperty(object obj)
+        {
+            if (obj is AmmoEffect effectToAdd)
+            {
+                if(effectToAdd.CompatibleAmmo.Contains(Type))
+                {
+                    Effects.Add(effectToAdd);
+                }
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveProperty(object obj)
+        {
+            if (obj is AmmoEffect effectToRemove)
+            {
+                Effects.Remove(effectToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
 
         private void Effects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
