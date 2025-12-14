@@ -36,6 +36,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             _amount = new ModInt("Amount", amount);
             _load = new ModFloat("Load", load);
 
+            CanBeEdited = false;
             IsInEditMode = false;
 
             SubscribeToChildPropertyChanges();
@@ -47,6 +48,9 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             Cost = other.Cost.Clone();
             Amount = other.Amount.Clone();
             Load = other.Load.Clone();
+
+            CanBeEdited = other.CanBeEdited;
+            IsInEditMode = other.IsInEditMode;
 
             SubscribeToChildPropertyChanges();
         }
@@ -131,16 +135,18 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             }
         }
 
-        private bool _isReadOnly;
+        private bool _canBeEdited;
+        public bool CanBeEdited
+        {
+            get => _canBeEdited;
+            set => Update(ref _isInEditMode, value);
+        }
+
+        private bool _isInEditMode;
         public bool IsInEditMode
         {
-            get => _isReadOnly;
-            set
-            {
-                bool oldValue = _isReadOnly;
-                Update(ref _isReadOnly, value);
-                bool newValue = _isReadOnly;
-            }
+            get => _isInEditMode;
+            set => Update(ref _isInEditMode, value);
         }
 
         public int TotalLoad => (int)(Amount.Total * Load.Total);

@@ -83,6 +83,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Gear(Gear other) : base(other)
         {
             LoadEquippedOrFull = other.LoadEquippedOrFull.Clone();
+            LoadUnequippedOrEmpty = other.LoadUnequippedOrEmpty.Clone();
             CanBeEquippedOrFilled = other.CanBeEquippedOrFilled;
             EquippedOrFull = other.EquippedOrFull;
         }

@@ -397,6 +397,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             if (_typeToCollectionMap.TryGetValue(itemType, out IList collection))
             {
+                ItemToAddToInventory.CanBeEdited = true;
+                ItemToAddToInventory.IsInEditMode = true;
                 collection.Add(ItemToAddToInventory);
                 FullInventory.Add(ItemToAddToInventory);
                 FullInventoryView.Refresh();

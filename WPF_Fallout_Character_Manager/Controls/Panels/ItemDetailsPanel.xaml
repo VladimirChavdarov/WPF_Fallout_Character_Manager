@@ -1504,7 +1504,8 @@
                             BorderThickness="1"
                             Margin="10 0 3 0"
                             HorizontalAlignment="Right"
-                            IsChecked="{Binding SelectedItem.IsInEditMode, Mode=TwoWay}">
+                            IsChecked="{Binding SelectedItem.IsInEditMode, Mode=TwoWay}"
+                            IsHitTestVisible="{Binding SelectedItem.CanBeEdited}">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="ToggleButton">
                                     <Border x:Name="PART_Border"

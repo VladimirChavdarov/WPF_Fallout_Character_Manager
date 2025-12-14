@@ -18,29 +18,29 @@ namespace WPF_Fallout_Character_Manager.Models
             PowerArmors = new ObservableCollection<PowerArmor>();
 
             // testing
-            Armor a1 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Cloth").Clone();
-            a1.Amount.BaseValue++;
-            Armor a2 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Steel").Clone();
-            a2.Amount.BaseValue++;
-            Armor a3 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Leather").Clone();
-            a3.Amount.BaseValue++;
+            //Armor a1 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Cloth").Clone();
+            //a1.Amount.BaseValue++;
+            //Armor a2 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Steel").Clone();
+            //a2.Amount.BaseValue++;
+            //Armor a3 = xtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == "Leather").Clone();
+            //a3.Amount.BaseValue++;
 
-            a2.Decay.BaseValue = 5;
-            ArmorUpgrade au2 = xtrnlArmorModel.ArmorUpgrades.FirstOrDefault(x => x.Name.Contains("Fitted"));
-            a2.Upgrades.Add(au2);
+            //a2.Decay.BaseValue = 5;
+            //ArmorUpgrade au2 = xtrnlArmorModel.ArmorUpgrades.FirstOrDefault(x => x.Name.Contains("Fitted"));
+            //a2.Upgrades.Add(au2);
 
-            Armors.Add(a1);
-            Armors.Add(a2);
-            Armors.Add(a3);
+            //Armors.Add(a1);
+            //Armors.Add(a2);
+            //Armors.Add(a3);
 
 
-            PowerArmor p1 = xtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == "T-45").Clone();
-            p1.Amount.BaseValue++;
-            PowerArmor p2 = xtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == "X-02").Clone();
-            p2.Amount.BaseValue++;
+            //PowerArmor p1 = xtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == "T-45").Clone();
+            //p1.Amount.BaseValue++;
+            //PowerArmor p2 = xtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == "X-02").Clone();
+            //p2.Amount.BaseValue++;
 
-            PowerArmors.Add(p1);
-            PowerArmors.Add(p2);
+            //PowerArmors.Add(p1);
+            //PowerArmors.Add(p2);
             //
 
         }

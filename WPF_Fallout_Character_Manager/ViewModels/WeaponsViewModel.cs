@@ -60,7 +60,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set
             {
                 Update(ref _selectedWeapon, value);
-                SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+
+                if(SelectedAmmo != null)
+                {
+                    SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+                }
+
                 SetToHitBaseValue(SelectedWeapon);
             }
         }
@@ -90,26 +95,29 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _ammoModel.Ammos.CollectionChanged += AmmoModel_Ammos_CollectionChanged;
 
             // testing code
-            Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
-            Weapon w1 = xtrnlW1.Clone();
-            w1.Amount.BaseValue = 5;
-            w1.Name.BaseValue = "This is my custom assault rifle now";
-            w1.Equipped = true;
-            WeaponUpgrade wu1 = xtrnlWeaponsModel.WeaponUpgrades.FirstOrDefault(x => x.Name == "Bayonet");
-            w1.Upgrades.Add(wu1);
-            WeaponsModel.Weapons.Add(w1);
+            //Weapon xtrnlW1 = xtrnlWeaponsModel.Weapons.FirstOrDefault(x => x.Name.BaseValue == "Assault Rifle");
+            //Weapon w1 = xtrnlW1.Clone();
+            //w1.Amount.BaseValue = 5;
+            //w1.Name.BaseValue = "This is my custom assault rifle now";
+            //w1.Equipped = true;
+            //WeaponUpgrade wu1 = xtrnlWeaponsModel.WeaponUpgrades.FirstOrDefault(x => x.Name == "Bayonet");
+            //w1.Upgrades.Add(wu1);
+            //WeaponsModel.Weapons.Add(w1);
 
-            Ammo xtrnlA1 = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ".308");
-            Ammo a1 = xtrnlA1.Clone();
-            a1.Amount.BaseValue = 50;
-            AmmoEffect ae1 = xtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Name == "Match");
-            a1.Effects.Add(ae1);
-            a1.Amount.BaseValue += 10;
-            AmmoModel.Ammos.Add(a1);
+            //Ammo xtrnlA1 = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == ".308");
+            //Ammo a1 = xtrnlA1.Clone();
+            //a1.Amount.BaseValue = 50;
+            //AmmoEffect ae1 = xtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Name == "Match");
+            //a1.Effects.Add(ae1);
+            //a1.Amount.BaseValue += 10;
+            //AmmoModel.Ammos.Add(a1);
             //
 
             SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault();
-            SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+            if(SelectedWeapon != null)
+            {
+                SelectedAmmo = SelectedWeapon.CompatibleAmmos.FirstOrDefault();
+            }
         }
         //
 
@@ -146,6 +154,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void SetToHitBaseValue(Weapon weapon)
         {
+            if(weapon == null)
+            {
+                return;
+            }
+
             switch (weapon.Type)
             {
                 case "Bladed":
