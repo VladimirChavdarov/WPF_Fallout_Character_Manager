@@ -5,8 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="350">
+
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
     <GroupBox
         Header="Inventory"
         Grid.Column="2"
@@ -165,6 +171,12 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0 5 0 0">
+                    <Image
+                        Source="/Resources/warning_bright_red.png"
+                        Visibility="{Binding InventoryModel.IsOverencumbered, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Width="25"
+                        Height="25"
+                        Margin="0 0 5 0"/>
                     <Image
                         Source="/Resources/carry_load_icon.png"
                         Width="25"

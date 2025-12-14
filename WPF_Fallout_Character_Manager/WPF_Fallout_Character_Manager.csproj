@@ -60,6 +60,8 @@
     <None Remove="Resources\vault_boy_thumbsup.png" />
     <None Remove="Resources\vault_boy_thumbsup_green.png" />
     <None Remove="Resources\vault_boy_thumbsup_green_filled.png" />
+    <None Remove="Resources\warning_bright_red.png" />
+    <None Remove="Resources\warning_red.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -187,6 +189,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\vault_boy_thumbsup_green_filled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\warning_bright_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\warning_red.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

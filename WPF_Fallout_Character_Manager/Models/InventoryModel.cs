@@ -27,6 +27,9 @@ namespace WPF_Fallout_Character_Manager.Models
             Nourishment = new ObservableCollection<Nourishment>();
             GearItems = new ObservableCollection<Gear>();
             JunkItems = new ObservableCollection<Junk>();
+
+            CarryLoad.PropertyChanged += (s, e) => OnPropertyChanged(nameof(IsOverencumbered));
+            CurrentLoad.PropertyChanged += (s, e) => OnPropertyChanged(nameof(IsOverencumbered));
         }
         //
 
@@ -42,15 +45,23 @@ namespace WPF_Fallout_Character_Manager.Models
         public ModFloat CarryLoad
         {
             get => _carryLoad;
-            set => Update(ref _carryLoad, value);
+            set
+            {
+                Update(ref _carryLoad, value);
+            }
         }
 
         private ModFloat _currentLoad;
         public ModFloat CurrentLoad
         {
             get => _currentLoad;
-            set => Update(ref _currentLoad, value);
+            set
+            {
+                Update(ref _currentLoad, value);
+            }
         }
+
+        public bool IsOverencumbered => CurrentLoad.Total > CarryLoad.Total;
 
         public ObservableCollection<Aid> AidItems { get; set; }
         public ObservableCollection<Explosive> Explosives { get; set; }
