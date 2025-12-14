@@ -115,6 +115,32 @@ namespace WPF_Fallout_Character_Manager.Models.External
         }
         //
 
+        // methods
+        public void AddProperty(object obj)
+        {
+            if (obj is AidProperty propertyToAdd)
+            {
+                Properties.Add(propertyToAdd);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveProperty(object obj)
+        {
+            if (obj is AidProperty propertyToRemove)
+            {
+                Properties.Remove(propertyToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+        //
+
         // members
         public ObservableCollection<AidProperty> Properties { get; set; }
         //

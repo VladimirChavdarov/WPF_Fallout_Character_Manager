@@ -101,6 +101,30 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Nourishment Clone() => new Nourishment(this);
+
+        public void AddProperty(object obj)
+        {
+            if (obj is NourishmentProperty propertyToAdd)
+            {
+                Properties.Add(propertyToAdd);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveProperty(object obj)
+        {
+            if (obj is NourishmentProperty propertyToRemove)
+            {
+                Properties.Remove(propertyToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
         //
 
         // members

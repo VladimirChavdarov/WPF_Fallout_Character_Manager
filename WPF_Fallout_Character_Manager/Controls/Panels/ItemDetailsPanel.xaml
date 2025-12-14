@@ -880,6 +880,368 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:Aid}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <control:TextBoxWithLabelControl
+                    Margin="0 0 0 20"
+                    TextPadding="5"
+                    Width="580"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    Orientation="Vertical"
+                    LabelFontSize="11"
+                    LabelText="Description: "
+                    FontSize="11"
+                    CanOpenModal="false"
+                    IsReadOnly="{Binding SelectedItem.IsInEditMode}"
+                    Text="{Binding SelectedItem.Name.Note}"/>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="5 10 5 0">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Content="Properties"/>
+
+                    <ListBox
+                        Style="{StaticResource FalloutInventoryTabsListBox}"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="1"
+                        Padding="5"
+                        Height="160"
+                        Width="580"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding SelectedItem.Properties}">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                                <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete"
+                                                Command="{Binding RemovePropertyCommand}"
+                                                CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding Name}"
+                                    FontSize="9"
+                                    Width="160"
+                                    TextWrapping="Wrap"
+                                    Padding="0 0 10 0"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Margin="0 15 0 0"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="Add Property:"/>
+
+                    <ComboBox
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        MinWidth="180"
+                        Width="Auto"
+                        ItemsSource="{Binding XtrnlAidModel.AidProperties}"
+                        DisplayMemberPath="Name"
+                        Tag="Properties"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    Command="{Binding AddPropertyCommand}"
+                                    CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:Explosive}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="105"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="160"/>
+                    </Grid.ColumnDefinitions>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="0"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="55"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="AP:"
+                        IsReadOnly="{Binding SelectedItem.AP.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.AP}"
+                        Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.AP.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="150"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Damage:"
+                        IsReadOnly="{Binding SelectedItem.Damage.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.Damage}"
+                        Text="{Binding SelectedItem.Damage.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.Damage.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="2"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="95"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Arm DC:"
+                        IsReadOnly="{Binding SelectedItem.ArmDC.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.ArmDC}"
+                        Text="{Binding SelectedItem.ArmDC.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.ArmDC.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="3"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="190"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Range:"
+                        IsReadOnly="{Binding SelectedItem.Range.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.Range}"
+                        Text="{Binding SelectedItem.Range.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.Range.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="4"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="150"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Area of Effect:"
+                        IsReadOnly="{Binding SelectedItem.AreaOfEffect.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.AreaOfEffect}"
+                        Text="{Binding SelectedItem.AreaOfEffect.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.AreaOfEffect.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                </Grid>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="5 10 5 0">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Content="Properties"/>
+
+                    <ListBox
+                        Style="{StaticResource FalloutInventoryTabsListBox}"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="1"
+                        Padding="5"
+                        Height="140"
+                        Width="580"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding SelectedItem.Properties}">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                                <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete"
+                                                Command="{Binding RemovePropertyCommand}"
+                                                CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding Name}"
+                                    FontSize="9"
+                                    Width="160"
+                                    TextWrapping="Wrap"
+                                    Padding="0 0 10 0"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Margin="0 15 0 0"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="Add Property:"/>
+
+                    <ComboBox
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        MinWidth="180"
+                        Width="Auto"
+                        ItemsSource="{Binding XtrnlExplosivesModel.ExplosiveProperties}"
+                        DisplayMemberPath="Name"
+                        Tag="Properties"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    Command="{Binding AddPropertyCommand}"
+                                    CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:Nourishment}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="5 10 5 0">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Content="Properties"/>
+
+                    <ListBox
+                        Style="{StaticResource FalloutInventoryTabsListBox}"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="1"
+                        Padding="5"
+                        Height="140"
+                        Width="580"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding SelectedItem.Properties}">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                                <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete"
+                                            Command="{Binding RemovePropertyCommand}"
+                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding Name}"
+                                    FontSize="9"
+                                    Width="160"
+                                    TextWrapping="Wrap"
+                                    Padding="0 0 10 0"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Margin="0 15 0 0"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="Add Property:"/>
+
+                    <ComboBox
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        MinWidth="180"
+                        Width="Auto"
+                        ItemsSource="{Binding XtrnlNourishmentModel.NourishmentProperties}"
+                        DisplayMemberPath="Name"
+                        Tag="Properties"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    Command="{Binding AddPropertyCommand}"
+                                    CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     
     <GroupBox
