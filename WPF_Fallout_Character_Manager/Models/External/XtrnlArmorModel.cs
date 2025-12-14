@@ -399,7 +399,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set
             {
                 Update(ref _equipped, value);
+
                 Load.BaseValue = Equipped ? 0.0f : 100.0f;
+
                 OnPropertyChanged(nameof(EquippedNameAmount));
             }
         }

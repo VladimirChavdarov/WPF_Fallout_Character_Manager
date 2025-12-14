@@ -510,7 +510,8 @@
                                 VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
                                 IsChecked="{Binding SelectedItem.Equipped}"
-                                Command="{Binding DataContext.ArmorViewModel.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                Command="{Binding DataContext.ArmorViewModel.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -729,7 +730,8 @@
                                 VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
                                 IsChecked="{Binding SelectedItem.Equipped}"
-                                Command="{Binding DataContext.ArmorViewModel.UnequipOtherPowerArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                Command="{Binding DataContext.ArmorViewModel.UnequipOtherPowerArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -1280,6 +1282,87 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:Gear}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <Grid
+                    Visibility="{Binding SelectedItem.CanBeEquippedOrFilled, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="135"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="250"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Column="0"
+                        Margin="0 0 0 10"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom">
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            Content="Equipped:"
+                            FontSize="11"
+                            VerticalAlignment="Top"/>
+                        <CheckBox
+                            Style="{StaticResource FalloutSkillCheckbox}"
+                            Margin="0 2 0 0"
+                            FontSize="22"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            IsChecked="{Binding SelectedItem.EquippedOrFull}"
+                            IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
+                    </StackPanel>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="210"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Load: Equipped/Full"
+                        IsReadOnly="{Binding SelectedItem.LoadEquippedOrFull.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.LoadEquippedOrFull}"
+                        Text="{Binding SelectedItem.LoadEquippedOrFull.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.LoadEquippedOrFull.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                    <control:TextBoxWithLabelControl
+                        Grid.Column="2"
+                        Orientation="Vertical"
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        MinWidth="240"
+                        TextWrapping="Wrap"
+                        HorizontalContentAlignment="Left"
+                        LabelFontSize="11"
+                        LabelText="Load: Unequipped/Empty"
+                        IsReadOnly="{Binding SelectedItem.LoadUnequippedOrEmpty.IsBaseValueReadOnly}"
+                        ModValue ="{Binding SelectedItem.LoadUnequippedOrEmpty}"
+                        Text="{Binding SelectedItem.LoadUnequippedOrEmpty.Total, Mode=OneWay}"
+                        Hint="{Binding SelectedItem.LoadUnequippedOrEmpty.Note}"
+                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                </Grid>
+
+                <control:TextBoxWithLabelControl
+                    Margin="0 0 0 20"
+                    TextPadding="5"
+                    Width="580"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    Orientation="Vertical"
+                    LabelFontSize="11"
+                    LabelText="Description: "
+                    FontSize="11"
+                    CanOpenModal="false"
+                    IsReadOnly="{Binding SelectedItem.IsInEditMode}"
+                    Text="{Binding SelectedItem.Name.Note}"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>

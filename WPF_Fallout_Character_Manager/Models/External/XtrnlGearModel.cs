@@ -71,6 +71,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Gear(string name = "NewGearItem", int cost = 0, string description = "", float load = 0.0f, float loadEquippedOrFull = 0.0f) : base(name, cost, 0, load, description)
         {
             LoadEquippedOrFull = new ModFloat("Load When Equipped/Full", loadEquippedOrFull);
+            LoadUnequippedOrEmpty = new ModFloat("Load When Unequipped/Empty", load);
             CanBeEquippedOrFilled = false;
             if(load != loadEquippedOrFull)
             {
@@ -99,6 +100,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _loadEquippedOrFull, value);
         }
 
+        private ModFloat _loadUnequippedOrEmpty;
+        public ModFloat LoadUnequippedOrEmpty
+        {
+            get => _loadUnequippedOrEmpty;
+            set => Update(ref _loadUnequippedOrEmpty, value);
+        }
+
         private bool _canBeEquippedOrFilled;
         public bool CanBeEquippedOrFilled
         {
@@ -110,7 +118,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public bool EquippedOrFull
         {
             get => _equippedOrFull;
-            set => Update(ref _equippedOrFull, value);
+            set
+            {
+                Update(ref _equippedOrFull, value);
+                Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+            }
         }
         //
 
