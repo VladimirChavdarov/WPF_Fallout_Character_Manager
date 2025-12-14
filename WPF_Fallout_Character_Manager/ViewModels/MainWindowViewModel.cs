@@ -74,6 +74,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ArmorViewModel = new ArmorViewModel(XtrnlArmorModel, ArmorModel);
             EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);
             InventoryViewModel = new InventoryViewModel(
+                                     WeaponsViewModel,
+                                     ArmorViewModel,
+
                                      InventoryModel,
                                      WeaponsModel,
                                      ArmorModel,

@@ -492,6 +492,26 @@
                             Text="{Binding SelectedItem.StrRequirement.Total, Mode=OneWay}"
                             Hint="{Binding SelectedItem.StrRequirement.Note}"
                             CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="0 10 0 0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                Content="Equipped:"
+                                FontSize="11"
+                                VerticalAlignment="Top"/>
+                            <CheckBox
+                                Style="{StaticResource FalloutSkillCheckbox}"
+                                Margin="0 2 0 0"
+                                FontSize="22"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                IsChecked="{Binding SelectedItem.Equipped}"
+                                Command="{Binding DataContext.ArmorViewModel.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <StackPanel
@@ -690,6 +710,26 @@
                                 Text="{Binding SelectedItem.Decay.BaseValue}"
                                 Hint="{Binding SelectedItem.Decay.Note}"
                                 CanOpenModal="False"/>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="0 10 0 0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                Content="Equipped:"
+                                FontSize="11"
+                                VerticalAlignment="Top"/>
+                            <CheckBox
+                                Style="{StaticResource FalloutSkillCheckbox}"
+                                Margin="0 2 0 0"
+                                FontSize="22"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                IsChecked="{Binding SelectedItem.Equipped}"
+                                Command="{Binding DataContext.ArmorViewModel.UnequipOtherPowerArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         </StackPanel>
                     </StackPanel>
 

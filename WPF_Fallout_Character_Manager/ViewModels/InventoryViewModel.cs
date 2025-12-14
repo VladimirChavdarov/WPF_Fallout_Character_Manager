@@ -20,6 +20,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
     class InventoryViewModel : ViewModelBase
     {
         // local variables
+        private WeaponsViewModel _weaponsViewModel;
+        private ArmorViewModel _armorViewModel;
+
         private InventoryModel _inventoryModel;
         private WeaponsModel _weaponsModel;
         private ArmorModel _armorModel;
@@ -139,6 +142,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         public object SelectedItem => SelectedInventoryItem ?? SelectedCatalogueItem;
 
+        public WeaponsViewModel WeaponsViewModel
+        {
+            get => _weaponsViewModel;
+        }
+
+        public ArmorViewModel ArmorViewModel
+        {
+            get => _armorViewModel;
+        }
+
         public InventoryModel InventoryModel
         {
             get => _inventoryModel;
@@ -203,6 +216,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         // constructor
         public InventoryViewModel(
+            WeaponsViewModel weaponsViewModel,
+            ArmorViewModel armorViewModel,
+
             InventoryModel inventoryModel,
             WeaponsModel weaponsModel,
             ArmorModel armorModel,
@@ -218,6 +234,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             XtrnlJunkModel xtrnlJunkModel,
             SPECIALModel specialModel)
         {
+            _weaponsModel = weaponsModel;
+            _armorModel = armorModel;
+
             _inventoryModel = inventoryModel;
             _weaponsModel = weaponsModel;
             _armorModel = armorModel;
