@@ -138,6 +138,34 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Junk Clone() => new Junk(this);
+
+        public void AddProperty(object obj)
+        {
+            if (obj is JunkComponent componentToAdd)
+            {
+                Components.Add(componentToAdd.Clone());
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveProperty(object obj)
+        {
+            if (obj is JunkComponent component)
+            {
+                JunkComponent componentToRemove = Components.First(x => x.NameString == component.NameString);
+                if(componentToRemove != null)
+                {
+                    Components.Remove(componentToRemove);
+                }
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
         //
 
         // members

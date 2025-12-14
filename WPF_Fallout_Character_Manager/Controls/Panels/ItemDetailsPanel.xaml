@@ -1365,6 +1365,106 @@
                     Text="{Binding SelectedItem.Name.Note}"/>
             </StackPanel>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:Junk}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="5 10 5 0">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Content="Properties"/>
+
+                    <ListBox
+                        Style="{StaticResource FalloutInventoryTabsListBox}"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="1"
+                        Padding="5"
+                        Height="140"
+                        Width="580"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding SelectedItem.Components}">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                                <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete"
+                                                Command="{Binding RemovePropertyCommand}"
+                                                CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Text="{Binding NameAmount}"
+                                        FontSize="9"
+                                        Width="160"
+                                        TextWrapping="Wrap"
+                                        VerticalAlignment="Center"/>
+
+                                    <control:UpDownTextBoxControl
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        MinValue="1"
+                                        FontSize="9"
+                                        Text="{Binding Amount.BaseValue}"
+                                        ModValue="{Binding SelectedItem.Amount}"
+                                        IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                        CanOpenModal="False"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        FontSize="10"
+                        Margin="0 15 0 0"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Content="Add Property:"/>
+
+                    <ComboBox
+                        Margin="5"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        MinWidth="180"
+                        Width="Auto"
+                        ItemsSource="{Binding XtrnlJunkModel.JunkComponents}"
+                        DisplayMemberPath="NameString"
+                        Tag="Properties"
+                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    Command="{Binding AddPropertyCommand}"
+                                    CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     
     <GroupBox
