@@ -74,7 +74,7 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="AC:"
-                IsReadOnly="{Binding SelectedPowerArmor.AC.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding SelectedPowerArmor.AC}"
                 Text="{Binding SelectedPowerArmor.AC.Total, Mode=OneWay}"
                 Hint="{Binding SelectedPowerArmor.AC.Note}"/>
@@ -89,7 +89,7 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Defense Points:"
-                IsReadOnly="{Binding SelectedPowerArmor.DP.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding SelectedPowerArmor.DP}"
                 Text="{Binding SelectedPowerArmor.DP.Total, Mode=OneWay}"
                 Hint="{Binding SelectedPowerArmor.DP.Note}"/>
@@ -104,7 +104,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="Repair DC:"
-                    IsReadOnly="{Binding SelectedPowerArmor.RepairDC.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedPowerArmor.RepairDC}"
                     Text="{Binding SelectedPowerArmor.RepairDC.Total, Mode=OneWay}"
                     Hint="{Binding SelectedPowerArmor.RepairDC.Note}"/>
@@ -119,7 +119,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="Allotted Time:"
-                    IsReadOnly="{Binding SelectedPowerArmor.AllottedTime.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedPowerArmor.AllottedTime}"
                     Text="{Binding SelectedPowerArmor.AllottedTime.Total, Mode=OneWay}"
                     Hint="{Binding SelectedPowerArmor.AllottedTime.Note}"/>
@@ -141,7 +141,7 @@
                 MinWidth="45"
                 LabelFontSize="11"
                 LabelText="Cost:"
-                IsReadOnly="{Binding SelectedPowerArmor.Cost.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding SelectedPowerArmor.Cost}"
                 Text="{Binding SelectedPowerArmor.Cost.Total, Mode=OneWay}"
                 Hint="{Binding SelectedPowerArmor.Cost.Note}"/>
@@ -163,7 +163,7 @@
                 MinWidth="45"
                 LabelFontSize="11"
                 LabelText="Load:"
-                IsReadOnly="{Binding SelectedPowerArmor.Load.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding SelectedPowerArmor.Load}"
                 Text="{Binding SelectedPowerArmor.Load.Total, Mode=OneWay}"
                 Hint="{Binding SelectedPowerArmor.Load.Note}"/>

@@ -72,7 +72,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="AC:"
-                    IsReadOnly="{Binding SelectedArmor.AC.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedArmor.AC}"
                     Text="{Binding SelectedArmor.AC.Total, Mode=OneWay}"
                     Hint="{Binding SelectedArmor.AC.Note}"/>
@@ -87,7 +87,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="DT:"
-                    IsReadOnly="{Binding SelectedArmor.DT.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedArmor.DT}"
                     Text="{Binding SelectedArmor.DT.Total, Mode=OneWay}"
                     Hint="{Binding SelectedArmor.DT.Note}"/>
@@ -109,7 +109,7 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="Cost:"
-                    IsReadOnly="{Binding SelectedArmor.Cost.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedArmor.Cost}"
                     Text="{Binding SelectedArmor.Cost.Total, Mode=OneWay}"
                     Hint="{Binding SelectedArmor.Cost.Note}"/>
@@ -131,7 +131,7 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="Load:"
-                    IsReadOnly="{Binding SelectedArmor.Load.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedArmor.Load}"
                     Text="{Binding SelectedArmor.Load.Total, Mode=OneWay}"
                     Hint="{Binding SelectedArmor.Load.Note}"/>
@@ -159,7 +159,7 @@
                         MinWidth="45"
                         LabelFontSize="11"
                         LabelText="STR Req:"
-                        IsReadOnly="{Binding SelectedArmor.StrRequirement.IsBaseValueReadOnly}"
+                        IsReadOnly="True"
                         ModValue ="{Binding SelectedArmor.StrRequirement}"
                         Text="{Binding SelectedArmor.StrRequirement.Total, Mode=OneWay}"
                         Hint="{Binding SelectedArmor.StrRequirement.Note}"/>

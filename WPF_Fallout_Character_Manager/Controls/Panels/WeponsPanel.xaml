@@ -79,7 +79,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="AP:"
-                    IsReadOnly="{Binding SelectedWeapon.AP.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedWeapon.AP}"
                     Text="{Binding SelectedWeapon.AP.Total, Mode=OneWay}"
                     Hint="{Binding SelectedWeapon.AP.Note}"/>
@@ -94,7 +94,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="To Hit:"
-                    IsReadOnly="{Binding SelectedWeapon.ToHit.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedWeapon.ToHit}"
                     Text="{Binding SelectedWeapon.ToHit.Total, Mode=OneWay}"
                     Hint="{Binding SelectedWeapon.ToHit.Note}"/>
@@ -109,7 +109,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="Damage:"
-                    IsReadOnly="{Binding SelectedWeapon.Damage.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedWeapon.Damage}"
                     Text="{Binding SelectedWeapon.Damage.Total, Mode=OneWay}"
                     Hint="{Binding SelectedWeapon.Damage.Note}"/>
@@ -138,7 +138,7 @@
                             VerticalAlignment="Top"
                             Width="25"
                             TextWrapping="NoWrap"
-                            IsReadOnly="{Binding SelectedWeapon.CritChance.IsBaseValueReadOnly}"
+                            IsReadOnly="True"
                             ModValue ="{Binding SelectedWeapon.CritChance}"
                             Text="{Binding SelectedWeapon.CritChance.BaseValue}"
                             Hint="{Binding SelectedWeapon.CritChance.Note}"/>
@@ -149,7 +149,7 @@
                             VerticalAlignment="Top"
                             Width="50"
                             TextWrapping="NoWrap"
-                            IsReadOnly="{Binding SelectedWeapon.CritDamage.IsBaseValueReadOnly}"
+                            IsReadOnly="True"
                             ModValue ="{Binding SelectedWeapon.CritDamage}"
                             Text="{Binding SelectedWeapon.CritDamage.BaseValue}"
                             Hint="{Binding SelectedWeapon.CritDamage.Note}"/>
@@ -166,7 +166,7 @@
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="Range:"
-                    IsReadOnly="{Binding SelectedWeapon.RangeMultiplier.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedWeapon.RangeMultiplier}"
                     Text="{Binding SelectedWeapon.RangeMultiplier.Total, Mode=OneWay}"
                     Hint="{Binding SelectedWeapon.RangeMultiplier.Note}"/>
@@ -189,7 +189,7 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="Cost:"
-                    IsReadOnly="{Binding SelectedWeapon.Cost.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedWeapon.Cost}"
                     Text="{Binding SelectedWeapon.Cost.Total, Mode=OneWay}"
                     Hint="{Binding SelectedWeapon.Cost.Note}"/>
@@ -232,7 +232,7 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="Load:"
-                    IsReadOnly="{Binding SelectedWeapon.Load.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding SelectedWeapon.Load}"
                     Text="{Binding SelectedWeapon.Load.Total, Mode=OneWay}"
                     Hint="{Binding SelectedWeapon.Load.Note}"/>
@@ -313,7 +313,7 @@
                         MinWidth="45"
                         LabelFontSize="11"
                         LabelText="STR Req:"
-                        IsReadOnly="{Binding SelectedWeapon.StrRequirement.IsBaseValueReadOnly}"
+                        IsReadOnly="True"
                         ModValue ="{Binding SelectedWeapon.StrRequirement}"
                         Text="{Binding SelectedWeapon.StrRequirement.Total, Mode=OneWay}"
                         Hint="{Binding SelectedWeapon.StrRequirement.Note}"/>
