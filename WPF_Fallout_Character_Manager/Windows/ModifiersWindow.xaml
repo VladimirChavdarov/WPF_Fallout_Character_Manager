@@ -96,6 +96,7 @@
                                         Text="{Binding Name}"/>
                                     <controls:UpDownTextBoxWithLabelControl
                                         Margin="2"
+                                        MaxWidth="200"
                                         VerticalAlignment="Top"
                                         Orientation="Vertical"
                                         LabelFontSize="8"
