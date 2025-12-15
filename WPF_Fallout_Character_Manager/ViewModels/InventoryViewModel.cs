@@ -52,11 +52,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private dynamic _selectedCatalogueItem;
         private dynamic _selectedInventoryItem;
 
-        private Dictionary<Type, IList> _typeToCollectionMap { get; } = new Dictionary<Type, IList>();
+        private Type _selectedTypeForCreating;
+        private dynamic _newItemTemplate;
+
+        private Dictionary<Type, IList> _typeToInventoryCollections { get; } = new Dictionary<Type, IList>();
+        private Dictionary<Type, IList> _typeToCatalogueCollections { get; } = new Dictionary<Type, IList>();
         //
 
         // public variables
         public IReadOnlyList<string> Categories { get; } = new List<string>() { "All", "Weapon", "Armor", "Ammo", "Aid", "Explosive", "Nourishment", "Gear", "Junk" };
+        public IReadOnlyList<Type> ItemTypes { get; } = new List<Type>() { typeof(Weapon), typeof(Armor), typeof(PowerArmor), typeof(Ammo), typeof(Aid), typeof(Explosive), typeof(Nourishment), typeof(Gear), typeof(Junk) };
         public ICollectionView CatalogueView { get; }
         public ICollectionView FullInventoryView { get; }
         
@@ -139,6 +144,36 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 {
                     SelectedCatalogueItem = null;
                 }
+            }
+        }
+
+
+        public Type SelectedTypeForCreating
+        {
+            get => _selectedTypeForCreating;
+            set
+            {
+                Update(ref _selectedTypeForCreating, value);
+
+                if (_typeToCatalogueCollections.TryGetValue(SelectedTypeForCreating, out IList collection))
+                {
+                    dynamic item = collection[0];
+                    NewItemTemplate = item.Clone();
+                    NewItemTemplate.CanBeEdited = true;
+                    NewItemTemplate.IsInEditMode = true;
+                }
+                else
+                {
+                    throw new Exception($"No collection found for item type {SelectedTypeForCreating}");
+                }
+            }
+        }
+        public dynamic NewItemTemplate
+        {
+            get => _newItemTemplate;
+            set
+            {
+                Update(ref _newItemTemplate, value);
             }
         }
 
@@ -280,15 +315,25 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 i.PropertyChanged += IventoryItem_PropertyChanged;
             }
 
-            _typeToCollectionMap.Add(typeof(Weapon), WeaponsModel.Weapons);
-            _typeToCollectionMap.Add(typeof(Armor), ArmorModel.Armors);
-            _typeToCollectionMap.Add(typeof(PowerArmor), ArmorModel.PowerArmors);
-            _typeToCollectionMap.Add(typeof(Ammo), AmmoModel.Ammos);
-            _typeToCollectionMap.Add(typeof(Aid), InventoryModel.AidItems);
-            _typeToCollectionMap.Add(typeof(Explosive), InventoryModel.Explosives);
-            _typeToCollectionMap.Add(typeof(Nourishment), InventoryModel.Nourishment);
-            _typeToCollectionMap.Add(typeof(Gear), InventoryModel.GearItems);
-            _typeToCollectionMap.Add(typeof(Junk), InventoryModel.JunkItems);
+            _typeToInventoryCollections.Add(typeof(Weapon), WeaponsModel.Weapons);
+            _typeToInventoryCollections.Add(typeof(Armor), ArmorModel.Armors);
+            _typeToInventoryCollections.Add(typeof(PowerArmor), ArmorModel.PowerArmors);
+            _typeToInventoryCollections.Add(typeof(Ammo), AmmoModel.Ammos);
+            _typeToInventoryCollections.Add(typeof(Aid), InventoryModel.AidItems);
+            _typeToInventoryCollections.Add(typeof(Explosive), InventoryModel.Explosives);
+            _typeToInventoryCollections.Add(typeof(Nourishment), InventoryModel.Nourishment);
+            _typeToInventoryCollections.Add(typeof(Gear), InventoryModel.GearItems);
+            _typeToInventoryCollections.Add(typeof(Junk), InventoryModel.JunkItems);
+
+            _typeToCatalogueCollections.Add(typeof(Weapon), XtrnlWeaponsModel.Weapons);
+            _typeToCatalogueCollections.Add(typeof(Armor), XtrnlArmorModel.Armors);
+            _typeToCatalogueCollections.Add(typeof(PowerArmor), XtrnlArmorModel.PowerArmors);
+            _typeToCatalogueCollections.Add(typeof(Ammo), XtrnlAmmoModel.Ammos);
+            _typeToCatalogueCollections.Add(typeof(Aid), XtrnlAidModel.AidItems);
+            _typeToCatalogueCollections.Add(typeof(Explosive), XtrnlExplosivesModel.Explosives);
+            _typeToCatalogueCollections.Add(typeof(Nourishment), XtrnlNourishmentModel.Nourishments);
+            _typeToCatalogueCollections.Add(typeof(Gear), XtrnlGearModel.GearItems);
+            _typeToCatalogueCollections.Add(typeof(Junk), XtrnlJunkModel.JunkItems);
 
             CatalogueView = CollectionViewSource.GetDefaultView(Catalogue);
             CatalogueView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
@@ -299,6 +344,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OpenAddToInventoryWindowCommand = new RelayCommand(OpenAddToInventoryWindow);
             AddToInventoryCommand = new RelayCommand(AddToInventory);
             RemoveFromInventoryCommand = new RelayCommand(RemoveFromInventory);
+
+            OpenNewTemplateWindowCommand = new RelayCommand(OpenNewTemplateWindow);
+            AddToCatalogueCommand = new RelayCommand(AddToCatalogue);
+            NullifyNewItemTemplateCommand = new RelayCommand(NullifyNewItemTemplate);
 
             AddPropertyCommand = new RelayCommand(AddProperty);
             RemovePropertyCommand = new RelayCommand(RemoveProperty);
@@ -409,6 +458,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             if (sender is Item item)
             {
+                item.ConstructNote();
+
                 if (e.PropertyName == nameof(Item.TotalLoad))
                 {
                     CalculateCurrentLoad();
@@ -440,7 +491,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             Type itemType = ItemToAddToInventory.GetType();
 
-            if (_typeToCollectionMap.TryGetValue(itemType, out IList collection))
+            if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
             {
                 ItemToAddToInventory.CanBeEdited = true;
                 ItemToAddToInventory.IsInEditMode = true;
@@ -464,7 +515,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             Type itemType = SelectedItem.GetType();
 
-            if (_typeToCollectionMap.TryGetValue(itemType, out IList collection))
+            if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
             {
                 collection.Remove(SelectedItem);
                 if(SelectedItem is  Item item)
@@ -480,7 +531,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (obj == null)
                 return;
 
-            dynamic item = SelectedItem;
+            dynamic item = SelectedItem ?? NewItemTemplate;
             item.AddProperty(obj);
         }
 
@@ -490,7 +541,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (obj == null)
                 return;
 
-            dynamic item = SelectedItem;
+            dynamic item = SelectedItem ?? NewItemTemplate;
             item.RemoveProperty(obj);
         }
 
@@ -500,7 +551,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (obj == null)
                 return;
 
-            dynamic item = SelectedItem;
+            dynamic item = SelectedItem ?? NewItemTemplate;
             item.AddUpgrade(obj);
         }
 
@@ -510,8 +561,58 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (obj == null)
                 return;
 
-            dynamic item = SelectedItem;
+            dynamic item = SelectedItem ?? NewItemTemplate;
             item.RemoveUpgrade(obj);
+        }
+
+        public RelayCommand OpenNewTemplateWindowCommand { get; private set; }
+        private void OpenNewTemplateWindow(object _ = null)
+        {
+            NewItemTemplate = null;
+            SelectedCatalogueItem = null;
+            SelectedInventoryItem = null;
+
+            var window = new NewTemplateWindow();
+            window.DataContext = this;
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
+        }
+
+        public RelayCommand AddToCatalogueCommand { get; private set; }
+        private void AddToCatalogue(object _ = null)
+        {
+            if (NewItemTemplate == null)
+                return;
+
+            if (_typeToCatalogueCollections.TryGetValue(SelectedTypeForCreating, out IList collection))
+            {
+                NewItemTemplate.CanBeEdited = false;
+                NewItemTemplate.IsInEditMode = false;
+                NewItemTemplate.ConstructNote();
+
+                collection.Add(NewItemTemplate);
+                Catalogue.Add(NewItemTemplate);
+                CatalogueView.Refresh();
+
+                NewItemTemplate = null;
+                SelectedCatalogueItem = null;
+                SelectedInventoryItem = null;
+            }
+            else
+            {
+                throw new Exception($"No collection found for item type {SelectedTypeForCreating}");
+            }
+        }
+
+        public RelayCommand NullifyNewItemTemplateCommand { get; private set; }
+        private void NullifyNewItemTemplate(object _ = null)
+        {
+            NewItemTemplate = null;
+            SelectedCatalogueItem = null;
+            SelectedInventoryItem = null;
         }
         //
     }

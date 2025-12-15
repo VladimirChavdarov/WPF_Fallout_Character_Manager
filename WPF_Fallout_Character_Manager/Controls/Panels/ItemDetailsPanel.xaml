@@ -15,7 +15,6 @@
     <UserControl.Resources>
         
         <conv:InvertBoolConverter x:Key="InvertBoolConverter"/>
-        <conv:VisibilitySwitcherConverter x:Key="VisibilitySwitcherConverter"/>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
         <DataTemplate DataType="{x:Type xtrnl:Weapon}">

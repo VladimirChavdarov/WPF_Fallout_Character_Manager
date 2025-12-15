@@ -20,6 +20,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // constructor
         public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel)
         {
+            WeaponTypes = new ObservableCollection<string>();
             Weapons = new ObservableCollection<Weapon>();
             WeaponProperties = new ObservableCollection<WeaponProperty>();
             WeaponUpgrades = new ObservableCollection<WeaponUpgrade>();
@@ -117,7 +118,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     type: parts[1],
                     cost: Int32.Parse(parts[2]),
                     ap: Int32.Parse(parts[3]),
-                    damage: new ModString("Damage", parts[4], true),
+                    damage: new ModString("Damage", parts[4]),
                     rangeMultiplier: "x0/x0",
                     critChance: Int32.Parse(critField[0]),
                     critDamage: critField[1],
@@ -164,13 +165,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 //
 
                 // Note
-                string note = "Type: " + weapon.Type;
-                note += "\nProperties: ";
-                foreach(WeaponProperty property in weapon.Properties)
-                {
-                    note += property.Name + ". ";
-                }
-                weapon.Name.Note = note;
+                weapon.ConstructNote();
                 //
 
                 Weapons.Add(weapon);
@@ -198,7 +193,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     type: parts[1],
                     cost: Int32.Parse(parts[2]),
                     ap: Int32.Parse(parts[3]),
-                    damage: new ModString("Damage", parts[4], true),
+                    damage: new ModString("Damage", parts[4]),
                     rangeMultiplier: parts[5],
                     critChance: Int32.Parse(critField[0]),
                     critDamage: critField[1],
@@ -240,17 +235,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 //
 
                 // Note
-                string note = "Type: " + weapon.Type;
-                note += "\nAmmo: " + weapon.AmmoType;
-                note += "\nProperties: ";
-                foreach (WeaponProperty property in weapon.Properties)
-                {
-                    note += property.Name + ". ";
-                }
-                weapon.Name.Note = note;
+                weapon.ConstructNote();
                 //
 
                 Weapons.Add(weapon);
+            }
+            //
+
+            // add weapon types
+            foreach(Weapon w in Weapons)
+            {
+                if(!WeaponTypes.Contains(w.Type))
+                {
+                    WeaponTypes.Add(w.Type);
+                }
             }
             //
         }
@@ -292,6 +290,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
+        public ObservableCollection<string> WeaponTypes { get; set; }
         public ObservableCollection<Weapon> Weapons { get; set; }
         public ObservableCollection<WeaponProperty> WeaponProperties { get; set; }
         public ObservableCollection<WeaponUpgrade> WeaponUpgrades { get; set; }
@@ -337,26 +336,26 @@ namespace WPF_Fallout_Character_Manager.Models.External
             WeaponType = weaponType;
             Name = new ModString("Name", name, false, description);
             Type = type;
-            Cost = new ModInt("Cost", cost, true);
-            AP = new ModInt("AP", ap, true);
-            ToHit = new ModInt("To Hit", 0, true);
+            Cost = new ModInt("Cost", cost);
+            AP = new ModInt("AP", ap);
+            ToHit = new ModInt("To Hit", 0);
             if (damage != null)
                 Damage = damage;
             else
-                Damage = new ModString("Damage", "None", true);
-            RangeMultiplier = new ModString("Range", rangeMultiplier, true);
-            CritChance = new ModInt("Crit Chance", critChance, true);
-            CritDamage = new ModString("Crit Damage", critDamage, true);
+                Damage = new ModString("Damage", "None");
+            RangeMultiplier = new ModString("Range", rangeMultiplier);
+            CritChance = new ModInt("Crit Chance", critChance);
+            CritDamage = new ModString("Crit Damage", critDamage);
             AmmoType = ammoType;
-            AmmoCapacity = new ModInt("Ammo Capacity", ammoCapacity, true);
-            AmmoPerAttack = new ModFloat("Ammo per Attack", ammoPerAttack, true);
-            NumberOfAttacks = new ModInt("Number of Attacks", numberOfAttacks, true);
+            AmmoCapacity = new ModInt("Ammo Capacity", ammoCapacity);
+            AmmoPerAttack = new ModFloat("Ammo per Attack", ammoPerAttack);
+            NumberOfAttacks = new ModInt("Number of Attacks", numberOfAttacks);
             UsedAmmoFirepower = 0.0f;
-            Load = new ModFloat("Load", load, true);
-            StrRequirement = new ModInt("Strength Requirement", strRequirement, true);
+            Load = new ModFloat("Load", load);
+            StrRequirement = new ModInt("Strength Requirement", strRequirement);
             Decay = new ModInt("Decay", decay, false);
-            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
-            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
+            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots);
+            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0);
             Equipped = false;
 
             _decay.PropertyChanged += Decay_PropertyChanged;
@@ -378,7 +377,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             if (other.Damage != null)
                 Damage = other.Damage.Clone();
             else
-                Damage = new ModString("Damage", "None", true);
+                Damage = new ModString("Damage", "None");
             RangeMultiplier = other.RangeMultiplier.Clone();
             CritChance = other.CritChance.Clone();
             CritDamage = other.CritDamage.Clone();
@@ -559,6 +558,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Weapon Clone() => new Weapon(this);
+
+        public override void ConstructNote()
+        {
+            string note = "Type: " + Type;
+            note += "\nAmmo: " + AmmoType;
+            note += "\nProperties: ";
+            foreach (WeaponProperty property in Properties)
+            {
+                note += property.Name + ". ";
+            }
+            Name.Note = note;
+        }
 
         public void InitializeBulletSlots()
         {

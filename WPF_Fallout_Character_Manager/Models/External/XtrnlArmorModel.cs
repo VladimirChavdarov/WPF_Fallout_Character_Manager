@@ -142,14 +142,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Upgrades = new ObservableCollection<ArmorUpgrade>();
 
-            Name = new ModString("Name", name, true);
-            Cost = new ModInt("Cost", cost, true);
-            AC = new ModInt("AC", ac, true);
-            DT = new ModInt("DT", dt, true);
-            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
-            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
-            Load = new ModFloat("Load", load, true);
-            StrRequirement = new ModInt("Strength Requirement", strRequirement, true);
+            Name = new ModString("Name", name);
+            Cost = new ModInt("Cost", cost);
+            AC = new ModInt("AC", ac);
+            DT = new ModInt("DT", dt);
+            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots);
+            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0);
+            Load = new ModFloat("Load", load);
+            StrRequirement = new ModInt("Strength Requirement", strRequirement);
             Decay = new ModInt("Decay", decay, false);
             Equipped = false;
 
@@ -306,15 +306,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Upgrades = new ObservableCollection<ArmorUpgrade>();
 
-            Name = new ModString("Name", name, true);
-            Cost = new ModInt("Cost", cost, true);
-            AC = new ModInt("AC", ac, true);
-            DP = new ModInt("DP", dp, true);
-            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots, true);
-            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0, true);
-            Load = new ModFloat("Load", load, true);
+            Name = new ModString("Name", name);
+            Cost = new ModInt("Cost", cost);
+            AC = new ModInt("AC", ac);
+            DP = new ModInt("DP", dp);
+            AvailableUpgradeSlots = new ModInt("Available Upgrade Slots", availableUpgradeSlots);
+            TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0);
+            Load = new ModFloat("Load", load);
             RepairDC = new ModInt("Repair DC", repairDC);
-            AllottedTime = new ModInt("Allotted Time", allottedTime, true);
+            AllottedTime = new ModInt("Allotted Time", allottedTime);
             Decay = new ModInt("Decay", decay, false);
             Equipped = false;
 

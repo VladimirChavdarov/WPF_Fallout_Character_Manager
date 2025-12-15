@@ -139,7 +139,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         public bool CanBeEdited
         {
             get => _canBeEdited;
-            set => Update(ref _isInEditMode, value);
+            set => Update(ref _canBeEdited, value);
         }
 
         private bool _isInEditMode;
@@ -156,6 +156,11 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         //
 
         // methods
+        public virtual void ConstructNote()
+        {
+
+        }
+
         private void SubscribeToChildPropertyChanges()
         {
             Name.PropertyChanged += Child_PropertyChanged;

@@ -143,15 +143,15 @@
 
             <Button
                 Grid.Row="4"
-                Style="{StaticResource FalloutHighlightedButton}"
+                Style="{StaticResource FalloutButton}"
                 Content="New Item Template"
                 Margin="10"
                 Padding="5"
                 Width="150"
                 FontSize="10"
-                HorizontalAlignment="Right"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Command="{Binding DataContext.AddToInventoryCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                Command="{Binding OpenNewTemplateWindowCommand}"/>
         </Grid>
     </GroupBox>
 </UserControl>
