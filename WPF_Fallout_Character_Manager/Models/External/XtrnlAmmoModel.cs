@@ -81,6 +81,29 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 AmmoEffects.Add(effect);
             }
             //
+
+            Ammos.CollectionChanged += Ammos_CollectionChanged;
+        }
+        //
+
+        // methods
+        private void Ammos_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(e.NewItems != null)
+            {
+                foreach(Ammo a in e.NewItems)
+                {
+                    a.Type = a.Name.Total;
+                }
+            }
+
+            foreach(Ammo a  in Ammos)
+            {
+                if(!AmmoTypes.Contains(a.Type))
+                {
+                    AmmoTypes.Add(a.Type);
+                }
+            }
         }
         //
 

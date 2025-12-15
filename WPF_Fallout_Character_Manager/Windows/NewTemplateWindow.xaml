@@ -836,7 +836,7 @@
                     <Label
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="11"
-                Content="{Binding NewItemTemplate.Type}"/>
+                Content="{Binding NewItemTemplate.Name.Total}"/>
                 </StackPanel>
 
                 <StackPanel
