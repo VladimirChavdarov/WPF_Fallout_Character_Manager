@@ -47,11 +47,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="AP:"
-                IsReadOnly="{Binding NewItemTemplate.AP.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.AP}"
                 Text="{Binding NewItemTemplate.AP.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.AP.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="1"
@@ -63,11 +63,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="To Hit:"
-                IsReadOnly="{Binding NewItemTemplate.ToHit.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.ToHit}"
                 Text="{Binding NewItemTemplate.ToHit.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.ToHit.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="2"
@@ -79,11 +79,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Damage:"
-                IsReadOnly="{Binding NewItemTemplate.Damage.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.Damage}"
                 Text="{Binding NewItemTemplate.Damage.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.Damage.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <StackPanel
                 Grid.Column="3"
@@ -109,11 +109,11 @@
                         VerticalAlignment="Top"
                         Width="35"
                         TextWrapping="NoWrap"
-                        IsReadOnly="{Binding NewItemTemplate.CritChance.IsBaseValueReadOnly}"
+                        IsReadOnly="True"
                         ModValue ="{Binding NewItemTemplate.CritChance}"
                         Text="{Binding NewItemTemplate.CritChance.BaseValue}"
                         Hint="{Binding NewItemTemplate.CritChance.Note}"
-                        CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                        CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                             <control:EnhancedTextBox
                         Grid.Column="1"
@@ -121,11 +121,11 @@
                         VerticalAlignment="Top"
                         Width="50"
                         TextWrapping="NoWrap"
-                        IsReadOnly="{Binding NewItemTemplate.CritDamage.IsBaseValueReadOnly}"
+                        IsReadOnly="True"
                         ModValue ="{Binding NewItemTemplate.CritDamage}"
                         Text="{Binding NewItemTemplate.CritDamage.BaseValue}"
                         Hint="{Binding NewItemTemplate.CritDamage.Note}"
-                        CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                        CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                         </Grid>
                     </StackPanel>
 
@@ -139,11 +139,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Range:"
-                IsReadOnly="{Binding NewItemTemplate.RangeMultiplier.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.RangeMultiplier}"
                 Text="{Binding NewItemTemplate.RangeMultiplier.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.RangeMultiplier.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                 </Grid>
 
                 <Grid>
@@ -171,7 +171,7 @@
                         TextBoxSlot="1"
                         MinValue="0"
                         MaxValue="10"
-                        IsReadOnly="{Binding NewItemTemplate.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                        IsReadOnly="{Binding NewItemTemplate.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                         ModValue="{Binding NewItemTemplate.Decay}"
                         Text="{Binding NewItemTemplate.Decay.BaseValue}"
                         Hint="{Binding NewItemTemplate.Decay.Note}"
@@ -185,11 +185,11 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="STR Req:"
-                    IsReadOnly="{Binding NewItemTemplate.StrRequirement.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding NewItemTemplate.StrRequirement}"
                     Text="{Binding NewItemTemplate.StrRequirement.Total, Mode=OneWay}"
                     Hint="{Binding NewItemTemplate.StrRequirement.Note}"
-                    CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                    CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                         <control:TextBoxWithLabelControl
                     Orientation="Horizontal"
@@ -198,11 +198,11 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="Ammo Capacity:"
-                    IsReadOnly="{Binding NewItemTemplate.NumberOfAttacks.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding NewItemTemplate.NumberOfAttacks}"
                     Text="{Binding NewItemTemplate.NumberOfAttacks.Total, Mode=OneWay}"
                     Hint="{Binding NewItemTemplate.NumberOfAttacks.Note}"
-                    CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                    CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                         <StackPanel
                             Orientation="Vertical"
@@ -220,7 +220,7 @@
                                 FontSize="11"
                                 ItemsSource="{Binding XtrnlAmmoModel.AmmoTypes}"
                                 SelectedItem="{Binding NewItemTemplate.AmmoType}"
-                                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}">
                             </ComboBox>
                         </StackPanel>
 
@@ -233,7 +233,7 @@
                             FontSize="11"
                             ItemsSource="{Binding XtrnlWeaponsModel.WeaponTypes}"
                             SelectedItem="{Binding NewItemTemplate.Type}"
-                            Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </StackPanel>
 
                     <StackPanel
@@ -285,7 +285,7 @@
                     Style="{StaticResource FalloutDefaultLabel}"
                     FontSize="10"
                     Margin="0 15 0 0"
-                    Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                     Content="Add Property:"/>
 
                         <ComboBox
@@ -297,7 +297,7 @@
                     ItemsSource="{Binding XtrnlWeaponsModel.WeaponProperties}"
                     DisplayMemberPath="Name"
                     Tag="Properties"
-                    Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                     SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -371,7 +371,7 @@
                     Style="{StaticResource FalloutDefaultLabel}"
                     FontSize="10"
                     Margin="0 15 0 0"
-                    Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                     Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -383,7 +383,7 @@
                     ItemsSource="{Binding XtrnlWeaponsModel.WeaponUpgrades}"
                     DisplayMemberPath="Name"
                     Tag="Upgrades"
-                    Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                     SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -423,11 +423,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Armor Class:"
-                IsReadOnly="{Binding NewItemTemplate.AC.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.AC}"
                 Text="{Binding NewItemTemplate.AC.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.AC.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="1"
@@ -439,11 +439,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Damage Threshold:"
-                IsReadOnly="{Binding NewItemTemplate.DT.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.DT}"
                 Text="{Binding NewItemTemplate.DT.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.DT.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                 </Grid>
 
                 <Grid>
@@ -472,7 +472,7 @@
                         TextBoxSlot="1"
                         MinValue="0"
                         MaxValue="10"
-                        IsReadOnly="{Binding NewItemTemplate.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                        IsReadOnly="{Binding NewItemTemplate.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                         ModValue="{Binding NewItemTemplate.Decay}"
                         Text="{Binding NewItemTemplate.Decay.BaseValue}"
                         Hint="{Binding NewItemTemplate.Decay.Note}"
@@ -486,11 +486,11 @@
                     MinWidth="45"
                     LabelFontSize="11"
                     LabelText="STR Req:"
-                    IsReadOnly="{Binding NewItemTemplate.StrRequirement.IsBaseValueReadOnly}"
+                    IsReadOnly="True"
                     ModValue ="{Binding NewItemTemplate.StrRequirement}"
                     Text="{Binding NewItemTemplate.StrRequirement.Total, Mode=OneWay}"
                     Hint="{Binding NewItemTemplate.StrRequirement.Note}"
-                    CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                    CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                         <StackPanel
                     Grid.Column="1"
@@ -510,7 +510,7 @@
                         HorizontalAlignment="Right"
                         IsChecked="{Binding NewItemTemplate.Equipped}"
                         Command="{Binding DataContext.ArmorViewModel.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        IsHitTestVisible="{Binding NewItemTemplate.IsInEditMode}"/>
+                        IsHitTestVisible="{Binding NewItemTemplate.CanBeEdited}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -570,7 +570,7 @@
                     Style="{StaticResource FalloutDefaultLabel}"
                     FontSize="10"
                     Margin="0 15 0 0"
-                    Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                     Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -582,7 +582,7 @@
                     ItemsSource="{Binding XtrnlArmorModel.ArmorUpgrades}"
                     DisplayMemberPath="Name"
                     Tag="Upgrades"
-                    Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                     SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -624,11 +624,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Armor Class:"
-                IsReadOnly="{Binding NewItemTemplate.AC.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.AC}"
                 Text="{Binding NewItemTemplate.AC.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.AC.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="1"
@@ -640,11 +640,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Defense Points:"
-                IsReadOnly="{Binding NewItemTemplate.DP.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.DP}"
                 Text="{Binding NewItemTemplate.DP.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.DP.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="2"
@@ -656,11 +656,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Repair DC:"
-                IsReadOnly="{Binding NewItemTemplate.RepairDC.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.RepairDC}"
                 Text="{Binding NewItemTemplate.RepairDC.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.RepairDC.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="3"
@@ -672,11 +672,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Allotted Time:"
-                IsReadOnly="{Binding NewItemTemplate.AllottedTime.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.AllottedTime}"
                 Text="{Binding NewItemTemplate.AllottedTime.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.AllottedTime.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                 </Grid>
 
                 <Grid>
@@ -705,7 +705,7 @@
                         TextBoxSlot="1"
                         MinValue="0"
                         MaxValue="10"
-                        IsReadOnly="{Binding NewItemTemplate.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                        IsReadOnly="{Binding NewItemTemplate.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                         ModValue="{Binding NewItemTemplate.Decay}"
                         Text="{Binding NewItemTemplate.Decay.BaseValue}"
                         Hint="{Binding NewItemTemplate.Decay.Note}"
@@ -730,7 +730,7 @@
                         HorizontalAlignment="Right"
                         IsChecked="{Binding NewItemTemplate.Equipped}"
                         Command="{Binding DataContext.ArmorViewModel.UnequipOtherPowerArmorsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        IsHitTestVisible="{Binding NewItemTemplate.IsInEditMode}"/>
+                        IsHitTestVisible="{Binding NewItemTemplate.CanBeEdited}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -790,7 +790,7 @@
         Style="{StaticResource FalloutDefaultLabel}"
         FontSize="10"
         Margin="0 15 0 0"
-        Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+        Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
         Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -802,7 +802,7 @@
         ItemsSource="{Binding XtrnlArmorModel.PowerArmorUpgrades}"
         DisplayMemberPath="Name"
         Tag="Upgrades"
-        Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+        Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
         SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -890,7 +890,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="10"
                 Margin="0 15 0 0"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Add Effect:"/>
 
                     <ComboBox
@@ -902,7 +902,7 @@
                 ItemsSource="{Binding XtrnlAmmoModel.AmmoEffects}"
                 DisplayMemberPath="Name"
                 Tag="Properties"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -936,7 +936,7 @@
             LabelText="Description: "
             FontSize="11"
             CanOpenModal="false"
-            IsReadOnly="{Binding NewItemTemplate.IsInEditMode}"
+            IsReadOnly="{Binding NewItemTemplate.CanBeEdited}"
             Text="{Binding NewItemTemplate.Name.Note}"/>
 
                 <StackPanel
@@ -990,7 +990,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="10"
                 Margin="0 15 0 0"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Add Property:"/>
 
                     <ComboBox
@@ -1002,7 +1002,7 @@
                 ItemsSource="{Binding XtrnlAidModel.AidProperties}"
                 DisplayMemberPath="Name"
                 Tag="Properties"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1044,11 +1044,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="AP:"
-                IsReadOnly="{Binding NewItemTemplate.AP.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.AP}"
                 Text="{Binding NewItemTemplate.AP.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.AP.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="1"
@@ -1060,11 +1060,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Damage:"
-                IsReadOnly="{Binding NewItemTemplate.Damage.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.Damage}"
                 Text="{Binding NewItemTemplate.Damage.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.Damage.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="2"
@@ -1076,11 +1076,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Arm DC:"
-                IsReadOnly="{Binding NewItemTemplate.ArmDC.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.ArmDC}"
                 Text="{Binding NewItemTemplate.ArmDC.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.ArmDC.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="3"
@@ -1092,11 +1092,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Range:"
-                IsReadOnly="{Binding NewItemTemplate.Range.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.Range}"
                 Text="{Binding NewItemTemplate.Range.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.Range.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="4"
@@ -1108,11 +1108,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Area of Effect:"
-                IsReadOnly="{Binding NewItemTemplate.AreaOfEffect.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.AreaOfEffect}"
                 Text="{Binding NewItemTemplate.AreaOfEffect.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.AreaOfEffect.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                 </Grid>
 
                 <StackPanel
@@ -1166,7 +1166,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="10"
                 Margin="0 15 0 0"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Add Property:"/>
 
                     <ComboBox
@@ -1178,7 +1178,7 @@
                 ItemsSource="{Binding XtrnlExplosivesModel.ExplosiveProperties}"
                 DisplayMemberPath="Name"
                 Tag="Properties"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1252,7 +1252,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="10"
                 Margin="0 15 0 0"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Add Property:"/>
 
                     <ComboBox
@@ -1264,7 +1264,7 @@
                 ItemsSource="{Binding XtrnlNourishmentModel.NourishmentProperties}"
                 DisplayMemberPath="Name"
                 Tag="Properties"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1300,7 +1300,7 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
                 IsChecked="{Binding NewItemTemplate.CanBeEquippedOrFilled}"
-                IsHitTestVisible="{Binding NewItemTemplate.IsInEditMode}"/>
+                IsHitTestVisible="{Binding NewItemTemplate.CanBeEdited}"/>
                     <Label
                 Style="{StaticResource FalloutDefaultLabel}"
                 Content="Can be Equipped or Filled"
@@ -1334,7 +1334,7 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
                     IsChecked="{Binding NewItemTemplate.EquippedOrFull}"
-                    IsHitTestVisible="{Binding NewItemTemplate.IsInEditMode}"/>
+                    IsHitTestVisible="{Binding NewItemTemplate.CanBeEdited}"/>
                     </StackPanel>
 
                     <control:TextBoxWithLabelControl
@@ -1347,11 +1347,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Load: Equipped/Full"
-                IsReadOnly="{Binding NewItemTemplate.LoadEquippedOrFull.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.LoadEquippedOrFull}"
                 Text="{Binding NewItemTemplate.LoadEquippedOrFull.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.LoadEquippedOrFull.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                 Grid.Column="2"
@@ -1363,11 +1363,11 @@
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Load: Unequipped/Empty"
-                IsReadOnly="{Binding NewItemTemplate.LoadUnequippedOrEmpty.IsBaseValueReadOnly}"
+                IsReadOnly="True"
                 ModValue ="{Binding NewItemTemplate.LoadUnequippedOrEmpty}"
                 Text="{Binding NewItemTemplate.LoadUnequippedOrEmpty.Total, Mode=OneWay}"
                 Hint="{Binding NewItemTemplate.LoadUnequippedOrEmpty.Note}"
-                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                 </Grid>
 
                 <control:TextBoxWithLabelControl
@@ -1381,7 +1381,7 @@
             LabelText="Description: "
             FontSize="11"
             CanOpenModal="false"
-            IsReadOnly="{Binding NewItemTemplate.IsInEditMode}"
+            IsReadOnly="{Binding NewItemTemplate.CanBeEdited}"
             Text="{Binding NewItemTemplate.Name.Note}"/>
             </StackPanel>
         </DataTemplate>
@@ -1443,7 +1443,7 @@
                                 FontSize="9"
                                 Text="{Binding Amount.BaseValue}"
                                 ModValue="{Binding NewItemTemplate.Amount}"
-                                IsReadOnly="{Binding NewItemTemplate.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                IsReadOnly="{Binding NewItemTemplate.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                 CanOpenModal="False"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -1454,7 +1454,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="10"
                 Margin="0 15 0 0"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Add Property:"/>
 
                     <ComboBox
@@ -1466,7 +1466,7 @@
                 ItemsSource="{Binding XtrnlJunkModel.JunkComponents}"
                 DisplayMemberPath="NameString"
                 Tag="Properties"
-                Visibility="{Binding NewItemTemplate.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1566,7 +1566,7 @@
                                 Text="{Binding NewItemTemplate.Name.Total, Mode=OneWay}"
                                 Hint="{Binding NewItemTemplate.Name.Note}"
                                 ModValue="{Binding NewItemTemplate.Name}"
-                                CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                                CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                         </Grid>
 
                         <Border
@@ -1589,24 +1589,24 @@
                                         HorizontalAlignment="Right"
                                         Orientation="Horizontal"
                                         LabelFontSize="11"
-                                        IsReadOnly="{Binding NewItemTemplate.Cost.IsBaseValueReadOnly}"
+                                        IsReadOnly="True"
                                         LabelText="{Binding NewItemTemplate.Cost.Name}"
                                         Text="{Binding NewItemTemplate.Cost.Total, Mode=OneWay}"
                                         Hint="{Binding NewItemTemplate.Cost.Note}"
                                         ModValue="{Binding NewItemTemplate.Cost}"
-                                        CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                                        CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
 
                                     <control:TextBoxWithLabelControl
                                         Margin="5"
                                         HorizontalAlignment="Right"
                                         Orientation="Horizontal"
                                         LabelFontSize="11"
-                                        IsReadOnly="{Binding NewItemTemplate.Load.IsBaseValueReadOnly}"
+                                        IsReadOnly="True"
                                         LabelText="{Binding NewItemTemplate.Load.Name}"
                                         Text="{Binding NewItemTemplate.Load.Total, Mode=OneWay}"
                                         Hint="{Binding NewItemTemplate.Load.Note}"
                                         ModValue="{Binding NewItemTemplate.Load}"
-                                        CanOpenModal="{Binding NewItemTemplate.IsInEditMode}"/>
+                                        CanOpenModal="{Binding NewItemTemplate.CanBeEdited}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

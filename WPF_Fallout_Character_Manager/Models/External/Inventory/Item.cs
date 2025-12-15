@@ -37,7 +37,6 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             _load = new ModFloat("Load", load);
 
             CanBeEdited = false;
-            IsInEditMode = false;
 
             SubscribeToChildPropertyChanges();
         }
@@ -50,7 +49,6 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
             Load = other.Load.Clone();
 
             CanBeEdited = other.CanBeEdited;
-            IsInEditMode = other.IsInEditMode;
 
             SubscribeToChildPropertyChanges();
         }
@@ -140,13 +138,6 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         {
             get => _canBeEdited;
             set => Update(ref _canBeEdited, value);
-        }
-
-        private bool _isInEditMode;
-        public bool IsInEditMode
-        {
-            get => _isInEditMode;
-            set => Update(ref _isInEditMode, value);
         }
 
         public int TotalLoad => (int)(Amount.Total * Load.Total);

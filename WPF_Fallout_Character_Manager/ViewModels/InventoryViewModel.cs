@@ -160,7 +160,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     dynamic item = collection[0];
                     NewItemTemplate = item.Clone();
                     NewItemTemplate.CanBeEdited = true;
-                    NewItemTemplate.IsInEditMode = true;
                 }
                 else
                 {
@@ -494,7 +493,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
             {
                 ItemToAddToInventory.CanBeEdited = true;
-                ItemToAddToInventory.IsInEditMode = true;
                 if(ItemToAddToInventory is Item item)
                 {
                     item.PropertyChanged += IventoryItem_PropertyChanged;
@@ -590,7 +588,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (_typeToCatalogueCollections.TryGetValue(SelectedTypeForCreating, out IList collection))
             {
                 NewItemTemplate.CanBeEdited = false;
-                NewItemTemplate.IsInEditMode = false;
                 NewItemTemplate.ConstructNote();
 
                 collection.Add(NewItemTemplate);

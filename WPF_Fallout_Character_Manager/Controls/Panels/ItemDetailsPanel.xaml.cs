@@ -42,7 +42,7 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
             {
                 if(vm.SelectedItem is Item gameItem)
                 {
-                    if(!gameItem.IsInEditMode)
+                    if(!gameItem.CanBeEdited)
                     {
                         e.Handled = true;
                         return;

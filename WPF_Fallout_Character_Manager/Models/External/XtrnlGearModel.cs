@@ -101,7 +101,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set
             {
                 Update(ref _loadEquippedOrFull, value);
-                Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+                if(LoadUnequippedOrEmpty != null)
+                {
+                    Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+                }
             }
         }
 
@@ -112,7 +115,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set
             {
                 Update(ref _loadUnequippedOrEmpty, value);
-                Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+                if (LoadEquippedOrFull != null)
+                {
+                    Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+                }
             }
         }
 
