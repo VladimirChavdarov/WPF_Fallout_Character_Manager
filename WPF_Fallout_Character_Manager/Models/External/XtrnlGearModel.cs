@@ -98,21 +98,32 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public ModFloat LoadEquippedOrFull
         {
             get => _loadEquippedOrFull;
-            set => Update(ref _loadEquippedOrFull, value);
+            set
+            {
+                Update(ref _loadEquippedOrFull, value);
+                Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+            }
         }
 
         private ModFloat _loadUnequippedOrEmpty;
         public ModFloat LoadUnequippedOrEmpty
         {
             get => _loadUnequippedOrEmpty;
-            set => Update(ref _loadUnequippedOrEmpty, value);
+            set
+            {
+                Update(ref _loadUnequippedOrEmpty, value);
+                Load.BaseValue = EquippedOrFull ? LoadEquippedOrFull.Total : LoadUnequippedOrEmpty.Total;
+            }
         }
 
         private bool _canBeEquippedOrFilled;
         public bool CanBeEquippedOrFilled
         {
             get => _canBeEquippedOrFilled;
-            set => Update(ref _canBeEquippedOrFilled, value);
+            set
+            {
+                Update(ref _canBeEquippedOrFilled, value);
+            }
         }
 
         private bool _equippedOrFull;

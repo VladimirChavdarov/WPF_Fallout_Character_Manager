@@ -1287,6 +1287,27 @@
         <DataTemplate DataType="{x:Type xtrnl:Gear}">
             <StackPanel
                 DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+                <StackPanel
+                    Margin="0 0 0 10"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    <CheckBox
+                        Style="{StaticResource FalloutSkillCheckbox}"
+                        Margin="0 2 0 0"
+                        FontSize="22"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        IsChecked="{Binding SelectedItem.CanBeEquippedOrFilled}"
+                        IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="Can be Equipped or Filled"
+                        FontSize="11"
+                        VerticalAlignment="Top"/>
+                </StackPanel>
+
                 <Grid
                     Visibility="{Binding SelectedItem.CanBeEquippedOrFilled, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>
