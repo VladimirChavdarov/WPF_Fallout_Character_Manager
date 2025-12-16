@@ -79,8 +79,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
                     break;
                 }
                 default:
-                    MessageBox.Show("Invalid object passed to OpenModifierModal — expected ModValue<T>.");
-                    break;
+                    {
+                        MessageBox.Show("Invalid object passed to OpenModifierModal — expected ModValue<T>.");
+                        return;
+                    }
             }
 
             var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
