@@ -358,6 +358,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0);
             Equipped = false;
 
+            Name.PropertyChanged += NoteComponents_PropertyChanged;
+            Properties.CollectionChanged += Properties_CollectionChanged;
             _decay.PropertyChanged += Decay_PropertyChanged;
             Upgrades.CollectionChanged += Upgrades_CollectionChanged;
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
@@ -392,6 +394,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots = other.TakenUpgradeSlots.Clone();
             Equipped = other.Equipped;
 
+            Name.PropertyChanged += NoteComponents_PropertyChanged;
+            Properties.CollectionChanged += Properties_CollectionChanged;
             _decay.PropertyChanged += Decay_PropertyChanged;
             Upgrades.CollectionChanged += Upgrades_CollectionChanged;
             TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
@@ -631,6 +635,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 throw new ArgumentException("The argument cannot be cast to the correct type");
             }
+        }
+
+        // a field that is relevant to the information in displayed in the note has been changed.
+        private void NoteComponents_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ConstructNote();
+        }
+        private void Properties_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ConstructNote();
         }
 
         private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

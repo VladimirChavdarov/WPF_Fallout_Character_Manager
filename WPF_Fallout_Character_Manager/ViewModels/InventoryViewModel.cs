@@ -455,14 +455,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void IventoryItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (sender is Item item)
+            if (e.PropertyName == nameof(Item.TotalLoad))
             {
-                item.ConstructNote();
-
-                if (e.PropertyName == nameof(Item.TotalLoad))
-                {
-                    CalculateCurrentLoad();
-                }
+                CalculateCurrentLoad();
             }
         }
         //

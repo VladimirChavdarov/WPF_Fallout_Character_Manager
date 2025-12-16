@@ -167,7 +167,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
                 OnPropertyChanged(nameof(NameAmount));
                 OnPropertyChanged(nameof(NameString));
             }
-            if (sender == Amount && e.PropertyName == nameof(ModInt.Total))
+            else if (sender == Amount && e.PropertyName == nameof(ModInt.Total))
             {
                 OnPropertyChanged(nameof(TotalCost));
                 OnPropertyChanged(nameof(TotalLoad));
