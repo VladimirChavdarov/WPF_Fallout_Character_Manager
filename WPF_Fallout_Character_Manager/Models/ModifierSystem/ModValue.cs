@@ -54,6 +54,15 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             if (e.PropertyName == nameof(LabeledValue<T>.Value))
             {
                 UpdateTotal();
+                OnPropertyChanged(nameof(BaseValue));
+            }
+            else if (e.PropertyName == nameof(LabeledValue<T>.Note))
+            {
+                OnPropertyChanged(nameof(Note));
+            }
+            else if (e.PropertyName == nameof(LabeledValue<T>.Name))
+            {
+                OnPropertyChanged(nameof(Name));
             }
         }
 
