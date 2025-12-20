@@ -55,15 +55,21 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        
                         <!-- Border around the ComboBox -->
                         <Border x:Name="Border" 
+                                Grid.Column="0"
                                     Background="{StaticResource FalloutGreenBackground}" 
                                     BorderBrush="{StaticResource FalloutGreen}" 
                                     BorderThickness="0"/>
 
                         <!-- ToggleButton (Arrow) -->
                         <ToggleButton x:Name="ToggleButton"
-                            Grid.Column="2"
+                            Grid.Column="1"
                             Focusable="false"
                             IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                             HorizontalAlignment="Right"
@@ -99,6 +105,7 @@
                         <!-- Content (Selected Item) -->
                         <ContentPresenter
                             x:Name="ContentSite"
+                            Grid.Column="0"
                             Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"

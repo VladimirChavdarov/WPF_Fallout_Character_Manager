@@ -31,6 +31,7 @@
                     HorizontalAlignment="Left"
                     MinWidth="160"
                     Width="Auto"
+                    MaxWidth="410"
                     ItemsSource="{Binding WeaponsModel.Weapons}"
                     DisplayMemberPath="EquippedNameAmount"
                     SelectedItem="{Binding SelectedWeapon}">

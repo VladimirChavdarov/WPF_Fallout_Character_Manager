@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="AddToInventoryWindow" Height="130" Width="220"
+        Title="AddToInventoryWindow" Height="160" Width="250"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         MinWidth="50"
@@ -64,11 +64,15 @@
                     <Label
                         Style="{StaticResource FalloutDefaultLabel}"
                         Margin="0 0 0 10"
+                        Width ="220"
                         FontSize="11"
                         VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Content="{Binding ItemToAddToInventory.Name.Total}"/>
-                    
+                        HorizontalAlignment="Left">
+                        <Label.Content>
+                            <AccessText TextWrapping="Wrap" Text="{Binding ItemToAddToInventory.Name.Total}"/>
+                        </Label.Content>
+                    </Label>
+
                     <controls:UpDownTextBoxWithLabelControl
                         Margin="0 0 0 10"
                         HorizontalAlignment="Left"
@@ -81,7 +85,7 @@
                         CanOpenModal="False"/>
                     
                     <Grid
-                        HorizontalAlignment="Right">
+                        HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>

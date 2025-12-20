@@ -29,6 +29,7 @@
                     HorizontalAlignment="Left"
                     MinWidth="160"
                     Width="Auto"
+                    MaxWidth="410"
                     ItemsSource="{Binding ArmorsModel.Armors}"
                     DisplayMemberPath="EquippedNameAmount"
                     SelectedItem="{Binding SelectedArmor}">
