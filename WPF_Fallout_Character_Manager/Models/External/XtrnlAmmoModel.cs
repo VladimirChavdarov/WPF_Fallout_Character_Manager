@@ -124,7 +124,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
             Effects = new ObservableCollection<AmmoEffect>();
             Effects.CollectionChanged += Effects_CollectionChanged;
-            PropertyChanged += Ammo_PropertyChanged;
             if (effect != null)
                 Effects.Add(effect);
         }
@@ -136,7 +135,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
             CustomName = other.CustomName;
 
             Effects.CollectionChanged += Effects_CollectionChanged;
-            PropertyChanged += Ammo_PropertyChanged;
         }
         //
 
@@ -167,6 +165,23 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     foreach(AmmoEffect effect in Effects)
                     {
                         if(effect.Name != "")
+                            result += " (" + effect.Name + ")";
+                    }
+                }
+                return result;
+            }
+        }
+
+        public override string NameAmount
+        {
+            get
+            {
+                string result = base.NameAmount;
+                if (!CustomName)
+                {
+                    foreach (AmmoEffect effect in Effects)
+                    {
+                        if (effect.Name != "")
                             result += " (" + effect.Name + ")";
                     }
                 }
@@ -207,15 +222,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void Effects_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(NameAmountEffects));
-        }
-
-        private void Ammo_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(NameAmount)) // update NameAmountEffects if NameAmount changes
-            {
-                OnPropertyChanged(nameof(NameAmountEffects));
-            }
+            OnPropertyChanged(nameof(NameAmount));
         }
         //
     }

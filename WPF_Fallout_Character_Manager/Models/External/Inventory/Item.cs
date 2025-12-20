@@ -142,7 +142,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
 
         public int TotalLoad => (int)(Amount.Total * Load.Total);
         public int TotalCost => (int)(Amount.Total * Cost.Total);
-        public string NameAmount => $"({Amount.Total}) {Name.Total}";
+        public virtual string NameAmount => $"({Amount.Total}) {Name.Total}";
         public string NameString => Name.Total;
         //
 

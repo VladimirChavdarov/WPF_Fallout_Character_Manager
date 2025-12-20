@@ -227,7 +227,7 @@
                                 <DataTemplate>
                                     <TextBlock
                                         Grid.Column="0"
-                                        Text="{Binding NameAmountEffects}"
+                                        Text="{Binding NameAmount}"
                                         FontSize="9"
                                         TextWrapping="Wrap"
                                         Padding="0 0 10 0"/>

@@ -43,6 +43,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         slotCost: 1
                         );
 
+                    if (newUpgrade.Value == "-")
+                        continue;
+
                     ArmorUpgrades.Add(newUpgrade);
                 }
             }
@@ -63,6 +66,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         value: parts[2 + i],
                         slotCost: 1
                         );
+
+                    if (newUpgrade.Value == "-")
+                        continue;
 
                     PowerArmorUpgrades.Add(newUpgrade);
                 }
@@ -245,6 +251,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
+        public override string NameAmount
+        {
+            get
+            {
+                string result = base.NameAmount;
+                foreach (ArmorUpgrade upgrade in Upgrades)
+                {
+                    result += " (" + upgrade.Name + ")";
+                }
+
+                return result;
+            }
+        }
+
         public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString(); // probably doesn't update properly. See EquippedNameAmount.
 
         public ObservableCollection<ArmorUpgrade> Upgrades { get; set; }
@@ -252,6 +272,35 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Armor Clone() => new Armor(this);
+
+        public void AddUpgrade(object obj)
+        {
+            if (obj is ArmorUpgrade upgradeToAdd)
+            {
+                if (TakenUpgradeSlots.Total + upgradeToAdd.SlotCost > AvailableUpgradeSlots.Total)
+                {
+                    return;
+                }
+
+                Upgrades.Add(upgradeToAdd);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveUpgrade(object obj)
+        {
+            if (obj is ArmorUpgrade upgradeToRemove)
+            {
+                Upgrades.Remove(upgradeToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
 
         private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -280,6 +329,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         private void Upgrades_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             TakenUpgradeSlots.BaseValue = Upgrades.Count;
+            OnPropertyChanged(nameof(NameAmount));
+            OnPropertyChanged(nameof(EquippedNameAmount));
         }
 
         private void TakenUpgradeSlots_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -421,6 +472,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
+        public override string NameAmount
+        {
+            get
+            {
+                string result = base.NameAmount;
+                foreach (ArmorUpgrade upgrade in Upgrades)
+                {
+                    result += " (" + upgrade.Name + ")";
+                }
+
+                return result;
+            }
+        }
+
         public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString(); // probably doesn't update properly. See EquippedNameAmount.
 
         public ObservableCollection<ArmorUpgrade> Upgrades { get; set; }
@@ -428,6 +493,35 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public PowerArmor Clone() => new PowerArmor(this);
+
+        public void AddUpgrade(object obj)
+        {
+            if (obj is ArmorUpgrade upgradeToAdd)
+            {
+                if (TakenUpgradeSlots.Total + upgradeToAdd.SlotCost > AvailableUpgradeSlots.Total)
+                {
+                    return;
+                }
+
+                Upgrades.Add(upgradeToAdd);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
+
+        public void RemoveUpgrade(object obj)
+        {
+            if (obj is ArmorUpgrade upgradeToRemove)
+            {
+                Upgrades.Remove(upgradeToRemove);
+            }
+            else
+            {
+                throw new ArgumentException("The argument cannot be cast to the correct type");
+            }
+        }
 
         private void Decay_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -448,12 +542,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
             ApplyDecay(Cost, decay, (int)costReduction);
         }
 
-        private void TakenUpgradeSlots_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void Upgrades_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             TakenUpgradeSlots.BaseValue = Upgrades.Count;
+            OnPropertyChanged(nameof(NameAmount));
+            OnPropertyChanged(nameof(EquippedNameAmount));
         }
 
-        private void Upgrades_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void TakenUpgradeSlots_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }

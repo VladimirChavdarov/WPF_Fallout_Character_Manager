@@ -551,6 +551,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
+        public override string NameAmount
+        {
+            get
+            {
+                string result = base.NameAmount;
+                foreach(WeaponUpgrade upgrade in Upgrades)
+                {
+                    result += " (" + upgrade.Name + ")";
+                }
+
+                return result;
+            }
+        }
+
         public string UpgradeSlotVisualization => TakenUpgradeSlots.BaseValue.ToString() + "/" + AvailableUpgradeSlots.BaseValue.ToString(); // probably doesn't update properly. See EquippedNameAmount.
 
         public ObservableCollection<WeaponProperty> Properties { get; set; }
@@ -669,6 +683,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 TakenUpgradeSlots.BaseValue += upgrade.SlotCost;
             }
+
+            OnPropertyChanged(nameof(NameAmount));
+            OnPropertyChanged(nameof(EquippedNameAmount));
         }
 
         private void TakenUpgradeSlots_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
