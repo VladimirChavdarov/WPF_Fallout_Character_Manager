@@ -936,7 +936,7 @@
             LabelText="Description: "
             FontSize="11"
             CanOpenModal="false"
-            IsReadOnly="{Binding NewItemTemplate.CanBeEdited}"
+            IsReadOnly="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
             Text="{Binding NewItemTemplate.Name.Note}"/>
 
                 <StackPanel
@@ -1381,7 +1381,7 @@
             LabelText="Description: "
             FontSize="11"
             CanOpenModal="false"
-            IsReadOnly="{Binding NewItemTemplate.CanBeEdited}"
+            IsReadOnly="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
             Text="{Binding NewItemTemplate.Name.Note}"/>
             </StackPanel>
         </DataTemplate>

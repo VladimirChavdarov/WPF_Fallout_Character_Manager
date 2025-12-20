@@ -43,7 +43,7 @@
                         ModValue ="{Binding SelectedItem.AP}"
                         Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.AP.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="1"
@@ -59,7 +59,7 @@
                         ModValue ="{Binding SelectedItem.ToHit}"
                         Text="{Binding SelectedItem.ToHit.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.ToHit.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="2"
@@ -75,7 +75,7 @@
                         ModValue ="{Binding SelectedItem.Damage}"
                         Text="{Binding SelectedItem.Damage.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.Damage.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <StackPanel
                         Grid.Column="3"
@@ -105,7 +105,7 @@
                                 ModValue ="{Binding SelectedItem.CritChance}"
                                 Text="{Binding SelectedItem.CritChance.BaseValue}"
                                 Hint="{Binding SelectedItem.CritChance.Note}"
-                                CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                                CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                             <control:EnhancedTextBox
                                 Grid.Column="1"
@@ -117,7 +117,7 @@
                                 ModValue ="{Binding SelectedItem.CritDamage}"
                                 Text="{Binding SelectedItem.CritDamage.BaseValue}"
                                 Hint="{Binding SelectedItem.CritDamage.Note}"
-                                CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                                CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
                         </Grid>
                     </StackPanel>
 
@@ -135,7 +135,7 @@
                         ModValue ="{Binding SelectedItem.RangeMultiplier}"
                         Text="{Binding SelectedItem.RangeMultiplier.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.RangeMultiplier.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
                 </Grid>
 
                 <Grid>
@@ -163,7 +163,7 @@
                                 TextBoxSlot="1"
                                 MinValue="0"
                                 MaxValue="10"
-                                IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                IsReadOnly="{Binding SelectedItem.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                 ModValue="{Binding SelectedItem.Decay}"
                                 Text="{Binding SelectedItem.Decay.BaseValue}"
                                 Hint="{Binding SelectedItem.Decay.Note}"
@@ -181,7 +181,7 @@
                             ModValue ="{Binding SelectedItem.StrRequirement}"
                             Text="{Binding SelectedItem.StrRequirement.Total, Mode=OneWay}"
                             Hint="{Binding SelectedItem.StrRequirement.Note}"
-                            CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                            CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                         <control:TextBoxWithLabelControl
                             Orientation="Horizontal"
@@ -194,7 +194,7 @@
                             ModValue ="{Binding SelectedItem.NumberOfAttacks}"
                             Text="{Binding SelectedItem.NumberOfAttacks.Total, Mode=OneWay}"
                             Hint="{Binding SelectedItem.NumberOfAttacks.Note}"
-                            CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                            CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                         <StackPanel
                             Orientation="Vertical"
@@ -285,7 +285,7 @@
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             Margin="0 15 0 0"
-                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                             Content="Add Property:"/>
 
                         <ComboBox
@@ -297,7 +297,7 @@
                             ItemsSource="{Binding XtrnlWeaponsModel.WeaponProperties}"
                             DisplayMemberPath="Name"
                             Tag="Properties"
-                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                             SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -371,7 +371,7 @@
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             Margin="0 15 0 0"
-                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                             Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -383,7 +383,7 @@
                             ItemsSource="{Binding XtrnlWeaponsModel.WeaponUpgrades}"
                             DisplayMemberPath="Name"
                             Tag="Upgrades"
-                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                             SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -427,7 +427,7 @@
                         ModValue ="{Binding SelectedItem.AC}"
                         Text="{Binding SelectedItem.AC.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.AC.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="1"
@@ -443,7 +443,7 @@
                         ModValue ="{Binding SelectedItem.DT}"
                         Text="{Binding SelectedItem.DT.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.DT.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
                 </Grid>
 
                 <Grid>
@@ -472,7 +472,7 @@
                                 TextBoxSlot="1"
                                 MinValue="0"
                                 MaxValue="10"
-                                IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                IsReadOnly="{Binding SelectedItem.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                 ModValue="{Binding SelectedItem.Decay}"
                                 Text="{Binding SelectedItem.Decay.BaseValue}"
                                 Hint="{Binding SelectedItem.Decay.Note}"
@@ -490,7 +490,7 @@
                             ModValue ="{Binding SelectedItem.StrRequirement}"
                             Text="{Binding SelectedItem.StrRequirement.Total, Mode=OneWay}"
                             Hint="{Binding SelectedItem.StrRequirement.Note}"
-                            CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                            CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                         <StackPanel
                             Grid.Column="1"
@@ -510,7 +510,7 @@
                                 HorizontalAlignment="Right"
                                 IsChecked="{Binding SelectedItem.Equipped}"
                                 Command="{Binding DataContext.ArmorViewModel.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
+                                IsHitTestVisible="{Binding SelectedItem.CanBeEdited}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -570,7 +570,7 @@
                             Style="{StaticResource FalloutDefaultLabel}"
                             FontSize="10"
                             Margin="0 15 0 0"
-                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                             Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -582,7 +582,7 @@
                             ItemsSource="{Binding XtrnlArmorModel.ArmorUpgrades}"
                             DisplayMemberPath="Name"
                             Tag="Upgrades"
-                            Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                             SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -628,7 +628,7 @@
                         ModValue ="{Binding SelectedItem.AC}"
                         Text="{Binding SelectedItem.AC.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.AC.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="1"
@@ -644,7 +644,7 @@
                         ModValue ="{Binding SelectedItem.DP}"
                         Text="{Binding SelectedItem.DP.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.DP.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="2"
@@ -660,7 +660,7 @@
                         ModValue ="{Binding SelectedItem.RepairDC}"
                         Text="{Binding SelectedItem.RepairDC.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.RepairDC.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="3"
@@ -676,7 +676,7 @@
                         ModValue ="{Binding SelectedItem.AllottedTime}"
                         Text="{Binding SelectedItem.AllottedTime.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.AllottedTime.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
                 </Grid>
 
                 <Grid>
@@ -705,7 +705,7 @@
                                 TextBoxSlot="1"
                                 MinValue="0"
                                 MaxValue="10"
-                                IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                IsReadOnly="{Binding SelectedItem.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                 ModValue="{Binding SelectedItem.Decay}"
                                 Text="{Binding SelectedItem.Decay.BaseValue}"
                                 Hint="{Binding SelectedItem.Decay.Note}"
@@ -730,7 +730,7 @@
                                 HorizontalAlignment="Right"
                                 IsChecked="{Binding SelectedItem.Equipped}"
                                 Command="{Binding DataContext.ArmorViewModel.UnequipOtherPowerArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
+                                IsHitTestVisible="{Binding SelectedItem.CanBeEdited}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -790,7 +790,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 FontSize="10"
                 Margin="0 15 0 0"
-                Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 Content="Add Upgrade:"/>
 
                         <ComboBox
@@ -802,7 +802,7 @@
                 ItemsSource="{Binding XtrnlArmorModel.PowerArmorUpgrades}"
                 DisplayMemberPath="Name"
                 Tag="Upgrades"
-                Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -890,7 +890,7 @@
                         Style="{StaticResource FalloutDefaultLabel}"
                         FontSize="10"
                         Margin="0 15 0 0"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="Add Effect:"/>
 
                     <ComboBox
@@ -902,7 +902,7 @@
                         ItemsSource="{Binding XtrnlAmmoModel.AmmoEffects}"
                         DisplayMemberPath="Name"
                         Tag="Properties"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -936,7 +936,7 @@
                     LabelText="Description: "
                     FontSize="11"
                     CanOpenModal="false"
-                    IsReadOnly="{Binding SelectedItem.IsInEditMode}"
+                    IsReadOnly="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
                     Text="{Binding SelectedItem.Name.Note}"/>
 
                 <StackPanel
@@ -990,7 +990,7 @@
                         Style="{StaticResource FalloutDefaultLabel}"
                         FontSize="10"
                         Margin="0 15 0 0"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="Add Property:"/>
 
                     <ComboBox
@@ -1002,7 +1002,7 @@
                         ItemsSource="{Binding XtrnlAidModel.AidProperties}"
                         DisplayMemberPath="Name"
                         Tag="Properties"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1048,7 +1048,7 @@
                         ModValue ="{Binding SelectedItem.AP}"
                         Text="{Binding SelectedItem.AP.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.AP.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="1"
@@ -1064,7 +1064,7 @@
                         ModValue ="{Binding SelectedItem.Damage}"
                         Text="{Binding SelectedItem.Damage.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.Damage.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="2"
@@ -1080,7 +1080,7 @@
                         ModValue ="{Binding SelectedItem.ArmDC}"
                         Text="{Binding SelectedItem.ArmDC.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.ArmDC.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="3"
@@ -1096,7 +1096,7 @@
                         ModValue ="{Binding SelectedItem.Range}"
                         Text="{Binding SelectedItem.Range.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.Range.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="4"
@@ -1112,7 +1112,7 @@
                         ModValue ="{Binding SelectedItem.AreaOfEffect}"
                         Text="{Binding SelectedItem.AreaOfEffect.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.AreaOfEffect.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
                 </Grid>
 
                 <StackPanel
@@ -1166,7 +1166,7 @@
                         Style="{StaticResource FalloutDefaultLabel}"
                         FontSize="10"
                         Margin="0 15 0 0"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="Add Property:"/>
 
                     <ComboBox
@@ -1178,7 +1178,7 @@
                         ItemsSource="{Binding XtrnlExplosivesModel.ExplosiveProperties}"
                         DisplayMemberPath="Name"
                         Tag="Properties"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1252,7 +1252,7 @@
                         Style="{StaticResource FalloutDefaultLabel}"
                         FontSize="10"
                         Margin="0 15 0 0"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="Add Property:"/>
 
                     <ComboBox
@@ -1264,7 +1264,7 @@
                         ItemsSource="{Binding XtrnlNourishmentModel.NourishmentProperties}"
                         DisplayMemberPath="Name"
                         Tag="Properties"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
@@ -1300,7 +1300,7 @@
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
                         IsChecked="{Binding SelectedItem.CanBeEquippedOrFilled}"
-                        IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
+                        IsHitTestVisible="{Binding SelectedItem.CanBeEdited}"/>
                     <Label
                         Style="{StaticResource FalloutDefaultLabel}"
                         Content="Can be Equipped or Filled"
@@ -1334,7 +1334,7 @@
                             VerticalAlignment="Top"
                             HorizontalAlignment="Right"
                             IsChecked="{Binding SelectedItem.EquippedOrFull}"
-                            IsHitTestVisible="{Binding SelectedItem.IsInEditMode}"/>
+                            IsHitTestVisible="{Binding SelectedItem.CanBeEdited}"/>
                     </StackPanel>
 
                     <control:TextBoxWithLabelControl
@@ -1351,7 +1351,7 @@
                         ModValue ="{Binding SelectedItem.LoadEquippedOrFull}"
                         Text="{Binding SelectedItem.LoadEquippedOrFull.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.LoadEquippedOrFull.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
 
                     <control:TextBoxWithLabelControl
                         Grid.Column="2"
@@ -1367,7 +1367,7 @@
                         ModValue ="{Binding SelectedItem.LoadUnequippedOrEmpty}"
                         Text="{Binding SelectedItem.LoadUnequippedOrEmpty.Total, Mode=OneWay}"
                         Hint="{Binding SelectedItem.LoadUnequippedOrEmpty.Note}"
-                        CanOpenModal="{Binding SelectedItem.IsInEditMode}"/>
+                        CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
                 </Grid>
 
                 <control:TextBoxWithLabelControl
@@ -1381,7 +1381,7 @@
                     LabelText="Description: "
                     FontSize="11"
                     CanOpenModal="false"
-                    IsReadOnly="{Binding SelectedItem.IsInEditMode}"
+                    IsReadOnly="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
                     Text="{Binding SelectedItem.Name.Note}"/>
             </StackPanel>
         </DataTemplate>
@@ -1443,7 +1443,7 @@
                                         FontSize="9"
                                         Text="{Binding Amount.BaseValue}"
                                         ModValue="{Binding SelectedItem.Amount}"
-                                        IsReadOnly="{Binding SelectedItem.IsInEditMode, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                        IsReadOnly="{Binding SelectedItem.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                         CanOpenModal="False"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -1454,7 +1454,7 @@
                         Style="{StaticResource FalloutDefaultLabel}"
                         FontSize="10"
                         Margin="0 15 0 0"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         Content="Add Property:"/>
 
                     <ComboBox
@@ -1466,7 +1466,7 @@
                         ItemsSource="{Binding XtrnlJunkModel.JunkComponents}"
                         DisplayMemberPath="NameString"
                         Tag="Properties"
-                        Visibility="{Binding SelectedItem.IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
