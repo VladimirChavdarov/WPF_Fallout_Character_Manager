@@ -1162,38 +1162,69 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Label
-                        Style="{StaticResource FalloutDefaultLabel}"
-                        FontSize="10"
-                        Margin="0 15 0 0"
-                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
-                        Content="Add Property:"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel
+                            Grid.Column="0">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="10"
+                                Margin="0 15 0 0"
+                                Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Content="Add Property:"/>
 
-                    <ComboBox
-                        Margin="5"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        MinWidth="180"
-                        Width="Auto"
-                        ItemsSource="{Binding XtrnlExplosivesModel.ExplosiveProperties}"
-                        DisplayMemberPath="Name"
-                        Tag="Properties"
-                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
-                        SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBox.ItemContainerStyle>
-                            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
-                                <Setter Property="Tag" Value="{Binding Note}"/>
-                            </Style>
-                        </ComboBox.ItemContainerStyle>
+                            <ComboBox
+                                Margin="5"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                MinWidth="180"
+                                Width="Auto"
+                                ItemsSource="{Binding XtrnlExplosivesModel.ExplosiveProperties}"
+                                DisplayMemberPath="Name"
+                                Tag="Properties"
+                                Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
+                                SelectionChanged="ComboBox_SelectionChanged">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                        <Setter Property="Tag" Value="{Binding Note}"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
 
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction
-                                    Command="{Binding AddPropertyCommand}"
-                                    CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ComboBox>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding AddPropertyCommand}"
+                                            CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1">
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="10"
+                                Margin="0 15 0 0"
+                                Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Content="Explosive Type:"/>
+
+                            <ComboBox
+                                Margin="5"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                MinWidth="180"
+                                Width="Auto"
+                                ItemsSource="{Binding XtrnlExplosivesModel.ExplosiveTypes}"
+                                SelectedItem="{Binding SelectedItem.Type}"
+                                Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}">
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>

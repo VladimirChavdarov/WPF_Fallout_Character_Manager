@@ -18,6 +18,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Explosives = new ObservableCollection<Explosive>();
             ExplosiveProperties = new ObservableCollection<ExplosiveProperty>();
+            ExplosiveTypes = new ObservableCollection<string>() { "Thrown Explosive", "Placed Explosive" };
 
             var explosivePropertiesLines = File.ReadAllLines("Resources/Spreadsheets/explosives_properties.csv");
             foreach (var line in explosivePropertiesLines.Skip(1))
@@ -42,6 +43,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Explosive explosive = new Explosive(
                     name: parts[0],
+                    type: "Placed Explosive",
                     cost: Int32.Parse(parts[1]),
                     ap: Int32.Parse(parts[2]),
                     damage: parts[3],
@@ -52,12 +54,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetPropertiesOfExplosive(explosive, parts[6]);
 
-                string note = "Placed Explosive\n";
-                foreach (ExplosiveProperty property in explosive.Properties)
-                {
-                    note += property.Name + ". ";
-                }
-                explosive.Name.Note = note;
+                explosive.ConstructNote();
 
                 Explosives.Add(explosive);
             }
@@ -71,6 +68,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Explosive explosive = new Explosive(
                     name: parts[0],
+                    type: "Thrown Explosive",
                     cost: Int32.Parse(parts[1]),
                     ap: Int32.Parse(parts[2]),
                     damage: parts[3],
@@ -82,12 +80,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetPropertiesOfExplosive(explosive, parts[6]);
 
-                string note = "Thrown Explosive\n";
-                foreach (ExplosiveProperty property in explosive.Properties)
-                {
-                    note += property.Name + ". ";
-                }
-                explosive.Name.Note = note;
+                explosive.ConstructNote();
 
                 Explosives.Add(explosive);
             }
@@ -125,17 +118,19 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // data
         public ObservableCollection<Explosive> Explosives { get; set; }
         public ObservableCollection<ExplosiveProperty> ExplosiveProperties { get; set; }
+        public ObservableCollection<string> ExplosiveTypes { get; set; }
         //
     }
 
     class Explosive : Item
     {
         // constructor
-        public Explosive(string name = "NewExplosive", int cost = 0, int ap = 0, string damage = "None", int armDC = 0, string range = "0ft.", string areaOfEffect = "0ft. radius", float load = 0.0f)
+        public Explosive(string name = "NewExplosive", string type = "", int cost = 0, int ap = 0, string damage = "None", int armDC = 0, string range = "0ft.", string areaOfEffect = "0ft. radius", float load = 0.0f)
         {
             Properties = new ObservableCollection<ExplosiveProperty>();
 
             Name = new ModString("Name", name, true);
+            Type = type;
             Cost = new ModInt("Cost", cost, true);
             AP = new ModInt("AP", ap, true);
             Damage = new ModString("Damage", damage, true);
@@ -143,21 +138,37 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Range = new ModString("Range", range, true);
             AreaOfEffect = new ModString("Area of Effect", areaOfEffect, true);
             Load = new ModFloat("Load", load, true);
+
+            Properties.CollectionChanged += Properties_CollectionChanged;
         }
 
         protected Explosive(Explosive other) : base(other)
         {
             Properties = new ObservableCollection<ExplosiveProperty>(other.Properties);
 
+            this.Type = other.Type;
             AP = other.AP.Clone();
             Damage = other.Damage.Clone();
             ArmDC = other.ArmDC.Clone();
             Range = other.Range.Clone();
             AreaOfEffect = other.AreaOfEffect.Clone();
+
+            Properties.CollectionChanged += Properties_CollectionChanged;
         }
         //
 
         // members
+        private string _type;
+        public string Type
+        {
+            get => _type;
+            set
+            {
+                _type = value;
+                ConstructNote();
+            }
+        }
+
         private ModInt _ap;
         public ModInt AP
         {
@@ -199,6 +210,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public Explosive Clone() => new Explosive(this);
 
+        public override void ConstructNote()
+        {
+            string note = Type + "\n";
+            foreach (ExplosiveProperty property in Properties)
+            {
+                note += property.Name + ". ";
+            }
+            Name.Note = note;
+        }
+
         public void AddProperty(object obj)
         {
             if (obj is ExplosiveProperty propertyToAdd)
@@ -221,6 +242,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 throw new ArgumentException("The argument cannot be cast to the correct type");
             }
+        }
+
+        private void Properties_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ConstructNote();
         }
         //
     }
