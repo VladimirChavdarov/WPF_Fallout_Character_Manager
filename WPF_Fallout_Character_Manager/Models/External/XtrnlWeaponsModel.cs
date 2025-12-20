@@ -730,6 +730,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Value = value;
             Note = value;
             EquipRequirement = equipRequirement;
+
+            Note += "\nRequirements: " + EquipRequirement;
         }
         //
 
