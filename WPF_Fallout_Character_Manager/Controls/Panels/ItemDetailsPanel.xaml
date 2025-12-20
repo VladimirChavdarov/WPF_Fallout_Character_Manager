@@ -937,7 +937,7 @@
                     FontSize="11"
                     CanOpenModal="false"
                     IsReadOnly="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
-                    Text="{Binding SelectedItem.Name.Note}"/>
+                    Text="{Binding SelectedItem.Description.Value}"/>
 
                 <StackPanel
                     Grid.Column="1"

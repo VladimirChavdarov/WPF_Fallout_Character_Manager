@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
@@ -59,12 +60,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     chem.Properties.Add(newProperty);
                 }
 
-                string note = "";
-                foreach (AidProperty property in chem.Properties)
-                {
-                    note += property.Name + ". ";
-                }
-                chem.Name.Note = note;
+                chem.ConstructNote();
 
                 AidItems.Add(chem);
             }
@@ -107,15 +103,41 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Name = new ModString("Name", name, false, description);
             Cost = new ModInt("Cost", cost);
             Load = new ModFloat("Load", load);
+            Description = new LabeledString("Description", description);
+
+            SubscribeToPropertiesCollectionChange();
         }
 
         protected Aid(Aid other) : base(other)
         {
             Properties = new ObservableCollection<AidProperty>(other.Properties);
+            Description = other.Description.Clone();
+
+            SubscribeToPropertiesCollectionChange();
         }
         //
 
         // methods
+        public void SubscribeToPropertiesCollectionChange()
+        {
+            Description.PropertyChanged += Description_PropertyChanged;
+            Properties.CollectionChanged += Properties_CollectionChanged;
+        }
+
+        public override void ConstructNote()
+        {
+            string note = Description.Value;
+            if(note != "")
+            {
+                note += "\n\n";
+            }
+            foreach(AidProperty property in Properties)
+            {
+                note += property.Name + ". ";
+            }
+            Name.Note = note;
+        }
+
         public void AddProperty(object obj)
         {
             if (obj is AidProperty propertyToAdd)
@@ -139,14 +161,29 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 throw new ArgumentException("The argument cannot be cast to the correct type");
             }
         }
+
+        public Aid Clone() => new Aid(this);
+
+        private void Description_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ConstructNote();
+        }
+
+        private void Properties_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ConstructNote();
+        }
         //
 
         // members
-        public ObservableCollection<AidProperty> Properties { get; set; }
-        //
+        private LabeledString _description;
+        public LabeledString Description
+        {
+            get => _description;
+            set => Update(ref _description, value);
+        }
 
-        // methods
-        public Aid Clone() => new Aid(this);
+        public ObservableCollection<AidProperty> Properties { get; set; }
         //
     }
 
