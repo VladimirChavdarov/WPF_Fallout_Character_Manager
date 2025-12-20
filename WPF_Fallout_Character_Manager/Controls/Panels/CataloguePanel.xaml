@@ -107,6 +107,9 @@
                                     <MenuItem Header="Add to Inventory"
                                         Command="{Binding OpenAddToInventoryWindowCommand}"
                                         CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                    <MenuItem Header="Create New Template from this"
+                                        Command="{Binding CreateNewTemplateFromSelectedItemCommand}"
+                                        CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                                 </ContextMenu>
                             </Setter.Value>
                         </Setter>

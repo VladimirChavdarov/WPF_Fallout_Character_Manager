@@ -311,7 +311,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             foreach (Item i in FullInventory)
             {
-                i.PropertyChanged += IventoryItem_PropertyChanged;
+                i.PropertyChanged += InventoryItem_PropertyChanged;
             }
 
             _typeToInventoryCollections.Add(typeof(Weapon), WeaponsModel.Weapons);
@@ -343,6 +343,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OpenAddToInventoryWindowCommand = new RelayCommand(OpenAddToInventoryWindow);
             AddToInventoryCommand = new RelayCommand(AddToInventory);
             RemoveFromInventoryCommand = new RelayCommand(RemoveFromInventory);
+            DuplicateStackCommand = new RelayCommand(DuplicateStack);
+            CreateNewTemplateFromSelectedItemCommand = new RelayCommand(CreateNewTemplateFromSelectedItem);
 
             OpenNewTemplateWindowCommand = new RelayCommand(OpenNewTemplateWindow);
             AddToCatalogueCommand = new RelayCommand(AddToCatalogue);
@@ -453,7 +455,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             AddToCurrentLoad(loadToAdd);
         }
 
-        private void IventoryItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void InventoryItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Item.TotalLoad))
             {
@@ -490,7 +492,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 ItemToAddToInventory.CanBeEdited = true;
                 if(ItemToAddToInventory is Item item)
                 {
-                    item.PropertyChanged += IventoryItem_PropertyChanged;
+                    item.PropertyChanged += InventoryItem_PropertyChanged;
                 }
 
                 collection.Add(ItemToAddToInventory);
@@ -605,6 +607,47 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             NewItemTemplate = null;
             SelectedCatalogueItem = null;
             SelectedInventoryItem = null;
+        }
+
+        public RelayCommand DuplicateStackCommand { get; private set; }
+        private void DuplicateStack(object _ = null)
+        {
+            Type itemType = SelectedItem.GetType();
+
+            if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
+            {
+                dynamic selectedItem = SelectedItem;
+                Item newItem = selectedItem.Clone();
+                newItem.PropertyChanged += InventoryItem_PropertyChanged;
+
+                collection.Add(ItemToAddToInventory);
+                FullInventory.Add(ItemToAddToInventory);
+                FullInventoryView.Refresh();
+            }
+            else
+            {
+                throw new Exception($"No collection found for item type {itemType.Name}");
+            }
+        }
+
+        public RelayCommand CreateNewTemplateFromSelectedItemCommand { get; private set; }
+        private void CreateNewTemplateFromSelectedItem(object _ = null)
+        {
+            dynamic selectedItem = SelectedItem;
+            SelectedTypeForCreating = SelectedItem.GetType();
+            NewItemTemplate = selectedItem.Clone();
+            NewItemTemplate.CanBeEdited = true;
+
+            SelectedCatalogueItem = null;
+            SelectedInventoryItem = null;
+
+            var window = new NewTemplateWindow();
+            window.DataContext = this;
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
         }
         //
     }
