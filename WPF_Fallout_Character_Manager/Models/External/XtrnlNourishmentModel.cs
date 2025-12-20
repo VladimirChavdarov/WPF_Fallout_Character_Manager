@@ -47,14 +47,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     load: (float)Int32.Parse(parts[3])
                     );
 
-                SetNourishmentOfNourishment(nourishment, parts[2]);
+                SetPropertiesOfNourishment(nourishment, parts[2]);
 
-                string note = "";
-                foreach (NourishmentProperty property in nourishment.Properties)
-                {
-                    note += property.Name + ". ";
-                }
-                nourishment.Name.Note = note;
+                nourishment.ConstructNote();
 
                 Nourishments.Add(nourishment);
             }
@@ -62,7 +57,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        void SetNourishmentOfNourishment(Nourishment nourishment, string propertyLine)
+        void SetPropertiesOfNourishment(Nourishment nourishment, string propertyLine)
         {
             string[] properties = propertyLine.Split('.');
             foreach(string property in properties.SkipLast(1))
@@ -91,16 +86,30 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Nourishment(string name = "NewNourishment", int cost = 0, float load = 0.0f) : base(name, cost, 0, load)
         {
             Properties = new ObservableCollection<NourishmentProperty>();
+
+            Properties.CollectionChanged += Properties_CollectionChanged;
         }
 
         protected Nourishment(Nourishment other) : base(other)
         {
             Properties = new ObservableCollection<NourishmentProperty>(other.Properties);
+
+            Properties.CollectionChanged += Properties_CollectionChanged;
         }
         //
 
         // methods
         public Nourishment Clone() => new Nourishment(this);
+
+        public override void ConstructNote()
+        {
+            string note = "";
+            foreach (NourishmentProperty property in Properties)
+            {
+                note += property.Name + ". ";
+            }
+            Name.Note = note;
+        }
 
         public void AddProperty(object obj)
         {
@@ -124,6 +133,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 throw new ArgumentException("The argument cannot be cast to the correct type");
             }
+        }
+
+        private void Properties_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ConstructNote();
         }
         //
 
