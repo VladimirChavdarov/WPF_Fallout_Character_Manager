@@ -43,16 +43,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     );
                 SetComponentsOfJunk(componentItem, "x1 " + junkComponent.Name.Total);
 
-                string note = componentItem.Load.Total + " load\n";
-                foreach (JunkComponent component in componentItem.Components)
-                {
-                    note += "x" + component.Amount.Total + " " + component.Name.Total + ", ";
-                }
-                if (note != "")
-                {
-                    note = note.Remove(note.Length - 2);
-                }
-                componentItem.Name.Note = note;
+                componentItem.ConstructNote();
 
                 JunkItems.Add(componentItem);
             }
@@ -73,16 +64,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 SetComponentsOfJunk(junk, parts[3]);
 
-                string note = junk.Load.Total + " load\n";
-                foreach(JunkComponent component in junk.Components)
-                {
-                    note += "x" + component.Amount.Total + " " + component.Name.Total + ", ";
-                }
-                if(note != "")
-                {
-                    note = note.Remove(note.Length - 2);
-                }
-                junk.Name.Note = note;
+                junk.ConstructNote();
 
                 JunkItems.Add(junk);
             }
@@ -124,6 +106,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Junk(string name = "NewJunkItem", int cost = 0, float load = 0.0f, string description = "") : base(name, cost, 0, load, description)
         {
             Components = new ObservableCollection<JunkComponent>();
+
+            Components.CollectionChanged += Components_CollectionChanged;
+            foreach(JunkComponent component in Components)
+            {
+                component.PropertyChanged += Component_PropertyChanged;
+            }
         }
 
         public Junk(Junk other) : base(other)
@@ -133,17 +121,40 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 Components.Add(otherComponent.Clone());
             }
+            foreach (JunkComponent component in Components)
+            {
+                component.PropertyChanged += Component_PropertyChanged;
+            }
+
+            Components.CollectionChanged += Components_CollectionChanged;
+            ConstructNote();
         }
         //
 
         // methods
         public Junk Clone() => new Junk(this);
 
+        public override void ConstructNote()
+        {
+            string note = "";
+            foreach (JunkComponent component in Components)
+            {
+                note += "x" + component.Amount.Total + " " + component.Name.Total + ", ";
+            }
+            if (note != "")
+            {
+                note = note.Remove(note.Length - 2);
+            }
+            Name.Note = note;
+        }
+
         public void AddProperty(object obj)
         {
             if (obj is JunkComponent componentToAdd)
             {
-                Components.Add(componentToAdd.Clone());
+                JunkComponent c = componentToAdd.Clone();
+                c.PropertyChanged += Component_PropertyChanged;
+                Components.Add(c);
             }
             else
             {
@@ -158,6 +169,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 JunkComponent componentToRemove = Components.First(x => x.NameString == component.NameString);
                 if(componentToRemove != null)
                 {
+                    componentToRemove.PropertyChanged -= Component_PropertyChanged;
                     Components.Remove(componentToRemove);
                 }
             }
@@ -165,6 +177,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 throw new ArgumentException("The argument cannot be cast to the correct type");
             }
+        }
+
+        private void Components_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ConstructNote();
+        }
+
+        private void Component_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ConstructNote();
         }
         //
 
