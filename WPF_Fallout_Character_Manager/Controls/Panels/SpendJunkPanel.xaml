@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="WPF_Fallout_Character_Manager.Controls.Panels.SpendJunkPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="180" d:DesignWidth="665">
+
+    <UserControl.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBoolConverter"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Column="0">
+                <ComboBox
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    MinWidth="180"
+                    Width="Auto"
+                    ItemsSource="{Binding XtrnlJunkModel.JunkComponents}"
+                    DisplayMemberPath="NameString"
+                    Tag="Junk Components"
+                    SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                            <Setter Property="Tag" Value="{Binding Name.Note}"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction
+                                Command="{Binding AddJunkComponentForSpendingCommand}"
+                                CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <Label
+                    Style="{StaticResource FalloutDefaultLabel}"
+                    FontSize="10"
+                    Content="Components to Spend"/>
+
+                <ListBox
+                    Style="{StaticResource FalloutInventoryTabsListBox}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1"
+                    Padding="5"
+                    Height="120"
+                    Width="220"
+                    HorizontalAlignment="Left"
+                    ItemsSource="{Binding ComponentsToSpend}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                            <Setter Property="Tag" Value="{Binding Name.Note}"/>
+                            <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Delete"
+                                            Command="{Binding RemoveJunkComponentFromSpendingListCommand}"
+                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding NameString}"
+                                    FontSize="9"
+                                    Width="120"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center"/>
+
+                                <control:UpDownTextBoxControl
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    MinValue="1"
+                                    FontSize="9"
+                                    Margin="-5"
+                                    Text="{Binding Amount.BaseValue}"
+                                    ModValue="{Binding Amount}"
+                                    IsReadOnly="{Binding CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                    CanOpenModal="False"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="1">
+                <ComboBox
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    MinWidth="180"
+                    Width="Auto"
+                    ItemsSource="{Binding SelectableJunkItems}"
+                    DisplayMemberPath="NameAmount"
+                    Tag="Junk Components"
+                    SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                            <Setter Property="Tag" Value="{Binding Name.Note}"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction
+                                Command="{Binding SelectOrDeselectJunkCommand}"
+                                CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <Label
+                    Style="{StaticResource FalloutDefaultLabel}"
+                    FontSize="10"
+                    Content="Selected Junk Stacks"/>
+
+                <ListBox
+                    Style="{StaticResource FalloutInventoryTabsListBox}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1"
+                    Padding="5"
+                    Height="80"
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    ItemsSource="{Binding SelectedJunkItems}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                            <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
+                            <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Delete"
+                                            Command="{Binding RemoveJunkComponentFromSpendingListCommand}"
+                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding NameAmount}"
+                                    FontSize="9"
+                                    Width="160"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button
+                    Style="{StaticResource FalloutButton}"
+                    Content="Auto-Select"
+                    Margin="5 10 0 5"
+                    Padding="5"
+                    Width="190"
+                    FontSize="11"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

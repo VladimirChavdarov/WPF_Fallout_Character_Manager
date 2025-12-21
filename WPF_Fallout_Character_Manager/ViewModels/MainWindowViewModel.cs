@@ -52,6 +52,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public ArmorViewModel ArmorViewModel { get; }
         public EquippableViewModel EquippableViewModel { get; }
         public InventoryViewModel InventoryViewModel { get; }
+        public JunkManagerViewModel JunkManagerViewModel { get; }
         //
 
         // Constructor
@@ -91,6 +92,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                                      XtrnlGearModel,
                                      XtrnlJunkModel,
                                      SPECIALModel);
+
+            JunkManagerViewModel = new JunkManagerViewModel(XtrnlJunkModel, InventoryModel);
         }
         //
     }

@@ -213,15 +213,9 @@
                                     Grid.Row="0"
                                     DataContext="{Binding InventoryViewModel}"/>
 
-                                <GroupBox
-                                    Header="Spend Junk"
+                                <panels:JunkPanel
                                     Grid.Row="1"
-                                    Margin="5"
-                                    Background="Black"
-                                    BorderBrush="#23ba03"
-                                    BorderThickness="1">
-
-                                </GroupBox>
+                                    DataContext="{Binding JunkManagerViewModel}"/>
                             </Grid>
 
                             <panels:CataloguePanel
