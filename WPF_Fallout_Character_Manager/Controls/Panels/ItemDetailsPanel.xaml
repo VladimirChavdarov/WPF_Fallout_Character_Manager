@@ -1473,8 +1473,8 @@
                                         MinValue="1"
                                         FontSize="9"
                                         Text="{Binding Amount.BaseValue}"
-                                        ModValue="{Binding SelectedItem.Amount}"
-                                        IsReadOnly="{Binding SelectedItem.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                        ModValue="{Binding Amount}"
+                                        IsReadOnly="{Binding CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                         CanOpenModal="False"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -1486,7 +1486,7 @@
                         FontSize="10"
                         Margin="0 15 0 0"
                         Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
-                        Content="Add Property:"/>
+                        Content="Add Junk Component:"/>
 
                     <ComboBox
                         Margin="5"
@@ -1496,7 +1496,7 @@
                         Width="Auto"
                         ItemsSource="{Binding XtrnlJunkModel.JunkComponents}"
                         DisplayMemberPath="NameString"
-                        Tag="Properties"
+                        Tag="Components"
                         Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                         SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>

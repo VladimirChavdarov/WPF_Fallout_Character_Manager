@@ -191,6 +191,22 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // members
+        public override bool CanBeEdited
+        {
+            get => base.CanBeEdited;
+            set
+            {
+                base.CanBeEdited = value;
+                if(Components != null)
+                {
+                    foreach(JunkComponent component in Components)
+                    {
+                        component.CanBeEdited = value;
+                    }
+                }
+            }
+        }
+
         public ObservableCollection<JunkComponent> Components { get; set; }
         //
     }

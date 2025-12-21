@@ -134,7 +134,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         }
 
         private bool _canBeEdited;
-        public bool CanBeEdited
+        public virtual bool CanBeEdited
         {
             get => _canBeEdited;
             set => Update(ref _canBeEdited, value);
