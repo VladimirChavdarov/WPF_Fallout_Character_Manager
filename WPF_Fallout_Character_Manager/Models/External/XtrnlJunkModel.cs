@@ -83,7 +83,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 componentString = componentString.Replace(amountString, "");
                 string componentName = componentString.Trim();
 
-                JunkComponent componentRef = JunkComponents.FirstOrDefault(x => x.Name.BaseValue.Contains(componentName, StringComparison.InvariantCultureIgnoreCase));
+                //JunkComponent componentRef = JunkComponents.FirstOrDefault(x => x.Name.BaseValue.Contains(componentName, StringComparison.InvariantCultureIgnoreCase));
+                JunkComponent componentRef = JunkComponents.FirstOrDefault(x => x.Name.BaseValue.Equals(componentName, StringComparison.InvariantCultureIgnoreCase));
                 if (componentRef != null)
                 {
                     JunkComponent componentToAdd = componentRef.Clone();
@@ -146,6 +147,22 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 note = note.Remove(note.Length - 2);
             }
             Name.Note = note;
+        }
+
+        // NOTE: This method doesn't delete the junk item. If you want this, you need to handle it separately.
+        public List<Junk> ScrapJunkItem()
+        {
+            List<Junk> result = new List<Junk>();
+            foreach (JunkComponent junkComponent in Components)
+            {
+                Junk newJunkItem = new Junk(junkComponent.Name.Total, junkComponent.Cost.Total, junkComponent.Load.Total);
+                newJunkItem.Amount = junkComponent.Amount.Clone();
+                newJunkItem.Amount.BaseValue *= this.Amount.Total;
+                newJunkItem.Components.Add(junkComponent.Clone());
+                result.Add(newJunkItem);
+            }
+
+            return result;
         }
 
         public void AddProperty(object obj)

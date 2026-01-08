@@ -86,23 +86,36 @@
                             <StackPanel
                                 Orientation="Horizontal">
                                 <TextBlock
-                                    Grid.Column="0"
-                                    Text="{Binding NameString}"
+                                    Text="{Binding JunkComponent.NameString}"
                                     FontSize="9"
-                                    Width="120"
+                                    Width="80"
                                     TextWrapping="Wrap"
                                     VerticalAlignment="Center"/>
 
+                                <control:EnhancedTextBox
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="9"
+                                    IsReadOnly="True"
+                                    CanOpenModal="False"
+                                    Text="{Binding AvailableAmount, Mode=OneWay}"/>
+
+                                <Label
+                                    Style="{StaticResource FalloutDefaultLabel}"
+                                    FontSize="9"
+                                    VerticalAlignment="Center"
+                                    Margin="0 0 5 0"
+                                    Content="/"/>
+
                                 <control:UpDownTextBoxControl
-                                    Grid.Column="0"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
+                                    VerticalAlignment="Center"
                                     MinValue="1"
                                     FontSize="9"
                                     Margin="-5"
-                                    Text="{Binding Amount.BaseValue}"
-                                    ModValue="{Binding Amount}"
-                                    IsReadOnly="{Binding CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
+                                    Text="{Binding JunkComponent.Amount.BaseValue}"
+                                    ModValue="{Binding JunkComponent.Amount}"
+                                    IsReadOnly="{Binding JunkComponent.CanBeEdited, Mode=OneWay, Converter={StaticResource InvertBoolConverter}}"
                                     CanOpenModal="False"/>
                             </StackPanel>
                         </DataTemplate>
@@ -112,31 +125,57 @@
 
             <StackPanel
                 Grid.Column="1">
+                <Button
+                    Style="{StaticResource FalloutButton}"
+                    Content="Auto-Select"
+                    Margin="5"
+                    Padding="5"
+                    Width="180"
+                    FontSize="11"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                
                 <ComboBox
                     Margin="5"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
                     MinWidth="180"
                     Width="Auto"
                     ItemsSource="{Binding SelectableJunkItems}"
-                    DisplayMemberPath="NameAmount"
-                    Tag="Junk Components"
+                    IsEditable="False"
+                    IsReadOnly="True"
+                    StaysOpenOnEdit="True"
+                    Tag="Junk Inventory"
                     SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
-                            <Setter Property="Tag" Value="{Binding Name.Note}"/>
+                            <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
                         </Style>
                     </ComboBox.ItemContainerStyle>
 
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction
-                                Command="{Binding SelectOrDeselectJunkCommand}"
-                                CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <CheckBox
+                                    Style="{StaticResource FalloutSkillCheckbox}"
+                                    FontSize="18"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                    Command="{Binding DataContext.SelectOrDeselectJunkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"/>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding NameAmount}"
+                                    FontSize="9"
+                                    Width="160"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
-
+                
                 <Label
                     Style="{StaticResource FalloutDefaultLabel}"
                     FontSize="10"
@@ -147,7 +186,7 @@
                     BorderBrush="{StaticResource FalloutGreen}"
                     BorderThickness="1"
                     Padding="5"
-                    Height="80"
+                    Height="85"
                     Width="200"
                     HorizontalAlignment="Left"
                     ItemsSource="{Binding SelectedJunkItems}">
@@ -155,16 +194,6 @@
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
                             <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
-                            <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
-                            <Setter Property="ContextMenu">
-                                <Setter.Value>
-                                    <ContextMenu>
-                                        <MenuItem Header="Delete"
-                                            Command="{Binding RemoveJunkComponentFromSpendingListCommand}"
-                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
-                                    </ContextMenu>
-                                </Setter.Value>
-                            </Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
 
@@ -183,17 +212,63 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+            </StackPanel>
 
+            <StackPanel
+                Grid.Column="2"
+                Margin="8 0 0 0">
                 <Button
                     Style="{StaticResource FalloutButton}"
-                    Content="Auto-Select"
-                    Margin="5 10 0 5"
+                    Content="Accept"
+                    Margin="5"
                     Padding="5"
-                    Width="190"
+                    Width="160"
                     FontSize="11"
-                    HorizontalAlignment="Left"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <Label
+                    Style="{StaticResource FalloutDefaultLabel}"
+                    Margin="6 0 0 0"
+                    FontSize="10"
+                    Content="Output"/>
+
+                <ListBox
+                    Style="{StaticResource FalloutInventoryTabsListBox}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="1"
+                    Padding="5"
+                    Height="115"
+                    Width="180"
+                    HorizontalAlignment="Center"
+                    ItemsSource="{Binding Output}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                            <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Text="{Binding ActionSymbol}"
+                                    FontSize="9"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center"/>
+                                <TextBlock
+                                    Text="{Binding NameAmount}"
+                                    FontSize="9"
+                                    Width="120"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </Grid>
     </ScrollViewer>
