@@ -158,7 +158,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 Junk newJunkItem = new Junk(junkComponent.Name.Total, junkComponent.Cost.Total, junkComponent.Load.Total);
                 newJunkItem.Amount = junkComponent.Amount.Clone();
                 newJunkItem.Amount.BaseValue *= this.Amount.Total;
-                newJunkItem.Components.Add(junkComponent.Clone());
+                JunkComponent component = junkComponent.Clone();
+                component.Amount.BaseValue = 1;
+                newJunkItem.Components.Add(component);
                 result.Add(newJunkItem);
             }
 

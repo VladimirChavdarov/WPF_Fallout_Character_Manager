@@ -70,12 +70,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
-        private int _amountToRemove;
-        public int AmountToRemove
-        {
-            get => _amountToRemove;
-            set => Update(ref _amountToRemove, value);
-        }
+        //private int _amountToRemove;
+        //public int AmountToRemove
+        //{
+        //    get => _amountToRemove;
+        //    set => Update(ref _amountToRemove, value);
+        //}
 
         public string NameAmount => Junk?.NameAmount ?? string.Empty;
 
@@ -168,10 +168,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // methods
         private void UpdateSelectableJunkCollection()
         {
-            foreach(SelectableJunk sj in SelectedJunkItems)
+            foreach(SelectableJunk sj in SelectableJunkItems)
             {
                 sj.Junk.PropertyChanged -= SelectableJunk_PropertyChanged;
             }
+            SelectedJunkItems.Clear();
             SelectableJunkItems.Clear();
 
             foreach (Junk junk in InventoryModel.JunkItems)
@@ -204,52 +205,76 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     ComponentsToSpend.Where(x => selectedJunk.Junk.Components.Any(y => x.JunkComponent.Name.Total == y.Name.Total)
                                                  && x.AvailableAmount != x.JunkComponent.Amount.Total).ToList();
 
-                if(relevantComponents.Count != 0)
+                int amountToScrap = 0;
+                List<Junk> scrappedJunkItem = selectedJunk.Junk.ScrapJunkItem();
+                List<Junk> scrappedJunkItemTemplate = new List<Junk>();
+                foreach(Junk junk in scrappedJunkItem)
                 {
-                    List<Junk> scrappedJunkItem = selectedJunk.Junk.ScrapJunkItem();
-                    selectedJunk.JunkAction = JunkAction.ForRemove;
-                    Output.Add(selectedJunk);
+                    Junk junkToAdd = junk.Clone();
+                    junkToAdd.Amount.BaseValue /= selectedJunk.Junk.Amount.Total;
+                    scrappedJunkItemTemplate.Add(junkToAdd);
+                }
 
-                    //for (int i = 0; i < selectedJunk.Junk.Amount.Total; i++)
-                    //{
-                    //    selectedJunk.AmountToRemove++;
-
-
-                    //}
-
-                    foreach (JunkComponentWrapped desiredComponent in ComponentsToSpend)
+                // determine how many of this item we need to scrap to satisfy the Relevant Components
+                foreach (JunkComponentWrapped relComp in relevantComponents)
+                {
+                    Junk desiredScrappedJunk = scrappedJunkItem.FirstOrDefault(x => x.Name.Total == relComp.JunkComponent.Name.Total);
+                    int compAmountInScrappedJunk = scrappedJunkItemTemplate.FirstOrDefault(x => x.Name.Total == relComp.JunkComponent.Name.Total).Amount.Total;
+                    if(desiredScrappedJunk != null)
                     {
-                        Junk desiredScrappedJunk = scrappedJunkItem.FirstOrDefault(x => x.Name.Total == desiredComponent.JunkComponent.Name.Total);
-                        if(desiredScrappedJunk != null)
+                        int neededAmount = relComp.JunkComponent.Amount.Total - relComp.AvailableAmount;
+                        amountToScrap = (int)Math.Ceiling((double)neededAmount / compAmountInScrappedJunk);
+                        amountToScrap = Math.Min(amountToScrap, selectedJunk.Junk.Amount.Total);
+                    }
+                }
+
+                foreach (Junk scrappedJunk in scrappedJunkItem)
+                {
+                    Junk desiredScrappedJunkTemplate = scrappedJunkItemTemplate.FirstOrDefault(x => x.Name.Total == scrappedJunk.Name.Total);
+                    scrappedJunk.Amount.BaseValue -= desiredScrappedJunkTemplate.Amount.Total * (selectedJunk.Junk.Amount.Total - amountToScrap);
+
+                    JunkComponentWrapped relComp = relevantComponents.FirstOrDefault(x => x.JunkComponent.Name.Total == scrappedJunk.Name.Total);
+                    if(relComp != null)
+                    {
+                        int neededAmount = relComp.JunkComponent.Amount.Total - relComp.AvailableAmount;
+                        scrappedJunk.Amount.BaseValue -= neededAmount;
+
+                        if(scrappedJunk.Amount.BaseValue >= 0)
                         {
-                            int neededAmount = desiredComponent.JunkComponent.Amount.Total - desiredComponent.AvailableAmount;
-                            int surplus = desiredScrappedJunk.Amount.Total - neededAmount;
-                            if(surplus > 0)
-                            {
-                                SelectableJunk desiredSelectableJunk = new SelectableJunk();
-                                desiredSelectableJunk.Junk = desiredScrappedJunk;
-                                desiredSelectableJunk.Junk.Amount.BaseValue = surplus;
-                                desiredSelectableJunk.JunkAction = JunkAction.ForAdd;
-                                Output.Add(desiredSelectableJunk);
-
-                                desiredComponent.AvailableAmount = desiredComponent.JunkComponent.Amount.Total;
-                            }
-                            else
-                            {
-                                desiredComponent.AvailableAmount += desiredScrappedJunk.Amount.BaseValue;
-                            }
-
-                            scrappedJunkItem.Remove(desiredScrappedJunk);
+                            relComp.AvailableAmount = relComp.JunkComponent.Amount.Total;
+                        }
+                        else
+                        {
+                            relComp.AvailableAmount += neededAmount + scrappedJunk.Amount.Total;
                         }
                     }
 
-                    // add all of the leftover components from the scrapped junk as junk items back to the inventory
-                    foreach(Junk scrappedJunk in scrappedJunkItem)
+                    scrappedJunk.Amount.BaseValue = Math.Max(0, scrappedJunk.Amount.Total);
+                }
+
+                // setup Output list
+                if (relevantComponents.Count != 0)
+                {
+                    selectedJunk.JunkAction = JunkAction.ForRemove;
+                    Output.Add(selectedJunk);
+                    if (selectedJunk.Junk.Amount.Total != amountToScrap)
                     {
-                        SelectableJunk desiredSelectableJunk = new SelectableJunk();
-                        desiredSelectableJunk.Junk = scrappedJunk;
-                        desiredSelectableJunk.JunkAction = JunkAction.ForAdd;
-                        Output.Add(desiredSelectableJunk);
+                        SelectableJunk selectedJunkToAdd = new SelectableJunk();
+                        selectedJunkToAdd.Junk = selectedJunk.Junk.Clone();
+                        selectedJunkToAdd.Junk.Amount.BaseValue -= amountToScrap;
+                        selectedJunkToAdd.JunkAction = JunkAction.ForAdd;
+                        Output.Add(selectedJunkToAdd);
+                    }
+
+                    foreach (Junk scrappedJunk in scrappedJunkItem)
+                    {
+                        if(scrappedJunk.Amount.Total != 0)
+                        {
+                            SelectableJunk desiredSelectableJunk = new SelectableJunk();
+                            desiredSelectableJunk.Junk = scrappedJunk;
+                            desiredSelectableJunk.JunkAction = JunkAction.ForAdd;
+                            Output.Add(desiredSelectableJunk);
+                        }
                     }
                 }
             }
