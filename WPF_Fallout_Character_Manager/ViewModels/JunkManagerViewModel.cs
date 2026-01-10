@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
@@ -69,6 +70,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
+        private int _amountToRemove;
+        public int AmountToRemove
+        {
+            get => _amountToRemove;
+            set => Update(ref _amountToRemove, value);
+        }
+
         public string NameAmount => Junk?.NameAmount ?? string.Empty;
 
         private void Junk_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -119,6 +127,20 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             get => _inventoryModel;
         }
+
+        public Visibility ShowAcceptButton
+        {
+            get
+            {
+                foreach(JunkComponentWrapped component in ComponentsToSpend)
+                {
+                    if(component.AvailableAmount != component.JunkComponent.Amount.Total)
+                        return Visibility.Hidden;
+                }
+
+                return ComponentsToSpend.Any() ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
         //
 
         // constructor
@@ -138,6 +160,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             AddJunkComponentForSpendingCommand = new RelayCommand(AddJunkComponentForSpending);
             RemoveJunkComponentFromSpendingListCommand = new RelayCommand(RemoveJunkComponentFromSpendingList);
             SelectOrDeselectJunkCommand = new RelayCommand(SelectOrDeselectJunk);
+            AutoSelectJunkCommand = new RelayCommand(AutoSelectJunk);
         }
 
         //
@@ -159,6 +182,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 selectableJunk.Junk.PropertyChanged += SelectableJunk_PropertyChanged;
                 SelectableJunkItems.Add(selectableJunk);
             }
+
+            OnPropertyChanged(nameof(ShowAcceptButton));
         }
 
         private void ProcessSelectedJunkItems()
@@ -175,7 +200,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach(SelectableJunk selectedJunk in SelectedJunkItems)
             {
                 // this looks performance heavy
-                List<JunkComponent> relevantComponents = selectedJunk.Junk.Components.Where(x => ComponentsToSpend.Any(y => x.Name.Total == y.JunkComponent.Name.Total)).ToList();
+                List<JunkComponentWrapped> relevantComponents =
+                    ComponentsToSpend.Where(x => selectedJunk.Junk.Components.Any(y => x.JunkComponent.Name.Total == y.Name.Total)
+                                                 && x.AvailableAmount != x.JunkComponent.Amount.Total).ToList();
 
                 if(relevantComponents.Count != 0)
                 {
@@ -183,7 +210,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     selectedJunk.JunkAction = JunkAction.ForRemove;
                     Output.Add(selectedJunk);
 
-                    foreach(JunkComponentWrapped desiredComponent in ComponentsToSpend)
+                    //for (int i = 0; i < selectedJunk.Junk.Amount.Total; i++)
+                    //{
+                    //    selectedJunk.AmountToRemove++;
+
+
+                    //}
+
+                    foreach (JunkComponentWrapped desiredComponent in ComponentsToSpend)
                     {
                         Junk desiredScrappedJunk = scrappedJunkItem.FirstOrDefault(x => x.Name.Total == desiredComponent.JunkComponent.Name.Total);
                         if(desiredScrappedJunk != null)
@@ -219,6 +253,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     }
                 }
             }
+
+            OnPropertyChanged(nameof(ShowAcceptButton));
         }
 
         private void SelectableJunk_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -286,6 +322,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
 
             ProcessSelectedJunkItems();
+        }
+
+        public RelayCommand AutoSelectJunkCommand { get; private set; }
+        private void AutoSelectJunk(object _ = null)
+        {
+
         }
         //
     }

@@ -226,6 +226,7 @@
                     FontSize="11"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
+                    Visibility="{Binding ShowAcceptButton}"
                     Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
                 <Label
