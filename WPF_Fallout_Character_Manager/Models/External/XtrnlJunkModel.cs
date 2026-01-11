@@ -173,6 +173,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 JunkComponent c = componentToAdd.Clone();
                 c.PropertyChanged += Component_PropertyChanged;
+                c.CanBeEdited = true;
                 Components.Add(c);
             }
             else
