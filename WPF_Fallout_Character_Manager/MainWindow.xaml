@@ -227,9 +227,15 @@
 
                     <!-- Perks Tab -->
                     <TabItem Header="Perks">
-                        <TextBlock>
-                            Placeholder
-                        </TextBlock>
+                        <Grid
+                            Height="760"
+                            VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="350"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                        </Grid>
                     </TabItem>
                     <!-- -->
 

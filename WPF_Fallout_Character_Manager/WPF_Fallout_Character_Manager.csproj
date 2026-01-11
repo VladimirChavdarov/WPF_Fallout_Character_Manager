@@ -47,11 +47,13 @@
     <None Remove="Resources\Spreadsheets\melee_weapons.csv" />
     <None Remove="Resources\Spreadsheets\melee_weapons_properties.csv" />
     <None Remove="Resources\Spreadsheets\melee_weapons_upgrades.csv" />
+    <None Remove="Resources\Spreadsheets\perks.csv" />
     <None Remove="Resources\Spreadsheets\power_armor.csv" />
     <None Remove="Resources\Spreadsheets\power_armor_upgrades.csv" />
     <None Remove="Resources\Spreadsheets\ranged_weapons.csv" />
     <None Remove="Resources\Spreadsheets\ranged_weapons_properties.csv" />
     <None Remove="Resources\Spreadsheets\ranged_weapons_upgrades.csv" />
+    <None Remove="Resources\Spreadsheets\traits.csv" />
     <None Remove="Resources\trashcan.png" />
     <None Remove="Resources\trashcan1.png" />
     <None Remove="Resources\Vault_Boy.png" />
@@ -152,6 +154,9 @@
     <Content Include="Resources\Spreadsheets\melee_weapons_upgrades.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Spreadsheets\perks.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Spreadsheets\power_armor.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -165,6 +170,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Spreadsheets\ranged_weapons_upgrades.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Spreadsheets\traits.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\trashcan.png">

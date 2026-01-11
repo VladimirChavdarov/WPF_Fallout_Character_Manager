@@ -23,6 +23,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public XtrnlNourishmentModel XtrnlNourishmentModel { get; } = new XtrnlNourishmentModel();
         public XtrnlGearModel XtrnlGearModel { get; } = new XtrnlGearModel();
         public XtrnlJunkModel XtrnlJunkModel { get; } = new XtrnlJunkModel();
+        public XtrnlPerksModel XtrnlPerksModel { get; } = new XtrnlPerksModel();
         //
 
         // All Models
@@ -34,6 +35,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public ConditionsModel ConditionsModel { get; } = new ConditionsModel();
         public AmmoModel AmmoModel { get; } = new AmmoModel();
         public InventoryModel InventoryModel { get; } = new InventoryModel();
+        public PerksModel PerksModel { get; } = new PerksModel();
 
         public BioModel BioModel { get; }
         public WeaponsModel WeaponsModel { get; }
@@ -53,6 +55,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public EquippableViewModel EquippableViewModel { get; }
         public InventoryViewModel InventoryViewModel { get; }
         public JunkManagerViewModel JunkManagerViewModel { get; }
+        public PerksViewModel PerksViewModel { get; }
         //
 
         // Constructor
@@ -94,6 +97,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                                      SPECIALModel);
 
             JunkManagerViewModel = new JunkManagerViewModel(XtrnlJunkModel, InventoryModel);
+
+            PerksViewModel = new PerksViewModel(XtrnlPerksModel, PerksModel);
         }
         //
     }
