@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
+             xmlns:jnk="clr-namespace:WPF_Fallout_Character_Manager.ViewModels"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="180" d:DesignWidth="665">
@@ -243,6 +244,7 @@
                     Height="115"
                     Width="180"
                     HorizontalAlignment="Center"
+                    SelectionChanged="ListBox_SelectionChanged"
                     ItemsSource="{Binding Output}">
 
                     <ListBox.ItemContainerStyle>
@@ -259,13 +261,39 @@
                                     Text="{Binding ActionSymbol}"
                                     FontSize="9"
                                     TextWrapping="Wrap"
-                                    VerticalAlignment="Center"/>
+                                    VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource FalloutGreen}" />
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding JunkAction}"
+                                                    Value="{x:Static jnk:JunkAction.ForRemove}">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                                 <TextBlock
                                     Text="{Binding NameAmount}"
                                     FontSize="9"
                                     Width="120"
                                     TextWrapping="Wrap"
-                                    VerticalAlignment="Center"/>
+                                    VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{StaticResource FalloutGreen}" />
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding JunkAction}"
+                                                    Value="{x:Static jnk:JunkAction.ForRemove}">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

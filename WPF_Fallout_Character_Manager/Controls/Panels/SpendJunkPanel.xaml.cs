@@ -36,6 +36,14 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
             }
         }
 
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listBox)
+            {
+                listBox.SelectedItem = null;
+            }
+        }
+
         private void ListBoxItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             if (DataContext is InventoryViewModel vm)

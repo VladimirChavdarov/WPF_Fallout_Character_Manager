@@ -71,13 +71,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
-        //private int _amountToRemove;
-        //public int AmountToRemove
-        //{
-        //    get => _amountToRemove;
-        //    set => Update(ref _amountToRemove, value);
-        //}
-
         public string NameAmount => Junk?.NameAmount ?? string.Empty;
 
         private void Junk_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -472,6 +465,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     SelectedJunkItems.Add(evalJunk.Junk);
                 }
             }
+
+            OnPropertyChanged(nameof(ShowAcceptButton));
         }
         //
     }
