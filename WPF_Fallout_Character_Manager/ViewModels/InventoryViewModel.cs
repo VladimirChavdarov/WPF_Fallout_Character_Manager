@@ -620,8 +620,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 Item newItem = selectedItem.Clone();
                 newItem.PropertyChanged += InventoryItem_PropertyChanged;
 
-                collection.Add(ItemToAddToInventory);
-                FullInventory.Add(ItemToAddToInventory);
+                collection.Add(newItem);
+                FullInventory.Add(newItem);
                 FullInventoryView.Refresh();
             }
             else
