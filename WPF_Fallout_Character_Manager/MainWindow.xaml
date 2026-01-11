@@ -235,6 +235,10 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
+                            <panels:PerksCataloguesPanel
+                                Grid.Column="0"
+                                DataContext="{Binding PerksViewModel}"/>
+
                         </Grid>
                     </TabItem>
                     <!-- -->
