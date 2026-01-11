@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
@@ -86,6 +87,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 OnPropertyChanged(nameof(NameAmount));
             }
         }
+    }
+
+    class EvaluatedJunk
+    {
+        public SelectableJunk Junk { get; set; }
+        public int Coefficient { get; set; }
     }
 
     class JunkComponentWrapped : ModTypeBase
@@ -352,7 +359,87 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public RelayCommand AutoSelectJunkCommand { get; private set; }
         private void AutoSelectJunk(object _ = null)
         {
+            if (ComponentsToSpend.Count <= 0 || SelectableJunkItems.Count <= 0)
+            {
+                return;
+            }
 
+            // clear all selections
+            foreach(SelectableJunk junk in SelectableJunkItems)
+            {
+                junk.IsSelected = false;
+            }
+            SelectedJunkItems.Clear();
+            //
+
+            List<EvaluatedJunk> evaluatedJunkItems = new List<EvaluatedJunk>();
+
+            foreach(SelectableJunk inventoryJunkItem in SelectableJunkItems)
+            {
+                EvaluatedJunk evalJunk = new EvaluatedJunk();
+                evalJunk.Junk = inventoryJunkItem;
+                evalJunk.Coefficient = 0;
+                evaluatedJunkItems.Add(evalJunk);
+
+                List<JunkComponentWrapped> relevantComponents =
+                    ComponentsToSpend.Where(x => inventoryJunkItem.Junk.Components.Any(y => x.JunkComponent.Name.Total == y.Name.Total)
+                                                 && x.AvailableAmount != x.JunkComponent.Amount.Total).ToList();
+
+                int amountToScrap = 0;
+                List<Junk> scrappedJunkItem = inventoryJunkItem.Junk.ScrapJunkItem();
+                List<Junk> scrappedJunkItemTemplate = new List<Junk>();
+                foreach (Junk junk in scrappedJunkItem)
+                {
+                    Junk junkToAdd = junk.Clone();
+                    junkToAdd.Amount.BaseValue /= inventoryJunkItem.Junk.Amount.Total;
+                    scrappedJunkItemTemplate.Add(junkToAdd);
+                }
+
+                // determine how many of this item we need to scrap to satisfy the Relevant Components
+                foreach (JunkComponentWrapped relComp in relevantComponents)
+                {
+                    Junk desiredScrappedJunk = scrappedJunkItem.FirstOrDefault(x => x.Name.Total == relComp.JunkComponent.Name.Total);
+                    int compAmountInScrappedJunk = scrappedJunkItemTemplate.FirstOrDefault(x => x.Name.Total == relComp.JunkComponent.Name.Total).Amount.Total;
+                    if (desiredScrappedJunk != null)
+                    {
+                        int neededAmount = relComp.JunkComponent.Amount.Total - relComp.AvailableAmount;
+                        amountToScrap = (int)Math.Ceiling((double)neededAmount / compAmountInScrappedJunk);
+                        amountToScrap = Math.Min(amountToScrap, inventoryJunkItem.Junk.Amount.Total);
+                    }
+                }
+
+                if(amountToScrap == 0)
+                {
+                    continue;
+                }
+
+                // assign coefficients
+                foreach (Junk scrappedJunk in scrappedJunkItem)
+                {
+                    Junk desiredScrappedJunkTemplate = scrappedJunkItemTemplate.FirstOrDefault(x => x.Name.Total == scrappedJunk.Name.Total);
+                    JunkComponentWrapped relComp = relevantComponents.FirstOrDefault(x => x.JunkComponent.Name.Total == scrappedJunk.Name.Total);
+                    EvaluatedJunk evalScrappedJunk = evaluatedJunkItems.LastOrDefault();
+
+                    if(relComp != null)
+                    {
+                        int relJunkAmount = desiredScrappedJunkTemplate.Amount.Total * amountToScrap;
+                        scrappedJunk.Amount.BaseValue -= relJunkAmount;
+                        evalScrappedJunk.Coefficient += relJunkAmount;
+                    }
+
+                    evalScrappedJunk.Coefficient -= scrappedJunk.Amount.BaseValue;
+                }
+            }
+
+            // sort and traverse by coefficient
+            List<EvaluatedJunk> sortedEvaluatedJunkItems = evaluatedJunkItems.OrderByDescending(e => e.Coefficient).ToList();
+            foreach (EvaluatedJunk evalJunk in sortedEvaluatedJunkItems)
+            {
+                evalJunk.Junk.IsSelected = true;
+                SelectedJunkItems.Add(evalJunk.Junk);
+            }
+
+            ProcessSelectedJunkItems();
         }
         //
     }

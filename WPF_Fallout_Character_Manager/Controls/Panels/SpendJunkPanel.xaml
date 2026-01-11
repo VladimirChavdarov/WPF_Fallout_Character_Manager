@@ -134,7 +134,7 @@
                     FontSize="11"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
-                    Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    Command="{Binding AutoSelectJunkCommand}"/>
                 
                 <ComboBox
                     Margin="5"
