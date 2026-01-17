@@ -80,7 +80,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        private string DetermineImagePath(string prerequisite)
+        public static string DetermineImagePath(string prerequisite)
         {
             if (prerequisite.Contains("human", StringComparison.InvariantCultureIgnoreCase) &&
                 prerequisite.Contains("ghoul", StringComparison.InvariantCultureIgnoreCase) &&
@@ -169,16 +169,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
         }
         //
 
-        public ObservableCollection<Trait> Traits { get; set; }
-        public ObservableCollection<Perk> Perks { get; set; }
-        public Dictionary<string, string> ImageIcons { get; set; }
+        public ObservableCollection<Trait> Traits { get; private set; }
+        public ObservableCollection<Perk> Perks { get; private set; }
+        static public Dictionary<string, string> ImageIcons { get; private set; }
     }
 
     public class TPCard : LabeledString
     {
         // constructor
         public TPCard(string name = "", string description = "", string extraDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
-            : base(name, description, description, true)
+            : base(name, description, description)
         {
             Prerequisite = prerequisite;
             ExtraDescription = extraDescription;
@@ -218,6 +218,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 Update(ref _prerequisite, value);
                 ConstructNote();
+                if(PickImageFromCardType)
+                {
+                    ImagePath = XtrnlPerksModel.DetermineImagePath(_prerequisite);
+                }
             }
         }
 
@@ -236,7 +240,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public bool PickImageFromCardType
         {
             get => _pickImageFromCardType;
-            set => Update(ref _pickImageFromCardType, value);
+            set
+            {
+                Update(ref _pickImageFromCardType, value);
+            }
         }
 
         private string _cardType;
@@ -290,14 +297,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public override void ConstructNote()
         {
-            IsReadOnly = false;
             Note = "";
             if(!Prerequisite.Equals("none", StringComparison.InvariantCultureIgnoreCase))
             {
                 Note += "Requirement: " + Prerequisite + "\n\n";
             }
             Note += Value + "\n\nWild Wasteland: " + ExtraDescription;
-            IsReadOnly = true;
         }
         //
 
@@ -362,13 +367,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public override void ConstructNote()
         {
-            IsReadOnly = false;
             Note = "Requirement: " + Prerequisite + "\nMax Stacks: " + MaxStacks + "\n\n" + Value;
             if(ExtraDescription != "")
             {
                 Note += "\n\nRepeat: " + ExtraDescription;
             }
-            IsReadOnly = true;
         }
         //
 

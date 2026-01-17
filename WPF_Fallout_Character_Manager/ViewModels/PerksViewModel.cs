@@ -4,12 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
+using WPF_Fallout_Character_Manager.Windows;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
@@ -63,6 +66,20 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set => Update(ref _selectedCataloguePerk, value);
         }
 
+        private Trait _newTrait;
+        public Trait NewTrait
+        {
+            get => _newTrait;
+            set => Update(ref _newTrait, value);
+        }
+
+        private Perk _newPerk;
+        public Perk NewPerk
+        {
+            get => _newPerk;
+            set => Update(ref _newPerk, value);
+        }
+
         public ICollectionView TraitsCatalogueView { get; }
         public ICollectionView PerksCatalogueView { get; }
 
@@ -84,8 +101,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RefreshPerksCatalogueView();
 
             AddTraitCommand = new RelayCommand(AddTrait);
+            AddTraitToCatalogueCommand = new RelayCommand(AddTraitToCatalogue);
             AddPerkCommand = new RelayCommand(AddPerk);
+            AddPerkToCatalogueCommand = new RelayCommand(AddPerkToCatalogue);
             DeleteTraitOrPerkCommand = new RelayCommand(DelteTraitOrPerk);
+            OpenNewTraitModalWindowCommand = new RelayCommand(OpenNewTraitModalWindow);
+            OpenNewPerkModalWindowCommand = new RelayCommand(OpenNewPerkModalWindow);
+            LoadImageCommand = new RelayCommand(LoadImage);
+            ResetNewTraitOrPerkCommand = new RelayCommand(ResetNewTraitOrPerk);
         }
         //
 
@@ -127,6 +150,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 PerksModel.Traits.Add(SelectedCatalogueTrait.Clone());
         }
 
+        public RelayCommand AddTraitToCatalogueCommand { get; private set; }
+        private void AddTraitToCatalogue(object _ = null)
+        {
+            XtrnlPerksModel.Traits.Add(NewTrait.Clone());
+            NewTrait = null;
+        }
+
         public RelayCommand AddPerkCommand { get; private set; }
         private void AddPerk(object obj = null)
         {
@@ -136,6 +166,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 perkToAdd.CurrentStacks = 1;
                 PerksModel.Perks.Add(perkToAdd);
             }
+        }
+
+        public RelayCommand AddPerkToCatalogueCommand { get; private set; }
+        private void AddPerkToCatalogue(object _ = null)
+        {
+            XtrnlPerksModel.Perks.Add(NewPerk.Clone());
+            NewPerk = null;
         }
 
         public RelayCommand DeleteTraitOrPerkCommand { get; private set; }
@@ -153,6 +190,57 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     PerksModel.Perks.Remove(perk);
                     break;
             }
+        }
+
+        public RelayCommand OpenNewTraitModalWindowCommand { get; private set; }
+        private void OpenNewTraitModalWindow(object obj)
+        {
+            NewTrait = new Trait();
+            NewTrait.ImagePath = "/Resources/vault_boy_thumbsup.png";
+
+            var window = new NewTraitWindow();
+            window.DataContext = this;
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+            window.Left = mousePoint.X;
+            window.Top = mousePoint.Y - 100;
+
+            window.ShowDialog();
+        }
+
+        public RelayCommand OpenNewPerkModalWindowCommand { get; private set; }
+        private void OpenNewPerkModalWindow(object obj)
+        {
+            NewPerk = new Perk();
+            NewPerk.ImagePath = "/Resources/vault_boy_thumbsup.png";
+            NewPerk.MaxStacks = 1;
+
+            var window = new NewPerkWindow();
+            window.DataContext = this;
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+            window.Left = mousePoint.X;
+            window.Top = mousePoint.Y - 200;
+
+            window.ShowDialog();
+        }
+
+        public RelayCommand LoadImageCommand { get; private set; }
+        private void LoadImage(object _ = null)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Title = "Select an Avatar";
+            dialog.Filter = "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
+            if (dialog.ShowDialog() == true)
+            {
+                NewTrait.PickImageFromCardType = false;
+                NewTrait.ImagePath = dialog.FileName;
+            }
+        }
+
+        public RelayCommand ResetNewTraitOrPerkCommand { get; private set; }
+        private void ResetNewTraitOrPerk(object _ = null)
+        {
+            NewTrait = null;
+            NewPerk = null;
         }
         //
     }

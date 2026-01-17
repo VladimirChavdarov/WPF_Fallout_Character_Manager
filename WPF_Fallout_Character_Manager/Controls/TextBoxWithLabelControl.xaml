@@ -25,6 +25,8 @@
                 Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                MinHeight="{Binding MinHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                MaxHeight="{Binding MaxHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 TextPadding="{Binding TextPadding, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 TextWrapping="{Binding TextWrapping, RelativeSource={RelativeSource AncestorType=UserControl}}"
