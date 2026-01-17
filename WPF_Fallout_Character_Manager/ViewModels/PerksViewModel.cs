@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.External.Inventory;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
@@ -23,16 +26,92 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             get => _perksModel;
         }
 
+        private string _searchTraitsCatalogueText;
+        public string SearchTraitsCatalogueText
+        {
+            get => _searchTraitsCatalogueText;
+            set
+            {
+                Update(ref _searchTraitsCatalogueText, value);
+                RefreshTraitsCatalogueView();
+            }
+        }
+
+        private string _searchPerksCatalogueText;
+        public string SearchPerksCatalogueText
+        {
+            get => _searchPerksCatalogueText;
+            set
+            {
+                Update(ref _searchPerksCatalogueText, value);
+                RefreshPerksCatalogueView();
+            }
+        }
+
+        private Trait _selectedCatalogueTrait;
+        public Trait SelectedCatalogueTrait
+        {
+            get => _selectedCatalogueTrait;
+            set => Update(ref _selectedCatalogueTrait, value);
+        }
+
+        private Perk _selectedCataloguePerk;
+        public Perk SelectedCataloguePerk
+        {
+            get => _selectedCataloguePerk;
+            set => Update(ref _selectedCataloguePerk, value);
+        }
+
+        public ICollectionView TraitsCatalogueView { get; }
+        public ICollectionView PerksCatalogueView { get; }
+
         // constructor
         public PerksViewModel(XtrnlPerksModel xtrnlPerksModel, PerksModel perksModel)
         {
             _xtrnlPerksModel = xtrnlPerksModel;
             _perksModel = perksModel;
+
+            TraitsCatalogueView = CollectionViewSource.GetDefaultView(xtrnlPerksModel.Traits);
+            TraitsCatalogueView.SortDescriptions.Add(new SortDescription(nameof(Trait.Name), ListSortDirection.Ascending));
+
+            PerksCatalogueView = CollectionViewSource.GetDefaultView(xtrnlPerksModel.Perks);
+            PerksCatalogueView.SortDescriptions.Add(new SortDescription(nameof(Perk.Name), ListSortDirection.Ascending));
+
+            _searchTraitsCatalogueText = "";
+            RefreshTraitsCatalogueView();
+            _searchPerksCatalogueText = "";
+            RefreshPerksCatalogueView();
         }
         //
 
         // methods
+        private void RefreshTraitsCatalogueView()
+        {
+            TraitsCatalogueView.Filter = FilterTraits;
+        }
 
+        private void RefreshPerksCatalogueView()
+        {
+            PerksCatalogueView.Filter = FilterPerks;
+        }
+
+        private bool FilterTraits(object obj)
+        {
+            return FilterTPCard(obj, SearchTraitsCatalogueText);
+        }
+
+        private bool FilterPerks(object obj)
+        {
+            return FilterTPCard(obj, SearchPerksCatalogueText);
+        }
+
+        private bool FilterTPCard(object obj, string searchText)
+        {
+            if (obj is not TPCard card)
+                return false;
+
+            return searchText.Length == 0 || card.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+        }
         //
 
         // commands

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
@@ -21,23 +22,23 @@ namespace WPF_Fallout_Character_Manager.Models.External
             ImageIcons = new Dictionary<string, string>();
 
             {
-                ImageIcons.Add("none", "Resources/vault_boy_thumbsup.png");
-                ImageIcons.Add("human", "Resources/TraitsPerksIcons/human1.png");
-                ImageIcons.Add("ghoul", "Resources/TraitsPerksIcons/human2.png");
-                ImageIcons.Add("robot", "Resources/TraitsPerksIcons/robot1.png");
-                ImageIcons.Add("synth", "Resources/TraitsPerksIcons/synth1.png");
-                ImageIcons.Add("super mutant", "Resources/TraitsPerksIcons/synth1.png");
-                ImageIcons.Add("missing limb", "Resources/TraitsPerksIcons/severed_limbs1.png");
-                ImageIcons.Add("blind", "Resources/TraitsPerksIcons/blind1.png");
-                ImageIcons.Add("strength", "Resources/TraitsPerksIcons/Strength_icon.png");
-                ImageIcons.Add("perception", "Resources/TraitsPerksIcons/Perception_icon.png");
-                ImageIcons.Add("endurance", "Resources/TraitsPerksIcons/Endurance_icon.png");
-                ImageIcons.Add("charisma", "Resources/TraitsPerksIcons/Charisma_icon.png");
-                ImageIcons.Add("intelligence", "Resources/TraitsPerksIcons/Intelligence_icon.png");
-                ImageIcons.Add("agility", "Resources/TraitsPerksIcons/Agility_icon.png");
-                ImageIcons.Add("luck", "Resources/TraitsPerksIcons/Luck_icon.png");
-                ImageIcons.Add("humanoid", "Resources/TraitsPerksIcons/humanoids.png");
-                ImageIcons.Add("machine", "Resources/TraitsPerksIcons/machines.png");
+                ImageIcons.Add("None", "/Resources/vault_boy_thumbsup.png");
+                ImageIcons.Add("Human", "/Resources/TraitsPerksIcons/human1.png");
+                ImageIcons.Add("Ghoul", "/Resources/TraitsPerksIcons/ghoul2.png");
+                ImageIcons.Add("Robot", "/Resources/TraitsPerksIcons/robot1.png");
+                ImageIcons.Add("Synth", "/Resources/TraitsPerksIcons/synth1.png");
+                ImageIcons.Add("Super Mutant", "/Resources/TraitsPerksIcons/super_mutant1.png");
+                ImageIcons.Add("Missing Limb", "/Resources/TraitsPerksIcons/severed_limbs1.png");
+                ImageIcons.Add("Blind", "/Resources/TraitsPerksIcons/blind1.png");
+                ImageIcons.Add("Strength", "/Resources/TraitsPerksIcons/Strength_icon.png");
+                ImageIcons.Add("Perception", "/Resources/TraitsPerksIcons/Perception_icon.png");
+                ImageIcons.Add("Endurance", "/Resources/TraitsPerksIcons/Endurance_icon.png");
+                ImageIcons.Add("Charisma", "/Resources/TraitsPerksIcons/Charisma_icon.png");
+                ImageIcons.Add("Intelligence", "/Resources/TraitsPerksIcons/Intelligence_icon.png");
+                ImageIcons.Add("Agility", "/Resources/TraitsPerksIcons/Agility_icon.png");
+                ImageIcons.Add("Luck", "/Resources/TraitsPerksIcons/Luck_icon.png");
+                ImageIcons.Add("Humanoid", "/Resources/TraitsPerksIcons/humanoids.png");
+                ImageIcons.Add("Machine", "/Resources/TraitsPerksIcons/machines.png");
             }
 
             var traitsLines = File.ReadAllLines("Resources/Spreadsheets/traits.csv");
@@ -85,86 +86,86 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 prerequisite.Contains("ghoul", StringComparison.InvariantCultureIgnoreCase) &&
                 prerequisite.Contains("super mutant", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["humanoid"];
+                return ImageIcons["Humanoid"];
             }
 
             if (prerequisite.Contains("synth", StringComparison.InvariantCultureIgnoreCase) &&
                 prerequisite.Contains("robot", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["machine"];
+                return ImageIcons["Machine"];
             }
 
             if (prerequisite.Contains("human", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["human"];
+                return ImageIcons["Human"];
             }
 
             if (prerequisite.Contains("ghoul", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["ghoul"];
+                return ImageIcons["Ghoul"];
             }
 
             if (prerequisite.Contains("robot", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["robot"];
+                return ImageIcons["Robot"];
             }
 
             if (prerequisite.Contains("synth", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["synth"];
+                return ImageIcons["Synth"];
             }
 
             if (prerequisite.Contains("super mutant", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["super mutant"];
+                return ImageIcons["Super Mutant"];
             }
 
             if (prerequisite.Contains("missing", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["missing limb"];
+                return ImageIcons["Missing Limb"];
             }
 
             if (prerequisite.Contains("blind", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["blind"];
+                return ImageIcons["Blind"];
             }
 
             if (prerequisite.Contains("strength", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["strength"];
+                return ImageIcons["Strength"];
             }
 
             if (prerequisite.Contains("perception", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["perception"];
+                return ImageIcons["Perception"];
             }
 
             if (prerequisite.Contains("endurance", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["endurance"];
+                return ImageIcons["Endurance"];
             }
 
             if (prerequisite.Contains("charisma", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["charisma"];
+                return ImageIcons["Charisma"];
             }
 
             if (prerequisite.Contains("intelligence", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["intelligence"];
+                return ImageIcons["Intelligence"];
             }
 
             if (prerequisite.Contains("agility", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["agility"];
+                return ImageIcons["Agility"];
             }
 
             if (prerequisite.Contains("luck", StringComparison.InvariantCultureIgnoreCase))
             {
-                return ImageIcons["luck"];
+                return ImageIcons["Luck"];
             }
 
-            return ImageIcons["none"];
+            return ImageIcons["None"];
         }
         //
 
@@ -173,39 +174,44 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Dictionary<string, string> ImageIcons { get; set; }
     }
 
-    class Trait : LabeledString
+    public class TPCard : LabeledString
     {
         // constructor
-        public Trait(string name = "", string description = "", string wildWastelandDescription = "", string prerequisite = "", string imagePath = "")
-            : base(name, description, description)
+        public TPCard(string name = "", string description = "", string extraDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
+            : base(name, description, description, true)
         {
             Prerequisite = prerequisite;
-            WildWastelandDescription = wildWastelandDescription;
+            ExtraDescription = extraDescription;
+            PickImageFromCardType = true;
+            CardType = cardType;
             ImagePath = imagePath;
+            ShowDescription = false;
 
             ConstructNote();
+            OnPropertyChanged(nameof(DescriptionToShow));
         }
 
-        public Trait(Trait other) : base(other)
+        public TPCard(TPCard other) : base(other)
         {
             Prerequisite = other.Prerequisite;
-            WildWastelandDescription = other.WildWastelandDescription;
+            ExtraDescription = other.ExtraDescription;
+            PickImageFromCardType = other.PickImageFromCardType;
+            CardType = other.CardType;
             ImagePath = other.ImagePath;
+            ShowDescription = other.ShowDescription;
 
             ConstructNote();
+            OnPropertyChanged(nameof(DescriptionToShow));
         }
         //
 
         // method
-        public void ConstructNote()
-        {
-            Note = Value + "\nWild Wasteland: " + WildWastelandDescription;
-        }
+        public virtual void ConstructNote() { }
         //
 
         // members
-        string _prerequisite;
-        string Prerequisite
+        private string _prerequisite;
+        public string Prerequisite
         {
             get => _prerequisite;
             set
@@ -215,102 +221,186 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
-        string _wildWastelandDescription;
-        string WildWastelandDescription
+        private string _extraDescription;
+        public string ExtraDescription
         {
-            get => _wildWastelandDescription;
+            get => _extraDescription;
             set
             {
-                Update(ref _wildWastelandDescription, value);
+                Update(ref _extraDescription, value);
                 ConstructNote();
             }
         }
 
-        string _imagePath;
-        string ImagePath
+        private bool _pickImageFromCardType;
+        public bool PickImageFromCardType
+        {
+            get => _pickImageFromCardType;
+            set => Update(ref _pickImageFromCardType, value);
+        }
+
+        private string _cardType;
+        public string CardType
+        {
+            get => _cardType;
+            set => Update(ref _cardType, value);
+        }
+
+        private string _imagePath;
+        public string ImagePath
         {
             get => _imagePath;
             set => Update(ref _imagePath, value);
         }
+
+        private bool _showDescription;
+        public bool ShowDescription
+        {
+            get => _showDescription;
+            set
+            {
+                Update(ref _showDescription, value);
+                OnPropertyChanged(nameof(ToggleDescriptionVisibility));
+            }
+        }
+
+        public Visibility ToggleDescriptionVisibility => ShowDescription ? Visibility.Visible : Visibility.Collapsed;
+
+        public virtual string DescriptionToShow => Value;
         //
     }
 
-    class Perk : LabeledString
+    public class Trait : TPCard
     {
         // constructor
-        public Perk(string name = "", string description = "", string repeatDescription = "", int max = 0, string requirement = "", string imagePath = "")
-            : base(name, description, description)
+        public Trait(string name = "", string description = "", string wildWastelandDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
+            : base(name, description, wildWastelandDescription, prerequisite, cardType, imagePath)
         {
-            RepeatDescription = repeatDescription;
-            Requirement = requirement;
-            Max = max;
-            ImagePath = imagePath;
+        }
+
+        public Trait(Trait other) : base(other)
+        {
+        }
+        //
+
+        // method
+        public override void ConstructNote()
+        {
+            IsReadOnly = false;
+            Note = "";
+            if(!Prerequisite.Equals("none", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Note += "Requirement: " + Prerequisite + "\n\n";
+            }
+            Note += Value + "\n\nWild Wasteland: " + ExtraDescription;
+            IsReadOnly = true;
+        }
+        //
+
+        // members
+        private bool _isWildWastelandToggled;
+        public bool IsWildWastelandToggled
+        {
+            get => _isWildWastelandToggled;
+            set
+            {
+                Update(ref _isWildWastelandToggled, value);
+                OnPropertyChanged(nameof(DescriptionToShow));
+            }
+        }
+
+        public override string DescriptionToShow
+        {
+            get
+            {
+                string result = "";
+                if (!Prerequisite.Equals("none", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    result += "Requirement: " + Prerequisite + "\n\n";
+                }
+
+                result += Value;
+
+                if (IsWildWastelandToggled)
+                {
+                    result += Value + "\n\nWild Wasteland: " + ExtraDescription;
+                }
+
+                return result;
+            }
+        }
+        //
+    }
+
+    public class Perk : TPCard
+    {
+        // constructor
+        public Perk(string name = "", string description = "", string repeatDescription = "", int max = 0, string requirement = "", string cardType = "None", string imagePath = "")
+            : base(name, description, repeatDescription, requirement, cardType, imagePath)
+        {
+            MaxStacks = max;
 
             ConstructNote();
         }
 
         public Perk(Perk other) : base(other)
         {
-            RepeatDescription = other.RepeatDescription;
-            Requirement = other.Requirement;
-            Max = other.Max;
-            ImagePath = other.ImagePath;
+            MaxStacks = other.MaxStacks;
 
             ConstructNote();
         }
         //
 
         // methods
-        public void ConstructNote()
+        public override void ConstructNote()
         {
-            Note = "Requirement: " + Requirement + "\nMax Stacks: " + Max + "\n" + Value;
-            if(RepeatDescription != "")
+            IsReadOnly = false;
+            Note = "Requirement: " + Prerequisite + "\nMax Stacks: " + MaxStacks + "\n\n" + Value;
+            if(ExtraDescription != "")
             {
-                Note += "\nRepeat: " + RepeatDescription;
+                Note += "\n\nRepeat: " + ExtraDescription;
             }
+            IsReadOnly = true;
         }
         //
 
         // members
-        string _requirement;
-        string Requirement
+        public override string DescriptionToShow
         {
-            get => _requirement;
+            get
+            {
+                string result = "Requirement: " + Prerequisite + "\n\n" + Value;
+                if (ExtraDescription != "")
+                {
+                    result += "\n\nRepeat: " + ExtraDescription;
+                }
+                return result;
+            }
+        }
+
+        int _currentStacks;
+        public int CurrentStacks
+        {
+            get => _currentStacks;
             set
             {
-                Update(ref _requirement, value);
+                Update(ref _currentStacks, value);
+                OnPropertyChanged(nameof(ReachedMaxStacks));
+            }
+        }
+
+        int _maxStacks;
+        public int MaxStacks
+        {
+            get => _maxStacks;
+            set
+            {
+                Update(ref _maxStacks, value);
                 ConstructNote();
             }
         }
 
-        string _repeatDescription;
-        string RepeatDescription
-        {
-            get => _repeatDescription;
-            set
-            {
-                Update(ref _repeatDescription, value);
-                ConstructNote();
-            }
-        }
-
-        int _max;
-        int Max
-        {
-            get => _max;
-            set
-            {
-                Update(ref _max, value);
-                ConstructNote();
-            }
-        }
-
-        string _imagePath;
-        string ImagePath
-        {
-            get => _imagePath;
-            set => Update(ref _imagePath, value);
-        }
+        public bool ReachedMaxStacks => MaxStacks == CurrentStacks ? true : false;
         //
     }
 }

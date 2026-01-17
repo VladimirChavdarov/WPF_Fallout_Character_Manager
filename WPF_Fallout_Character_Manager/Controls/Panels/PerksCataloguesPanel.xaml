@@ -7,7 +7,7 @@
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="760" d:DesignWidth="350">
+             d:DesignHeight="760" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="250"/>
@@ -40,7 +40,7 @@
                     LabelText="Search"
                     CanOpenModal="False"
                     IsReadOnly="False"
-                    Text="{Binding SearchInventoryText, Mode=TwoWay}"/>
+                    Text="{Binding SearchTraitsCatalogueText, Mode=TwoWay}"/>
 
                 <Label
                     Style="{StaticResource FalloutDefaultLabel}"
@@ -54,21 +54,18 @@
                     BorderBrush="{StaticResource FalloutGreen}"
                     BorderThickness="0 1 0 0"
                     Padding="0 5 0 0"
-                    ItemsSource="{Binding FullInventoryView}"
-                    SelectedItem="{Binding SelectedInventoryItem}">
+                    ItemsSource="{Binding TraitsCatalogueView}"
+                    SelectedItem="{Binding SelectedCatalogueTrait}">
 
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
-                            <Setter Property="Tag" Value="{Binding Name.Note}"/>
+                            <Setter Property="Tag" Value="{Binding Note}"/>
                             <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
                             <Setter Property="ContextMenu">
                                 <Setter.Value>
                                     <ContextMenu>
-                                        <MenuItem Header="Delete"
+                                        <MenuItem Header="Add to Character"
                                             Command="{Binding RemoveFromInventoryCommand}"
-                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
-                                        <MenuItem Header="Duplicate Stack"
-                                            Command="{Binding DuplicateStackCommand}"
                                             CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                                     </ContextMenu>
                                 </Setter.Value>
@@ -80,25 +77,15 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="280"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
                                     Grid.Column="0"
-                                    Text="{Binding NameAmount}"
+                                    Text="{Binding Name}"
                                     FontSize="9"
                                     TextWrapping="Wrap"
                                     Padding="0 0 10 0"/>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Text="{Binding TotalCost}"
-                                    FontSize="9"/>
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Text="{Binding TotalLoad}"
-                                    FontSize="9"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -114,7 +101,77 @@
             Background="Black"
             BorderBrush="#23ba03"
             BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <control:TextBoxWithLabelControl
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    MinWidth="300"
+                    LabelFontSize="11"
+                    LabelText="Search"
+                    CanOpenModal="False"
+                    IsReadOnly="False"
+                    Text="{Binding SearchPerksCatalogueText, Mode=TwoWay}"/>
+
+                <Label
+                    Style="{StaticResource FalloutDefaultLabel}"
+                    Grid.Row="1"
+                    FontSize="11"
+                    Content="Name"/>
+
+                <ListBox
+                    Grid.Row="3"
+                    Style="{StaticResource FalloutInventoryTabsListBox}"
+                    BorderBrush="{StaticResource FalloutGreen}"
+                    BorderThickness="0 1 0 0"
+                    Padding="0 5 0 0"
+                    ItemsSource="{Binding PerksCatalogueView}"
+                    SelectedItem="{Binding SelectedCataloguePerk}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                            <Setter Property="Tag" Value="{Binding Note}"/>
+                            <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Add to Character"
+                                            Command="{Binding RemoveFromInventoryCommand}"
+                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="280"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding Name}"
+                                    FontSize="9"
+                                    TextWrapping="Wrap"
+                                    Padding="0 0 10 0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>

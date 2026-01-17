@@ -239,6 +239,9 @@
                                 Grid.Column="0"
                                 DataContext="{Binding PerksViewModel}"/>
 
+                            <panels:PerksCollectionPanel
+                                Grid.Column="1"
+                                DataContext="{Binding PerksViewModel}"/>
                         </Grid>
                     </TabItem>
                     <!-- -->
