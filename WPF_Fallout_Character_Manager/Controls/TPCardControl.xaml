@@ -97,16 +97,16 @@
                 BorderBrush="{StaticResource FalloutGreen}"
                 BorderThickness="0 1 0 0">
                 <Grid>
-                        <Button
-                            x:Name="DeleteBtn"
-                            Grid.Column="2"
-                            Style="{StaticResource FalloutButton}"
-                            HorizontalAlignment="Right"
-                            Margin="5"
-                            BorderBrush="{StaticResource FalloutGreen}"
-                            BorderThickness="1 1 1 1"
-                            Command="{Binding DataContext.DeleteTraitOrPerkCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                            CommandParameter="{Binding}">
+                    <Button
+                        x:Name="DeleteBtn"
+                        Grid.Column="2"
+                        Style="{StaticResource FalloutButton}"
+                        HorizontalAlignment="Right"
+                        Margin="5"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="1 1 1 1"
+                        Command="{Binding DataContext.DeleteTraitOrPerkCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                        CommandParameter="{Binding}">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border x:Name="PART_Border"

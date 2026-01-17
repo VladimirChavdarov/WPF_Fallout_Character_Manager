@@ -134,6 +134,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
             ThisUserControl.CanOpenModalPropertyChanged(e);
+            ThisUserControl.BindOpenModifierWindowCommand();
         }
 
         private void CanOpenModalPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -214,6 +215,9 @@ namespace WPF_Fallout_Character_Manager.Controls
         public EnhancedTextBox()
         {
             InitializeComponent();
+
+            Loaded += (s, e) => BindOpenModifierWindowCommand();
+            //DataContextChanged += (s, e) => BindOpenModifierWindowCommand();
         }
 
         private void CustomTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -221,6 +225,41 @@ namespace WPF_Fallout_Character_Manager.Controls
             if(!CanOpenModal)
             {
                 e.Handled = true;
+            }
+        }
+
+        private void ClearMouseBindings()
+        {
+            var existingBindings = CustomTextBox.InputBindings
+                .OfType<MouseBinding>()
+                .Where(mouseBinding => mouseBinding.Gesture is MouseGesture mouseGesture && mouseGesture.MouseAction == MouseAction.RightClick)
+                .ToList();
+
+            foreach (var mouseBinding in existingBindings)
+                CustomTextBox.InputBindings.Remove(mouseBinding);
+        }
+
+        private void BindOpenModifierWindowCommand()
+        {
+            ClearMouseBindings();
+
+            // add binding if OpenModal is true
+            if (CanOpenModal && DataContext != null)
+            {
+                var binding = new MouseBinding
+                {
+                    Gesture = new MouseGesture(MouseAction.RightClick)
+                };
+
+                // bind command
+                BindingOperations.SetBinding(binding, MouseBinding.CommandProperty,
+                    new Binding("OpenModifierModalWindowCommand") { Source = DataContext });
+
+                // bind param
+                BindingOperations.SetBinding(binding, MouseBinding.CommandParameterProperty,
+                    new Binding(nameof(ModValue)) { Source = this });
+
+                CustomTextBox.InputBindings.Add(binding);
             }
         }
     }

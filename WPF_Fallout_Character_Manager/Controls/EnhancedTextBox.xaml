@@ -47,12 +47,6 @@
                         Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"/>
                 </ToolTip>
             </TextBox.ToolTip>
-
-            <TextBox.InputBindings>
-                <MouseBinding Gesture="RightClick"
-                    Command="{Binding OpenModifierModalWindowCommand}"
-                    CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-            </TextBox.InputBindings>
         </TextBox>
     </Grid>
 </UserControl>
