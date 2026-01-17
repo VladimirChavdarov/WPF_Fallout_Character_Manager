@@ -25,71 +25,69 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <ToggleButton
-                x:Name="EditBtn"
-                Grid.Column="1"
-                Style="{StaticResource FalloutToggleButton}"
-                BorderBrush="{StaticResource FalloutGreen}"
-                BorderThickness="0"
+            <TextBlock
+                Grid.Row="0"
+                Style="{StaticResource FalloutDefaultText}"
+                FontSize="12"
                 Margin="5 0 5 0"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
                 VerticalAlignment="Center"
-                VerticalContentAlignment="Center"
-                IsChecked="{Binding ShowDescription, Mode=TwoWay}">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    TextAlignment="Center"
-                    Width="Auto"
-                    FontSize="10"
-                    TextWrapping="Wrap"
-                    Text="{Binding Name}">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource FalloutDefaultText}">
-                            <Setter Property="Foreground" Value="{StaticResource FalloutGreen}" />
-
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Value="True">
-                                    <Setter Property="Foreground" Value="Black" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=ToggleButton}}" Value="True">
-                                    <Setter Property="Foreground" Value="Black" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </ToggleButton>
+                HorizontalAlignment="Stretch"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Text="{Binding Name}"/>
 
             <ScrollViewer
                 Grid.Row="1"
                 HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
-                    <Image
+                    <ToggleButton
+                        x:Name="ImageToggleBtn"
+                        Grid.Column="1"
+                        Style="{StaticResource FalloutToggleButton}"
                         Visibility="{Binding ToggleDescriptionVisibility, Converter={StaticResource VisibilitySwitcherConverter}}"
-                        Source="{Binding ImagePath}"
-                        Width="180"
-                        Height="150">
-                    </Image>
+                        Background="Black"                        
+                        IsChecked="{Binding ShowDescription, Mode=TwoWay}">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Image
+                                    Source="{Binding ImagePath}"
+                                    Width="180"
+                                    Height="150"/>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
 
-                    <controls:EnhancedTextBox
-                        Grid.Row="1"
-                        CanOpenModal="False"
-                        BorderBrush="{StaticResource FalloutGreen}"
-                        BorderThickness="1 1 1 1"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center"
-                        TextPadding="5"
-                        Margin="5 0 5 0"
-                        FontSize="9"
-                        Width="Auto"
-                        IsReadOnly="{Binding IsReadOnly}"
-                        TextWrapping="Wrap"
-                        Text="{Binding DescriptionToShow, Mode=OneWay}"
-                        Visibility="{Binding ToggleDescriptionVisibility}">
-                    </controls:EnhancedTextBox>
+                    <ToggleButton
+                        x:Name="TextToggleBtn"
+                        Grid.Column="1"
+                        Style="{StaticResource FalloutToggleButton}"
+                        Visibility="{Binding ToggleDescriptionVisibility}"
+                        Background="Black"                        
+                        IsChecked="{Binding ShowDescription, Mode=TwoWay}">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <controls:EnhancedTextBox
+                                    Grid.Row="1"
+                                    CanOpenModal="False"
+                                    BorderBrush="{StaticResource FalloutGreen}"
+                                    BorderThickness="1 1 1 1"
+                                    HorizontalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Center"
+                                    TextPadding="5"
+                                    Margin="5 0 5 0"
+                                    FontSize="9"
+                                    Width="Auto"
+                                    IsReadOnly="{Binding IsReadOnly}"
+                                    TextWrapping="Wrap"
+                                    Text="{Binding DescriptionToShow, Mode=OneWay}"
+                                    PreviewMouseLeftButtonDown="EnhancedTextBox_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="DescriptionEnhancedTextBox_PreviewMouseMove"
+                                    MouseLeave="EnhancedTextBox_MouseLeave">
+                                </controls:EnhancedTextBox>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
                 </StackPanel>
             </ScrollViewer>
 
@@ -100,12 +98,11 @@
                 BorderThickness="0 1 0 0">
                 <StackPanel>
                     <StackPanel
-                        Grid.Column="1"
                         Margin="5 10 5 5"
                         Orientation="Horizontal"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Left"
-                        Visibility="Collapsed">
+                        Visibility="{Binding WildWastelandVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
                         <CheckBox
                             Style="{StaticResource FalloutSkillCheckbox}"
                             Margin="0 2 0 0"
@@ -120,7 +117,12 @@
                             VerticalAlignment="Top"/>
                     </StackPanel>
 
-                    <StackPanel>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="0 5 0 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding WildWastelandVisibility, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource VisibilitySwitcherConverter}}">
                         <controls:UpDownTextBoxControl x:Name="PerkStacks"
                             HorizontalAlignment="Center"
                             FontSize="11"
@@ -136,7 +138,7 @@
                             Visibility="{Binding ReachedMaxStacks, Converter={StaticResource BoolToVisibilityConverter}}"
                             FontSize="9"
                             Margin="0 -3 0 0"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Content="(max.)"/>
                     </StackPanel>

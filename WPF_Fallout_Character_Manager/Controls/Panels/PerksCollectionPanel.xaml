@@ -26,8 +26,8 @@
                 Width="250"
                 Height="250"
                 HorizontalAlignment="Left"
-                DataContext="{Binding SelectedCataloguePerk}"
-                WildWastelandVisibility="Collapsed"/>
+                DataContext="{Binding SelectedCatalogueTrait}"
+                WildWastelandVisibility="Visible"/>
         </GroupBox>
 
         <GroupBox
@@ -36,8 +36,15 @@
             Margin="5"
             Background="Black"
             BorderBrush="#23ba03"
-            BorderThickness="1">
-            
+            BorderThickness="1"
+            Padding="5">
+            <control:TPCardControl
+                Width="250"
+                Height="250"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                DataContext="{Binding SelectedCataloguePerk}"
+                WildWastelandVisibility="Collapsed"/>
         </GroupBox>
     </Grid>
 </UserControl>

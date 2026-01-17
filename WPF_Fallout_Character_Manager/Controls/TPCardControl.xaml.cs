@@ -73,5 +73,29 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             InitializeComponent();
         }
+
+        private void EnhancedTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(sender is FrameworkElement fe && DataContext is TPCard card)
+            {
+                card.ShowDescription = false;
+            }
+        }
+
+        private void DescriptionEnhancedTextBox_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender is FrameworkElement fe)
+            {
+                Mouse.OverrideCursor = Cursors.Hand;
+            }
+        }
+
+        private void EnhancedTextBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is FrameworkElement fe)
+            {
+                Mouse.OverrideCursor = null;
+            }
+        }
     }
 }
