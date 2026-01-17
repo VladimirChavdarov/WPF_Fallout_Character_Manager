@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="WPF_Fallout_Character_Manager.Controls.Panels.BioPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="770" d:DesignWidth="1365">
+    <Grid
+        Height="770"
+        VerticalAlignment="Top">
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="10">
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Name:"
+                        FontSize="11"
+                        Text="{Binding BioModel.Name}"
+                        CanOpenModal="false"
+                        MinWidth="220"/>
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Race:"
+                        FontSize="11"
+                        Text="{Binding BioModel.Race}"
+                        CanOpenModal="false"
+                        MinWidth="222"/>
+                    <controls:TextBoxWithLabelControl
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Background:"
+                        FontSize="11"
+                        Text="{Binding BioModel.Background}"
+                        CanOpenModal="false"
+                        MinWidth="171"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="10"
+                                VerticalAlignment="Center">
+                                Level:
+                            </Label>
+                            <controls:UpDownTextBoxControl
+                                Grid.Column="1"
+                                MinValue="1"
+                                MaxValue="30"
+                                MinWidth="20"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                CanOpenModal="False"
+                                Text="{Binding BioModel.LevelNum}"
+                                Hint="{Binding BioModel.Level.LevelModInt.BaseValue}"
+                                ModValue="{Binding BioModel.Level.LevelModInt}"
+                                IsReadOnly="{Binding BioModel.Level.LevelModInt.IsBaseValueReadOnly}"/>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="10"
+                                VerticalAlignment="Center">
+                                XP:
+                            </Label>
+                            <controls:UpDownTextBoxControl
+                                Grid.Column="1"
+                                MinValue="0"
+                                FontSize="11"
+                                VerticalAlignment="Center"
+                                CanOpenModal="False"
+                                Text="{Binding BioModel.XP.BaseValue}"
+                                Hint="{Binding BioModel.XP.Note}"
+                                ModValue="{Binding BioModel.XP}"
+                                IsReadOnly="{Binding BioModel.XP.IsBaseValueReadOnly}"/>
+                        </Grid>
+                    </Grid>
+
+                    <Button
+                        Command="{Binding LoadImageCommand}"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource FalloutImageButton}"
+                        Margin="5"
+                        MaxWidth="280"
+                        MaxHeight="260">
+                        <Image
+                            Source="{Binding Image}"
+                            Width="280"
+                            Height="240"
+                            Stretch="Uniform"/>
+                    </Button>
+
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 0"
+                        Orientation="Vertical"
+                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Appearance:"
+                        FontSize="11"
+                        IsReadOnly="False"
+                        CanOpenModal="False"
+                        Text="{Binding AppearanceDescription}"
+                        Width="280"
+                        MinHeight="380"
+                        TextWrapping="Wrap"
+                        AllowNewLines="True"
+                        AllowTabs="True"/>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="10">
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 0"
+                        Orientation="Vertical"
+                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Backstory:"
+                        FontSize="11"
+                        IsReadOnly="False"
+                        CanOpenModal="False"
+                        Text="{Binding Backstory}"
+                        Width="430"
+                        MinHeight="380"
+                        TextWrapping="Wrap"
+                        AllowNewLines="True"
+                        AllowTabs="True"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 20 0 0"
+                        Orientation="Vertical"
+                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Virtues:"
+                        FontSize="11"
+                        IsReadOnly="False"
+                        CanOpenModal="False"
+                        Text="{Binding Virtues}"
+                        Width="430"
+                        MinHeight="130"
+                        TextWrapping="Wrap"
+                        AllowNewLines="True"
+                        AllowTabs="True"/>
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 20 0 0"
+                        Orientation="Vertical"
+                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Vices:"
+                        FontSize="11"
+                        IsReadOnly="False"
+                        CanOpenModal="False"
+                        Text="{Binding Vices}"
+                        Width="430"
+                        MinHeight="130"
+                        TextWrapping="Wrap"
+                        AllowNewLines="True"
+                        AllowTabs="True"/>
+                </StackPanel>
+                
+                <StackPanel
+                    Grid.Column="2"
+                    Margin="10">
+                    <controls:TextBoxWithLabelControl
+                        Margin="0 0 0 0"
+                        Orientation="Vertical"
+                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Left"
+                        LabelFontSize="10"
+                        LabelText="Notes:"
+                        FontSize="11"
+                        IsReadOnly="False"
+                        CanOpenModal="False"
+                        Text="{Binding Notes}"
+                        Width="570"
+                        MinHeight="725"
+                        TextWrapping="Wrap"
+                        AllowNewLines="True"
+                        AllowTabs="True"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

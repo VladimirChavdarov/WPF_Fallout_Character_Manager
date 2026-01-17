@@ -176,7 +176,9 @@
                             Text="{Binding NewPerk.Value}"
                             Width="300"
                             MinHeight="100"
-                            TextWrapping="Wrap"/>
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
                         <control:TextBoxWithLabelControl
                             Margin="0 0 0 10"
                             Orientation="Vertical"
@@ -190,7 +192,9 @@
                             Text="{Binding NewPerk.ExtraDescription}"
                             Width="300"
                             MinHeight="100"
-                            TextWrapping="Wrap"/>
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

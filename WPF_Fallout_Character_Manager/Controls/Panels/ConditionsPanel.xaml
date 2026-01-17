@@ -162,6 +162,8 @@
                                         MaxWidth="198"
                                         IsReadOnly="{Binding IsReadOnly}"
                                         TextWrapping="Wrap"
+                                        AllowNewLines="True"
+                                        AllowTabs="True"
                                         Text="{Binding BaseValue.Note}"
                                         Visibility="{Binding DescriptionVisibility}"
                                         PreviewMouseMove="DescriptionEnhancedTextBox_PreviewMouseMove"

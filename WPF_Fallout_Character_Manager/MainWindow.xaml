@@ -248,9 +248,8 @@
 
                     <!-- Perks Tab -->
                     <TabItem Header="Data">
-                        <TextBlock>
-                            Placeholder
-                        </TextBlock>
+                        <panels:BioPanel
+                            DataContext="{Binding BioViewModel}"/>
                     </TabItem>
                     <!-- -->
 
@@ -258,9 +257,6 @@
                              Focusable="False"
                              IsHitTestVisible="False"
                              FontFamily="{StaticResource Monofonto}">
-                        <TextBlock>
-                            Placeholder
-                        </TextBlock>
                     </TabItem>
 
                     <!-- Perks Tab -->

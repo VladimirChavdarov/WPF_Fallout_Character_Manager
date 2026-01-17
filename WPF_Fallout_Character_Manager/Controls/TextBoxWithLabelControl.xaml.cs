@@ -228,6 +228,36 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region AllowNewLines
+        public static readonly DependencyProperty AllowNewLinesProperty =
+        DependencyProperty.Register(
+            nameof(AllowNewLines),
+            typeof(bool),
+            typeof(TextBoxWithLabelControl),
+            new PropertyMetadata(false)); // default
+
+        public bool AllowNewLines
+        {
+            get => (bool)GetValue(AllowNewLinesProperty);
+            set => SetValue(AllowNewLinesProperty, value);
+        }
+        #endregion
+
+        #region AllowTabs
+        public static readonly DependencyProperty AllowTabsProperty =
+        DependencyProperty.Register(
+            nameof(AllowTabs),
+            typeof(bool),
+            typeof(TextBoxWithLabelControl),
+            new PropertyMetadata(false)); // default
+
+        public bool AllowTabs
+        {
+            get => (bool)GetValue(AllowTabsProperty);
+            set => SetValue(AllowTabsProperty, value);
+        }
+        #endregion
+
         #region TextPadding
         public static readonly DependencyProperty TextPaddingProperty =
         DependencyProperty.Register("TextPadding", typeof(Thickness), typeof(TextBoxWithLabelControl),

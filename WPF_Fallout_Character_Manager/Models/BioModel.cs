@@ -49,6 +49,13 @@ namespace WPF_Fallout_Character_Manager.Models
             set => Update(ref _race, value);
         }
 
+        private string _appearanceDescription;
+        public string AppearanceDescription
+        {
+            get => _appearanceDescription;
+            set => Update(ref _appearanceDescription, value);
+        }
+
         private string _background;
         public string Background
         {
@@ -61,6 +68,27 @@ namespace WPF_Fallout_Character_Manager.Models
         {
             get => _backstory;
             set => Update(ref _backstory, value);
+        }
+
+        private string _virtues;
+        public string Virtues
+        {
+            get => _virtues;
+            set => Update(ref _virtues, value);
+        }
+
+        private string _vices;
+        public string Vices
+        {
+            get => _vices;
+            set => Update(ref _vices, value);
+        }
+
+        private string _notes;
+        public string Notes
+        {
+            get => _notes;
+            set => Update(ref _notes, value);
         }
 
         private int _levelNum;

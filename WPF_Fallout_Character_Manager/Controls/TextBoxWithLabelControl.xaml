@@ -30,6 +30,8 @@
                 TextPadding="{Binding TextPadding, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 TextWrapping="{Binding TextWrapping, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                AllowNewLines="{Binding AllowNewLines, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                AllowTabs="{Binding AllowTabs, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FlowDirection="LeftToRight"
                 VerticalAlignment="Center"
                 ModValue="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
