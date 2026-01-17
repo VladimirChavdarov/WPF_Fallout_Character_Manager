@@ -10,7 +10,7 @@
              d:DesignHeight="760" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -26,6 +26,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <control:TextBoxWithLabelControl
@@ -49,10 +50,10 @@
                     Content="Name"/>
 
                 <ListBox
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Style="{StaticResource FalloutInventoryTabsListBox}"
                     BorderBrush="{StaticResource FalloutGreen}"
-                    BorderThickness="0 1 0 0"
+                    BorderThickness="0 1 0 1"
                     Padding="0 5 0 0"
                     ItemsSource="{Binding TraitsCatalogueView}"
                     SelectedItem="{Binding SelectedCatalogueTrait}">
@@ -65,8 +66,7 @@
                                 <Setter.Value>
                                     <ContextMenu>
                                         <MenuItem Header="Add to Character"
-                                            Command="{Binding RemoveFromInventoryCommand}"
-                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                            Command="{Binding AddTraitCommand}"/>
                                     </ContextMenu>
                                 </Setter.Value>
                             </Setter>
@@ -77,7 +77,7 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="280"/>
+                                    <ColumnDefinition Width="250"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
@@ -91,6 +91,17 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
+                <Button
+                    Grid.Row="3"
+                    Style="{StaticResource FalloutButton}"
+                    Content="New Trait Template"
+                    Margin="10"
+                    Padding="5"
+                    Width="160"
+                    FontSize="10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding OpenNewTemplateWindowCommand}"/>
             </Grid>
         </GroupBox>
 
@@ -106,6 +117,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <control:TextBoxWithLabelControl
@@ -129,10 +141,10 @@
                     Content="Name"/>
 
                 <ListBox
-                    Grid.Row="3"
+                    Grid.Row="2"
                     Style="{StaticResource FalloutInventoryTabsListBox}"
                     BorderBrush="{StaticResource FalloutGreen}"
-                    BorderThickness="0 1 0 0"
+                    BorderThickness="0 1 0 1"
                     Padding="0 5 0 0"
                     ItemsSource="{Binding PerksCatalogueView}"
                     SelectedItem="{Binding SelectedCataloguePerk}">
@@ -145,8 +157,7 @@
                                 <Setter.Value>
                                     <ContextMenu>
                                         <MenuItem Header="Add to Character"
-                                            Command="{Binding RemoveFromInventoryCommand}"
-                                            CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                            Command="{Binding AddPerkCommand}"/>
                                     </ContextMenu>
                                 </Setter.Value>
                             </Setter>
@@ -157,7 +168,7 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="280"/>
+                                    <ColumnDefinition Width="250"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
@@ -171,6 +182,17 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
+                <Button
+                    Grid.Row="3"
+                    Style="{StaticResource FalloutButton}"
+                    Content="New Perk Template"
+                    Margin="10"
+                    Padding="5"
+                    Width="160"
+                    FontSize="10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding OpenNewTemplateWindowCommand}"/>
             </Grid>
         </GroupBox>
     </Grid>

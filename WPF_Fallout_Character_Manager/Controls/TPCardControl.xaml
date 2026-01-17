@@ -96,53 +96,93 @@
                 Margin="5"
                 BorderBrush="{StaticResource FalloutGreen}"
                 BorderThickness="0 1 0 0">
-                <StackPanel>
-                    <StackPanel
-                        Margin="5 10 5 5"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Visibility="{Binding WildWastelandVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                        <CheckBox
-                            Style="{StaticResource FalloutSkillCheckbox}"
-                            Margin="0 2 0 0"
-                            FontSize="18"
-                            VerticalAlignment="Top"
+                <Grid>
+                        <Button
+                            x:Name="DeleteBtn"
+                            Grid.Column="2"
+                            Style="{StaticResource FalloutButton}"
                             HorizontalAlignment="Right"
-                            IsChecked="{Binding IsWildWastelandToggled}"/>
-                        <Label
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            Content="Wild Wasteland"
-                            FontSize="9"
-                            VerticalAlignment="Top"/>
-                    </StackPanel>
-
-                    <StackPanel
-                        Orientation="Horizontal"
-                        Margin="0 5 0 0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Visibility="{Binding WildWastelandVisibility, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource VisibilitySwitcherConverter}}">
-                        <controls:UpDownTextBoxControl x:Name="PerkStacks"
-                            HorizontalAlignment="Center"
-                            FontSize="11"
-                            MinusButtonSlot="0"
-                            PlusButtonSlot="2"
-                            TextBoxSlot="1"
-                            MinValue="1"
-                            MaxValue="{Binding MaxStacks}"
-                            Text="{Binding CurrentStacks}"
-                            CanOpenModal="False"/>
-                        <Label
-                            Style="{StaticResource FalloutDefaultLabel}"
-                            Visibility="{Binding ReachedMaxStacks, Converter={StaticResource BoolToVisibilityConverter}}"
-                            FontSize="9"
-                            Margin="0 -3 0 0"
+                            Margin="5"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1 1 1 1"
+                            Command="{Binding DataContext.DeleteTraitOrPerkCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CommandParameter="{Binding}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="PART_Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                    <Rectangle x:Name="PART_OverlayRect"
+                                            Margin="5"
+                                            Width="18"
+                                            Height="18">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="#23ba03"/>
+                                        </Rectangle.Fill>
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="/Resources/trashcan.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                        <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                        
+                    <StackPanel>
+                        <StackPanel
+                            Margin="5 10 5 5"
+                            Orientation="Horizontal"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Content="(max.)"/>
+                            HorizontalAlignment="Left"
+                            Visibility="{Binding WildWastelandVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                            <CheckBox
+                                Style="{StaticResource FalloutSkillCheckbox}"
+                                Margin="0 2 0 0"
+                                FontSize="18"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                IsChecked="{Binding IsWildWastelandToggled}"/>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                Content="Wild Wasteland"
+                                FontSize="9"
+                                VerticalAlignment="Top"/>
+                        </StackPanel>
+
+                        <StackPanel
+                            Orientation="Horizontal"
+                            Margin="0 5 0 0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Visibility="{Binding WildWastelandVisibility, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource VisibilitySwitcherConverter}}">
+                            <controls:UpDownTextBoxControl x:Name="PerkStacks"
+                                HorizontalAlignment="Center"
+                                FontSize="11"
+                                MinusButtonSlot="0"
+                                PlusButtonSlot="2"
+                                TextBoxSlot="1"
+                                MinValue="1"
+                                MaxValue="{Binding MaxStacks}"
+                                Text="{Binding CurrentStacks}"
+                                CanOpenModal="False"/>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                Visibility="{Binding ReachedMaxStacks, Converter={StaticResource BoolToVisibilityConverter}}"
+                                FontSize="9"
+                                Margin="0 -3 0 0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Content="(max.)"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </Border>
         </Grid>
     </Border>

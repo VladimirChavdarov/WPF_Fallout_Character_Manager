@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Data;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
@@ -81,6 +82,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RefreshTraitsCatalogueView();
             _searchPerksCatalogueText = "";
             RefreshPerksCatalogueView();
+
+            AddTraitCommand = new RelayCommand(AddTrait);
+            AddPerkCommand = new RelayCommand(AddPerk);
+            DeleteTraitOrPerkCommand = new RelayCommand(DelteTraitOrPerk);
         }
         //
 
@@ -115,7 +120,40 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // commands
+        public RelayCommand AddTraitCommand { get; private set; }
+        private void AddTrait(object obj = null)
+        {
+            if(SelectedCatalogueTrait != null)
+                PerksModel.Traits.Add(SelectedCatalogueTrait.Clone());
+        }
 
+        public RelayCommand AddPerkCommand { get; private set; }
+        private void AddPerk(object obj = null)
+        {
+            if(SelectedCataloguePerk != null)
+            {
+                var perkToAdd = SelectedCataloguePerk.Clone();
+                perkToAdd.CurrentStacks = 1;
+                PerksModel.Perks.Add(perkToAdd);
+            }
+        }
+
+        public RelayCommand DeleteTraitOrPerkCommand { get; private set; }
+        private void DelteTraitOrPerk(object obj)
+        {
+            if(obj == null)
+                return;
+
+            switch(obj)
+            {
+                case Trait trait:
+                    PerksModel.Traits.Remove(trait);
+                    break;
+                case Perk perk:
+                    PerksModel.Perks.Remove(perk);
+                    break;
+            }
+        }
         //
     }
 }

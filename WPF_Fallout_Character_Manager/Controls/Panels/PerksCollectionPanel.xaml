@@ -10,7 +10,7 @@
              d:DesignHeight="760" d:DesignWidth="1015">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="320"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -22,12 +22,29 @@
             BorderBrush="#23ba03"
             BorderThickness="1"
             Padding="5">
-            <control:TPCardControl
-                Width="250"
-                Height="250"
-                HorizontalAlignment="Left"
-                DataContext="{Binding SelectedCatalogueTrait}"
-                WildWastelandVisibility="Visible"/>
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl
+                    HorizontalAlignment="Left"
+                    Width="980"
+                    ItemsSource="{Binding PerksModel.Traits}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <control:TPCardControl
+                                Width="235"
+                                Height="250"
+                                Margin="5 5 5 5"
+                                WildWastelandVisibility="Visible"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </GroupBox>
 
         <GroupBox
@@ -38,13 +55,29 @@
             BorderBrush="#23ba03"
             BorderThickness="1"
             Padding="5">
-            <control:TPCardControl
-                Width="250"
-                Height="250"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                DataContext="{Binding SelectedCataloguePerk}"
-                WildWastelandVisibility="Collapsed"/>
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl
+                    HorizontalAlignment="Left"
+                    Width="980"
+                    ItemsSource="{Binding PerksModel.Perks}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <control:TPCardControl
+                                Width="235"
+                                Height="250"
+                                Margin="5 5 5 5"
+                                WildWastelandVisibility="Collapsed"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </GroupBox>
     </Grid>
 </UserControl>

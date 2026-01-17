@@ -276,14 +276,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Trait(string name = "", string description = "", string wildWastelandDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
             : base(name, description, wildWastelandDescription, prerequisite, cardType, imagePath)
         {
+            IsWildWastelandToggled = false;
         }
 
         public Trait(Trait other) : base(other)
         {
+            IsWildWastelandToggled = other.IsWildWastelandToggled;
         }
         //
 
         // method
+        public Trait Clone() => new Trait(this);
+
         public override void ConstructNote()
         {
             IsReadOnly = false;
@@ -338,6 +342,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public Perk(string name = "", string description = "", string repeatDescription = "", int max = 0, string requirement = "", string cardType = "None", string imagePath = "")
             : base(name, description, repeatDescription, requirement, cardType, imagePath)
         {
+            CurrentStacks = 0;
             MaxStacks = max;
 
             ConstructNote();
@@ -345,6 +350,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public Perk(Perk other) : base(other)
         {
+            CurrentStacks = other.CurrentStacks;
             MaxStacks = other.MaxStacks;
 
             ConstructNote();
@@ -352,6 +358,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
+        public Perk Clone() => new Perk(this);
+
         public override void ConstructNote()
         {
             IsReadOnly = false;
