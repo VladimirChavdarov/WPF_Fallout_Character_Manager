@@ -117,6 +117,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             // serialization
             RegisterModelForSerialization<BioModel, BioModelDTO>(BioModel);
             RegisterModelForSerialization<SurvivalModel, SurvivalModelDTO>(SurvivalModel);
+            RegisterModelForSerialization<SPECIALModel, SPECIALModelDTO>(SPECIALModel);
+            RegisterModelForSerialization<CombatModel, CombatModelDTO>(CombatModel);
             //
         }
         //
@@ -178,6 +180,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void PostLoadUpdate()
         {
             SurvivalModel.UpdateModel(SPECIALModel);
+            CombatModel.UpdateModel(SPECIALModel, BioModel.Level);
         }
 
         public bool SaveCharacter(object _ = null)

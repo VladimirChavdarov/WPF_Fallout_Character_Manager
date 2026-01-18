@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
@@ -20,7 +23,7 @@ namespace WPF_Fallout_Character_Manager.Models
         Luck
     }
 
-    internal sealed class SPECIALModel : ModelBase
+    internal sealed class SPECIALModel : ModelBase, ISerializable<SPECIALModelDTO>
     {
         // constructor
         public SPECIALModel()
@@ -37,17 +40,51 @@ namespace WPF_Fallout_Character_Manager.Models
 
             };
 
-            foreach(var keyValue in _special)
-            {
-                var key = keyValue.Key;
-                var value = keyValue.Value;
-
-                value.PropertyChanged += (s, e) => OnPropertyChanged(key.ToString());
-            }
+            SubscribeToPropertyChanged();
         }
         //
 
         // helpers
+        public SPECIALModelDTO ToDto()
+        {
+            SPECIALModelDTO dto = new SPECIALModelDTO();
+            foreach(var kvp in _special)
+            {
+                dto.Special.Add(kvp.Key, kvp.Value.ToDto());
+            }
+
+            return dto;
+        }
+
+        public void FromDto(SPECIALModelDTO dto, bool versionMismatch = false)
+        {
+            _special.Clear();
+            foreach(var kvp in dto.Special)
+            {
+                _special.Add(kvp.Key, new ModInt(kvp.Value));
+            }
+
+            SubscribeToPropertyChanged();
+        }
+
+        private void SubscribeToPropertyChanged()
+        {
+            foreach (var (key, value) in _special)
+            {
+                value.PropertyChanged -= ModInt_PropertyChanged;
+                value.PropertyChanged += ModInt_PropertyChanged;
+            }
+        }
+
+        private void ModInt_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is ModInt modInt)
+            {
+                var stat = _special.First(kvp => kvp.Value == modInt).Key;
+                OnPropertyChanged(stat.ToString());
+            }
+        }
+
         public int GetModifier(SPECIAL MainStat)
         {
             return _special[MainStat].Total - 5;
