@@ -9,8 +9,9 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using WPF_Fallout_Character_Manager.Models.External.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
@@ -29,6 +30,23 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             UpdateTotal();
         }
 
+        protected ModValue(ModValueDTO<T> dto)
+        {
+            _baseValueObject = new LabeledValue<T>(dto.BaseValueObject.Name, dto.BaseValueObject.Value, dto.BaseValueObject.Note);
+            _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
+
+            _isBaseValueReadOnly = dto.IsBaseValueReadOnly;
+            Modifiers = new ObservableCollection<LabeledValue<T>>();
+            Modifiers.CollectionChanged += Modifiers_CollectionChanged;
+            Modifiers.Clear();
+            foreach (LabeledValue<T> mod in dto.Modifiers)
+            {
+                AddModifier((LabeledValue<T>)mod.Clone());
+            }
+
+            UpdateTotal();
+        }
+
         protected ModValue(ModValue<T> other)
         {
             _baseValueObject = new LabeledValue<T>(other.Name, other.BaseValue, other.Note);
@@ -40,9 +58,10 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 
             foreach (LabeledValue<T> mod in other.Modifiers)
             {
-                LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
-                Modifiers.Add(modifierClone);
-                modifierClone.PropertyChanged += Modifiers_PropertyChanged;
+                AddModifier((LabeledValue<T>)mod.Clone());
+                //LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
+                //Modifiers.Add(modifierClone);
+                //modifierClone.PropertyChanged += Modifiers_PropertyChanged;
             }
 
             UpdateTotal();
@@ -134,6 +153,18 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             else
                 throw new Exception($"Modifier with label '{modifierName}' not found.");
         }
+
+        // serialization
+        public ModValueDTO<T> ToDto()
+        {
+            return new ModValueDTO<T>
+            {
+                BaseValueObject = _baseValueObject,
+                IsBaseValueReadOnly = _isBaseValueReadOnly,
+                Modifiers = Modifiers.ToList()
+            };
+        }
+        //
 
         // Data
         protected T _total;

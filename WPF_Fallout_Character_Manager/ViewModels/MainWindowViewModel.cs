@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
+    /// <summary>
+    /// This is the entry-point of the program. The main ViewModel contains the initial instances of all other Models and ViewModels.
+    /// I also use this ViewModel to handle the serialization of the character and all catalogues.
+    /// </summary>
     internal class MainWindowViewModel : ViewModelBase
     {
         // External Data Models
@@ -37,7 +44,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public InventoryModel InventoryModel { get; } = new InventoryModel();
         public PerksModel PerksModel { get; } = new PerksModel();
 
-        public BioModel BioModel { get; }
+        public BioModel BioModel { get; private set; }
         public WeaponsModel WeaponsModel { get; }
         public ArmorModel ArmorModel { get; }
         //
@@ -99,6 +106,42 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             JunkManagerViewModel = new JunkManagerViewModel(XtrnlJunkModel, InventoryModel);
 
             PerksViewModel = new PerksViewModel(XtrnlPerksModel, PerksModel);
+
+            // serialization
+            SaveCharacterCommand = new RelayCommand(SaveCharacter);
+            LoadCharacterCommand = new RelayCommand(LoadCharacter);
+            //
+        }
+        //
+
+        // serialization
+        void SerializeCharacterJson()
+        {
+            BioModelDTO dto = BioModel.ToDto();
+
+            string json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText("test_character.json", json);
+        }
+
+        void DeserializeCharacterJson()
+        {
+            string json = File.ReadAllText("test_character.json");
+
+            BioModelDTO dto = JsonSerializer.Deserialize<BioModelDTO>(json);
+            BioModel.FromDto(dto);
+            //BioViewModel.BioModel = new BioModel(dto, XtrnlLevelModel);
+        }
+
+        public RelayCommand SaveCharacterCommand { get; private set; }
+        private void SaveCharacter(object _ = null)
+        {
+            SerializeCharacterJson();
+        }
+
+        public RelayCommand LoadCharacterCommand { get; private set; }
+        private void LoadCharacter(object _ = null)
+        {
+            DeserializeCharacterJson();
         }
         //
     }

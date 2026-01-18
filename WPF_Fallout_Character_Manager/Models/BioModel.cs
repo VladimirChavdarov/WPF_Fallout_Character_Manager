@@ -4,11 +4,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.Serialization;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
@@ -19,13 +22,12 @@ namespace WPF_Fallout_Character_Manager.Models
             Name = "none";
             Race = "No Race";
             Background = "No Background";
-            Backstory = "No Backstory";
+            AppearanceDescription = "";
+            Backstory = "";
+            Virtues = "";
+            Vices = "";
             _xtrnlLevelModel = xtrnlLevelModel;
             LevelNum = 1;
-            //_level = xtrnlLevelModel.Levels.First();
-            //_level = new ModInt("Level", 1, false, "");
-            //_level.Note = "Levels are a measurement of your character’s experience and adaptation to the wasteland. Throughout the game, the Game Master (GM) may reward the player characters with Experience Points (XP). Whenever you gain 1000 XP, you gain a level. Each level grants you something.";
-            //_level.PropertyChanged += (s, e) => OnPropertyChanged(nameof(Level));
             _xp = new ModInt("XP", 543, false, "");
             _xp.Note = "The GM may award the players with XP at any time, but is typically awarded when the player characters spend any amount of time resting after completing a quest, encounter, or discovering something new. Whenever you gain XP, if your XP total is lower than any other player character’s total XP, you gain XP equal to the difference between your total and theirs. (Simply put: everyone shares the same amount of XP, defaulting to whoever has the highest). Additionally, the following modifiers are added to the total: Reaching 0 Hit points (10%), Death (1000 XP), Creature Discovery (20%), Location Discovery (20%)";
             _xp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(XP));
@@ -34,6 +36,57 @@ namespace WPF_Fallout_Character_Manager.Models
 
             KarmaCaps = new ObservableCollection<KarmaCap> { new KarmaCap(true) };
         }
+
+        public BioModel(BioModelDTO dto, XtrnlLevelModel xtrnlLevelModel) : this(xtrnlLevelModel)
+        {
+            FromDto(dto);
+        }
+
+        // method
+        public void FromDto(BioModelDTO dto)
+        {
+            Name = dto.Name;
+            Race = dto.Race;
+            Background = dto.Background;
+            AppearanceDescription = dto.AppearanceDescription;
+            Backstory = dto.Backstory;
+            Virtues = dto.Virtues;
+            Vices = dto.Vices;
+            LevelNum = dto.LevelNum;
+            XP = new ModInt(dto.XP);
+            ImageSource = dto.ImageSource;
+            KarmaCaps.Clear();
+            foreach (bool karmaCapFlag in dto.KarmaCaps)
+            {
+                KarmaCaps.Add(new KarmaCap(karmaCapFlag));
+            }
+        }
+        
+        public BioModelDTO ToDto()
+        {
+            BioModelDTO dto = new BioModelDTO
+            {
+                Name = this.Name,
+                Race = this.Race,
+                Background = this.Background,
+                AppearanceDescription = this.AppearanceDescription,
+                Backstory = this.Backstory,
+                Virtues = this.Virtues,
+                Vices = this.Vices,
+                LevelNum = this.LevelNum,
+                XP = this.XP.ToDto(),
+                ImageSource = this.ImageSource,
+                KarmaCaps = new List<bool>()
+            };
+
+            foreach(KarmaCap cap in this.KarmaCaps)
+            {
+                dto.KarmaCaps.Add(cap.IsActive);
+            }
+
+            return dto;
+        }
+        //
 
         private string _name;
         public string Name
@@ -49,18 +102,19 @@ namespace WPF_Fallout_Character_Manager.Models
             set => Update(ref _race, value);
         }
 
-        private string _appearanceDescription;
-        public string AppearanceDescription
-        {
-            get => _appearanceDescription;
-            set => Update(ref _appearanceDescription, value);
-        }
 
         private string _background;
         public string Background
         {
             get => _background;
             set => Update(ref _background, value);
+        }
+
+        private string _appearanceDescription;
+        public string AppearanceDescription
+        {
+            get => _appearanceDescription;
+            set => Update(ref _appearanceDescription, value);
         }
 
         private string _backstory;
@@ -98,15 +152,13 @@ namespace WPF_Fallout_Character_Manager.Models
             set
             {
                 Update(ref _levelNum, value);
-                Level = _xtrnlLevelModel.Levels.FirstOrDefault(x => x.LevelModInt.BaseValue == _levelNum);
             }
         }
 
-        private Level _level;
+        //private Level _level;
         public Level Level
         {
-            get => _level;
-            set => Update(ref _level, value);
+            get => _xtrnlLevelModel.Levels.FirstOrDefault(x => x.LevelModInt.BaseValue == _levelNum);
         }
 
         private ModInt _xp;

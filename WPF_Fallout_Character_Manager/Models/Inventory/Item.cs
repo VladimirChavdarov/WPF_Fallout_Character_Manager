@@ -8,7 +8,7 @@ using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Utilities;
 
-namespace WPF_Fallout_Character_Manager.Models.External.Inventory
+namespace WPF_Fallout_Character_Manager.Models.Inventory
 {
     //enum Category
     //{
@@ -141,7 +141,7 @@ namespace WPF_Fallout_Character_Manager.Models.External.Inventory
         }
 
         public int TotalLoad => (int)(Amount.Total * Load.Total);
-        public int TotalCost => (int)(Amount.Total * Cost.Total);
+        public int TotalCost => Amount.Total * Cost.Total;
         public virtual string NameAmount => $"({Amount.Total}) {Name.Total}";
         public string NameString => Name.Total;
         //

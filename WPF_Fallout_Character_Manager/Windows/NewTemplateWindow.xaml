@@ -8,7 +8,7 @@
         xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
         xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         xmlns:xtrnl="clr-namespace:WPF_Fallout_Character_Manager.Models.External"
-        xmlns:inventory="clr-namespace:WPF_Fallout_Character_Manager.Models.External.Inventory"
+        xmlns:inventory="clr-namespace:WPF_Fallout_Character_Manager.Models.Inventory"
         xmlns:panels="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
         mc:Ignorable="d"
         Title="NewTemplateWindow" Height="600" Width="665"

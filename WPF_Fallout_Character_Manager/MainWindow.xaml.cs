@@ -49,15 +49,21 @@ namespace WPF_Fallout_Character_Manager
 
         private void RunFunctionTab_SaveCharacter(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("TODO: Implement the Saving function");
-
+            if (DataContext is MainWindowViewModel mainVM)
+            {
+                mainVM.SaveCharacterCommand.Execute(null);
+            }
+            MessageBox.Show("Character Saved!");
             e.Handled = true;
         }
 
         private void RunFunctionTab_LoadCharacter(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("TODO: Implement the Loading function");
-
+            if(DataContext is  MainWindowViewModel mainVM)
+            {
+                mainVM.LoadCharacterCommand.Execute(null);
+            }
+            MessageBox.Show("Characted Loaded!");
             e.Handled = true;
         }
     }

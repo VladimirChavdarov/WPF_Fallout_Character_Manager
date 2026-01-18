@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
@@ -19,7 +20,11 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         public ModInt(string name = "NewModInt", int value = 0, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
 
+        public ModInt(ModValueDTO<int> dto)
+            : base(dto) { }
+
         protected ModInt(ModInt other) : base(other) { }
+
         //
 
         // methods

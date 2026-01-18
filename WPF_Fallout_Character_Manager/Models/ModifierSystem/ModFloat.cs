@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
@@ -18,6 +19,9 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public ModFloat(string name = "NewModFloat", float value = 0.0f, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
+
+        public ModFloat(ModValueDTO<float> dto)
+            : base(dto) { }
 
         protected ModFloat(ModFloat other) : base(other) { }
         //
