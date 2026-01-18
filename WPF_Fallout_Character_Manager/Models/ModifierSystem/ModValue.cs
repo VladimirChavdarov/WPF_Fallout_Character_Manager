@@ -20,6 +20,36 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // constructor
         public ModValue(string name = "NewModValue", T value = default, bool isBaseValueReadOnly = false, string hint = "No Hint")
         {
+            DefaultInit(name, value, isBaseValueReadOnly, hint);
+        }
+
+        protected ModValue(ModValueDTO<T> dto, ModValue<T> fallback = null)
+        {
+            if(dto == null)
+            {
+                if(fallback == null)
+                {
+                    DefaultInit("INVALID MOD VALUE", default, true, "If you encounter this, it means a value couldn't be loaded from the json and a fallback wasn't specified. If you encounter this and haven't touched the code yourself, contact the author of the app.");
+                }
+                else
+                {
+                    InitFromClone(fallback);
+                }
+            }
+            else
+            {
+                InitFromDto(dto);
+            }
+        }
+
+        protected ModValue(ModValue<T> other)
+        {
+            InitFromClone(other);
+        }
+        //
+
+        private void DefaultInit(string name = "NewModValue", T value = default, bool isBaseValueReadOnly = false, string hint = "No Hint")
+        {
             _baseValueObject = new LabeledValue<T>(name, value, hint);
             _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
 
@@ -30,7 +60,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             UpdateTotal();
         }
 
-        protected ModValue(ModValueDTO<T> dto)
+        private void InitFromDto(ModValueDTO<T> dto)
         {
             _baseValueObject = new LabeledValue<T>(dto.BaseValueObject.Name, dto.BaseValueObject.Value, dto.BaseValueObject.Note);
             _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
@@ -47,7 +77,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             UpdateTotal();
         }
 
-        protected ModValue(ModValue<T> other)
+        private void InitFromClone(ModValue<T> other)
         {
             _baseValueObject = new LabeledValue<T>(other.Name, other.BaseValue, other.Note);
             _baseValueObject.PropertyChanged += BaseValue_PropertyChanged;
@@ -59,14 +89,10 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             foreach (LabeledValue<T> mod in other.Modifiers)
             {
                 AddModifier((LabeledValue<T>)mod.Clone());
-                //LabeledValue<T> modifierClone = (LabeledValue<T>)mod.Clone();
-                //Modifiers.Add(modifierClone);
-                //modifierClone.PropertyChanged += Modifiers_PropertyChanged;
             }
 
             UpdateTotal();
         }
-        //
 
         private void BaseValue_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
@@ -227,7 +253,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
 
-        public ObservableCollection<LabeledValue<T>>? Modifiers { get; }
+        public ObservableCollection<LabeledValue<T>>? Modifiers { get; private set; }
         //
     }
 

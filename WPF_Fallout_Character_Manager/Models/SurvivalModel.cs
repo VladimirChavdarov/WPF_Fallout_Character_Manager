@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 namespace WPF_Fallout_Character_Manager.Models
 {
-    internal sealed class SurvivalModel : ModelBase
+    internal sealed class SurvivalModel : ModelBase, ISerializable<SurvivalModelDTO>
     {
         // constructor
         public SurvivalModel()
@@ -24,6 +25,35 @@ namespace WPF_Fallout_Character_Manager.Models
         //
 
         // helpers
+
+        public void FromDto(SurvivalModelDTO dto, bool versionMismatch = false)
+        {
+            Hunger = new ModInt(dto.Hunger);
+            Dehydration = new ModInt(dto.Dehydration);
+            Exhaustion = new ModInt(dto.Exhaustion);
+            RadDC = new ModInt(dto.RadDC,
+                new ModInt("RadDC", 0, true, "Your Radiation DC is equal to 12 - your Endurance ability modifier. Radiation DC is a measurement of how much you can resist radiation before taking levels of Rads. Whenever your character enters or starts their turn for the first time in an Irradiated Zone you must roll a d20 roll against your Radiation DC. If you fail, you take 1 level of radiation. If you succeed, your Radiation DC increases by 2 until you remove all your levels of Rads. All Irradiated Zones have a Radiation Severity Score that determines how often you must roll a d20 against your Radiation DC."));
+            Rads = new ModInt(dto.Rads);
+            PassiveSense = new ModInt(dto.PassiveSense,
+                new ModInt("Passive Sense", 0, true, "A measurement of your senses at all times. When you roll a Perception ability check, your character is actively trying to find something they may already be aware of. Creatures that sneak remain undetected if they roll higher than your passive sense score. Your passive sense score is equal to 12 + your Perception modifier."));
+            PartyNerve = new ModInt(dto.PartyNerve);
+            GroupSneak = new ModInt(dto.GroupSneak);
+        }
+
+        public SurvivalModelDTO ToDto()
+        {
+            return new SurvivalModelDTO
+            {
+                Hunger = Hunger.ToDto(),
+                Dehydration = Dehydration.ToDto(),
+                Exhaustion = Exhaustion.ToDto(),
+                RadDC = RadDC.ToDto(),
+                Rads = Rads.ToDto(),
+                PassiveSense = PassiveSense.ToDto(),
+                PartyNerve = PartyNerve.ToDto(),
+                GroupSneak = GroupSneak.ToDto()
+            };
+        }
 
         // Updates any properties that depend on other Models via functions here.
         // Updates the RadDC based on the Endurance Modifier

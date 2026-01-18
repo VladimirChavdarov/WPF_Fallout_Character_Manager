@@ -51,9 +51,15 @@ namespace WPF_Fallout_Character_Manager
         {
             if (DataContext is MainWindowViewModel mainVM)
             {
-                mainVM.SaveCharacterCommand.Execute(null);
+                if(mainVM.SaveCharacter())
+                {
+                    MessageBox.Show("Character Saved!");
+                }
+                else
+                {
+                    MessageBox.Show("Unable to Save Character.", "Save error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            MessageBox.Show("Character Saved!");
             e.Handled = true;
         }
 
@@ -61,9 +67,15 @@ namespace WPF_Fallout_Character_Manager
         {
             if(DataContext is  MainWindowViewModel mainVM)
             {
-                mainVM.LoadCharacterCommand.Execute(null);
+                if(mainVM.LoadCharacter())
+                {
+                    MessageBox.Show("Characted Loaded!");
+                }
+                else
+                {
+                    MessageBox.Show("Unable to Load Character.", "Load error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            MessageBox.Show("Characted Loaded!");
             e.Handled = true;
         }
     }

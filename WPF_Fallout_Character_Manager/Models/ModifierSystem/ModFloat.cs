@@ -20,8 +20,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         public ModFloat(string name = "NewModFloat", float value = 0.0f, bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
 
-        public ModFloat(ModValueDTO<float> dto)
-            : base(dto) { }
+        public ModFloat(ModValueDTO<float> dto, ModFloat fallback = null)
+            : base(dto, fallback) { }
 
         protected ModFloat(ModFloat other) : base(other) { }
         //

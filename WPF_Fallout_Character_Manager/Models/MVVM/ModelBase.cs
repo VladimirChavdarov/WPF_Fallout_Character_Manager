@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace WPF_Fallout_Character_Manager.Models.MVVM
 {
+    interface ISerializable<TDto>
+    {
+        TDto ToDto();
+        void FromDto(TDto dto, bool versionMismatch = false);
+    }
+
     public class ModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

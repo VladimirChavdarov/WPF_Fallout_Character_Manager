@@ -15,7 +15,7 @@ using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
-    internal sealed class BioModel : ModelBase
+    internal sealed class BioModel : ModelBase, ISerializable<BioModelDTO>
     {
         public BioModel(XtrnlLevelModel xtrnlLevelModel)
         {
@@ -37,13 +37,8 @@ namespace WPF_Fallout_Character_Manager.Models
             KarmaCaps = new ObservableCollection<KarmaCap> { new KarmaCap(true) };
         }
 
-        public BioModel(BioModelDTO dto, XtrnlLevelModel xtrnlLevelModel) : this(xtrnlLevelModel)
-        {
-            FromDto(dto);
-        }
-
         // method
-        public void FromDto(BioModelDTO dto)
+        public void FromDto(BioModelDTO dto, bool versionMismatch = false)
         {
             Name = dto.Name;
             Race = dto.Race;

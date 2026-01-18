@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Transactions;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Models.Serialization;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
+using WPF_Fallout_Character_Manager.ViewModels.Serialization;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
@@ -65,6 +68,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public PerksViewModel PerksViewModel { get; }
         //
 
+        // serialization
+        private readonly Dictionary<Type, object> _serializableModels = new();
+        //
+
         // Constructor
         public MainWindowViewModel()
         {
@@ -108,40 +115,87 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             PerksViewModel = new PerksViewModel(XtrnlPerksModel, PerksModel);
 
             // serialization
-            SaveCharacterCommand = new RelayCommand(SaveCharacter);
-            LoadCharacterCommand = new RelayCommand(LoadCharacter);
+            RegisterModelForSerialization<BioModel, BioModelDTO>(BioModel);
+            RegisterModelForSerialization<SurvivalModel, SurvivalModelDTO>(SurvivalModel);
             //
         }
         //
 
         // serialization
-        void SerializeCharacterJson()
+        private void RegisterModelForSerialization<TModel, TDto>(TModel model) where TModel : ISerializable<TDto>
         {
-            BioModelDTO dto = BioModel.ToDto();
+            _serializableModels[typeof(TModel)] = model;
+        }
+
+        CharacterDTO CreateCharacterDto()
+        {
+            var characterDto = new CharacterDTO();
+            foreach(var (modelKey, modelVal) in _serializableModels)
+            {
+                var method = modelVal.GetType().GetMethod("ToDto");
+                var dtoValue = method.Invoke(modelVal, null);
+
+                characterDto.ModelDtos[modelKey.Name] = JsonSerializer.SerializeToElement(dtoValue);
+            }
+
+            return characterDto;
+        }
+
+        bool SerializeCharacterJson()
+        {
+            CharacterDTO dto = CreateCharacterDto();
 
             string json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText("test_character.json", json);
+            return true;
         }
 
-        void DeserializeCharacterJson()
+        bool DeserializeCharacterJson()
         {
             string json = File.ReadAllText("test_character.json");
+            CharacterDTO dto = new CharacterDTO();
+            float appVersion = dto.Version;
+            dto = JsonSerializer.Deserialize<CharacterDTO>(json);
+            bool versionMisMatch = appVersion != dto.Version;
 
-            BioModelDTO dto = JsonSerializer.Deserialize<BioModelDTO>(json);
-            BioModel.FromDto(dto);
-            //BioViewModel.BioModel = new BioModel(dto, XtrnlLevelModel);
+            foreach(var (modelName, jsonElement) in dto.ModelDtos)
+            {
+                if (!_serializableModels.TryGetValue(_serializableModels.Keys.First(t => t.Name == modelName), out var model))
+                {
+                    return false;
+                }
+
+                var fromDtoMethod = model.GetType().GetMethod("FromDto");
+                var dtoType = fromDtoMethod.GetParameters()[0].ParameterType;
+
+                var typedDto = jsonElement.Deserialize(dtoType);
+                fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
+            }
+            
+            return true;
         }
 
-        public RelayCommand SaveCharacterCommand { get; private set; }
-        private void SaveCharacter(object _ = null)
+        private void PostLoadUpdate()
         {
-            SerializeCharacterJson();
+            SurvivalModel.UpdateModel(SPECIALModel);
         }
 
-        public RelayCommand LoadCharacterCommand { get; private set; }
-        private void LoadCharacter(object _ = null)
+        public bool SaveCharacter(object _ = null)
         {
-            DeserializeCharacterJson();
+            return SerializeCharacterJson();
+        }
+
+        //public RelayCommand LoadCharacterCommand { get; private set; }
+        public bool LoadCharacter(object _ = null)
+        {
+            if (!DeserializeCharacterJson())
+            {
+                return false;
+            }
+
+            PostLoadUpdate();
+
+            return true;
         }
         //
     }

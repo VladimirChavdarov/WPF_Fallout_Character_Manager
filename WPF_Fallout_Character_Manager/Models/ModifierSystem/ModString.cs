@@ -20,8 +20,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         public ModString(string name = "NewModString", string value = "None", bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
 
-        public ModString(ModValueDTO<string> dto)
-            : base(dto) { }
+        public ModString(ModValueDTO<string> dto, ModString fallback = null)
+            : base(dto, fallback) { }
 
         protected ModString(ModString other) : base(other) { }
         //
