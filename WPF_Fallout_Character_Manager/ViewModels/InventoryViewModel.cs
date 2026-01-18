@@ -13,7 +13,7 @@ using System.Windows.Data;
 using System.Windows.Shell;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
-using WPF_Fallout_Character_Manager.Models.External.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 using WPF_Fallout_Character_Manager.Windows;
 

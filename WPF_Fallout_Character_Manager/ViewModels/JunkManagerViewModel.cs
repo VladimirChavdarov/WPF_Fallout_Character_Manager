@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
-using WPF_Fallout_Character_Manager.Models.External.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 

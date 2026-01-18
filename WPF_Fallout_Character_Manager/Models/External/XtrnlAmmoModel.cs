@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Ribbon.Primitives;
 using System.Windows.Media.Effects;
-using WPF_Fallout_Character_Manager.Models.External.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;

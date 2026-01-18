@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WPF_Fallout_Character_Manager.Models.External.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.ViewModels;
 
 namespace WPF_Fallout_Character_Manager.Windows
