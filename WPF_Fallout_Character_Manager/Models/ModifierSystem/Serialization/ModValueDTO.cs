@@ -10,6 +10,6 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem.Serialization
     {
         public LabeledValue<T> BaseValueObject { get; set; }
         public bool IsBaseValueReadOnly { get; set; }
-        public List<LabeledValue<T>> Modifiers { get; set; }
+        public List<LabeledValue<T>> Modifiers { get; set; } = new();
     }
 }

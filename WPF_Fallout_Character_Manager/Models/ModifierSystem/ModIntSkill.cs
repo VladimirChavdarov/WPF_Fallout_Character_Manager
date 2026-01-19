@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
 {
@@ -15,8 +16,47 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         {
             _isTagged = false;
             SkillModifiers = skillModifiers;
-            //SelectedModifier = SkillModifiers.FirstOrDefault();
             SelectedModifier = SkillModifiers.LastOrDefault();
+        }
+
+        public ModIntSkill(ModIntSkillDTO dto, ModIntSkill fallback = null)
+            : base(dto, fallback)
+        {
+            IsTagged = dto.IsTagged;
+            SelectedModifier = dto.SelectedModifier;
+            SkillModifiers = new ObservableCollection<SPECIAL>();
+            SkillModifiers.Clear();
+            foreach (SPECIAL skillMod in dto.SkillModifiers)
+            {
+                SkillModifiers.Add(skillMod);
+            }
+        }
+
+        public ModIntSkill(ModIntSkill other) : base(other)
+        {
+            IsTagged = other.IsTagged;
+            SelectedModifier = other.SelectedModifier;
+            SkillModifiers = new ObservableCollection<SPECIAL>();
+            SkillModifiers.Clear();
+            foreach(SPECIAL skillMod in other.SkillModifiers)
+            {
+                SkillModifiers.Add(skillMod);
+            }
+        }
+        //
+
+        // methods
+        public ModIntSkillDTO ToDto()
+        {
+            return new ModIntSkillDTO
+            {
+                BaseValueObject = _baseValueObject,
+                IsBaseValueReadOnly = _isBaseValueReadOnly,
+                Modifiers = Modifiers.ToList(),
+                IsTagged = _isTagged,
+                SelectedModifier = _selectedModifier,
+                SkillModifiers = SkillModifiers.ToList(),
+            };
         }
         //
 
@@ -29,15 +69,26 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
             get => _isTagged;
             set
             {
-                _isTagged = value;
+                //_isTagged = value;
+                Update(ref _isTagged, value);
 
                 if (value)
-                    AddModifier(new LabeledInt(TaggedModifierName, 2, "You are proficient in this skill.", true));
+                {
+                    if(!Modifiers.Any(x => x.Name == TaggedModifierName))
+                    {
+                        //AddModifier(new LabeledInt(TaggedModifierName, 2, "You are proficient in this skill.", true));
+                        AddModifier(new LabeledValue<int>(TaggedModifierName, 2, "You are proficient in this skill.", true));
+                    }
+                }
                 else
                 {
-                    LabeledInt modifierToRemove = (LabeledInt)Modifiers.FirstOrDefault(x => x.Name == TaggedModifierName);
-                    modifierToRemove.IsReadOnly = false;
-                    RemoveModifier(modifierToRemove);
+                    //LabeledInt modifierToRemove = (LabeledInt)Modifiers.FirstOrDefault(x => x.Name == TaggedModifierName);
+                    var modifierToRemove = Modifiers.FirstOrDefault(x => x.Name == TaggedModifierName);
+                    if(modifierToRemove != null)
+                    {
+                        modifierToRemove.IsReadOnly = false;
+                        RemoveModifier(modifierToRemove);
+                    }
                 }
 
                 UpdateTotal();

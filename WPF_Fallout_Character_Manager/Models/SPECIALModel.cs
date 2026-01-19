@@ -74,6 +74,14 @@ namespace WPF_Fallout_Character_Manager.Models
                 value.PropertyChanged -= ModInt_PropertyChanged;
                 value.PropertyChanged += ModInt_PropertyChanged;
             }
+
+            OnPropertyChanged(nameof(Strength));
+            OnPropertyChanged(nameof(Perception));
+            OnPropertyChanged(nameof(Endurance));
+            OnPropertyChanged(nameof(Charisma));
+            OnPropertyChanged(nameof(Intelligence));
+            OnPropertyChanged(nameof(Agility));
+            OnPropertyChanged(nameof(Luck));
         }
 
         private void ModInt_PropertyChanged(object? sender, PropertyChangedEventArgs e)

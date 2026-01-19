@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
@@ -27,7 +28,7 @@ namespace WPF_Fallout_Character_Manager.Models
         Unarmed
     }
 
-    class SkillModel : ModelBase
+    class SkillModel : ModelBase, ISerializable<SkillModelDTO>
     {
         // Constructor
         public SkillModel()
@@ -64,20 +65,51 @@ namespace WPF_Fallout_Character_Manager.Models
             _skills[Skill.Speech].Note = "The Speech skill measures your ability to communicate and to read others. Speech encompasses your ability to persuade, dissuade, convince, or deceive. Knowledge of language, oratory, and expression also falls under Speech. You can use the Speech skill to convince non-player characters to agree with you, perform a favor for you, or even risk their life for you (at GM’s discretion). You can also use Speech to tell a convincing lie, read the intentions of someone who may have ill-intent towards you, or to communicate non-verbally.";
             _skills[Skill.Survival].Note = "The Survival skill measures a mixture of your adaptation, knowledge of the land, ability to hunt, and expertise in cuisine. You can use your Survival skill to track other creatures. To craft most food and drink recipes, your Survival skill must be equal to or more than its requirement. Additionally, learning more about a creature’s habits, type, or physical abilities might require a Survival check (at GM’s discretion).";
             _skills[Skill.Unarmed].Note = "The Unarmed skill measures your ability to punch, strike, wrestle, kick, elbow, knee, or grapple other creatures. When you make an unarmed attack roll, you add your Unarmed skill bonus to the attack roll. Unarmed attack rolls deal 1d4 + your Strength or Agility modifier bludgeoning damage, they critically hit when you roll a 20 on the attack roll and deal extra damage equal to double the total amount of damage. Unarmed attacks can be non-lethal.";
-            
 
+            SubscribeToOnPropertyChanged();
+        }
+        //
+
+        // Helpers
+        void SubscribeToOnPropertyChanged()
+        {
             // subscribe to OnPropertyChange
-            foreach(var keyValue in _skills)
+            foreach (var keyValue in _skills)
             {
                 var key = keyValue.Key;
                 var value = keyValue.Value;
 
                 value.PropertyChanged += (s, e) => OnPropertyChanged(key.ToString());
             }
-        }
-        //
 
-        // Helpers
+            foreach (Skill skill in Enum.GetValues(typeof(Skill)))
+            {
+                OnPropertyChanged(skill.ToString());
+            }
+        }
+
+        public SkillModelDTO ToDto()
+        {
+            SkillModelDTO dto = new SkillModelDTO();
+            foreach(var kvp  in _skills)
+            {
+                dto.Skills.Add(kvp.Key, kvp.Value.ToDto());
+            }
+
+            return dto;
+        }
+
+        public void FromDto(SkillModelDTO dto, bool versionMismatch = false)
+        {
+            _skills.Clear();
+            foreach(var kvp in dto.Skills)
+            {
+                _skills.Add(kvp.Key, new ModIntSkill(kvp.Value));
+            }
+
+            SubscribeToOnPropertyChanged();
+        }
+
         public void UpdateModel(SPECIALModel specialModel)
         {
             int luckModifier = specialModel.GetClampedHalfLuckModifier();
