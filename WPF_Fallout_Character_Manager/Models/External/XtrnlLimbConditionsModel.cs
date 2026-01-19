@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
@@ -53,7 +54,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
     // Technically ModTypeBase should only be used for Values that can have attached modifiers but it's just an IPropertyChanged interface so I'll
     // use it here as well.
-    public sealed class LimbCondition : ModTypeBase
+    public sealed class LimbCondition : ModTypeBase, ISerializable<LimbConditionDTO>
     {
         // constructor
         public LimbCondition(
@@ -69,6 +70,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             _apCost = apCost;
             _modifier = modifier;
             _effects = effects;
+        }
+
+        public LimbCondition(LimbConditionDTO dto)
+        {
+            FromDto(dto);
         }
         //
 
@@ -119,7 +125,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public LimbCondition Clone() => new LimbCondition
         {
-            BaseValue = new LabeledString(this.BaseValue.Name, this.BaseValue.Value, this.BaseValue.Note),
+            BaseValue = this.BaseValue.Clone(),
             Target = this.Target,
             APCost = this.APCost,
             Modifier = this.Modifier,
@@ -127,6 +133,27 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
             SelectedExternalCondition = this.SelectedExternalCondition,
         };
+
+        public LimbConditionDTO ToDto()
+        {
+            return new LimbConditionDTO
+            {
+                BaseValue = BaseValue,
+                Target = Target,
+                APCost = APCost,
+                Modifier = Modifier,
+                Effects = Effects,
+            };
+        }
+
+        public void FromDto(LimbConditionDTO dto, bool versionMismatch = false)
+        {
+            BaseValue = dto.BaseValue.Clone();
+            Target = dto.Target;
+            APCost = dto.APCost;
+            Modifier = dto.Modifier;
+            Effects = dto.Effects;
+        }
         //
     }
 }

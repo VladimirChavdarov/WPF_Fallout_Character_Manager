@@ -120,6 +120,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<SPECIALModel, SPECIALModelDTO>(SPECIALModel);
             RegisterModelForSerialization<CombatModel, CombatModelDTO>(CombatModel);
             RegisterModelForSerialization<SkillModel, SkillModelDTO>(SkillModel);
+            RegisterModelForSerialization<LimbConditionsModel, LimbConditionsModelDTO>(LimbConditionsModel);
             //
         }
         //

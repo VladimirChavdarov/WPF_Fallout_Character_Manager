@@ -8,10 +8,11 @@ using System.Xml.Linq;
 using Microsoft.VisualBasic;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
-    public class LimbConditionsModel : ModelBase
+    public class LimbConditionsModel : ModelBase, ISerializable<LimbConditionsModelDTO>
     {
         // Constructor
         public LimbConditionsModel()
@@ -72,6 +73,25 @@ namespace WPF_Fallout_Character_Manager.Models
             if (index >= 0)
             {
                 LimbConditions[index] = newCondition.Clone();
+            }
+        }
+
+        public LimbConditionsModelDTO ToDto()
+        {
+            LimbConditionsModelDTO result = new LimbConditionsModelDTO();
+            foreach(LimbCondition lc in LimbConditions)
+            {
+                result.LimbConditions.Add(lc.ToDto());
+            }
+            return result;
+        }
+
+        public void FromDto(LimbConditionsModelDTO dto, bool versionMismatch)
+        {
+            LimbConditions.Clear();
+            foreach(var lcDto in dto.LimbConditions)
+            {
+                LimbConditions.Add(new LimbCondition(lcDto));
             }
         }
 

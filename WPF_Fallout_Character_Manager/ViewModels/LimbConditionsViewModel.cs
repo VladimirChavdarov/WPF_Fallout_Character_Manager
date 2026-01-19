@@ -136,17 +136,18 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 {
                     LimbCondition oldLimbCondition = activeCondition.Clone();
 
-                    LimbCondition? selected = activeCondition.SelectedExternalCondition;
+                    LimbCondition? selectedExternal = activeCondition.SelectedExternalCondition;
 
                     // Copy all fields from the selected external template
-                    activeCondition.BaseValue = selected.BaseValue;
-                    activeCondition.Target = selected.Target;
-                    activeCondition.APCost = selected.APCost;
-                    activeCondition.Modifier = selected.Modifier;
-                    activeCondition.Effects = selected.Effects;
+                    //activeCondition = selected.Clone();
+                    activeCondition.BaseValue = selectedExternal.BaseValue.Clone();
+                    activeCondition.Target = selectedExternal.Target;
+                    activeCondition.APCost = selectedExternal.APCost;
+                    activeCondition.Modifier = selectedExternal.Modifier;
+                    activeCondition.Effects = selectedExternal.Effects;
 
                     // Clear temporary selection
-                    activeCondition.SelectedExternalCondition = selected;
+                    activeCondition.SelectedExternalCondition = selectedExternal;
 
                     LimbConditionsModel.ReplaceLimbCondition(oldLimbCondition, activeCondition);
                 }
