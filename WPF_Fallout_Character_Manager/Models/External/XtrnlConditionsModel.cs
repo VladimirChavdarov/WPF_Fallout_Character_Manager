@@ -9,6 +9,7 @@ using System.Windows;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
@@ -69,7 +70,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
     }
 
-    class Condition : ModTypeBase
+    class Condition : ModTypeBase, ISerializable<ConditionDTO>
     {
         // constructor
         public Condition(string name = "NewCondition", string description = "No Description", bool isReadOnly = true, Visibility descriptionVisibility = Visibility.Visible)
@@ -77,6 +78,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             _baseValue = new LabeledString(name, description, description);
             _isReadOnly = isReadOnly;
             _descriptionVisibility = descriptionVisibility;
+        }
+
+        public Condition(ConditionDTO dto)
+        {
+            FromDto(dto);
         }
         //
 
@@ -115,6 +121,23 @@ namespace WPF_Fallout_Character_Manager.Models.External
             IsReadOnly = this.IsReadOnly,
             DescriptionVisibility = this.DescriptionVisibility,
         };
+
+        public ConditionDTO ToDto()
+        {
+            return new ConditionDTO
+            {
+                BaseValue = this.BaseValue,
+                IsReadOnly = this.IsReadOnly,
+                DescriptionVisibility = this.DescriptionVisibility,
+            };
+        }
+
+        public void FromDto(ConditionDTO dto, bool versionMismatch = false)
+        {
+            BaseValue = dto.BaseValue.Clone();
+            IsReadOnly = dto.IsReadOnly;
+            DescriptionVisibility = dto.DescriptionVisibility;
+        }
         //
     }
 }
