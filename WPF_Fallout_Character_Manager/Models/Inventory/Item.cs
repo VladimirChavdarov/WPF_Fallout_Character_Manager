@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.Inventory
@@ -23,7 +25,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
     //    None
     //}
 
-    class Item : ModTypeBase
+    class Item : ModTypeBase, ISerializable<ItemDTO>
     {
         // constructors
         public Item(string name = "ItemName", int cost = 0, int amount = 0, float load = 0.0f, string description = "")
@@ -49,6 +51,13 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             Load = other.Load.Clone();
 
             CanBeEdited = other.CanBeEdited;
+
+            SubscribeToChildPropertyChanges();
+        }
+
+        public Item(ItemDTO dto)
+        {
+            FromDto(dto);
 
             SubscribeToChildPropertyChanges();
         }
@@ -205,6 +214,32 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
                 decayModifier.Value = newValue;
                 decayModifier.IsReadOnly = true;
             }
+        }
+
+        public virtual ItemDTO ToDto()
+        {
+            return new ItemDTO
+            {
+                Name = Name.ToDto(),
+                Cost = Cost.ToDto(),
+                Amount = Amount.ToDto(),
+                Load = Load.ToDto(),
+                CanBeEdited = CanBeEdited
+            };
+        }
+
+        public virtual void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            Name = new ModString(dto.Name);
+            Cost = new ModInt(dto.Cost);
+            Amount = new ModInt(dto.Amount);
+            Load = new ModFloat(dto.Load);
+            CanBeEdited = dto.CanBeEdited;
+
+            OnPropertyChanged(nameof(TotalCost));
+            OnPropertyChanged(nameof(TotalLoad));
+            OnPropertyChanged(nameof(NameAmount));
+            OnPropertyChanged(nameof(NameString));
         }
     }
 }

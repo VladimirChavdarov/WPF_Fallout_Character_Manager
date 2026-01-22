@@ -289,30 +289,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             _specialModel = specialModel;
 
-            foreach (Item i in XtrnlWeaponsModel.Weapons) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlArmorModel.Armors) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlArmorModel.PowerArmors) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlAmmoModel.Ammos) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlAidModel.AidItems) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlExplosivesModel.Explosives) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlNourishmentModel.Nourishments) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlGearModel.GearItems) { Catalogue.Add(i); }
-            foreach (Item i in XtrnlJunkModel.JunkItems) { Catalogue.Add(i); }
-
-            foreach (Item i in WeaponsModel.Weapons) { FullInventory.Add(i); }
-            foreach (Item i in ArmorModel.Armors) { FullInventory.Add(i); }
-            foreach (Item i in ArmorModel.PowerArmors) { FullInventory.Add(i); }
-            foreach (Item i in AmmoModel.Ammos) { FullInventory.Add(i); }
-            foreach (Item i in InventoryModel.AidItems) { FullInventory.Add(i); }
-            foreach (Item i in InventoryModel.Explosives) { FullInventory.Add(i); }
-            foreach (Item i in InventoryModel.Nourishment) { FullInventory.Add(i); }
-            foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
-            foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
-
-            foreach (Item i in FullInventory)
-            {
-                i.PropertyChanged += InventoryItem_PropertyChanged;
-            }
+            ReloadCatalogueAndInventory();
 
             _typeToInventoryCollections.Add(typeof(Weapon), WeaponsModel.Weapons);
             _typeToInventoryCollections.Add(typeof(Armor), ArmorModel.Armors);
@@ -371,6 +348,37 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // methods
+        public void ReloadCatalogueAndInventory()
+        {
+            Catalogue.Clear();
+            FullInventory.Clear();
+
+            foreach (Item i in XtrnlWeaponsModel.Weapons) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlArmorModel.Armors) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlArmorModel.PowerArmors) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlAmmoModel.Ammos) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlAidModel.AidItems) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlExplosivesModel.Explosives) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlNourishmentModel.Nourishments) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlGearModel.GearItems) { Catalogue.Add(i); }
+            foreach (Item i in XtrnlJunkModel.JunkItems) { Catalogue.Add(i); }
+
+            foreach (Item i in WeaponsModel.Weapons) { FullInventory.Add(i); }
+            foreach (Item i in ArmorModel.Armors) { FullInventory.Add(i); }
+            foreach (Item i in ArmorModel.PowerArmors) { FullInventory.Add(i); }
+            foreach (Item i in AmmoModel.Ammos) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.AidItems) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.Explosives) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.Nourishment) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
+            foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
+
+            foreach (Item i in FullInventory)
+            {
+                i.PropertyChanged += InventoryItem_PropertyChanged;
+            }
+        }
+
         private void RefreshCatalogueView()
         {
             CatalogueView.Filter = FilterCatalogue;

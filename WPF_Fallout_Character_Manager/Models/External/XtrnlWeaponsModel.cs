@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 using Accessibility;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
@@ -15,7 +17,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlWeaponsModel : ModelBase
+    class XtrnlWeaponsModel : ModelBase, ISerializable<XtrnlWeaponsModelDTO>
     {
         // constructor
         public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel)
@@ -26,6 +28,36 @@ namespace WPF_Fallout_Character_Manager.Models.External
             WeaponUpgrades = new ObservableCollection<WeaponUpgrade>();
 
             // upload melee weapon properties
+            UploadMeleeWeaponsPropertiesFromCSV();
+            //
+            // upload ranged weapon properties
+            UploadRangedWeaponsPropertiesFromCSV();
+            //
+
+            // upload melee weapon upgrades
+            UploadMeleeWeaponsUpgradesFromCSV();
+            //
+            // upload ranged weapon upgrades
+            UploadRangedWeaponsUpgradesFromCSV();
+            //
+            //
+
+            // upload melee weapons
+            UploadMeleeWeaponsFromCSV();
+            //
+            // upload ranged weapons
+            UploadRangedWeaponsFromCSV();
+            //
+
+            // add weapon types
+            DetermineWeaponTypes();
+            //
+        }
+        //
+
+        // methods
+        private void UploadMeleeWeaponsPropertiesFromCSV()
+        {
             var weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons_properties.csv");
             foreach (var line in weaponPropLines.Skip(1))
             {
@@ -38,11 +70,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     parts[0],
                     parts[1]
                     );
+                property.SetId(Guid.NewGuid());
                 WeaponProperties.Add(property);
             }
-            //
-            // upload ranged weapon properties
-            weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_properties.csv");
+        }
+
+        private void UploadRangedWeaponsPropertiesFromCSV()
+        {
+            var weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_properties.csv");
             foreach (var lines in weaponPropLines.Skip(1))
             {
                 var parts = lines.Split(";");
@@ -54,11 +89,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     name: parts[0],
                     value: parts[1]
                     );
+                property.SetId(Guid.NewGuid());
                 WeaponProperties.Add(property);
             }
-            //
+        }
 
-            // upload melee weapon upgrades
+        private void UploadMeleeWeaponsUpgradesFromCSV()
+        {
             var weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons_upgrades.csv");
             foreach (var line in weaponUpgLines.Skip(1))
             {
@@ -75,11 +112,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     value: parts[3],
                     equipRequirement: "Any melee weapon."
                     );
+                upgrade.SetId(Guid.NewGuid());
                 WeaponUpgrades.Add(upgrade);
             }
-            //
-            // upload ranged weapon upgrades
-            weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_upgrades.csv");
+        }
+
+        private void UploadRangedWeaponsUpgradesFromCSV()
+        {
+            var weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_upgrades.csv");
             foreach (var line in weaponUpgLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -95,12 +135,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     value: parts[4],
                     equipRequirement: parts[5]
                     );
+                upgrade.SetId(Guid.NewGuid());
                 WeaponUpgrades.Add(upgrade);
             }
-            //
-            //
+        }
 
-            // upload melee weapons
+        private void UploadMeleeWeaponsFromCSV()
+        {
             var weaponLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons.csv");
             foreach (var line in weaponLines.Skip(1))
             {
@@ -145,7 +186,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     if (trimmedProperty.Contains("Ammo"))
                     {
                         string ammoProperty = trimmedProperty.Replace("Ammo: ", "");
-                        ProcessAmmo(weapon, ammoProperty, xtrnlAmmoModel);
+                        ProcessAmmo(weapon, ammoProperty);
                     }
 
                     if (trimmedProperty.Contains("Depleted"))
@@ -170,9 +211,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Weapons.Add(weapon);
             }
-            //
-            // upload ranged weapons
-            weaponLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons.csv");
+        }
+
+        private void UploadRangedWeaponsFromCSV()
+        {
+            var weaponLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons.csv");
             foreach (var line in weaponLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -207,7 +250,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     );
 
                 // set ammo type, capacity, and ammo per attack
-                ProcessAmmo(weapon, parts[7], xtrnlAmmoModel);
+                ProcessAmmo(weapon, parts[7]);
 
                 // properties
                 string[] properties = parts[8].Split(".");
@@ -215,21 +258,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 {
                     string trimmedProperty = property.Trim();
 
-                    WeaponProperty newProperty = WeaponProperties.FirstOrDefault(x => trimmedProperty.Contains(x.Name) && x.WeaponType == WeaponType.Ranged);
-                    if (newProperty == null)
-                        throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
-                    if(newProperty.Name != trimmedProperty)
+                    WeaponProperty newProperty = WeaponProperties.FirstOrDefault(x => trimmedProperty == x.Name && x.WeaponType == WeaponType.Ranged);
+                    if(newProperty == null)
                     {
-                        // add a copy with the specific name taken from the weapons table.
-                        // NOTE: I don't know how much I like the idea of some properties being copies, and others references.
-                        // with the current setup, there will be duplicates. Take "Automatic" for example. A weapon will have a
-                        // property "Automatic" (reference) and a property "Automatic: 2" (copy)
-                        WeaponProperty propertyToAdd = newProperty.Clone;
-                        propertyToAdd.Name = trimmedProperty;
-                        weapon.Properties.Add(propertyToAdd);
+                        newProperty = new WeaponProperty(WeaponType.Ranged, trimmedProperty, "This specifies another property the weapon has.");
+                        newProperty.SetId(Guid.NewGuid());
+                        WeaponProperties.Add(newProperty);
                     }
-                    // add a direct reference to the master list.
-                    // NOTE: maybe put in an else.
                     weapon.Properties.Add(newProperty);
                 }
                 //
@@ -240,22 +275,21 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Weapons.Add(weapon);
             }
-            //
+        }
 
-            // add weapon types
-            foreach(Weapon w in Weapons)
+        private void DetermineWeaponTypes()
+        {
+            WeaponTypes.Clear();
+            foreach (Weapon w in Weapons)
             {
-                if(!WeaponTypes.Contains(w.Type))
+                if (!WeaponTypes.Contains(w.Type))
                 {
                     WeaponTypes.Add(w.Type);
                 }
             }
-            //
         }
-        //
 
-        // methods
-        private void ProcessAmmo(Weapon weapon, string ammoStringUnprocessed, XtrnlAmmoModel xtrnlAmmoModel)
+        private void ProcessAmmo(Weapon weapon, string ammoStringUnprocessed)
         {
             // process string
             string[] ammoField = ammoStringUnprocessed.Split(",");
@@ -263,13 +297,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 ammoField[i] = ammoField[i].Trim();
 
             // ammo type
-            Ammo ammoToAdd = xtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Type.Contains(ammoField[0], StringComparison.InvariantCultureIgnoreCase));
+            Ammo ammoToAdd = XtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Type.Contains(ammoField[0], StringComparison.InvariantCultureIgnoreCase));
             if (ammoToAdd == null)
             {
                 // add the unusual ammo types to the master list. We do this because of the junk jet and solar scorcher.
                 ammoToAdd = new Ammo(ammoField[0], ammoField[0], 0, 0, 0.0f);
-                xtrnlAmmoModel.Ammos.Add(ammoToAdd);
-                xtrnlAmmoModel.AmmoTypes.Add(ammoField[0]);
+                XtrnlAmmoModel.Ammos.Add(ammoToAdd);
+                XtrnlAmmoModel.AmmoTypes.Add(ammoField[0]);
             }
             weapon.CompatibleAmmos.Add(ammoToAdd);
             weapon.AmmoType = ammoToAdd.Type;
@@ -287,13 +321,57 @@ namespace WPF_Fallout_Character_Manager.Models.External
             weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
             weapon.InitializeBulletSlots();
         }
+
+        public XtrnlWeaponsModelDTO ToDto()
+        {
+            XtrnlWeaponsModelDTO result = new XtrnlWeaponsModelDTO();
+            foreach(WeaponProperty property in WeaponProperties)
+            {
+                result.Properties.Add(property);
+            }
+            foreach(WeaponUpgrade upgrade in WeaponUpgrades)
+            {
+                result.Upgrades.Add(upgrade);
+            }
+            foreach(Weapon weapon in Weapons)
+            {
+                if(weapon.ToDto() is not WeaponDTO wDto)
+                    throw new InvalidOperationException("Expected WeaponDTO");
+
+                result.Weapons.Add(wDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(XtrnlWeaponsModelDTO dto, bool versionMismatch = false)
+        {
+            Weapons.Clear();
+            WeaponProperties.Clear();
+            WeaponUpgrades.Clear();
+
+            foreach (WeaponProperty property in dto.Properties)
+            {
+                WeaponProperties.Add(property);
+            }
+            foreach (WeaponUpgrade upgrade in dto.Upgrades)
+            {
+                WeaponUpgrades.Add(upgrade);
+            }
+            foreach(WeaponDTO weaponDto in dto.Weapons)
+            {
+                Weapons.Add(new Weapon(weaponDto));
+            }
+
+            DetermineWeaponTypes();
+        }
         //
 
         // data
-        public ObservableCollection<string> WeaponTypes { get; set; }
-        public ObservableCollection<Weapon> Weapons { get; set; }
-        public ObservableCollection<WeaponProperty> WeaponProperties { get; set; }
-        public ObservableCollection<WeaponUpgrade> WeaponUpgrades { get; set; }
+        public static ObservableCollection<string> WeaponTypes { get; set; }
+        public static ObservableCollection<Weapon> Weapons { get; set; }
+        public static ObservableCollection<WeaponProperty> WeaponProperties { get; set; }
+        public static ObservableCollection<WeaponUpgrade> WeaponUpgrades { get; set; }
         //
     }
     enum WeaponType
@@ -358,11 +436,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots = new ModInt("Taken Upgrade Slots", 0);
             Equipped = false;
 
-            Name.PropertyChanged += NoteComponents_PropertyChanged;
-            Properties.CollectionChanged += Properties_CollectionChanged;
-            _decay.PropertyChanged += Decay_PropertyChanged;
-            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
-            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+            SubscribeToPropertyChanged();
         }
 
         protected Weapon(Weapon other) : base(other)
@@ -394,14 +468,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots = other.TakenUpgradeSlots.Clone();
             Equipped = other.Equipped;
 
-            Name.PropertyChanged += NoteComponents_PropertyChanged;
-            Properties.CollectionChanged += Properties_CollectionChanged;
-            _decay.PropertyChanged += Decay_PropertyChanged;
-            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
-            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+            SubscribeToPropertyChanged();
 
             InitializeBulletSlots();
             ScaleWeaponWithDecay();
+        }
+
+        public Weapon(WeaponDTO dto)
+        {
+            Properties = new ObservableCollection<WeaponProperty>();
+            Upgrades = new ObservableCollection<WeaponUpgrade>();
+            BulletSlots = new ObservableCollection<TypeWrap<bool>>(); // we assume a new weapon always comes with an empty magazine
+            CompatibleAmmos = new ObservableCollection<Ammo>();
+
+            FromDto(dto);
         }
         //
 
@@ -577,6 +657,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public Weapon Clone() => new Weapon(this);
 
+        public void SubscribeToPropertyChanged()
+        {
+            Name.PropertyChanged -= NoteComponents_PropertyChanged;
+            Name.PropertyChanged += NoteComponents_PropertyChanged;
+            Properties.CollectionChanged -= Properties_CollectionChanged;
+            Properties.CollectionChanged += Properties_CollectionChanged;
+            _decay.PropertyChanged -= Decay_PropertyChanged;
+            _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged -= Upgrades_CollectionChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged -= TakenUpgradeSlots_PropertyChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+        }
+
         public override void ConstructNote()
         {
             string note = "Type: " + Type;
@@ -692,6 +786,98 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }
+
+        public override ItemDTO ToDto()
+        {
+            WeaponDTO result = new WeaponDTO();
+
+            result.Name = Name.ToDto();
+            result.Cost = Cost.ToDto();
+            result.Amount = Amount.ToDto();
+            result.Load = Load.ToDto();
+
+            result.Type = Type;
+            result.AP = AP.ToDto();
+            result.ToHit = ToHit.ToDto();
+            result.Damage = Damage.ToDto();
+            result.RangeMultiplier = RangeMultiplier.ToDto();
+            result.CritChance = CritChance.ToDto();
+            result.CritDamage = CritDamage.ToDto();
+            result.AmmoType = AmmoType;
+            result.AmmoCapacity = AmmoCapacity.ToDto();
+            result.AmmoPerAttack = AmmoPerAttack.ToDto();
+            result.NumberOfAttacks = NumberOfAttacks.ToDto();
+            result.UsedAmmoFirepower = UsedAmmoFirepower;
+            result.StrRequirement = StrRequirement.ToDto();
+            result.Decay = Decay.ToDto();
+            result.WeaponType = WeaponType;
+            result.AvailableUpgradeSlots = AvailableUpgradeSlots.ToDto();
+            result.TakenUpgradeSlots = TakenUpgradeSlots.ToDto();
+            result.Equipped = Equipped;
+            
+            foreach(var property in Properties)
+            {
+                result.PropertyIds.Add(property.Id);
+            }
+            foreach(var upgrade in Upgrades)
+            {
+                result.UpgradeIds.Add(upgrade.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            if (dto is not WeaponDTO wDto)
+                throw new InvalidOperationException("Expected WeaponDTO");
+
+            base.FromDto(dto);
+
+            Type = wDto.Type;
+            AP = new ModInt(wDto.AP);
+            ToHit = new ModInt(wDto.ToHit);
+            Damage = new ModString(wDto.Damage);
+            RangeMultiplier = new ModString(wDto.RangeMultiplier);
+            CritChance = new ModInt(wDto.CritChance);
+            CritDamage = new ModString(wDto.CritDamage);
+            AmmoType = wDto.AmmoType;
+            AmmoCapacity = new ModInt(wDto.AmmoCapacity);
+            AmmoPerAttack = new ModFloat(wDto.AmmoPerAttack);
+            NumberOfAttacks = new ModInt(wDto.NumberOfAttacks);
+            UsedAmmoFirepower = wDto.UsedAmmoFirepower;
+            StrRequirement = new ModInt(wDto.StrRequirement);
+            Decay = new ModInt(wDto.Decay);
+            WeaponType = wDto.WeaponType;
+            AvailableUpgradeSlots = new ModInt(wDto.AvailableUpgradeSlots);
+            TakenUpgradeSlots = new ModInt(wDto.TakenUpgradeSlots);
+            Equipped = wDto.Equipped;
+
+            Properties.Clear();
+            foreach(Guid id in wDto.PropertyIds)
+            {
+                WeaponProperty property = XtrnlWeaponsModel.WeaponProperties.FirstOrDefault(x => x.Id == id);
+                if(property != null)
+                {
+                    Properties.Add(property);
+                }
+            }
+
+            Upgrades.Clear();
+            foreach (Guid id in wDto.UpgradeIds)
+            {
+                WeaponUpgrade upgrade = XtrnlWeaponsModel.WeaponUpgrades.FirstOrDefault(x => x.Id == id);
+                if (upgrade != null)
+                {
+                    Upgrades.Add(upgrade);
+                }
+            }
+
+            SubscribeToPropertyChanged();
+
+            InitializeBulletSlots();
+            ScaleWeaponWithDecay();
+        }
         //
     }
 
@@ -701,11 +887,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // constructor
         public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "") : base(name, value, value)
         {
+            //Id = Guid.NewGuid();
             _weaponType = weaponType;
         }
         //
 
         // members
+        public Guid Id { get; set; } // NOTE: This has a public setter only because of serialization. DON'T SET MANUALLY!
+
         private WeaponType _weaponType;
         public WeaponType WeaponType
         {
@@ -714,7 +903,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
         }
         //
 
-        public WeaponProperty Clone => new WeaponProperty(this.WeaponType, this.Name, this.Value);
+        // methods
+        public void SetId(Guid id)
+        {
+            Id = id;
+        }
+        //
     }
 
     class WeaponUpgrade : LabeledString
@@ -722,6 +916,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // constructor
         public WeaponUpgrade(WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
         {
+            //Id = Guid.NewGuid();
             WeaponType= weaponType;
             Name = name;
             CostMultiplier = costMultiplier;
@@ -736,6 +931,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // members
+        public Guid Id { get; set; } // NOTE: This has a public setter only because of serialization. DON'T SET MANUALLY!
+
         private WeaponType _weaponType;
         public WeaponType WeaponType
         {
@@ -786,6 +983,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     throw new InvalidOperationException("Cannot edit WeaponUpgrade.EquipRequirement when in read-only mode");
                 Update(ref _equipRequirement, value);
             }
+        }
+        //
+
+        // methods
+        public void SetId(Guid id)
+        {
+            Id = id;
         }
         //
     }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Models.Serialization;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
@@ -15,6 +16,12 @@ using WPF_Fallout_Character_Manager.ViewModels.Serialization;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
+    public enum DtoType
+    {
+        Character,
+        Catalogue,
+    }
+
     /// <summary>
     /// This is the entry-point of the program. The main ViewModel contains the initial instances of all other Models and ViewModels.
     /// I also use this ViewModel to handle the serialization of the character and all catalogues.
@@ -70,6 +77,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         // serialization
         private readonly Dictionary<Type, object> _serializableModels = new();
+        private readonly Dictionary<Type, object> _serializableXtrnlModels = new();
+        private readonly Dictionary<DtoType, string> _serializationFilePaths = new Dictionary<DtoType, string>
+        {
+            { DtoType.Character, "test_character.json" },
+            { DtoType.Catalogue, "test_catalogue.json" }
+        };
         //
 
         // Constructor
@@ -115,21 +128,28 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             PerksViewModel = new PerksViewModel(XtrnlPerksModel, PerksModel);
 
             // serialization
-            RegisterModelForSerialization<BioModel, BioModelDTO>(BioModel);
-            RegisterModelForSerialization<SurvivalModel, SurvivalModelDTO>(SurvivalModel);
-            RegisterModelForSerialization<SPECIALModel, SPECIALModelDTO>(SPECIALModel);
-            RegisterModelForSerialization<CombatModel, CombatModelDTO>(CombatModel);
-            RegisterModelForSerialization<SkillModel, SkillModelDTO>(SkillModel);
-            RegisterModelForSerialization<LimbConditionsModel, LimbConditionsModelDTO>(LimbConditionsModel);
-            RegisterModelForSerialization<ConditionsModel, ConditionsModelDTO>(ConditionsModel);
+            RegisterModelForSerialization<BioModel, BioModelDTO>(BioModel, DtoType.Character);
+            RegisterModelForSerialization<SurvivalModel, SurvivalModelDTO>(SurvivalModel, DtoType.Character);
+            RegisterModelForSerialization<SPECIALModel, SPECIALModelDTO>(SPECIALModel, DtoType.Character);
+            RegisterModelForSerialization<CombatModel, CombatModelDTO>(CombatModel, DtoType.Character);
+            RegisterModelForSerialization<SkillModel, SkillModelDTO>(SkillModel, DtoType.Character);
+            RegisterModelForSerialization<LimbConditionsModel, LimbConditionsModelDTO>(LimbConditionsModel, DtoType.Character);
+            RegisterModelForSerialization<ConditionsModel, ConditionsModelDTO>(ConditionsModel, DtoType.Character);
+
+            RegisterModelForSerialization<XtrnlWeaponsModel, XtrnlWeaponsModelDTO>(XtrnlWeaponsModel, DtoType.Catalogue);
             //
         }
         //
 
         // serialization
-        private void RegisterModelForSerialization<TModel, TDto>(TModel model) where TModel : ISerializable<TDto>
+        private void RegisterModelForSerialization<TModel, TDto>(TModel model, DtoType type) where TModel : ISerializable<TDto>
         {
-            _serializableModels[typeof(TModel)] = model;
+            if(type == DtoType.Character)
+                _serializableModels[typeof(TModel)] = model;
+            else if(type == DtoType.Catalogue)
+            {
+                _serializableXtrnlModels[typeof(TModel)] = model;
+            }
         }
 
         CharacterDTO CreateCharacterDto()
@@ -146,18 +166,41 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             return characterDto;
         }
 
+        CatalogueDTO CreateCatalogueDTO()
+        {
+            var catalogueDto = new CatalogueDTO();
+            foreach (var (modelKey, modelVal) in _serializableXtrnlModels)
+            {
+                var method = modelVal.GetType().GetMethod("ToDto");
+                var dtoValue = method.Invoke(modelVal, null);
+
+                catalogueDto.XtrnlModelDtos[modelKey.Name] = JsonSerializer.SerializeToElement(dtoValue);
+            }
+
+            return catalogueDto;
+        }
+
         bool SerializeCharacterJson()
         {
-            CharacterDTO dto = CreateCharacterDto();
+            CharacterDTO characterDto = CreateCharacterDto();
+            string characterJson = JsonSerializer.Serialize(characterDto, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(_serializationFilePaths[DtoType.Character], characterJson);
 
-            string json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText("test_character.json", json);
+            return true;
+        }
+
+        bool SerializeCatalogueJson()
+        {
+            CatalogueDTO catalogueDto = CreateCatalogueDTO();
+            string catalogueJson = JsonSerializer.Serialize(catalogueDto, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(_serializationFilePaths[DtoType.Catalogue], catalogueJson);
+
             return true;
         }
 
         bool DeserializeCharacterJson()
         {
-            string json = File.ReadAllText("test_character.json");
+            string json = File.ReadAllText(_serializationFilePaths[DtoType.Character]);
             CharacterDTO dto = new CharacterDTO();
             float appVersion = dto.Version;
             dto = JsonSerializer.Deserialize<CharacterDTO>(json);
@@ -176,7 +219,32 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 var typedDto = jsonElement.Deserialize(dtoType);
                 fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
             }
-            
+
+            return true;
+        }
+
+        bool DeserializeCatalogueJson()
+        {
+            string json = File.ReadAllText(_serializationFilePaths[DtoType.Catalogue]);
+            CatalogueDTO dto = new CatalogueDTO();
+            float appVersion = dto.Version;
+            dto = JsonSerializer.Deserialize<CatalogueDTO>(json);
+            bool versionMisMatch = appVersion != dto.Version;
+
+            foreach (var (modelName, jsonElement) in dto.XtrnlModelDtos)
+            {
+                if (!_serializableXtrnlModels.TryGetValue(_serializableXtrnlModels.Keys.First(t => t.Name == modelName), out var model))
+                {
+                    return false;
+                }
+
+                var fromDtoMethod = model.GetType().GetMethod("FromDto");
+                var dtoType = fromDtoMethod.GetParameters()[0].ParameterType;
+
+                var typedDto = jsonElement.Deserialize(dtoType);
+                fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
+            }
+
             return true;
         }
 
@@ -185,16 +253,32 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SurvivalModel.UpdateModel(SPECIALModel);
             CombatModel.UpdateModel(SPECIALModel, BioModel.Level);
             SkillModel.UpdateModel(SPECIALModel);
+
+            InventoryViewModel.ReloadCatalogueAndInventory();
         }
 
         public bool SaveCharacter(object _ = null)
         {
-            return SerializeCharacterJson();
+            if (!SerializeCatalogueJson())
+            {
+                return false;
+            }
+
+            if(!SerializeCharacterJson())
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        //public RelayCommand LoadCharacterCommand { get; private set; }
         public bool LoadCharacter(object _ = null)
         {
+            if (!DeserializeCatalogueJson())
+            {
+                return false;
+            }
+
             if (!DeserializeCharacterJson())
             {
                 return false;

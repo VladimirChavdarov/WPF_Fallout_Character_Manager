@@ -26,7 +26,7 @@ Trail Carbine;Rifle;310;6;2d8 ballistic;x8/x18;20, x2;.44, 8 rounds, 1 attacks p
 Railway Rifle;Rifle;730;6;2d10 piercing;x4/x8;19, x4;Railway Spike, 10 rounds, 1 attacks per ammo;Debilitating. Destructive. Two Handed. Defensive.;21;6
 Junk Jet;Rifle;300;6;3d6 bludgeoning/piercing;x4/x10;19, 3d6;Any item < 1 cu ft, 5 rounds, 1 attacks per ammo;Breakable. Powerful. Unstable. Two Handed.;18;6
 Sniper Rifle;Rifle;710;6;2d12 ballistic;x10/x30;20, x5;.308, 6 rounds, 1 attacks per ammo;Accurate. Two Handed.;16;5
-Assault Rifle;Rifle;375;6;1d10 ballistic;x8/x18;20, 1d10;5mm, 24 rounds, 1 attacks per ammo;Two Handed. Switch. (Single Shot) Accurate. (Single Shot) Semi-Automatic. (Fully Automatic) Unstable. Quick Reload.;14;5
+Assault Rifle;Rifle;375;6;1d10 ballistic;x8/x18;20, 1d10;5mm, 24 rounds, 1 attacks per ammo;Two Handed. Switch. Accurate. Semi-Automatic. Unstable. (Single Shot) Accurate. (Single Shot) Semi-Automatic. (Fully Automatic) Unstable. Quick Reload.;14;5
 Anti-Material Rifle;Rifle;1200;6;5d8 ballistic;x16/x40;20, x5;.50, 6 rounds, 1 attacks per ammo;Accurate. Destructive. Two Handed.;20;7
 Lever-Action Shotgun;Shotgun;600;4;3d4 ballistic;x3/x6;20, 5d4;20 gauge, 5 rounds, 1 attacks per ammo;Powerful. Manual Reload. Spread. Two Handed.;12;5
 Single Shotgun;Shotgun;500;4;3d6 ballistic;x3/x6;20, 3d6;20 gauge, 1 round, 1 attacks per ammo;Powerful. Manual Reload.;11;4
