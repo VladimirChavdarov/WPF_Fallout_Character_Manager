@@ -225,6 +225,15 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             }
         }
 
+        // This will update the Name, Cost, Amount and Load properties of an ItemDTO. Saves a bit of repetitiveness in the code.
+        protected void UpdateItemDTO(ItemDTO dto)
+        {
+            dto.Name = Name.ToDto();
+            dto.Cost = Cost.ToDto();
+            dto.Amount = Amount.ToDto();
+            dto.Load = Load.ToDto();
+        }
+
         public virtual ItemDTO ToDto()
         {
             return new ItemDTO

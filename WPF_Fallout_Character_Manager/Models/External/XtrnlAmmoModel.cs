@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls.Ribbon.Primitives;
 using System.Windows.Media.Effects;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
 using WPF_Fallout_Character_Manager.Models.MVVM;
@@ -18,6 +19,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlAmmoModel : ModelBase
     {
+        private static string ammoEffectsPath = "Resources/Spreadsheets/ammo_special.csv";
+        private static string ammoPath = "Resources/Spreadsheets/ammo.csv";
+
         // constructor
         public XtrnlAmmoModel()
         {
@@ -25,8 +29,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Ammos = new ObservableCollection<Ammo>();
             AmmoEffects = new ObservableCollection<AmmoEffect>();
 
+            Utils.UpdateCSVFilesIdFields(ammoEffectsPath);
+
             // upload standard ammo
-            var ammoLines = File.ReadAllLines("Resources/Spreadsheets/ammo.csv");
+            var ammoLines = File.ReadAllLines(ammoPath);
             foreach(var line in ammoLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -47,14 +53,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
             //
 
             // upload ammo effects (special ammo)
-            var ammoEffectLines = File.ReadLines("Resources/Spreadsheets/ammo_special.csv");
+            var ammoEffectLines = File.ReadLines(ammoEffectsPath);
             foreach (var line in ammoEffectLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 4)
+                if (parts.Length < 5)
                     continue;
 
+                Utils.IdFromString(parts[4], out Guid id);
+
                 AmmoEffect effect = new AmmoEffect(
+                    id,
                     name: parts[0],
                     costMultiplier: parts[1],
                     value: parts[2]);
@@ -68,14 +77,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 //
 
-                // note
-                effect.Note += "\nCompatibility: ";
-                foreach (string compatibleAmmo in effect.CompatibleAmmo)
-                {
-                    effect.Note += compatibleAmmo + ". ";
-                }
-                //
-
+                effect.ConstructNote();
                 effect.IsReadOnly = true;
 
                 AmmoEffects.Add(effect);
@@ -97,9 +99,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
             }
 
-            foreach(Ammo a  in Ammos)
+            DetermineAmmoTypes();
+        }
+
+        private void DetermineAmmoTypes()
+        {
+            AmmoTypes.Clear();
+            foreach (Ammo a in Ammos)
             {
-                if(!AmmoTypes.Contains(a.Type))
+                if (!AmmoTypes.Contains(a.Type))
                 {
                     AmmoTypes.Add(a.Type);
                 }
@@ -123,7 +131,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Type = type;
 
             Effects = new ObservableCollection<AmmoEffect>();
-            Effects.CollectionChanged += Effects_CollectionChanged;
+            SubscribeToPropertyChanged();
             if (effect != null)
                 Effects.Add(effect);
         }
@@ -132,9 +140,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Type = other.Type;
             Effects = new ObservableCollection<AmmoEffect>(other.Effects);
-            CustomName = other.CustomName;
 
-            Effects.CollectionChanged += Effects_CollectionChanged;
+            SubscribeToPropertyChanged();
+        }
+
+        public Ammo(AmmoDTO dto)
+        {
+            Effects = new ObservableCollection<AmmoEffect>();
+            FromDto(dto);
         }
         //
 
@@ -148,25 +161,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _type, value);
         }
 
-        private bool _customName = false;
-        public bool CustomName
-        {
-            get => _customName;
-            set => Update(ref  _customName, value);
-        }
-
         public string NameAmountEffects
         {
             get
             {
                 string result = NameAmount;
-                if(!CustomName)
+                foreach(AmmoEffect effect in Effects)
                 {
-                    foreach(AmmoEffect effect in Effects)
-                    {
-                        if(effect.Name != "")
-                            result += " (" + effect.Name + ")";
-                    }
+                    if(effect.Name != "")
+                        result += " (" + effect.Name + ")";
                 }
                 return result;
             }
@@ -177,13 +180,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             get
             {
                 string result = base.NameAmount;
-                if (!CustomName)
+                foreach (AmmoEffect effect in Effects)
                 {
-                    foreach (AmmoEffect effect in Effects)
-                    {
-                        if (effect.Name != "")
-                            result += " (" + effect.Name + ")";
-                    }
+                    if (effect.Name != "")
+                        result += " (" + effect.Name + ")";
                 }
                 return result;
             }
@@ -192,6 +192,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // methods
         public Ammo Clone() => new Ammo(this);
+
+        public void SubscribeToPropertyChanged()
+        {
+            Effects.CollectionChanged -= Effects_CollectionChanged;
+            Effects.CollectionChanged += Effects_CollectionChanged;
+        }
 
         public void AddProperty(object obj)
         {
@@ -224,17 +230,55 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             OnPropertyChanged(nameof(NameAmount));
         }
+
+        public override ItemDTO ToDto()
+        {
+            AmmoDTO result = new AmmoDTO();
+
+            UpdateItemDTO(result);
+            
+            result.Type = Type;
+            
+            foreach(var effect in Effects)
+            {
+                result.EffectIds.Add(effect.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<AmmoDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            Type = typedDto.Type;
+
+            foreach(Guid id in typedDto.EffectIds)
+            {
+                AmmoEffect effect = XtrnlAmmoModel.AmmoEffects.FirstOrDefault(x => x.Id == id);
+                if (effect != null)
+                {
+                    Effects.Add(effect);
+                }
+                else
+                {
+                    throw new ArgumentException("Couldn't find this ammo effect in the master list");
+                }
+            }
+
+            SubscribeToPropertyChanged();
+        }
         //
     }
 
-    class AmmoEffect : LabeledString
+    class AmmoEffect : ItemAttribute
     {
         // constructor
-        public AmmoEffect(string name = "NewAmmoEffect", string value = "", string costMultiplier = "x1.0")
+        public AmmoEffect(Guid id, string name = "NewAmmoEffect", string value = "", string costMultiplier = "x1.0")
+            : base(id, name, value)
         {
-            Name = name;
-            Value = value;
-            Note = value;
             CostMultiplier = costMultiplier;
             IsReadOnly = true;
             CompatibleAmmo = new ObservableCollection<string>();
@@ -255,6 +299,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
         }
 
         public ObservableCollection<string> CompatibleAmmo { get; set; }
+        //
+
+        // methods
+        public void ConstructNote()
+        {
+            Note += "\nCompatibility: ";
+            foreach (string compatibleAmmo in CompatibleAmmo)
+            {
+                Note += compatibleAmmo + ". ";
+            }
+        }
         //
     }
 }

@@ -129,12 +129,17 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void AmmoModel_Ammos_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            foreach(Weapon weapon in WeaponsModel.Weapons)
+            UpdateCompatibleAmmos();
+        }
+
+        public void UpdateCompatibleAmmos()
+        {
+            foreach (Weapon weapon in WeaponsModel.Weapons)
             {
                 weapon.CompatibleAmmos.Clear();
-                foreach(Ammo ammo in AmmoModel.Ammos)
+                foreach (Ammo ammo in AmmoModel.Ammos)
                 {
-                    if(ammo.Type == weapon.AmmoType)
+                    if (ammo.Type == weapon.AmmoType)
                     {
                         weapon.CompatibleAmmos.Add(ammo);
                     }

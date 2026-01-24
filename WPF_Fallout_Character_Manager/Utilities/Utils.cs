@@ -163,5 +163,13 @@ namespace WPF_Fallout_Character_Manager.Utilities
             string[] addition = { csvLine };
             File.AppendAllLines(csvPath, addition);
         }
+
+        public static TExpected EnsureDtoType<TExpected>(object dto)
+        {
+            if (dto is not TExpected typedDto)
+                throw new InvalidOperationException($"Expected {typeof(TExpected).Name}");
+
+            return typedDto;
+        }
     }
 }
