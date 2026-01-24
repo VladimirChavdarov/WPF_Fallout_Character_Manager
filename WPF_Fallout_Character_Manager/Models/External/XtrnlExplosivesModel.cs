@@ -6,13 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlExplosivesModel : ModelBase
     {
+        private static readonly string explosivePropertiesPath = "Resources/Spreadsheets/explosives_properties.csv";
+        private static readonly string explosivesThrownPath = "Resources/Spreadsheets/explosives_thrown.csv";
+        private static readonly string explosivesPlacedPath = "Resources/Spreadsheets/explosives_placed.csv";
+
         // constructor
         public XtrnlExplosivesModel()
         {
@@ -20,21 +26,26 @@ namespace WPF_Fallout_Character_Manager.Models.External
             ExplosiveProperties = new ObservableCollection<ExplosiveProperty>();
             ExplosiveTypes = new ObservableCollection<string>() { "Thrown Explosive", "Placed Explosive" };
 
-            var explosivePropertiesLines = File.ReadAllLines("Resources/Spreadsheets/explosives_properties.csv");
+            Utils.UpdateCSVFilesIdFields(explosivePropertiesPath);
+
+            var explosivePropertiesLines = File.ReadAllLines(explosivePropertiesPath);
             foreach (var line in explosivePropertiesLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 2)
+                if (parts.Length < 3)
                     continue;
 
+                Utils.IdFromString(parts[2], out Guid id);
+
                 ExplosiveProperty explosiveProperty = new ExplosiveProperty(
+                    id,
                     name: parts[0],
                     value: parts[1]
                     );
                 ExplosiveProperties.Add(explosiveProperty);
             }
 
-            var explosivesPlacedLines = File.ReadAllLines("Resources/Spreadsheets/explosives_placed.csv");
+            var explosivesPlacedLines = File.ReadAllLines(explosivesPlacedPath);
             foreach (var line in explosivesPlacedLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -43,7 +54,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Explosive explosive = new Explosive(
                     name: parts[0],
-                    type: "Placed Explosive",
+                    type: ExplosiveTypes[1],
                     cost: Int32.Parse(parts[1]),
                     ap: Int32.Parse(parts[2]),
                     damage: parts[3],
@@ -59,7 +70,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 Explosives.Add(explosive);
             }
 
-            var explosivesThrownLines = File.ReadAllLines("Resources/Spreadsheets/explosives_thrown.csv");
+            var explosivesThrownLines = File.ReadAllLines(explosivesThrownPath);
             foreach (var line in explosivesThrownLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -68,7 +79,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 Explosive explosive = new Explosive(
                     name: parts[0],
-                    type: "Thrown Explosive",
+                    type: ExplosiveTypes[0],
                     cost: Int32.Parse(parts[1]),
                     ap: Int32.Parse(parts[2]),
                     damage: parts[3],
@@ -95,17 +106,22 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 string trimmedProperty = property.Trim();
 
-                ExplosiveProperty newProperty = ExplosiveProperties.FirstOrDefault(x => x.Name.Contains(trimmedProperty));
+                ExplosiveProperty newProperty = ExplosiveProperties.FirstOrDefault(x => x.Name == trimmedProperty);
                 if(newProperty == null)
                 {
-                    newProperty = ExplosiveProperties.FirstOrDefault(x => trimmedProperty.Contains(x.Name));
-                }
-
-                if(newProperty.Name != trimmedProperty)
-                {
-                    ExplosiveProperty propertyToAddToMasterList = new ExplosiveProperty(trimmedProperty, newProperty.Value);
-                    newProperty = propertyToAddToMasterList;
-                    ExplosiveProperties.Add(propertyToAddToMasterList);
+                    Utils.IdFromString("", out Guid id);
+                    newProperty = new ExplosiveProperty(id, trimmedProperty, "This specifies another property the weapon has.");
+                    string csvPath = "";
+                    if(explosive.Type == ExplosiveTypes[0])
+                    {
+                        csvPath = explosivesThrownPath;
+                    }
+                    else if(explosive.Type == ExplosiveTypes[1])
+                    {
+                        csvPath = explosivesPlacedPath;
+                    }
+                    Utils.AddCSVLine(csvPath, newProperty.Name + ";" + newProperty.Value + ";" + id.ToString());
+                    ExplosiveProperties.Add(newProperty);
                 }
 
                 if (newProperty == null)
@@ -116,9 +132,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        public ObservableCollection<Explosive> Explosives { get; set; }
-        public ObservableCollection<ExplosiveProperty> ExplosiveProperties { get; set; }
-        public ObservableCollection<string> ExplosiveTypes { get; set; }
+        public static ObservableCollection<Explosive> Explosives { get; set; }
+        public static ObservableCollection<ExplosiveProperty> ExplosiveProperties { get; set; }
+        public static ObservableCollection<string> ExplosiveTypes { get; set; }
         //
     }
 
@@ -139,7 +155,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             AreaOfEffect = new ModString("Area of Effect", areaOfEffect, true);
             Load = new ModFloat("Load", load, true);
 
-            Properties.CollectionChanged += Properties_CollectionChanged;
+            SubscribeToCollectionChanged();
         }
 
         protected Explosive(Explosive other) : base(other)
@@ -153,7 +169,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Range = other.Range.Clone();
             AreaOfEffect = other.AreaOfEffect.Clone();
 
-            Properties.CollectionChanged += Properties_CollectionChanged;
+            SubscribeToCollectionChanged();
+        }
+
+        public Explosive(ExplosiveDTO dto)
+        {
+            Properties = new ObservableCollection<ExplosiveProperty>();
+
+            FromDto(dto);
         }
         //
 
@@ -210,6 +233,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public Explosive Clone() => new Explosive(this);
 
+        public void SubscribeToCollectionChanged()
+        {
+            Properties.CollectionChanged -= Properties_CollectionChanged;
+            Properties.CollectionChanged += Properties_CollectionChanged;
+        }
+
         public override void ConstructNote()
         {
             string note = Type + "\n";
@@ -248,13 +277,63 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ConstructNote();
         }
+
+        public override ItemDTO ToDto()
+        {
+            ExplosiveDTO result = new ExplosiveDTO();
+
+            UpdateItemDTO(result);
+
+            result.Type = Type;
+            result.AP = AP.ToDto();
+            result.Damage = Damage.ToDto();
+            result.ArmDC = ArmDC.ToDto();
+            result.Range = Range.ToDto();
+            result.AreaOfEffect = AreaOfEffect.ToDto();
+
+            foreach(var property in Properties)
+            {
+                result.PropertyIds.Add(property.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<ExplosiveDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            Type = typedDto.Type;
+            AP = new ModInt(typedDto.AP);
+            Damage = new ModString(typedDto.Damage);
+            ArmDC = new ModInt(typedDto.ArmDC);
+            Range = new ModString(typedDto.Range);
+            AreaOfEffect = new ModString(typedDto.AreaOfEffect);
+
+            foreach (Guid id in typedDto.PropertyIds)
+            {
+                ExplosiveProperty property = XtrnlExplosivesModel.ExplosiveProperties.FirstOrDefault(x => x.Id == id);
+                if (property != null)
+                {
+                    Properties.Add(property);
+                }
+                else
+                {
+                    throw new ArgumentException("Couldn't find this explosive property in the master list");
+                }
+            }
+
+            SubscribeToCollectionChanged();
+        }
         //
     }
 
-    class ExplosiveProperty : LabeledString
+    class ExplosiveProperty : ItemAttribute
     {
         // constructor
-        public ExplosiveProperty(string name = "NewExplosiveProperty", string value = "") : base(name, value, value) { }
+        public ExplosiveProperty(Guid id, string name = "NewExplosiveProperty", string value = "") : base(id, name, value) { }
         //
     }
 }

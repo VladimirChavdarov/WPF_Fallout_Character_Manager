@@ -49,6 +49,11 @@ namespace WPF_Fallout_Character_Manager.Models
                 var typedDto = Utils.EnsureDtoType<AidDTO>(aid.ToDto());
                 result.AidItems.Add(typedDto);
             }
+            foreach (Explosive explosive in Explosives)
+            {
+                var typedDto = Utils.EnsureDtoType<ExplosiveDTO>(explosive.ToDto());
+                result.Explosives.Add(typedDto);
+            }
 
             return result;
         }
@@ -60,9 +65,13 @@ namespace WPF_Fallout_Character_Manager.Models
             CurrentLoad = new ModFloat(dto.CurrentLoad);
 
             AidItems.Clear();
-            foreach(AidDTO aidDTO in dto.AidItems)
+            foreach(AidDTO aidDto in dto.AidItems)
             {
-                AidItems.Add(new Aid(aidDTO));
+                AidItems.Add(new Aid(aidDto));
+            }
+            foreach (ExplosiveDTO explosiveDto in dto.Explosives)
+            {
+                Explosives.Add(new Explosive(explosiveDto));
             }
         }
         //
