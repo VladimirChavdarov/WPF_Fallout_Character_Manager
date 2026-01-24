@@ -67,13 +67,13 @@ namespace WPF_Fallout_Character_Manager
         {
             if(DataContext is  MainWindowViewModel mainVM)
             {
-                if(mainVM.LoadCharacter())
+                if(mainVM.LoadCharacter(out string error))
                 {
                     MessageBox.Show("Characted Loaded!");
                 }
                 else
                 {
-                    MessageBox.Show("Unable to Load Character.", "Load error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Unable to Load Character. " + error, "Load error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             e.Handled = true;

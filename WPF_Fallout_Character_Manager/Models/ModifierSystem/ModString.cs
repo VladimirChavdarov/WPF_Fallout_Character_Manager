@@ -17,6 +17,8 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
     public class ModString : ModValue<string>
     {
         // constructor
+        public ModString() : base() { }
+
         public ModString(string name = "NewModString", string value = "None", bool isbaseValueReadOnly = false, string hint = "No Hint")
             : base(name, value, isbaseValueReadOnly, hint) { }
 

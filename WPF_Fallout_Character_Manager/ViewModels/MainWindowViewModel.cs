@@ -80,8 +80,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private readonly Dictionary<Type, object> _serializableXtrnlModels = new();
         private readonly Dictionary<DtoType, string> _serializationFilePaths = new Dictionary<DtoType, string>
         {
-            { DtoType.Character, "test_character.json" },
-            { DtoType.Catalogue, "test_catalogue.json" }
+            { DtoType.Character, "character.json" },
+            { DtoType.Catalogue, "catalogue.json" }
         };
         //
 
@@ -139,6 +139,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<ArmorModel, ArmorModelDTO>(ArmorModel, DtoType.Character);
             RegisterModelForSerialization<WeaponsModel, WeaponsModelDTO>(WeaponsModel, DtoType.Character);
             RegisterModelForSerialization<InventoryModel, InventoryModelDTO>(InventoryModel, DtoType.Character);
+            RegisterModelForSerialization<PerksModel, PerksModelDTO>(PerksModel, DtoType.Character);
 
             RegisterModelForSerialization<XtrnlWeaponsModel, XtrnlWeaponsModelDTO>(XtrnlWeaponsModel, DtoType.Catalogue);
             //
@@ -202,8 +203,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             return true;
         }
 
-        bool DeserializeCharacterJson()
+        bool DeserializeCharacterJson(out string error)
         {
+            if (!File.Exists(_serializationFilePaths[DtoType.Character]))
+            {
+                error = "Cannot find file: " + _serializationFilePaths[DtoType.Character];
+                return false;
+            }
+
             string json = File.ReadAllText(_serializationFilePaths[DtoType.Character]);
             CharacterDTO dto = new CharacterDTO();
             float appVersion = dto.Version;
@@ -214,6 +221,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 if (!_serializableModels.TryGetValue(_serializableModels.Keys.First(t => t.Name == modelName), out var model))
                 {
+                    error = "Trying to deserialize a Model that wasn't marked for serialization/deserialization. Model: " + modelName;
                     return false;
                 }
 
@@ -224,11 +232,18 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
             }
 
+            error = default;
             return true;
         }
 
-        bool DeserializeCatalogueJson()
+        bool DeserializeCatalogueJson(out string error)
         {
+            if (!File.Exists(_serializationFilePaths[DtoType.Catalogue]))
+            {
+                error = "Cannot find file: " + _serializationFilePaths[DtoType.Catalogue];
+                return false;
+            }
+
             string json = File.ReadAllText(_serializationFilePaths[DtoType.Catalogue]);
             CatalogueDTO dto = new CatalogueDTO();
             float appVersion = dto.Version;
@@ -239,6 +254,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 if (!_serializableXtrnlModels.TryGetValue(_serializableXtrnlModels.Keys.First(t => t.Name == modelName), out var model))
                 {
+                    error = "Trying to deserialize a Model that wasn't marked for serialization/deserialization. Model: " + modelName;
                     return false;
                 }
 
@@ -249,6 +265,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
             }
 
+            error = default;
             return true;
         }
 
@@ -278,14 +295,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             return true;
         }
 
-        public bool LoadCharacter(object _ = null)
+        public bool LoadCharacter(out string error)
         {
-            if (!DeserializeCatalogueJson())
+            if (!DeserializeCatalogueJson(out error))
             {
                 return false;
             }
 
-            if (!DeserializeCharacterJson())
+            if (!DeserializeCharacterJson(out error))
             {
                 return false;
             }

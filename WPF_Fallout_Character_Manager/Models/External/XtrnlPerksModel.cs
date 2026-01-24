@@ -177,6 +177,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     public class TPCard : LabeledString
     {
         // constructor
+        public TPCard() : base() { }
+
         public TPCard(string name = "", string description = "", string extraDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
             : base(name, description, description)
         {
@@ -280,6 +282,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     public class Trait : TPCard
     {
         // constructor
+        public Trait() : base() { }
+
         public Trait(string name = "", string description = "", string wildWastelandDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
             : base(name, description, wildWastelandDescription, prerequisite, cardType, imagePath)
         {
@@ -344,6 +348,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     public class Perk : TPCard
     {
         // constructor
+        public Perk() : base() { }
+
         public Perk(string name = "", string description = "", string repeatDescription = "", int max = 0, string requirement = "", string cardType = "None", string imagePath = "")
             : base(name, description, repeatDescription, requirement, cardType, imagePath)
         {
