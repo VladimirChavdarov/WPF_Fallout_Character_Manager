@@ -36,10 +36,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             WeaponProperties = new ObservableCollection<WeaponProperty>();
             WeaponUpgrades = new ObservableCollection<WeaponUpgrade>();
 
-            UpdateCSVFilesIdFields(meleePropertiesPath);
-            UpdateCSVFilesIdFields(rangedPropertiesPath);
-            UpdateCSVFilesIdFields(meleeUpgradesPath);
-            UpdateCSVFilesIdFields(rangedUpgradesPath);
+            Utils.UpdateCSVFilesIdFields(meleePropertiesPath);
+            Utils.UpdateCSVFilesIdFields(rangedPropertiesPath);
+            Utils.UpdateCSVFilesIdFields(meleeUpgradesPath);
+            Utils.UpdateCSVFilesIdFields(rangedUpgradesPath);
 
             // upload melee weapon properties
             UploadMeleeWeaponsPropertiesFromCSV();
@@ -286,7 +286,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     {
                         _missingIds |= !Utils.IdFromString("", out Guid id);
                         newProperty = new WeaponProperty(id, WeaponType.Ranged, trimmedProperty, "This specifies another property the weapon has.");
-                        AddCSVLine(rangedPropertiesPath, newProperty.Name + ";" + newProperty.Value + ";" + id.ToString());
+                        Utils.AddCSVLine(rangedPropertiesPath, newProperty.Name + ";" + newProperty.Value + ";" + id.ToString());
                         WeaponProperties.Add(newProperty);
                     }
                     weapon.Properties.Add(newProperty);
@@ -344,39 +344,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
             weapon.AmmoPerAttack.BaseValue = 1.0f / Utils.FloatFromString(ammoField[2]);
             weapon.NumberOfAttacks.BaseValue = (int)(weapon.AmmoCapacity.BaseValue / weapon.AmmoPerAttack.BaseValue);
             weapon.InitializeBulletSlots();
-        }
-
-        // this will update fill in ids for any Property or Upgrade that didn't have one already.
-        private bool UpdateCSVFilesIdFields(string csvPath)
-        {
-            string[] fileLines = File.ReadAllLines(csvPath);
-
-            List<string> columnNames = fileLines[0].Split(';').ToList();
-            int idColumnIndex = columnNames.FindIndex(x => x.Equals("id", StringComparison.InvariantCultureIgnoreCase)); ;
-            if (idColumnIndex == -1)
-            {
-                return false;
-            }
-            
-            for(int i = 1; i < fileLines.Length; i++)
-            {
-                string[] parts = fileLines[i].Split(';');
-                if (parts[idColumnIndex] == "")
-                {
-                    Utils.IdFromString("", out Guid newId);
-                    parts[idColumnIndex] = newId.ToString();
-                    fileLines[i] = string.Join(";", parts);
-                }
-            }
-
-            File.WriteAllLines(csvPath, fileLines);
-            return true;
-        }
-
-        private void AddCSVLine(string csvPath, string csvLine)
-        {
-            string[] addition = { csvLine };
-            File.AppendAllLines(csvPath, addition);
         }
 
         public XtrnlWeaponsModelDTO ToDto()

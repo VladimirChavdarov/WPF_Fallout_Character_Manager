@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
-    class ArmorModel : ModelBase
+    class ArmorModel : ModelBase, ISerializable<ArmorModelDTO>
     {
         // constructor
         public ArmorModel(XtrnlArmorModel xtrnlArmorModel)
@@ -47,7 +49,44 @@ namespace WPF_Fallout_Character_Manager.Models
         //
 
         // methods
+        public ArmorModelDTO ToDto()
+        {
+            ArmorModelDTO result = new ArmorModelDTO();
 
+            foreach (Armor armor in Armors)
+            {
+                if (armor.ToDto() is not ArmorDTO aDto)
+                    throw new InvalidOperationException("Expected ArmorDTO");
+
+                result.Armors.Add(aDto);
+            }
+
+            foreach (PowerArmor armor in PowerArmors)
+            {
+                if (armor.ToDto() is not PowerArmorDTO apDto)
+                    throw new InvalidOperationException("Expected PowerArmorDTO");
+
+                result.PowerArmors.Add(apDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(ArmorModelDTO dto, bool versionMismatch = false)
+        {
+            Armors.Clear();
+            PowerArmors.Clear();
+
+            foreach(ArmorDTO aDto in dto.Armors)
+            {
+                Armors.Add(new Armor(aDto));
+            }
+
+            foreach (PowerArmorDTO paDto in dto.PowerArmors)
+            {
+                PowerArmors.Add(new PowerArmor(paDto));
+            }
+        }
         //
 
         // data

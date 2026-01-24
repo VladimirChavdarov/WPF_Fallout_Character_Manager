@@ -136,6 +136,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<LimbConditionsModel, LimbConditionsModelDTO>(LimbConditionsModel, DtoType.Character);
             RegisterModelForSerialization<ConditionsModel, ConditionsModelDTO>(ConditionsModel, DtoType.Character);
             RegisterModelForSerialization<WeaponsModel, WeaponsModelDTO>(WeaponsModel, DtoType.Character);
+            RegisterModelForSerialization<ArmorModel, ArmorModelDTO>(ArmorModel, DtoType.Character);
 
             RegisterModelForSerialization<XtrnlWeaponsModel, XtrnlWeaponsModelDTO>(XtrnlWeaponsModel, DtoType.Catalogue);
             //
@@ -254,6 +255,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SurvivalModel.UpdateModel(SPECIALModel);
             CombatModel.UpdateModel(SPECIALModel, BioModel.Level);
             SkillModel.UpdateModel(SPECIALModel);
+            ArmorViewModel.UpdateSelectedArmorsRefs();
 
             InventoryViewModel.ReloadCatalogueAndInventory();
         }

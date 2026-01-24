@@ -59,6 +59,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         }
         //
 
+        // methods
+        public void UpdateSelectedArmorsRefs()
+        {
+            SelectedArmor = ArmorsModel.Armors.FirstOrDefault(x => x.Equipped == true);
+            ArmorsModel.EquippedArmor = SelectedArmor;
+            SelectedPowerArmor = ArmorsModel.PowerArmors.FirstOrDefault(x => x.Equipped == true);
+            ArmorsModel.EquippedPowerArmor = SelectedPowerArmor;
+        }
+        //
+
         // commands
         public RelayCommand UnequipOtherArmorsCommand { get; private set; }
         private void UnequipOtherArmors(object _ = null)

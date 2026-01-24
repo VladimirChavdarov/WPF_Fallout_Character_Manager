@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Utilities;
@@ -16,6 +17,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlArmorModel : ModelBase
     {
+        private static string armorUpgradesPath = "Resources/Spreadsheets/armor_upgrades.csv";
+        private static string powerArmorUpgradesPath = "Resources/Spreadsheets/power_armor_upgrades.csv";
+        private static string armorPath = "Resources/Spreadsheets/armor.csv";
+        private static string powerArmorPath = "Resources/Spreadsheets/power_armor.csv";
+
         // constructor
         public XtrnlArmorModel()
         {
@@ -24,18 +30,24 @@ namespace WPF_Fallout_Character_Manager.Models.External
             PowerArmors = new ObservableCollection<PowerArmor>();
             PowerArmorUpgrades = new ObservableCollection<ArmorUpgrade>();
 
+            Utils.UpdateCSVFilesIdFields(armorUpgradesPath);
+            Utils.UpdateCSVFilesIdFields(powerArmorUpgradesPath);
+
             // upgrades
-            var armorUpgradesLines = File.ReadAllLines("Resources/Spreadsheets/armor_upgrades.csv");
+            var armorUpgradesLines = File.ReadAllLines(armorUpgradesPath);
             foreach(var line in armorUpgradesLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 5)
+                if (parts.Length < 6)
                     continue;
 
-                for(int i = 0; i < 3; i++)
+                Utils.IdFromString(parts[5], out Guid id);
+
+                for (int i = 0; i < 3; i++)
                 {
                     string name = parts[0] + " (Rank " + (i+1) + ")";
                     ArmorUpgrade newUpgrade = new ArmorUpgrade(
+                        id,
                         name: name,
                         cost: parts[1],
                         rank: i + 1,
@@ -49,17 +61,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     ArmorUpgrades.Add(newUpgrade);
                 }
             }
-            var powerArmorUpgradeLines = File.ReadAllLines("Resources/Spreadsheets/power_armor_upgrades.csv");
+            var powerArmorUpgradeLines = File.ReadAllLines(powerArmorUpgradesPath);
             foreach (var line in powerArmorUpgradeLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 5)
+                if (parts.Length < 6)
                     continue;
+
+                Utils.IdFromString(parts[5], out Guid id);
 
                 for (int i = 0; i < 3; i++)
                 {
                     string name = parts[0] + " (Rank " + (i + 1) + ")";
                     ArmorUpgrade newUpgrade = new ArmorUpgrade(
+                        id,
                         name: name,
                         cost: parts[1],
                         rank: i + 1,
@@ -76,7 +91,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             //
 
             // armors
-            var armorLines = File.ReadAllLines("Resources/Spreadsheets/armor.csv");
+            var armorLines = File.ReadAllLines(armorPath);
             foreach (var line in armorLines.Skip(1))
             {
                 var parts = line.Split(";");
@@ -99,7 +114,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             //
 
             // power armors
-            var powerArmorsLines = File.ReadAllLines("Resources/Spreadsheets/power_armor.csv");
+            var powerArmorsLines = File.ReadAllLines(powerArmorPath);
             foreach (var line in powerArmorsLines.Skip(1))
             {
                 var parts = line.Split(";");
@@ -125,10 +140,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        public ObservableCollection<Armor> Armors { get; set; }
-        public ObservableCollection<ArmorUpgrade> ArmorUpgrades { get; set; }
-        public ObservableCollection<PowerArmor> PowerArmors { get; set; }
-        public ObservableCollection<ArmorUpgrade> PowerArmorUpgrades { get; set; }
+        public static ObservableCollection<Armor> Armors { get; set; }
+        public static ObservableCollection<ArmorUpgrade> ArmorUpgrades { get; set; }
+        public static ObservableCollection<PowerArmor> PowerArmors { get; set; }
+        public static ObservableCollection<ArmorUpgrade> PowerArmorUpgrades { get; set; }
         //
     }
 
@@ -159,9 +174,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Decay = new ModInt("Decay", decay, false);
             Equipped = false;
 
-            _decay.PropertyChanged += Decay_PropertyChanged;
-            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
-            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+            SubscribeToPropertyChanged();
         }
 
         protected Armor(Armor other) : base(other)
@@ -175,9 +188,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Decay = other.Decay.Clone();
             Equipped = other.Equipped;
 
-            _decay.PropertyChanged += Decay_PropertyChanged;
-            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
-            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+            SubscribeToPropertyChanged();
+        }
+
+        public Armor(ArmorDTO dto)
+        {
+            Upgrades = new ObservableCollection<ArmorUpgrade>();
+            FromDto(dto);
         }
         //
 
@@ -273,6 +290,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public Armor Clone() => new Armor(this);
 
+        public void SubscribeToPropertyChanged()
+        {
+            _decay.PropertyChanged -= Decay_PropertyChanged;
+            _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged -= Upgrades_CollectionChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged -= TakenUpgradeSlots_PropertyChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+        }
+
         public void AddUpgrade(object obj)
         {
             if (obj is ArmorUpgrade upgradeToAdd)
@@ -337,6 +364,60 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }
+
+        public override ItemDTO ToDto()
+        {
+            ArmorDTO result = new ArmorDTO();
+
+            result.Name = Name.ToDto();
+            result.Cost = Cost.ToDto();
+            result.Amount = Amount.ToDto();
+            result.Load = Load.ToDto();
+
+            result.AC = AC.ToDto();
+            result.DT = DT.ToDto();
+            result.AvailableUpgradeSlots = AvailableUpgradeSlots.ToDto();
+            result.TakenUpgradeSlots = TakenUpgradeSlots.ToDto();
+            result.StrRequirement = StrRequirement.ToDto();
+            result.Decay = Decay.ToDto();
+            result.Equipped = Equipped;
+
+            foreach(var upgrade in Upgrades)
+            {
+                result.UpgradeIds.Add(upgrade.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            if (dto is not ArmorDTO aDto)
+                throw new InvalidOperationException("Expected ArmorDTO");
+
+            base.FromDto(dto, versionMismatch);
+
+            AC = new ModInt(aDto.AC);
+            DT = new ModInt(aDto.DT);
+            AvailableUpgradeSlots = new ModInt(aDto.AvailableUpgradeSlots);
+            TakenUpgradeSlots = new ModInt(aDto.TakenUpgradeSlots);
+            StrRequirement = new ModInt(aDto.StrRequirement);
+            Decay = new ModInt(aDto.Decay);
+            Equipped = aDto.Equipped;
+
+            Upgrades.Clear();
+            foreach (Guid id in aDto.UpgradeIds)
+            {
+                ArmorUpgrade upgrade = XtrnlArmorModel.ArmorUpgrades.FirstOrDefault(x => x.Id == id);
+                if (upgrade != null)
+                {
+                    Upgrades.Add(upgrade);
+                }
+            }
+
+            SubscribeToPropertyChanged();
+            ScaleArmorWithDecay();
+        }
         //
     }
 
@@ -369,9 +450,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Decay = new ModInt("Decay", decay, false);
             Equipped = false;
 
-            _decay.PropertyChanged += Decay_PropertyChanged;
-            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
-            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+            SubscribeToPropertyChanged();
         }
 
         protected PowerArmor(PowerArmor other) : base(other)
@@ -387,9 +466,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Decay = other.Decay.Clone();
             Equipped = other.Equipped;
 
-            _decay.PropertyChanged += Decay_PropertyChanged;
-            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
-            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+            SubscribeToPropertyChanged();
+        }
+
+        public PowerArmor(PowerArmorDTO dto)
+        {
+            Upgrades = new ObservableCollection<ArmorUpgrade>();
+            FromDto(dto);
         }
         //
 
@@ -494,6 +577,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public PowerArmor Clone() => new PowerArmor(this);
 
+        public void SubscribeToPropertyChanged()
+        {
+            _decay.PropertyChanged -= Decay_PropertyChanged;
+            _decay.PropertyChanged += Decay_PropertyChanged;
+            Upgrades.CollectionChanged -= Upgrades_CollectionChanged;
+            Upgrades.CollectionChanged += Upgrades_CollectionChanged;
+            TakenUpgradeSlots.PropertyChanged -= TakenUpgradeSlots_PropertyChanged;
+            TakenUpgradeSlots.PropertyChanged += TakenUpgradeSlots_PropertyChanged;
+        }
+
         public void AddUpgrade(object obj)
         {
             if (obj is ArmorUpgrade upgradeToAdd)
@@ -553,19 +646,73 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             OnPropertyChanged(nameof(UpgradeSlotVisualization));
         }
+
+        public override ItemDTO ToDto()
+        {
+            PowerArmorDTO result = new PowerArmorDTO();
+
+            result.Name = Name.ToDto();
+            result.Cost = Cost.ToDto();
+            result.Amount = Amount.ToDto();
+            result.Load = Load.ToDto();
+
+            result.AC = AC.ToDto();
+            result.DP = DP.ToDto();
+            result.AvailableUpgradeSlots = AvailableUpgradeSlots.ToDto();
+            result.TakenUpgradeSlots = TakenUpgradeSlots.ToDto();
+            result.RepairDC = RepairDC.ToDto();
+            result.AllottedTime = AllottedTime.ToDto();
+            result.Decay = Decay.ToDto();
+            result.Equipped = Equipped;
+
+            foreach (var upgrade in Upgrades)
+            {
+                result.UpgradeIds.Add(upgrade.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            if (dto is not PowerArmorDTO paDTO)
+                throw new InvalidOperationException("Expected PowerArmorDTO");
+
+            base.FromDto(dto, versionMismatch);
+
+            AC = new ModInt(paDTO.AC);
+            DP = new ModInt(paDTO.DP);
+            AvailableUpgradeSlots = new ModInt(paDTO.AvailableUpgradeSlots);
+            TakenUpgradeSlots = new ModInt(paDTO.TakenUpgradeSlots);
+            RepairDC = new ModInt(paDTO.RepairDC);
+            AllottedTime = new ModInt(paDTO.AllottedTime);
+            Decay = new ModInt(paDTO.Decay);
+            Equipped = paDTO.Equipped;
+
+            Upgrades.Clear();
+            foreach (Guid id in paDTO.UpgradeIds)
+            {
+                ArmorUpgrade upgrade = XtrnlArmorModel.PowerArmorUpgrades.FirstOrDefault(x => x.Id == id);
+                if (upgrade != null)
+                {
+                    Upgrades.Add(upgrade);
+                }
+            }
+
+            SubscribeToPropertyChanged();
+            ScalePowerArmorWithDecay();
+        }
         //
     }
 
-    class ArmorUpgrade : LabeledString
+    class ArmorUpgrade : ItemAttribute
     {
         // constructor
-        public ArmorUpgrade(string name="NewUpgrade", string cost = "c0", int rank = 0, string value = "", int slotCost = 0)
+        public ArmorUpgrade(Guid id, string name="NewUpgrade", string cost = "c0", int rank = 0, string value = "", int slotCost = 0)
+            : base(id, name, value)
         {
-            Name = name;
             Cost = cost;
             Rank = rank;
-            Value = value;
-            Note = value;
             SlotCost = slotCost;
         }
         //

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -128,6 +129,39 @@ namespace WPF_Fallout_Character_Manager.Utilities
             }
 
             return false;
+        }
+
+        // this will update fill in ids for any Property or Upgrade that didn't have one already.
+        public static bool UpdateCSVFilesIdFields(string csvPath)
+        {
+            string[] fileLines = File.ReadAllLines(csvPath);
+
+            List<string> columnNames = fileLines[0].Split(';').ToList();
+            int idColumnIndex = columnNames.FindIndex(x => x.Equals("id", StringComparison.InvariantCultureIgnoreCase)); ;
+            if (idColumnIndex == -1)
+            {
+                return false;
+            }
+
+            for (int i = 1; i < fileLines.Length; i++)
+            {
+                string[] parts = fileLines[i].Split(';');
+                if (parts[idColumnIndex] == "")
+                {
+                    Utils.IdFromString("", out Guid newId);
+                    parts[idColumnIndex] = newId.ToString();
+                    fileLines[i] = string.Join(";", parts);
+                }
+            }
+
+            File.WriteAllLines(csvPath, fileLines);
+            return true;
+        }
+
+        public static void AddCSVLine(string csvPath, string csvLine)
+        {
+            string[] addition = { csvLine };
+            File.AppendAllLines(csvPath, addition);
         }
     }
 }
