@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Effects;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Utilities;
@@ -14,28 +16,37 @@ namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlAidModel : ModelBase
     {
+        private static string aidPropertiesPath = "Resources/Spreadsheets/chem_properties.csv";
+        private static string chemsPath = "Resources/Spreadsheets/chems.csv";
+        private static string medicinePath = "Resources/Spreadsheets/medicine.csv";
+
         // constructor
         public XtrnlAidModel()
         {
             AidItems = new ObservableCollection<Aid>();
             AidProperties = new ObservableCollection<AidProperty>();
 
+            Utils.UpdateCSVFilesIdFields(aidPropertiesPath);
+
             // Chems
-            var chemPropertiesLines = File.ReadAllLines("Resources/Spreadsheets/chem_properties.csv");
+            var chemPropertiesLines = File.ReadAllLines(aidPropertiesPath);
             foreach (var line in chemPropertiesLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 2)
+                if (parts.Length < 3)
                     continue;
 
+                Utils.IdFromString(parts[2], out Guid id);
+
                 AidProperty chemProperty = new AidProperty(
+                    id,
                     name: parts[0],
                     value: parts[1]
                     );
                 AidProperties.Add(chemProperty);
             }
 
-            var chemLines = File.ReadAllLines("Resources/Spreadsheets/chems.csv");
+            var chemLines = File.ReadAllLines(chemsPath);
             foreach (var line in chemLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -67,7 +78,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             //
 
             // Medicine
-            var medicineLines = File.ReadAllLines("Resources/Spreadsheets/medicine.csv");
+            var medicineLines = File.ReadAllLines(medicinePath);
             foreach (var line in medicineLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -88,8 +99,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        public ObservableCollection<Aid> AidItems {  get; set; }
-        public ObservableCollection<AidProperty> AidProperties { get; set; }
+        public static ObservableCollection<Aid> AidItems {  get; set; }
+        public static ObservableCollection<AidProperty> AidProperties { get; set; }
         //
     }
 
@@ -114,6 +125,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Description = other.Description.Clone();
 
             SubscribeToPropertiesCollectionChange();
+        }
+
+        public Aid(AidDTO dto)
+        {
+            Properties = new ObservableCollection<AidProperty>();
+            FromDto(dto);
         }
         //
 
@@ -173,6 +190,46 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ConstructNote();
         }
+
+        public override ItemDTO ToDto()
+        {
+            AidDTO result = new AidDTO();
+
+            UpdateItemDTO(result);
+
+            result.Description = Description;
+
+            foreach(AidProperty property in Properties)
+            {
+                result.PropertiesIds.Add(property.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<AidDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            Description = typedDto.Description;
+
+            foreach(Guid id in typedDto.PropertiesIds)
+            {
+                AidProperty property = XtrnlAidModel.AidProperties.FirstOrDefault(x => x.Id == id);
+                if (property != null)
+                {
+                    Properties.Add(property);
+                }
+                else
+                {
+                    throw new ArgumentException("Couldn't find this aid property in the master list");
+                }
+            }
+
+            SubscribeToPropertiesCollectionChange();
+        }
         //
 
         // members
@@ -187,10 +244,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
     }
 
-    class AidProperty : LabeledString
+    class AidProperty : ItemAttribute
     {
         // constructor
-        public AidProperty(string name = "NewAidProperty", string value = "") : base(name, value, value) { }
+        public AidProperty(Guid id, string name = "NewAidProperty", string value = "") : base(id, name, value) { }
         //
     }
 }

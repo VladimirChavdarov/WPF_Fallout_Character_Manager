@@ -6,14 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
     // This model should contain all of the player's items except Weapons, Armor, Power Armor and Ammo, because they have separate Models and ViewModels
     // to handle more complex logic.
-    class InventoryModel : ModelBase
+    class InventoryModel : ModelBase, ISerializable<InventoryModelDTO>
     {
         // constructor
         public InventoryModel()
@@ -30,6 +33,37 @@ namespace WPF_Fallout_Character_Manager.Models
 
             CarryLoad.PropertyChanged += (s, e) => OnPropertyChanged(nameof(IsOverencumbered));
             CurrentLoad.PropertyChanged += (s, e) => OnPropertyChanged(nameof(IsOverencumbered));
+        }
+        //
+
+        // methods
+        public InventoryModelDTO ToDto()
+        {
+            InventoryModelDTO result = new InventoryModelDTO();
+            result.Caps = Caps.ToDto();
+            result.CarryLoad = CarryLoad.ToDto();
+            result.CurrentLoad = CurrentLoad.ToDto();
+
+            foreach(Aid aid in AidItems)
+            {
+                var typedDto = Utils.EnsureDtoType<AidDTO>(aid.ToDto());
+                result.AidItems.Add(typedDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(InventoryModelDTO dto, bool versionMismatch = false)
+        {
+            Caps = new ModInt(dto.Caps);
+            CarryLoad = new ModFloat(dto.CarryLoad);
+            CurrentLoad = new ModFloat(dto.CurrentLoad);
+
+            AidItems.Clear();
+            foreach(AidDTO aidDTO in dto.AidItems)
+            {
+                AidItems.Add(new Aid(aidDTO));
+            }
         }
         //
 
