@@ -68,9 +68,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 WeaponProperty property = new WeaponProperty(
                     WeaponType.Melee,
                     parts[0],
-                    parts[1]
+                    parts[1],
+                    true
                     );
-                property.SetId(Guid.NewGuid());
                 WeaponProperties.Add(property);
             }
         }
@@ -87,9 +87,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 WeaponProperty property = new WeaponProperty(
                     weaponType: WeaponType.Ranged,
                     name: parts[0],
-                    value: parts[1]
+                    value: parts[1],
+                    true
                     );
-                property.SetId(Guid.NewGuid());
                 WeaponProperties.Add(property);
             }
         }
@@ -110,9 +110,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     timeToEquip: "5 minutes.",
                     slotCost: Int32.Parse(parts[2]),
                     value: parts[3],
-                    equipRequirement: "Any melee weapon."
+                    equipRequirement: "Any melee weapon.",
+                    true
                     );
-                upgrade.SetId(Guid.NewGuid());
                 WeaponUpgrades.Add(upgrade);
             }
         }
@@ -133,9 +133,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     timeToEquip: parts[2],
                     slotCost: Int32.Parse(parts[3]),
                     value: parts[4],
-                    equipRequirement: parts[5]
+                    equipRequirement: parts[5],
+                    true
                     );
-                upgrade.SetId(Guid.NewGuid());
                 WeaponUpgrades.Add(upgrade);
             }
         }
@@ -261,8 +261,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     WeaponProperty newProperty = WeaponProperties.FirstOrDefault(x => trimmedProperty == x.Name && x.WeaponType == WeaponType.Ranged);
                     if(newProperty == null)
                     {
-                        newProperty = new WeaponProperty(WeaponType.Ranged, trimmedProperty, "This specifies another property the weapon has.");
-                        newProperty.SetId(Guid.NewGuid());
+                        newProperty = new WeaponProperty(WeaponType.Ranged, trimmedProperty, "This specifies another property the weapon has.", true);
                         WeaponProperties.Add(newProperty);
                     }
                     weapon.Properties.Add(newProperty);
@@ -327,16 +326,25 @@ namespace WPF_Fallout_Character_Manager.Models.External
             XtrnlWeaponsModelDTO result = new XtrnlWeaponsModelDTO();
             foreach(WeaponProperty property in WeaponProperties)
             {
+                if (property.IsFromSpreadsheet)
+                    continue;
+
                 result.Properties.Add(property);
             }
             foreach(WeaponUpgrade upgrade in WeaponUpgrades)
             {
+                if (upgrade.IsFromSpreadsheet)
+                    continue;
+
                 result.Upgrades.Add(upgrade);
             }
             foreach(Weapon weapon in Weapons)
             {
                 if(weapon.ToDto() is not WeaponDTO wDto)
                     throw new InvalidOperationException("Expected WeaponDTO");
+
+                if (weapon.IsFromSpreadsheet)
+                    continue;
 
                 result.Weapons.Add(wDto);
             }
@@ -346,10 +354,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public void FromDto(XtrnlWeaponsModelDTO dto, bool versionMismatch = false)
         {
-            Weapons.Clear();
-            WeaponProperties.Clear();
-            WeaponUpgrades.Clear();
-
             foreach (WeaponProperty property in dto.Properties)
             {
                 WeaponProperties.Add(property);
@@ -882,19 +886,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
     }
 
 
-    class WeaponProperty : LabeledString
+    class WeaponProperty : ItemAttribute
     {
         // constructor
-        public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "") : base(name, value, value)
+        public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "", bool generateIdOnInit = false)
+            : base(name, value, generateIdOnInit)
         {
-            //Id = Guid.NewGuid();
             _weaponType = weaponType;
         }
         //
 
         // members
-        public Guid Id { get; set; } // NOTE: This has a public setter only because of serialization. DON'T SET MANUALLY!
-
         private WeaponType _weaponType;
         public WeaponType WeaponType
         {
@@ -902,28 +904,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _weaponType, value);
         }
         //
-
-        // methods
-        public void SetId(Guid id)
-        {
-            Id = id;
-        }
-        //
     }
 
-    class WeaponUpgrade : LabeledString
+    class WeaponUpgrade : ItemAttribute
     {
         // constructor
-        public WeaponUpgrade(WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
+        public WeaponUpgrade(WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="", bool generateIdOnInit = false)
+            : base(name, value, generateIdOnInit)
         {
-            //Id = Guid.NewGuid();
             WeaponType= weaponType;
-            Name = name;
             CostMultiplier = costMultiplier;
             TimeToEquip = timeToEquip;
             SlotCost = slotCost;
-            Value = value;
-            Note = value;
             EquipRequirement = equipRequirement;
 
             Note += "\nRequirements: " + EquipRequirement;
@@ -931,8 +923,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // members
-        public Guid Id { get; set; } // NOTE: This has a public setter only because of serialization. DON'T SET MANUALLY!
-
         private WeaponType _weaponType;
         public WeaponType WeaponType
         {
@@ -983,13 +973,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     throw new InvalidOperationException("Cannot edit WeaponUpgrade.EquipRequirement when in read-only mode");
                 Update(ref _equipRequirement, value);
             }
-        }
-        //
-
-        // methods
-        public void SetId(Guid id)
-        {
-            Id = id;
         }
         //
     }

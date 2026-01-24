@@ -149,6 +149,15 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             set => Update(ref _canBeEdited, value);
         }
 
+        // by default, all items come from a spreadsheet. The ones that don't are the ones the user has created via the app.
+        // this variable is used for the Catalogue items, specifically during its serialization.
+        private bool _isFromSpreadsheet = true;
+        public bool IsFromSpreadsheet
+        {
+            get => _isFromSpreadsheet;
+            set => Update(ref _isFromSpreadsheet, value);
+        }
+
         public int TotalLoad => (int)(Amount.Total * Load.Total);
         public int TotalCost => Amount.Total * Cost.Total;
         public virtual string NameAmount => $"({Amount.Total}) {Name.Total}";

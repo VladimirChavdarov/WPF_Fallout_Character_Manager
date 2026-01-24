@@ -593,6 +593,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (_typeToCatalogueCollections.TryGetValue(SelectedTypeForCreating, out IList collection))
             {
                 NewItemTemplate.CanBeEdited = false;
+                NewItemTemplate.IsFromSpreadsheet = false;
                 NewItemTemplate.ConstructNote();
 
                 collection.Add(NewItemTemplate);
