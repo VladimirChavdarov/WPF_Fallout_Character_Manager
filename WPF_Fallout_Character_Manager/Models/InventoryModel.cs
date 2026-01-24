@@ -54,6 +54,11 @@ namespace WPF_Fallout_Character_Manager.Models
                 var typedDto = Utils.EnsureDtoType<ExplosiveDTO>(explosive.ToDto());
                 result.Explosives.Add(typedDto);
             }
+            foreach (Nourishment nourishment in Nourishment)
+            {
+                var typedDto = Utils.EnsureDtoType<NourishmentDTO>(nourishment.ToDto());
+                result.Nourishment.Add(typedDto);
+            }
 
             return result;
         }
@@ -69,9 +74,15 @@ namespace WPF_Fallout_Character_Manager.Models
             {
                 AidItems.Add(new Aid(aidDto));
             }
+            Explosives.Clear();
             foreach (ExplosiveDTO explosiveDto in dto.Explosives)
             {
                 Explosives.Add(new Explosive(explosiveDto));
+            }
+            Nourishment.Clear();
+            foreach (NourishmentDTO nourishmentDTO in dto.Nourishment)
+            {
+                Nourishment.Add(new Nourishment(nourishmentDTO));
             }
         }
         //

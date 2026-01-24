@@ -5,36 +5,46 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlNourishmentModel : ModelBase
     {
+        private static readonly string nourishmentPropertiesPath = "Resources/Spreadsheets/foods_drinks_properties.csv";
+        private static readonly string nourishmentPath = "Resources/Spreadsheets/foods_drinks.csv";
+
         // constructor
         public XtrnlNourishmentModel()
         {
             Nourishments = new ObservableCollection<Nourishment>();
             NourishmentProperties = new ObservableCollection<NourishmentProperty>();
 
+            Utils.UpdateCSVFilesIdFields(nourishmentPropertiesPath);
 
-            var nourishmentPropertiesLines = File.ReadAllLines("Resources/Spreadsheets/foods_drinks_properties.csv");
+            var nourishmentPropertiesLines = File.ReadAllLines(nourishmentPropertiesPath);
             foreach (var line in nourishmentPropertiesLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 2)
+                if (parts.Length < 3)
                     continue;
 
+                Utils.IdFromString(parts[2], out Guid id);
+
                 NourishmentProperty nourishmentProperty = new NourishmentProperty(
+                    id,
                     name: parts[0],
                     value: parts[1]
                     );
                 NourishmentProperties.Add(nourishmentProperty);
             }
 
-            var nourishmentLines = File.ReadAllLines("Resources/Spreadsheets/foods_drinks.csv");
+            var nourishmentLines = File.ReadAllLines(nourishmentPath);
             foreach (var line in nourishmentLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -74,8 +84,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
-        public ObservableCollection<Nourishment> Nourishments { get; set; }
-        public ObservableCollection<NourishmentProperty> NourishmentProperties { get; set; }
+        public static ObservableCollection<Nourishment> Nourishments { get; set; }
+        public static ObservableCollection<NourishmentProperty> NourishmentProperties { get; set; }
         //
     }
 
@@ -87,19 +97,33 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Properties = new ObservableCollection<NourishmentProperty>();
 
-            Properties.CollectionChanged += Properties_CollectionChanged;
+            SubscribeToPropertyChanged();
         }
 
         protected Nourishment(Nourishment other) : base(other)
         {
             Properties = new ObservableCollection<NourishmentProperty>(other.Properties);
 
-            Properties.CollectionChanged += Properties_CollectionChanged;
+            SubscribeToPropertyChanged();
+        }
+
+        public Nourishment(NourishmentDTO dto)
+        {
+            Properties = new ObservableCollection<NourishmentProperty>();
+            FromDto(dto);
+
+            SubscribeToPropertyChanged();
         }
         //
 
         // methods
         public Nourishment Clone() => new Nourishment(this);
+
+        public void SubscribeToPropertyChanged()
+        {
+            Properties.CollectionChanged -= Properties_CollectionChanged;
+            Properties.CollectionChanged += Properties_CollectionChanged;
+        }
 
         public override void ConstructNote()
         {
@@ -139,6 +163,42 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ConstructNote();
         }
+
+        public override ItemDTO ToDto()
+        {
+            NourishmentDTO result = new NourishmentDTO();
+
+            UpdateItemDTO(result);
+
+            foreach(var property in Properties)
+            {
+                result.PropertyIds.Add(property.Id);
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<NourishmentDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            foreach (Guid id in typedDto.PropertyIds)
+            {
+                NourishmentProperty property = XtrnlNourishmentModel.NourishmentProperties.FirstOrDefault(x => x.Id == id);
+                if (property != null)
+                {
+                    Properties.Add(property);
+                }
+                else
+                {
+                    throw new ArgumentException("Couldn't find this nourishment property in the master list");
+                }
+            }
+
+            SubscribeToPropertyChanged();
+        }
         //
 
         // members
@@ -146,10 +206,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
     }
 
-    class NourishmentProperty : LabeledString
+    class NourishmentProperty : ItemAttribute
     {
         // constructor
-        public NourishmentProperty(string name = "NewNourishmentProperty", string value = "") : base(name, value, value) { }
+        public NourishmentProperty(Guid id, string name = "NewNourishmentProperty", string value = "") : base(id, name, value) { }
         //
     }
 }
