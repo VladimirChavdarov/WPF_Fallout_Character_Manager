@@ -23,6 +23,7 @@
     <None Remove="Resources\bottlecap_currency_icon.png" />
     <None Remove="Resources\bottlecap_front.png" />
     <None Remove="Resources\carry_load_icon.png" />
+    <None Remove="Resources\Fonts\JH_FALLOUT.TTF" />
     <None Remove="Resources\pen.png" />
     <None Remove="Resources\Spreadsheets\ammo.csv" />
     <None Remove="Resources\Spreadsheets\ammo_special.csv" />
@@ -95,6 +96,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\carry_load_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Fonts\JH_FALLOUT.TTF">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\pen.png">
