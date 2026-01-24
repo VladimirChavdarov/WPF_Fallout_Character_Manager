@@ -135,6 +135,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<SkillModel, SkillModelDTO>(SkillModel, DtoType.Character);
             RegisterModelForSerialization<LimbConditionsModel, LimbConditionsModelDTO>(LimbConditionsModel, DtoType.Character);
             RegisterModelForSerialization<ConditionsModel, ConditionsModelDTO>(ConditionsModel, DtoType.Character);
+            RegisterModelForSerialization<WeaponsModel, WeaponsModelDTO>(WeaponsModel, DtoType.Character);
 
             RegisterModelForSerialization<XtrnlWeaponsModel, XtrnlWeaponsModelDTO>(XtrnlWeaponsModel, DtoType.Catalogue);
             //

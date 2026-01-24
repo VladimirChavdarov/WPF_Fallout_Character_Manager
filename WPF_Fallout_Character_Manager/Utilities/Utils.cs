@@ -117,5 +117,17 @@ namespace WPF_Fallout_Character_Manager.Utilities
                 collection.Add(item);
             }
         }
+
+        public static bool IdFromString(string s, out Guid id)
+        {
+            id = Guid.NewGuid();
+            if (s != "")
+            {
+                id = Guid.Parse(s);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

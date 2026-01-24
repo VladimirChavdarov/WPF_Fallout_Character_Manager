@@ -31,5 +31,6 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory.Serialization
         public bool Equipped { get; set; }
         public List<Guid> PropertyIds { get; set; } = new();
         public List<Guid> UpgradeIds { get; set; } = new();
+        public List<bool> BulletSlots { get; set; } = new();
     }
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using System.Windows.Shapes;
 using Accessibility;
 using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
@@ -19,6 +21,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlWeaponsModel : ModelBase, ISerializable<XtrnlWeaponsModelDTO>
     {
+        private static string meleePropertiesPath = "Resources/Spreadsheets/melee_weapons_properties.csv";
+        private static string rangedPropertiesPath = "Resources/Spreadsheets/ranged_weapons_properties.csv";
+        private static string meleeUpgradesPath = "Resources/Spreadsheets/melee_weapons_upgrades.csv";
+        private static string rangedUpgradesPath = "Resources/Spreadsheets/ranged_weapons_upgrades.csv";
+        private static string meleeWeaponsPath = "Resources/Spreadsheets/melee_weapons.csv";
+        private static string rangedWeaponsPath = "Resources/Spreadsheets/ranged_weapons.csv";
+
         // constructor
         public XtrnlWeaponsModel(XtrnlAmmoModel xtrnlAmmoModel)
         {
@@ -26,6 +35,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Weapons = new ObservableCollection<Weapon>();
             WeaponProperties = new ObservableCollection<WeaponProperty>();
             WeaponUpgrades = new ObservableCollection<WeaponUpgrade>();
+
+            UpdateCSVFilesIdFields(meleePropertiesPath);
+            UpdateCSVFilesIdFields(rangedPropertiesPath);
+            UpdateCSVFilesIdFields(meleeUpgradesPath);
+            UpdateCSVFilesIdFields(rangedUpgradesPath);
 
             // upload melee weapon properties
             UploadMeleeWeaponsPropertiesFromCSV();
@@ -58,18 +72,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         private void UploadMeleeWeaponsPropertiesFromCSV()
         {
-            var weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons_properties.csv");
+            var weaponPropLines = File.ReadAllLines(meleePropertiesPath);
             foreach (var line in weaponPropLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 2)
+                if (parts.Length < 3)
                     continue;
 
+                _missingIds &= !Utils.IdFromString(parts[2], out Guid id);
+
                 WeaponProperty property = new WeaponProperty(
+                    id,
                     WeaponType.Melee,
                     parts[0],
-                    parts[1],
-                    true
+                    parts[1]
                     );
                 WeaponProperties.Add(property);
             }
@@ -77,18 +93,20 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void UploadRangedWeaponsPropertiesFromCSV()
         {
-            var weaponPropLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_properties.csv");
+            var weaponPropLines = File.ReadAllLines(rangedPropertiesPath);
             foreach (var lines in weaponPropLines.Skip(1))
             {
                 var parts = lines.Split(";");
-                if (parts.Length < 2)
+                if (parts.Length < 3)
                     continue;
 
+                _missingIds |= !Utils.IdFromString(parts[2], out Guid id);
+
                 WeaponProperty property = new WeaponProperty(
+                    id,
                     weaponType: WeaponType.Ranged,
                     name: parts[0],
-                    value: parts[1],
-                    true
+                    value: parts[1]
                     );
                 WeaponProperties.Add(property);
             }
@@ -96,22 +114,24 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void UploadMeleeWeaponsUpgradesFromCSV()
         {
-            var weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons_upgrades.csv");
+            var weaponUpgLines = File.ReadAllLines(meleeUpgradesPath);
             foreach (var line in weaponUpgLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 2)
+                if (parts.Length < 4)
                     continue;
 
+                _missingIds |= !Utils.IdFromString(parts[3], out Guid id);
+
                 WeaponUpgrade upgrade = new WeaponUpgrade(
+                    id,
                     weaponType: WeaponType.Melee,
                     name: parts[0],
                     costMultiplier: parts[1],
                     timeToEquip: "5 minutes.",
-                    slotCost: Int32.Parse(parts[2]),
-                    value: parts[3],
-                    equipRequirement: "Any melee weapon.",
-                    true
+                    slotCost: 1,
+                    value: parts[2],
+                    equipRequirement: "Any melee weapon."
                     );
                 WeaponUpgrades.Add(upgrade);
             }
@@ -119,22 +139,25 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void UploadRangedWeaponsUpgradesFromCSV()
         {
-            var weaponUpgLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons_upgrades.csv");
+            var weaponUpgLines = File.ReadAllLines(rangedUpgradesPath);
             foreach (var line in weaponUpgLines.Skip(1))
             {
                 var parts = line.Split(';');
-                if (parts.Length < 2)
+                if (parts.Length < 6)
                     continue;
 
+                _missingIds |= !Utils.IdFromString(parts[5], out Guid id);
+                int slotCost = Int32.Parse(Utils.Between(parts[3], "Mod Slot Total: ", "."));
+
                 WeaponUpgrade upgrade = new WeaponUpgrade(
+                    id,
                     weaponType: WeaponType.Ranged,
                     name: parts[0],
                     costMultiplier: parts[1],
                     timeToEquip: parts[2],
-                    slotCost: Int32.Parse(parts[3]),
-                    value: parts[4],
-                    equipRequirement: parts[5],
-                    true
+                    slotCost: slotCost,
+                    value: parts[3],
+                    equipRequirement: parts[4]
                     );
                 WeaponUpgrades.Add(upgrade);
             }
@@ -142,7 +165,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void UploadMeleeWeaponsFromCSV()
         {
-            var weaponLines = File.ReadAllLines("Resources/Spreadsheets/melee_weapons.csv");
+            var weaponLines = File.ReadAllLines(meleeWeaponsPath);
             foreach (var line in weaponLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -215,7 +238,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void UploadRangedWeaponsFromCSV()
         {
-            var weaponLines = File.ReadAllLines("Resources/Spreadsheets/ranged_weapons.csv");
+            var weaponLines = File.ReadAllLines(rangedWeaponsPath);
             foreach (var line in weaponLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -261,7 +284,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     WeaponProperty newProperty = WeaponProperties.FirstOrDefault(x => trimmedProperty == x.Name && x.WeaponType == WeaponType.Ranged);
                     if(newProperty == null)
                     {
-                        newProperty = new WeaponProperty(WeaponType.Ranged, trimmedProperty, "This specifies another property the weapon has.", true);
+                        _missingIds |= !Utils.IdFromString("", out Guid id);
+                        newProperty = new WeaponProperty(id, WeaponType.Ranged, trimmedProperty, "This specifies another property the weapon has.");
+                        AddCSVLine(rangedPropertiesPath, newProperty.Name + ";" + newProperty.Value + ";" + id.ToString());
                         WeaponProperties.Add(newProperty);
                     }
                     weapon.Properties.Add(newProperty);
@@ -321,6 +346,39 @@ namespace WPF_Fallout_Character_Manager.Models.External
             weapon.InitializeBulletSlots();
         }
 
+        // this will update fill in ids for any Property or Upgrade that didn't have one already.
+        private bool UpdateCSVFilesIdFields(string csvPath)
+        {
+            string[] fileLines = File.ReadAllLines(csvPath);
+
+            List<string> columnNames = fileLines[0].Split(';').ToList();
+            int idColumnIndex = columnNames.FindIndex(x => x.Equals("id", StringComparison.InvariantCultureIgnoreCase)); ;
+            if (idColumnIndex == -1)
+            {
+                return false;
+            }
+            
+            for(int i = 1; i < fileLines.Length; i++)
+            {
+                string[] parts = fileLines[i].Split(';');
+                if (parts[idColumnIndex] == "")
+                {
+                    Utils.IdFromString("", out Guid newId);
+                    parts[idColumnIndex] = newId.ToString();
+                    fileLines[i] = string.Join(";", parts);
+                }
+            }
+
+            File.WriteAllLines(csvPath, fileLines);
+            return true;
+        }
+
+        private void AddCSVLine(string csvPath, string csvLine)
+        {
+            string[] addition = { csvLine };
+            File.AppendAllLines(csvPath, addition);
+        }
+
         public XtrnlWeaponsModelDTO ToDto()
         {
             XtrnlWeaponsModelDTO result = new XtrnlWeaponsModelDTO();
@@ -372,6 +430,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // data
+        private bool _missingIds = false;
         public static ObservableCollection<string> WeaponTypes { get; set; }
         public static ObservableCollection<Weapon> Weapons { get; set; }
         public static ObservableCollection<WeaponProperty> WeaponProperties { get; set; }
@@ -482,7 +541,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Properties = new ObservableCollection<WeaponProperty>();
             Upgrades = new ObservableCollection<WeaponUpgrade>();
-            BulletSlots = new ObservableCollection<TypeWrap<bool>>(); // we assume a new weapon always comes with an empty magazine
+            BulletSlots = new ObservableCollection<TypeWrap<bool>>();
             CompatibleAmmos = new ObservableCollection<Ammo>();
 
             FromDto(dto);
@@ -827,6 +886,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 result.UpgradeIds.Add(upgrade.Id);
             }
+            foreach(var bulletSlot in BulletSlots)
+            {
+                result.BulletSlots.Add(bulletSlot.Value);
+            }
 
             return result;
         }
@@ -877,9 +940,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
             }
 
+            BulletSlots.Clear();
+            foreach(bool bulletSlot in wDto.BulletSlots)
+            {
+                BulletSlots.Add(bulletSlot);
+            }    
+
             SubscribeToPropertyChanged();
 
-            InitializeBulletSlots();
             ScaleWeaponWithDecay();
         }
         //
@@ -889,8 +957,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class WeaponProperty : ItemAttribute
     {
         // constructor
-        public WeaponProperty(WeaponType weaponType, string name = "NewProperty", string value = "", bool generateIdOnInit = false)
-            : base(name, value, generateIdOnInit)
+        public WeaponProperty(Guid id, WeaponType weaponType, string name = "NewProperty", string value = "")
+            : base(id, name, value)
         {
             _weaponType = weaponType;
         }
@@ -909,8 +977,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class WeaponUpgrade : ItemAttribute
     {
         // constructor
-        public WeaponUpgrade(WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="", bool generateIdOnInit = false)
-            : base(name, value, generateIdOnInit)
+        public WeaponUpgrade(Guid id, WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
+            : base(id, name, value)
         {
             WeaponType= weaponType;
             CostMultiplier = costMultiplier;

@@ -10,15 +10,17 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
 {
     // The children classes of this one are usually stuff like Properties and Upgrades. They are unique within the memory of the app,
     // the items simply reference the master list.
+    // Because of the simplicity of this class and its parent, it can be serialized without a designated DTO.
     public class ItemAttribute : LabeledValue<string>
     {
         // constructor
-        public ItemAttribute(string name = "NewItemAttribute", string value = "", bool generateIdOnInit = false) : base(name, value, value)
+        public ItemAttribute(Guid id, string name = "NewItemAttribute", string value = "") : base(name, value, value)
         {
-            if(generateIdOnInit)
-            {
-                Id = Guid.NewGuid();
-            }
+            Id = id;
+            //if(generateIdOnInit)
+            //{
+            //    Id = Guid.NewGuid();
+            //}
         }
         //
 
@@ -39,10 +41,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
         //
 
         // methods
-        //public void SetId(Guid id) // tva maj ne mi trqbva v krajna smetka
-        //{
-        //    Id = id;
-        //}
+        
         //
     }
 }

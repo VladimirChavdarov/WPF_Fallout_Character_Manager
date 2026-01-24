@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
-    class WeaponsModel : ModelBase
+    class WeaponsModel : ModelBase, ISerializable<WeaponsModelDTO>
     {
         // constructor
         public WeaponsModel(XtrnlWeaponsModel xtrnlWeaponsModel)
@@ -51,7 +53,29 @@ namespace WPF_Fallout_Character_Manager.Models
         //
 
         // methods
+        public void FromDto(WeaponsModelDTO dto, bool versionMismatch = false)
+        {
+            Weapons.Clear();
+            foreach(WeaponDTO wDto in dto.Weapons)
+            {
+                Weapons.Add(new Weapon(wDto));
+            }
+        }
 
+        public WeaponsModelDTO ToDto()
+        {
+            WeaponsModelDTO result = new WeaponsModelDTO();
+
+            foreach(Weapon weapon in Weapons)
+            {
+                if (weapon.ToDto() is not WeaponDTO wDto)
+                    throw new InvalidOperationException("Expected WeaponDTO");
+
+                result.Weapons.Add(wDto);
+            }
+
+            return result;
+        }
         //
 
         // data
