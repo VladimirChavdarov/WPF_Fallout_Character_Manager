@@ -8,6 +8,7 @@ using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Utilities;
 
@@ -15,13 +16,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlJunkModel : ModelBase
     {
+        private static readonly string junkComponentsPath = "Resources/Spreadsheets/junk_components.csv";
+        private static readonly string junkPath = "Resources/Spreadsheets/junk.csv";
+
         // constructor
         public XtrnlJunkModel()
         {
             JunkItems = new ObservableCollection<Junk>();
             JunkComponents = new ObservableCollection<JunkComponent>();
 
-            var junkComponentLines = File.ReadAllLines("Resources/Spreadsheets/junk_components.csv");
+            var junkComponentLines = File.ReadAllLines(junkComponentsPath);
             foreach (var line in junkComponentLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -48,7 +52,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 JunkItems.Add(componentItem);
             }
 
-            var junkLines = File.ReadAllLines("Resources/Spreadsheets/junk.csv");
+            var junkLines = File.ReadAllLines(junkPath);
             foreach (var line in junkLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -83,7 +87,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 componentString = componentString.Replace(amountString, "");
                 string componentName = componentString.Trim();
 
-                //JunkComponent componentRef = JunkComponents.FirstOrDefault(x => x.Name.BaseValue.Contains(componentName, StringComparison.InvariantCultureIgnoreCase));
                 JunkComponent componentRef = JunkComponents.FirstOrDefault(x => x.Name.BaseValue.Equals(componentName, StringComparison.InvariantCultureIgnoreCase));
                 if (componentRef != null)
                 {
@@ -108,11 +111,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             Components = new ObservableCollection<JunkComponent>();
 
-            Components.CollectionChanged += Components_CollectionChanged;
-            foreach(JunkComponent component in Components)
-            {
-                component.PropertyChanged += Component_PropertyChanged;
-            }
+            SubscribeToPropertyAndCollectionChanged();
         }
 
         public Junk(Junk other) : base(other)
@@ -122,18 +121,30 @@ namespace WPF_Fallout_Character_Manager.Models.External
             {
                 Components.Add(otherComponent.Clone());
             }
-            foreach (JunkComponent component in Components)
-            {
-                component.PropertyChanged += Component_PropertyChanged;
-            }
-
-            Components.CollectionChanged += Components_CollectionChanged;
+            SubscribeToPropertyAndCollectionChanged();
             ConstructNote();
+        }
+
+        public Junk(JunkDTO dto)
+        {
+            Components = new ObservableCollection<JunkComponent>();
+            FromDto(dto);
         }
         //
 
         // methods
         public Junk Clone() => new Junk(this);
+
+        private void SubscribeToPropertyAndCollectionChanged()
+        {
+            Components.CollectionChanged -= Components_CollectionChanged;
+            Components.CollectionChanged += Components_CollectionChanged;
+            foreach (JunkComponent component in Components)
+            {
+                component.PropertyChanged -= Component_PropertyChanged;
+                component.PropertyChanged += Component_PropertyChanged;
+            }
+        }
 
         public override void ConstructNote()
         {
@@ -208,6 +219,36 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ConstructNote();
         }
+
+        public override ItemDTO ToDto()
+        {
+            JunkDTO result = new JunkDTO();
+
+            UpdateItemDTO(result);
+
+            foreach(var component in Components)
+            {
+                result.JunkComponents.Add(component.ToDto());
+            }
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<JunkDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            Components.Clear();
+            foreach(ItemDTO componentDto in typedDto.JunkComponents)
+            {
+                Components.Add(new JunkComponent(componentDto));
+            }
+
+            SubscribeToPropertyAndCollectionChanged();
+            ConstructNote();
+        }
         //
 
         // members
@@ -237,10 +278,27 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public JunkComponent(string name = "NewJunkComponent", int cost = 0, float load = 0.0f) : base(name, cost, 0, load) { }
         
         public JunkComponent(JunkComponent other) : base(other) { }
+
+        public JunkComponent(ItemDTO dto)
+        {
+            FromDto(dto);
+        }
         //
 
         // methods
         public JunkComponent Clone() => new JunkComponent(this);
+
+        public override ItemDTO ToDto()
+        {
+            ItemDTO result = new ItemDTO();
+            UpdateItemDTO(result);
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            base.FromDto(dto, versionMismatch);
+        }
         //
     }
 }

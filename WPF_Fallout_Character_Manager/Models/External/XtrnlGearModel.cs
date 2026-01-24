@@ -6,20 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
     class XtrnlGearModel : ModelBase
     {
+        private static readonly string gearPath = "Resources/Spreadsheets/gear.csv";
+        private static readonly string magazinesPath = "Resources/Spreadsheets/magazine.csv";
+
         // constructor
         public XtrnlGearModel()
         {
             GearItems = new ObservableCollection<Gear>();
 
             // gear
-            var gearLines = File.ReadAllLines("Resources/Spreadsheets/gear.csv");
+            var gearLines = File.ReadAllLines(gearPath);
             foreach (var line in gearLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -39,7 +44,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             //
 
             // magazines
-            var magazineLines = File.ReadAllLines("Resources/Spreadsheets/magazine.csv");
+            var magazineLines = File.ReadAllLines(magazinesPath);
             foreach (var line in magazineLines.Skip(1))
             {
                 var parts = line.Split(';');
@@ -87,10 +92,41 @@ namespace WPF_Fallout_Character_Manager.Models.External
             CanBeEquippedOrFilled = other.CanBeEquippedOrFilled;
             EquippedOrFull = other.EquippedOrFull;
         }
+
+        public Gear(GearDTO dto)
+        {
+            FromDto(dto);
+        }
         //
 
         // methods
         public Gear Clone() => new Gear(this);
+
+        public override ItemDTO ToDto()
+        {
+            GearDTO result = new GearDTO();
+
+            UpdateItemDTO(result);
+
+            result.LoadEquippedOrFull = LoadEquippedOrFull.ToDto();
+            result.LoadUnequippedOrEmpty = LoadUnequippedOrEmpty.ToDto();
+            result.CanBeEquippedOrFilled = CanBeEquippedOrFilled;
+            result.EquippedOrFull = EquippedOrFull;
+
+            return result;
+        }
+
+        public override void FromDto(ItemDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<GearDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            LoadEquippedOrFull = new ModFloat(typedDto.LoadEquippedOrFull);
+            LoadUnequippedOrEmpty = new ModFloat(typedDto.LoadUnequippedOrEmpty);
+            CanBeEquippedOrFilled = typedDto.CanBeEquippedOrFilled;
+            EquippedOrFull = typedDto.EquippedOrFull;
+        }
         //
 
         // members

@@ -17,5 +17,7 @@ namespace WPF_Fallout_Character_Manager.Models.Serialization
         public List<AidDTO> AidItems { get; set; } = new();
         public List<ExplosiveDTO> Explosives { get; set; } = new();
         public List<NourishmentDTO> Nourishment { get; set; } = new();
+        public List<GearDTO> GearItems { get; set; } = new();
+        public List<JunkDTO> JunkItems { get; set; } = new();
     }
 }

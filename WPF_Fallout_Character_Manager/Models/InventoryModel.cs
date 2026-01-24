@@ -59,6 +59,16 @@ namespace WPF_Fallout_Character_Manager.Models
                 var typedDto = Utils.EnsureDtoType<NourishmentDTO>(nourishment.ToDto());
                 result.Nourishment.Add(typedDto);
             }
+            foreach (Gear gear in GearItems)
+            {
+                var typedDto = Utils.EnsureDtoType<GearDTO>(gear.ToDto());
+                result.GearItems.Add(typedDto);
+            }
+            foreach (Junk junk in JunkItems)
+            {
+                var typedDto = Utils.EnsureDtoType<JunkDTO>(junk.ToDto());
+                result.JunkItems.Add(typedDto);
+            }
 
             return result;
         }
@@ -84,6 +94,16 @@ namespace WPF_Fallout_Character_Manager.Models
             {
                 Nourishment.Add(new Nourishment(nourishmentDTO));
             }
+            GearItems.Clear();
+            foreach (GearDTO gearDto in dto.GearItems)
+            {
+                GearItems.Add(new Gear(gearDto));
+            }
+            JunkItems.Clear();
+            foreach (JunkDTO junkDto in dto.JunkItems)
+            {
+                JunkItems.Add(new Junk(junkDto));
+            }
         }
         //
 
@@ -102,6 +122,7 @@ namespace WPF_Fallout_Character_Manager.Models
             set
             {
                 Update(ref _carryLoad, value);
+                OnPropertyChanged(nameof(IsOverencumbered));
             }
         }
 
@@ -112,6 +133,7 @@ namespace WPF_Fallout_Character_Manager.Models
             set
             {
                 Update(ref _currentLoad, value);
+                OnPropertyChanged(nameof(IsOverencumbered));
             }
         }
 
