@@ -7,13 +7,10 @@ on:
 
 env:
   PROJECT_PATH: WPF_Fallout_Character_Manager/WPF_Fallout_Character_Manager.csproj
-  RUNTIME: win-x64
-  CONFIGURATION: Release
 
 jobs:
   deploy:
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -21,32 +18,22 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Restore
-        run: dotnet restore ${{ env.PROJECT_PATH }} --runtime ${{ env.RUNTIME }}
+      - run: dotnet restore ${{ env.PROJECT_PATH }}
 
-      - name: Build
-        run: dotnet build ${{ env.PROJECT_PATH }} -c ${{ env.CONFIGURATION }} --runtime ${{ env.RUNTIME }} --no-restore
+      - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
-      - name: Publish
-        run: dotnet publish ${{ env.PROJECT_PATH }} \
-          -c ${{ env.CONFIGURATION }} \
-          -r ${{ env.RUNTIME }} \
-          --self-contained true \
-          -p:PublishSingleFile=true \
-          --no-build
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-build
 
-      - name: Create Release
-        uses: actions/create-release@v1
+      - uses: actions/create-release@v1
+        id: create_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
 
-      - name: Upload EXE
-        uses: csexton/release-asset-action@v2
+      - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: |
-            WPF_Fallout_Character_Manager/bin/Release/net8.0-windows/win-x64/publish/*.exe
+          pattern: WPF_Fallout_Character_Manager/bin/Release/net8.0-windows/win-x64/publish/*.exe
           release-url: ${{ steps.create_release.outputs.upload_url }}
