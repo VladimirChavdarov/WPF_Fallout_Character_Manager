@@ -177,7 +177,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
     public class TPCard : LabeledString
     {
         // constructor
-        public TPCard() : base() { }
+        public TPCard() : base()
+        {
+            Prerequisite = "None";
+            ExtraDescription = "";
+            PickImageFromCardType = false;
+            CardType = "None";
+            ImagePath = "";
+            ShowDescription = false;
+
+            ConstructNote();
+            OnPropertyChanged(nameof(DescriptionToShow));
+        }
 
         public TPCard(string name = "", string description = "", string extraDescription = "", string prerequisite = "", string cardType = "None", string imagePath = "")
             : base(name, description, description)
@@ -302,11 +313,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
         public override void ConstructNote()
         {
             Note = "";
-            if(!Prerequisite.Equals("none", StringComparison.InvariantCultureIgnoreCase))
-            {
+
+            if(!Prerequisite.Equals("none", StringComparison.InvariantCultureIgnoreCase) && Prerequisite != "")
                 Note += "Requirement: " + Prerequisite + "\n\n";
-            }
-            Note += Value + "\n\nWild Wasteland: " + ExtraDescription;
+
+            Note += Value;
+
+            if(ExtraDescription != "")
+                Note += "\n\nWild Wasteland: " + ExtraDescription;
         }
         //
 
@@ -373,11 +387,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public override void ConstructNote()
         {
-            Note = "Requirement: " + Prerequisite + "\nMax Stacks: " + MaxStacks + "\n\n" + Value;
+            Note = "";
+
+            if (Prerequisite != "")
+                Note += "Requirement: " + Prerequisite + "\n";
+            else
+                Note += "Requirement: None";
+
+            Note += "Max Stacks: " + MaxStacks + "\n\n" + Value;
+
             if(ExtraDescription != "")
-            {
                 Note += "\n\nRepeat: " + ExtraDescription;
-            }
         }
         //
 

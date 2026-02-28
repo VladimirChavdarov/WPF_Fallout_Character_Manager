@@ -231,8 +231,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             dialog.Filter = "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
             if (dialog.ShowDialog() == true)
             {
-                NewTrait.PickImageFromCardType = false;
-                NewTrait.ImagePath = dialog.FileName;
+                if (NewTrait != null)
+                {
+                    NewTrait.PickImageFromCardType = false;
+                    NewTrait.ImagePath = dialog.FileName;
+                }
+                else if(NewPerk != null)
+                {
+                    NewPerk.PickImageFromCardType = false;
+                    NewPerk.ImagePath = dialog.FileName;
+                }
             }
         }
 
