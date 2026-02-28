@@ -281,6 +281,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void PostLoadUpdate()
         {
+            BioViewModel.UpdateImage();
             SurvivalModel.UpdateModel(SPECIALModel);
             CombatModel.UpdateModel(SPECIALModel, BioModel.Level);
             SkillModel.UpdateModel(SPECIALModel);

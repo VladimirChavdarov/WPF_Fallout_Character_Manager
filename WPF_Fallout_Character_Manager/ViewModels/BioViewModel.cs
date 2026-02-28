@@ -95,6 +95,17 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             _bioModel = bioModel;
 
+            UpdateImage();
+
+            FlipKarmaCapCommand = new RelayCommand(FlipKarmaCap);
+            AddKarmaCapCommand = new RelayCommand(AddKarmaCap);
+            RemoveKarmaCapCommand = new RelayCommand(RemoveKarmaCap);
+        }
+        //
+
+        // methods
+        public void UpdateImage()
+        {
             if (!string.IsNullOrEmpty(_bioModel?.ImageSource))
             {
                 try
@@ -112,13 +123,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     Console.WriteLine($"Failed to load image: {ex.Message}");
                 }
             }
-
-            FlipKarmaCapCommand = new RelayCommand(FlipKarmaCap);
-            AddKarmaCapCommand = new RelayCommand(AddKarmaCap);
-            RemoveKarmaCapCommand = new RelayCommand(RemoveKarmaCap);
         }
         //
-
-        
     }
 }
