@@ -373,9 +373,40 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
             foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
 
+            WeaponsModel.Weapons.CollectionChanged += ItemModel_CollectionChanged;
+            ArmorModel.Armors.CollectionChanged += ItemModel_CollectionChanged;
+            ArmorModel.PowerArmors.CollectionChanged += ItemModel_CollectionChanged;
+            AmmoModel.Ammos.CollectionChanged += ItemModel_CollectionChanged;
+            InventoryModel.AidItems.CollectionChanged += ItemModel_CollectionChanged;
+            InventoryModel.Nourishment.CollectionChanged += ItemModel_CollectionChanged;
+            InventoryModel.GearItems.CollectionChanged += ItemModel_CollectionChanged;
+            InventoryModel.JunkItems.CollectionChanged += ItemModel_CollectionChanged;
+
             foreach (Item i in FullInventory)
             {
                 i.PropertyChanged += InventoryItem_PropertyChanged;
+            }
+        }
+
+        private void ItemModel_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if(e.NewItems != null)
+            {
+                foreach(Item item in e.NewItems)
+                {
+                    item.PropertyChanged += InventoryItem_PropertyChanged;
+                    FullInventory.Add(item);
+                    FullInventoryView.Refresh();
+                }
+            }
+            if(e.OldItems != null)
+            {
+                foreach (Item item in e.OldItems)
+                {
+                    item.PropertyChanged -= InventoryItem_PropertyChanged;
+                    FullInventory.Remove(item);
+                    FullInventoryView.Refresh();
+                }
             }
         }
 
@@ -498,14 +529,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
             {
                 ItemToAddToInventory.CanBeEdited = true;
-                if(ItemToAddToInventory is Item item)
-                {
-                    item.PropertyChanged += InventoryItem_PropertyChanged;
-                }
-
                 collection.Add(ItemToAddToInventory);
-                FullInventory.Add(ItemToAddToInventory);
-                FullInventoryView.Refresh();
             }
             else
             {
@@ -521,10 +545,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
             {
                 collection.Remove(SelectedItem);
-                if(SelectedItem is  Item item)
-                {
-                    FullInventory.Remove(item);
-                }
             }
         }
 
@@ -627,11 +647,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 dynamic selectedItem = SelectedItem;
                 Item newItem = selectedItem.Clone();
-                newItem.PropertyChanged += InventoryItem_PropertyChanged;
-
                 collection.Add(newItem);
-                FullInventory.Add(newItem);
-                FullInventoryView.Refresh();
             }
             else
             {

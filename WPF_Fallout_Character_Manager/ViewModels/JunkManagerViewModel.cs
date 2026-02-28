@@ -155,6 +155,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RemoveJunkComponentFromSpendingListCommand = new RelayCommand(RemoveJunkComponentFromSpendingList);
             SelectOrDeselectJunkCommand = new RelayCommand(SelectOrDeselectJunk);
             AutoSelectJunkCommand = new RelayCommand(AutoSelectJunk);
+            AcceptOutputCommand = new RelayCommand(AcceptOutput);
         }
 
         //
@@ -467,6 +468,32 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
 
             OnPropertyChanged(nameof(ShowAcceptButton));
+        }
+
+        public RelayCommand AcceptOutputCommand { get; private set; }
+        private void AcceptOutput(object _ = null)
+        {
+            foreach(SelectableJunk sJunk in Output)
+            {
+                switch(sJunk.JunkAction)
+                {
+                case JunkAction.ForAdd:
+                {
+                    InventoryModel.JunkItems.Add(sJunk.Junk.Clone());
+                    break;
+                }
+                case JunkAction.ForRemove:
+                {
+                    InventoryModel.JunkItems.Remove(sJunk.Junk);
+                    break;
+                }
+                }
+            }
+
+            ComponentsToSpend.Clear();
+            SelectedJunkItems.Clear();
+            Output.Clear();
+            SelectableJunkItems.Clear();
         }
         //
     }

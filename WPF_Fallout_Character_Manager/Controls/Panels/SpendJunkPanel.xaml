@@ -228,7 +228,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     Visibility="{Binding ShowAcceptButton}"
-                    Command="{Binding DataContext.OpenConditionsModalWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    Command="{Binding DataContext.AcceptOutputCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
                 <Label
                     Style="{StaticResource FalloutDefaultLabel}"
