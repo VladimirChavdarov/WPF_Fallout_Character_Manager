@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Transactions;
+using Microsoft.Win32;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.External.Serialization;
@@ -13,6 +14,7 @@ using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Models.Serialization;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 using WPF_Fallout_Character_Manager.ViewModels.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
@@ -78,11 +80,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // serialization
         private readonly Dictionary<Type, object> _serializableModels = new();
         private readonly Dictionary<Type, object> _serializableXtrnlModels = new();
-        private readonly Dictionary<DtoType, string> _serializationFilePaths = new Dictionary<DtoType, string>
-        {
-            { DtoType.Character, "character.json" },
-            { DtoType.Catalogue, "catalogue.json" }
-        };
+        //private readonly Dictionary<DtoType, string> _serializationFilePaths = new Dictionary<DtoType, string>
+        //{
+        //    { DtoType.Character, "character.json" },
+        //    { DtoType.Catalogue, "catalogue.json" }
+        //};
+        private string _serializationCharacterPath;
+        private string _serializationCataloguePath = "catalogue.fct";
         //
 
         // Constructor
@@ -187,9 +191,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         bool SerializeCharacterJson()
         {
+            if (!CreateSaveFileDialog("Save Character", BioModel.Name, ".fch", out string filePath))
+                return false;
+
             CharacterDTO characterDto = CreateCharacterDto();
             string characterJson = JsonSerializer.Serialize(characterDto, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(_serializationFilePaths[DtoType.Character], characterJson);
+            File.WriteAllText(filePath, characterJson);
 
             return true;
         }
@@ -198,20 +205,23 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             CatalogueDTO catalogueDto = CreateCatalogueDTO();
             string catalogueJson = JsonSerializer.Serialize(catalogueDto, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(_serializationFilePaths[DtoType.Catalogue], catalogueJson);
+            File.WriteAllText(_serializationCataloguePath, catalogueJson);
 
             return true;
         }
 
         bool DeserializeCharacterJson(out string error)
         {
-            if (!File.Exists(_serializationFilePaths[DtoType.Character]))
+            if (!CreateOpenFileDialog("Load Character", ".fch", out string filePath, out error))
+                return false;
+
+            if (!File.Exists(filePath))
             {
-                error = "Cannot find file: " + _serializationFilePaths[DtoType.Character];
+                error = "Cannot find file: " + filePath;
                 return false;
             }
 
-            string json = File.ReadAllText(_serializationFilePaths[DtoType.Character]);
+            string json = File.ReadAllText(filePath);
             CharacterDTO dto = new CharacterDTO();
             float appVersion = dto.Version;
             dto = JsonSerializer.Deserialize<CharacterDTO>(json);
@@ -238,13 +248,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         bool DeserializeCatalogueJson(out string error)
         {
-            if (!File.Exists(_serializationFilePaths[DtoType.Catalogue]))
+            if (!File.Exists(_serializationCataloguePath))
             {
-                error = "Cannot find file: " + _serializationFilePaths[DtoType.Catalogue];
+                error = "Cannot find file: " + _serializationCataloguePath;
                 return false;
             }
 
-            string json = File.ReadAllText(_serializationFilePaths[DtoType.Catalogue]);
+            string json = File.ReadAllText(_serializationCataloguePath);
             CatalogueDTO dto = new CatalogueDTO();
             float appVersion = dto.Version;
             dto = JsonSerializer.Deserialize<CatalogueDTO>(json);
@@ -309,6 +319,49 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             PostLoadUpdate();
 
+            return true;
+        }
+
+        private bool CreateSaveFileDialog(string title, string defaultFileName, string fileExtension, out string filePath)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Title = title,
+                Filter = "(*" + fileExtension + ")|*" + fileExtension,
+                DefaultExt = fileExtension,
+                //AddExtension = true,
+                FileName = defaultFileName
+            };
+
+            if (dialog.ShowDialog() != true)
+            {
+                filePath = "";
+                return false;
+            }
+
+            filePath = dialog.FileName;
+            return true;
+        }
+
+        private bool CreateOpenFileDialog(string title, string fileExtension, out string filePath, out string error)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = title,
+                Filter = "(*" + fileExtension + ")|*" + fileExtension,
+                DefaultExt = fileExtension,
+                CheckFileExists = true
+            };
+
+            if (dialog.ShowDialog() != true)
+            {
+                filePath = dialog.FileName;
+                error = "User cancelled.";
+                return false;
+            }
+
+            filePath = dialog.FileName;
+            error = "";
             return true;
         }
         //
