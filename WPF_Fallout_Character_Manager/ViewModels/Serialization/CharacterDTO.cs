@@ -10,7 +10,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.Serialization
 {
     sealed class CharacterDTO
     {
-        public float Version { get; set; } = 1.1f;
+        public float Version { get; set; } = 1.2f;
 
         public Dictionary<string, JsonElement> ModelDtos { get; set; } = new();
         //public BioModelDTO BioModelDto { get; set; }

@@ -42,7 +42,6 @@ namespace WPF_Fallout_Character_Manager.Models
             InventoryModelDTO result = new InventoryModelDTO();
             result.Caps = Caps.ToDto();
             result.CarryLoad = CarryLoad.ToDto();
-            result.CurrentLoad = CurrentLoad.ToDto();
 
             foreach(Aid aid in AidItems)
             {
@@ -77,7 +76,6 @@ namespace WPF_Fallout_Character_Manager.Models
         {
             Caps = new ModInt(dto.Caps);
             CarryLoad = new ModFloat(dto.CarryLoad);
-            CurrentLoad = new ModFloat(dto.CurrentLoad);
 
             AidItems.Clear();
             foreach(AidDTO aidDto in dto.AidItems)

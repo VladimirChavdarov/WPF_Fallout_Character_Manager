@@ -12,7 +12,6 @@ namespace WPF_Fallout_Character_Manager.Models.Serialization
     {
         public ModValueDTO<int> Caps { get; set; }
         public ModValueDTO<float> CarryLoad { get; set; }
-        public ModValueDTO<float> CurrentLoad { get; set; }
 
         public List<AidDTO> AidItems { get; set; } = new();
         public List<ExplosiveDTO> Explosives { get; set; } = new();
