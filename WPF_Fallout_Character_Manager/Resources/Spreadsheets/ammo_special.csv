@@ -1,35 +1,35 @@
 Round Type;Cost Modifier;Effect;Type;id
-Armor Piercing;x3;If the weapon’s damage is dealt to a creature’s hit points, it ignores up to 8 points of DT and the creature’s armor gains a level of decay.;.308, .50, 5.56mm, 5mm;
-Bean Bag;x0.5;Damage is 1d4+1, no agility mod. Target takes 1 fatigue. If it brings target to 0 HP, they heal 1 unless hit to head/eyes.;12 gauge;
-Buck;x0.75;Weapon’s range modifiers are both increased by 4 and it loses its spread property.;12 gauge, 20 gauge;
-Buck Magnum;x3;Damage +3, ignores 3 DT, range mods +4. Loses spread and gains decay every second attack.;12 gauge, 20 gauge;
-Cap Shot;x4;Gains Destructive and Mangle properties. Ignores 2 DT.;12 gauge;
-Dragon’s Breath;x2;Half damage, gains Incendiary.;12 gauge;
-Explosive;x6;3d6 explosive to each target in 5 ft, target prone unless Strength save.;.308, .50;
-Flechette;x2;Damage -1 but ignores up to 6 DT.;12 gauge;
-FMJ, piercing;x3;Damage +2. If target brought to 0 HP, hits next creature in line.;.308, .357, 5mm, 9mm, 10mm, 12.7mm;
-Hollow Point;x4;Deals extra crit damage if HP hit. If damage reduced by DT, loses crit bonus and is halved.;.308, .357, .44, .45, .45-70, 5mm, 5.56mm, 9mm, 10mm, 12.7mm;
-JFP;x3;Gains Destructive.;.357;
-JSP;x2;Gains Breakable and +3 damage.;.308, 5mm;
-Incendiary;x4;Gains Incendiary.;.50, Missile;
-Match;x2;+5 damage, short range mod -2.;.308, 5.56mm;
-Magnum;x3;+3 damage, ignores 3 DT, +2 to range mods. Gains decay every second attack.;12 gauge, 20 gauge;
-Rubber;x0.5;Damage 1d4+2, no agility mod. Target gets 1 fatigue. If brought to 0 HP, heals 1 unless to head/eyes.;9mm, 10mm, 5mm;
-Slug;x4;Range mods tripled, gains Accurate and Destructive, loses Spread and Powerful.;12 gauge, 20 gauge;
-Pulse Slug;x6;Same as Slug, but double damage to Robot/Power Armor.;12 gauge, 20 gauge;
-Bulk;x0.5;Damage -3. Gains Durable.;Energy Cell, Microfusion Cell;
-Optimized;x2;+1 damage, ignores 1 DT.;Energy Cell, Microfusion Cell;
-Overcharged;x3;+2 damage, ignores 2 DT. Gains Breakable.;Energy Cell, Microfusion Cell;
-Max Charge;x5;+4 damage, ignores 4 DT. Gains Breakable and decay every 3rd attack.;Energy Cell, Microfusion Cell;
-Stimpak Loader;c25;This syringe allows you to load it with a stimpak, the target gains the effects of the stimpak.;Syringe;
-Chem Loader;c25;This syringe allows you to load it with a chem, the target gains the effects of the chem. Note: You cannot load a chem that has an inhaler.;Syringe;
-Radscorpion Venom;c35;Target becomes poisoned fro 3 turns and takes 1d6 poison damage at the start of each of their turns.;Syringe;
-Endangerol;c40;Target's DT is reduced by 3 for 1 minute.;Syringe;
-Yellow Belly;c50;Target becomes frightened for 3 rounds.;Syringe;
-Berserk;c55;Target spends all of its AP on its next turn to attack the nearest creature to it.;Syringe;
-Hemorrhage;c75;Target gains one level of bleeding.;Syringe;
-Lock Joint;c85;Target becomes slowed for 2 turns.;Syringe;
-Sclerosis;c110;Target becomes Deafened for 3 rounds.;Syringe;
-Myopic Serum;c160;Target becomes Blinded for 3 rounds.;Syringe;
-Mind Cloud;c175;All creatures beyond 30 feet of the target creature become invisible to them for 1 minute.;Syringe;
-Tranquilizer;c200;If the target's Endurance is a 4 or below, they fall unconscious for 1 hour. Otherwise, they become Dazed for their next two turns and fall unconscious for 1 hour at the end of their third turn. Creatures dazed in this way can remove this condition and prevent falling unconscious by using any chem with the stimulant property.;Syringe;
+Armor Piercing;x3;If the weaponï¿½s damage is dealt to a creatureï¿½s hit points, it ignores up to 8 points of DT and the creatureï¿½s armor gains a level of decay.;.308, .50, 5.56mm, 5mm;a41a3a48-7610-4232-b2bd-7b01ba77ee3a
+Bean Bag;x0.5;Damage is 1d4+1, no agility mod. Target takes 1 fatigue. If it brings target to 0 HP, they heal 1 unless hit to head/eyes.;12 gauge;e40bf05f-5190-4094-9921-39c17a60eb7c
+Buck;x0.75;Weaponï¿½s range modifiers are both increased by 4 and it loses its spread property.;12 gauge, 20 gauge;5eb5e8ca-9638-4e19-b202-328f27cc5185
+Buck Magnum;x3;Damage +3, ignores 3 DT, range mods +4. Loses spread and gains decay every second attack.;12 gauge, 20 gauge;7e688e58-12b1-4b1f-a6b6-2943329f3fd1
+Cap Shot;x4;Gains Destructive and Mangle properties. Ignores 2 DT.;12 gauge;dab5e78f-d048-4cd0-96d8-1502d5846421
+Dragonï¿½s Breath;x2;Half damage, gains Incendiary.;12 gauge;d165df9b-58cb-4c4e-86e2-76e9dff3bd95
+Explosive;x6;3d6 explosive to each target in 5 ft, target prone unless Strength save.;.308, .50;8ee1ba7b-ee74-4f95-9090-8e8c4edb59a2
+Flechette;x2;Damage -1 but ignores up to 6 DT.;12 gauge;5fba798e-6299-4bb6-b45c-85d324864ecc
+FMJ, piercing;x3;Damage +2. If target brought to 0 HP, hits next creature in line.;.308, .357, 5mm, 9mm, 10mm, 12.7mm;fc5f5545-7900-4346-b2f7-05f6fcc9478b
+Hollow Point;x4;Deals extra crit damage if HP hit. If damage reduced by DT, loses crit bonus and is halved.;.308, .357, .44, .45, .45-70, 5mm, 5.56mm, 9mm, 10mm, 12.7mm;d8debba2-20a9-412c-a069-e99544cfd1ea
+JFP;x3;Gains Destructive.;.357;67add7e7-8127-4067-8df6-884d1504e5c7
+JSP;x2;Gains Breakable and +3 damage.;.308, 5mm;0516a2fe-bad2-4b85-9abb-b5b613f7fd40
+Incendiary;x4;Gains Incendiary.;.50, Missile;62b91160-0332-44ee-ad2c-fb76a18c6bfd
+Match;x2;+5 damage, short range mod -2.;.308, 5.56mm;ea40f475-37a5-4933-8a10-463bf3ee2e14
+Magnum;x3;+3 damage, ignores 3 DT, +2 to range mods. Gains decay every second attack.;12 gauge, 20 gauge;b1014306-9075-41e6-a8dd-6a26151f5d52
+Rubber;x0.5;Damage 1d4+2, no agility mod. Target gets 1 fatigue. If brought to 0 HP, heals 1 unless to head/eyes.;9mm, 10mm, 5mm;108397ab-cb70-4ee0-912a-37d41ec13e47
+Slug;x4;Range mods tripled, gains Accurate and Destructive, loses Spread and Powerful.;12 gauge, 20 gauge;91bb201b-2550-4ee6-aad4-53db4127506a
+Pulse Slug;x6;Same as Slug, but double damage to Robot/Power Armor.;12 gauge, 20 gauge;3f6bd1ea-b23f-4778-8d0f-2160ccf23ea0
+Bulk;x0.5;Damage -3. Gains Durable.;Energy Cell, Microfusion Cell;fbe03d50-e813-4b85-907c-a804f465680a
+Optimized;x2;+1 damage, ignores 1 DT.;Energy Cell, Microfusion Cell;0af48594-684d-4945-8db9-0738e10541c2
+Overcharged;x3;+2 damage, ignores 2 DT. Gains Breakable.;Energy Cell, Microfusion Cell;2f77863c-e1be-4958-9bf0-486836954d3c
+Max Charge;x5;+4 damage, ignores 4 DT. Gains Breakable and decay every 3rd attack.;Energy Cell, Microfusion Cell;91b014d8-afb2-438a-833d-6891768b760f
+Stimpak Loader;c25;This syringe allows you to load it with a stimpak, the target gains the effects of the stimpak.;Syringe;45e529b5-f01c-4ee2-8674-a365f0b9af88
+Chem Loader;c25;This syringe allows you to load it with a chem, the target gains the effects of the chem. Note: You cannot load a chem that has an inhaler.;Syringe;057917b2-9e38-458a-87a4-562c4de7b861
+Radscorpion Venom;c35;Target becomes poisoned fro 3 turns and takes 1d6 poison damage at the start of each of their turns.;Syringe;82a49e96-a4fa-48df-aaee-129462c7f850
+Endangerol;c40;Target's DT is reduced by 3 for 1 minute.;Syringe;91ceda4a-f732-4954-b1b5-0646ea7a99da
+Yellow Belly;c50;Target becomes frightened for 3 rounds.;Syringe;d2456a74-2118-4815-85e8-412dd9010ea4
+Berserk;c55;Target spends all of its AP on its next turn to attack the nearest creature to it.;Syringe;b07a59b5-871e-47b3-b223-72080157d7c6
+Hemorrhage;c75;Target gains one level of bleeding.;Syringe;89960e70-a096-4c41-8935-a037e9a09bc6
+Lock Joint;c85;Target becomes slowed for 2 turns.;Syringe;1b3522c1-c47c-4044-9e05-182aedd5b51c
+Sclerosis;c110;Target becomes Deafened for 3 rounds.;Syringe;85ace093-49bc-4949-9f60-9451a6efe138
+Myopic Serum;c160;Target becomes Blinded for 3 rounds.;Syringe;d820b4e2-692b-43b2-8e51-bb00bf4df6e7
+Mind Cloud;c175;All creatures beyond 30 feet of the target creature become invisible to them for 1 minute.;Syringe;cdd76338-5b51-4f79-81ff-b2fd0c82985f
+Tranquilizer;c200;If the target's Endurance is a 4 or below, they fall unconscious for 1 hour. Otherwise, they become Dazed for their next two turns and fall unconscious for 1 hour at the end of their third turn. Creatures dazed in this way can remove this condition and prevent falling unconscious by using any chem with the stimulant property.;Syringe;e929fa8e-1ec1-4afb-a93b-2bc9c68ba86b

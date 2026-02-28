@@ -7,3 +7,21 @@ Pulse Grenade;150;4;2d8 electricity;STR x 10;15ft. radius;Electromagnetic.;4
 Incendiary Grenade;125;5;2d6 explosive and 3d6 fire;STR x 10;5ft. / 15ft. radius;Deafening: 5ft. Incendiary.;3
 Cryogenic Grenade;125;4;2d6 explosive and 3d6 cold;STR x 10;5ft. / 10ft. radius;Deafening: 5ft. Freezing.;4
 Flash Bang;25;5;1 explosive;STR x 10;20ft. radius;Blinding: 20ft. Deafening: 20ft.;3
+Deafening: 5ft;This specifies another property the weapon has.;3ed4557d-3fbc-42af-8b35-84ca54e53307
+Blinding: 20ft;This specifies another property the weapon has.;9aa7cacb-7ac0-4d42-b7a6-93bee2cf8a8a
+Deafening: 20ft;This specifies another property the weapon has.;a2713a0f-cc21-4489-99af-a8477c34fb59
+Deafening: 5ft;This specifies another property the weapon has.;c6c046ac-2918-4c32-9fa4-43fecbba17d6
+Blinding: 20ft;This specifies another property the weapon has.;b2636286-d8ef-4722-9dfa-19f1518b7138
+Deafening: 20ft;This specifies another property the weapon has.;e69637cc-f1ee-4f33-966e-8107e36df1b7
+Deafening: 5ft;This specifies another property the weapon has.;3bea4fca-6765-4d28-aa71-3eb36a347721
+Blinding: 20ft;This specifies another property the weapon has.;4047defe-167a-4c74-a7e1-8574113c748b
+Deafening: 20ft;This specifies another property the weapon has.;d40cd7ba-3a1b-48aa-a2e8-b636a0869455
+Deafening: 5ft;This specifies another property the weapon has.;e872d16d-261c-4cf6-942a-9f39923d4b0e
+Blinding: 20ft;This specifies another property the weapon has.;79bdd738-dbb2-494a-b1b0-8e497453f988
+Deafening: 20ft;This specifies another property the weapon has.;409b2882-fecc-481e-99b3-5fd18a589913
+Deafening: 5ft;This specifies another property the weapon has.;1c5c93c1-84be-4a7c-9228-90bdf3f77c8f
+Blinding: 20ft;This specifies another property the weapon has.;e4cae4b6-1bbd-462e-826e-c9cdcc923a26
+Deafening: 20ft;This specifies another property the weapon has.;ec2661d3-b3e7-4809-9d11-15893c047407
+Deafening: 5ft;This specifies another property the weapon has.;60e9cbb2-5e00-48e5-982f-55715d31886f
+Blinding: 20ft;This specifies another property the weapon has.;0a09e839-b6c3-4b55-a489-7f971b099531
+Deafening: 20ft;This specifies another property the weapon has.;825c0897-39a8-4abb-b9f7-53bb69177c6f

@@ -1,14 +1,14 @@
 Special Property Name;Description;id
-Blinding;Each creature in the area of effect listed next to the properties name becomes blinded for a number of rounds equal to 4 - their Endurance ability modifier to a minimum of 1.;
-Deafening;Each creature in the area of effect listed next to the properties name becomes deafened for a number of rounds equal to 4 - their Endurance ability modifier to a minimum of 1.;
-Destructive;When you roll a 1 on the damage dice with an explosive that has this property, it is a 2 instead.;
-Detonator;An explosive with this property does not detonate after the allotted time. Instead, you can spend 3 AP on your turn to detonate the explosive so long as you are within the range noted next to the property’s name.;
-Dismember;When an explosive with this property deals damage to hit points of the creature in its first range, they gain two random leg conditions, or a random arm 79 condition if they are prone when the explosive detonates. If the explosive deals enough damage to bring the target creature to 0 hit points, the limb is severed instead.;
-Electromagnetic;When a robot, synth, or creature made of inorganic material takes damage from an explosive with this property, the damage is doubled for them.;
-Freezing;When a creature takes damage from an explosive with this property, they gain the Slowed condition until the end of their next turn.;
-Incendiary;When a creature takes damage from an explosive with this property, they gain the Burning condition.;
-Mangle;When a creature takes damage to their hit points from an explosive with this property, they gain the Bleeding condition.;
-Proximity;An explosive with this property does not detonate after any allotted time has passed. Instead, when a creature enters the proximity area of the explosive for the first time on a turn - it detonates at the end of that creature’s turn. Each explosive’s proximity area is a 10 foot radius.;
-Shattering;The explosive always detonates at the end of your turn regardless of your explosive roll.;
-Slow;An explosive with this property detonates after the allotted time noted next to the properties name has passed.;
-Smoke;When the explosive detonates, it creates a cloud of smoke in the area of effect. This smoke spreads around corners, the area is heavily obscured, and creatures within the smoke are blinded. The smoke lasts for 1 minute.;
+Blinding;Each creature in the area of effect listed next to the properties name becomes blinded for a number of rounds equal to 4 - their Endurance ability modifier to a minimum of 1.;09465e3e-08be-4554-9b74-a36565c9965c
+Deafening;Each creature in the area of effect listed next to the properties name becomes deafened for a number of rounds equal to 4 - their Endurance ability modifier to a minimum of 1.;d1b8d639-4593-4036-94b0-2a02b6392dc5
+Destructive;When you roll a 1 on the damage dice with an explosive that has this property, it is a 2 instead.;1467bcad-30b7-46b5-80cd-82fdb4797627
+Detonator;An explosive with this property does not detonate after the allotted time. Instead, you can spend 3 AP on your turn to detonate the explosive so long as you are within the range noted next to the propertyï¿½s name.;bd31bd10-3c71-4140-80a8-c4996b025ae8
+Dismember;When an explosive with this property deals damage to hit points of the creature in its first range, they gain two random leg conditions, or a random arm 79 condition if they are prone when the explosive detonates. If the explosive deals enough damage to bring the target creature to 0 hit points, the limb is severed instead.;873f5986-18bc-4d95-af37-bbca31438342
+Electromagnetic;When a robot, synth, or creature made of inorganic material takes damage from an explosive with this property, the damage is doubled for them.;b34a2501-27a5-4d9f-ac64-7e8b21a621da
+Freezing;When a creature takes damage from an explosive with this property, they gain the Slowed condition until the end of their next turn.;e6a187af-acb8-4a5f-aa08-ac737ed06f0f
+Incendiary;When a creature takes damage from an explosive with this property, they gain the Burning condition.;66396c51-9db4-454a-ba3a-7261cee7027b
+Mangle;When a creature takes damage to their hit points from an explosive with this property, they gain the Bleeding condition.;f0364148-37b5-411d-a0b6-e97be3f52c1b
+Proximity;An explosive with this property does not detonate after any allotted time has passed. Instead, when a creature enters the proximity area of the explosive for the first time on a turn - it detonates at the end of that creatureï¿½s turn. Each explosiveï¿½s proximity area is a 10 foot radius.;99015ff6-6cd4-4a24-ab38-bf7ce0f1790a
+Shattering;The explosive always detonates at the end of your turn regardless of your explosive roll.;ffda0384-2c18-48b5-91f8-10680c6eb8f9
+Slow;An explosive with this property detonates after the allotted time noted next to the properties name has passed.;9918b28d-b1cd-41be-8c4a-13bdb47a838b
+Smoke;When the explosive detonates, it creates a cloud of smoke in the area of effect. This smoke spreads around corners, the area is heavily obscured, and creatures within the smoke are blinded. The smoke lasts for 1 minute.;5491f300-a725-4ea0-831f-6a53574e6e33

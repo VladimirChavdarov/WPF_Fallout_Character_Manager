@@ -7,3 +7,9 @@ Bottlecap Mine;250;6;4d6 explosive and 6d6 slashing.;+2;5ft. / 20ft. radius;Prox
 Cryo Mine;140;6;4d6 cold.;+8;10ft. radius;Freezing. Proximity.;8
 C-4 Plastic Explosive;350;6;15d6 explosive;+10;5ft. / 25ft. radius;Deafening: 10ft. Destructive. Detonator. Dismember.;12
 Nuka Mine;600;6;12d10 explosive and two levels of rads.;+10;45ft. radius;Destructive. Proximity.;22
+Deafening: 10ft;This specifies another property the weapon has.;79f6d3f1-8b75-4284-8605-678d66ebaad7
+Deafening: 10ft;This specifies another property the weapon has.;2a65681a-c1e6-4094-9893-798b4b391f4c
+Deafening: 10ft;This specifies another property the weapon has.;02e0e298-9cc8-41e8-8741-8a59b0afa236
+Deafening: 10ft;This specifies another property the weapon has.;0e15fc3a-bec1-4031-9fa7-ea305ddd900b
+Deafening: 10ft;This specifies another property the weapon has.;dd5cabcb-e33f-40ba-9602-6bcc03056e31
+Deafening: 10ft;This specifies another property the weapon has.;cba6f9d9-03b2-4169-8dee-63d2d2369fdf
