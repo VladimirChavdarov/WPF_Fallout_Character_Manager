@@ -51,8 +51,7 @@
                         FontSize="18"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
-                        IsChecked="{Binding SelectedArmor.Equipped}"
-                        Command="{Binding DataContext.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        IsChecked="{Binding SelectedArmor.Equipped}"/>
                 </StackPanel>
             </Grid>
 

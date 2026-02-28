@@ -250,6 +250,7 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         public bool IsBaseValueReadOnly
         {
             get => _isBaseValueReadOnly;
+            set => Update(ref _isBaseValueReadOnly, value);
         }
 
 

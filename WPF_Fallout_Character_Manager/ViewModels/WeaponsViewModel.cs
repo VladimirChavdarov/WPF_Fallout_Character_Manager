@@ -147,6 +147,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
+        public void UpdateSelectedWeaponRefs()
+        {
+            SelectedWeapon = WeaponsModel.Weapons.FirstOrDefault(x => x.Equipped == true);
+        }
+
         private static void ReloadWeapon(Weapon weapon, Ammo ammo)
         {
             int availableAttacks = (int)(ammo.Amount.BaseValue / weapon.AmmoPerAttack.BaseValue);

@@ -99,7 +99,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ArmorModel = new ArmorModel(XtrnlArmorModel);
 
             BioViewModel = new BioViewModel(BioModel);
-            SPECIALViewModel = new SPECIALViewModel(SPECIALModel);
+            SPECIALViewModel = new SPECIALViewModel(SPECIALModel, ArmorModel);
             SurvivalViewModel = new SurvivalViewModel(SurvivalModel, SPECIALModel);
             CombatViewModel = new CombatViewModel(CombatModel, SPECIALModel, BioModel, ArmorModel);
             SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel, BioModel);
@@ -286,6 +286,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SkillModel.UpdateModel(SPECIALModel);
             ArmorViewModel.UpdateSelectedArmorsRefs();
             WeaponsViewModel.UpdateCompatibleAmmos();
+            WeaponsViewModel.UpdateSelectedWeaponRefs();
 
             InventoryViewModel.ReloadCatalogueAndInventory();
         }

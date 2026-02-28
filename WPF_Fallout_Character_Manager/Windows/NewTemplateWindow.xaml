@@ -509,7 +509,6 @@
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
                         IsChecked="{Binding NewItemTemplate.Equipped}"
-                        Command="{Binding DataContext.ArmorViewModel.UnequipOtherArmorsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                         IsHitTestVisible="{Binding NewItemTemplate.CanBeEdited}"/>
                         </StackPanel>
                     </StackPanel>
@@ -729,7 +728,6 @@
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
                         IsChecked="{Binding NewItemTemplate.Equipped}"
-                        Command="{Binding DataContext.ArmorViewModel.UnequipOtherPowerArmorsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                         IsHitTestVisible="{Binding NewItemTemplate.CanBeEdited}"/>
                         </StackPanel>
                     </StackPanel>

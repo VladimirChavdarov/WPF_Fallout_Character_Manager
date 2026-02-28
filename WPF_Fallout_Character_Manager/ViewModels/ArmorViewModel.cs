@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
@@ -56,6 +58,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             UnequipOtherArmorsCommand = new RelayCommand(UnequipOtherArmors);
             UnequipOtherPowerArmorsCommand = new RelayCommand(UnequipOtherPowerArmors);
+
+            _armorsModel.Armors.CollectionChanged += Armors_CollectionChanged;
+            _armorsModel.PowerArmors.CollectionChanged += PowerArmors_CollectionChanged;
         }
         //
 
@@ -66,6 +71,56 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ArmorsModel.EquippedArmor = SelectedArmor;
             SelectedPowerArmor = ArmorsModel.PowerArmors.FirstOrDefault(x => x.Equipped == true);
             ArmorsModel.EquippedPowerArmor = SelectedPowerArmor;
+        }
+
+        private void Armors_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach(Armor armor in e.NewItems)
+                {
+                    armor.PropertyChanged -= Armor_PropertyChanged;
+                    armor.PropertyChanged += Armor_PropertyChanged;
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (Armor armor in e.OldItems)
+                {
+                    armor.PropertyChanged -= Armor_PropertyChanged;
+                }
+            }
+        }
+
+        private void Armor_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(Armor.Equipped))
+                UnequipOtherArmors();
+        }
+
+        private void PowerArmors_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (PowerArmor powerArmor in e.NewItems)
+                {
+                    powerArmor.PropertyChanged -= PowerArmor_PropertyChanged;
+                    powerArmor.PropertyChanged += PowerArmor_PropertyChanged;
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (PowerArmor powerArmor in e.OldItems)
+                {
+                    powerArmor.PropertyChanged -= PowerArmor_PropertyChanged;
+                }
+            }
+        }
+
+        private void PowerArmor_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PowerArmor.Equipped))
+                UnequipOtherPowerArmors();
         }
         //
 
