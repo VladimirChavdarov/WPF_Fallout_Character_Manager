@@ -264,7 +264,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 else
                 {
-                    throw new ArgumentException("Couldn't find this ammo effect in the master list");
+                    Effects.Add(new AmmoEffect(Guid.Empty, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                    //throw new ArgumentException("Couldn't find this ammo effect in the master list");
                 }
             }
 

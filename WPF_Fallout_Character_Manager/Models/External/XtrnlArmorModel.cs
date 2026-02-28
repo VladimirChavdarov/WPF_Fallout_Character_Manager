@@ -413,6 +413,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 {
                     Upgrades.Add(upgrade);
                 }
+                else
+                {
+                    Upgrades.Add(new ArmorUpgrade(Guid.Empty, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                }
             }
 
             SubscribeToPropertyChanged();
@@ -696,6 +700,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (upgrade != null)
                 {
                     Upgrades.Add(upgrade);
+                }
+                else
+                {
+                    Upgrades.Add(new ArmorUpgrade(Guid.Empty, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
                 }
             }
 

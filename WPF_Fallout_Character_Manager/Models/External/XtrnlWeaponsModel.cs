@@ -895,6 +895,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 {
                     Properties.Add(property);
                 }
+                else
+                {
+                    Properties.Add(new WeaponProperty(Guid.Empty, WeaponType.Melee, Globals.INVALID_PROPERTY, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                }
             }
 
             Upgrades.Clear();
@@ -904,6 +908,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (upgrade != null)
                 {
                     Upgrades.Add(upgrade);
+                }
+                else
+                {
+                    Upgrades.Add(new WeaponUpgrade(Guid.Empty, WeaponType.Melee, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
                 }
             }
 

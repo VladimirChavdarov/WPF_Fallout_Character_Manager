@@ -224,7 +224,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 else
                 {
-                    throw new ArgumentException("Couldn't find this aid property in the master list");
+                    Properties.Add(new AidProperty(Guid.Empty, Globals.INVALID_PROPERTY, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                    //throw new ArgumentException("Couldn't find this aid property in the master list");
                 }
             }
 

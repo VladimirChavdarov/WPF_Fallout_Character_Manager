@@ -134,6 +134,11 @@ namespace WPF_Fallout_Character_Manager.Utilities
         // this will update fill in ids for any Property or Upgrade that didn't have one already.
         public static bool UpdateCSVFilesIdFields(string csvPath)
         {
+            // This is a developer method which had a one-time use to generate ids in the csv files.
+            // It shouldn't be used in normal circumstances as csv files are not intended to be modified by the user.
+            // If you want to use it, comment out this exception and make sure you know what you're doing.
+            return false;
+
             string[] fileLines = File.ReadAllLines(csvPath);
 
             List<string> columnNames = fileLines[0].Split(';').ToList();
