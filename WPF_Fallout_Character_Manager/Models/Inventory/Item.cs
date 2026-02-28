@@ -252,7 +252,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             Cost = new ModInt(dto.Cost);
             Amount = new ModInt(dto.Amount);
             Load = new ModFloat(dto.Load);
-            CanBeEdited = dto.CanBeEdited;
+            CanBeEdited = true;
 
             OnPropertyChanged(nameof(TotalCost));
             OnPropertyChanged(nameof(TotalLoad));
