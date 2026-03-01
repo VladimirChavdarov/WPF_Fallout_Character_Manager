@@ -377,6 +377,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             foreach (Item i in InventoryModel.GearItems) { FullInventory.Add(i); }
             foreach (Item i in InventoryModel.JunkItems) { FullInventory.Add(i); }
 
+            WeaponsModel.Weapons.CollectionChanged -= ItemModel_CollectionChanged;
+            ArmorModel.Armors.CollectionChanged -= ItemModel_CollectionChanged;
+            ArmorModel.PowerArmors.CollectionChanged -= ItemModel_CollectionChanged;
+            AmmoModel.Ammos.CollectionChanged -= ItemModel_CollectionChanged;
+            InventoryModel.AidItems.CollectionChanged -= ItemModel_CollectionChanged;
+            InventoryModel.Nourishment.CollectionChanged -= ItemModel_CollectionChanged;
+            InventoryModel.GearItems.CollectionChanged -= ItemModel_CollectionChanged;
+            InventoryModel.JunkItems.CollectionChanged -= ItemModel_CollectionChanged;
+
             WeaponsModel.Weapons.CollectionChanged += ItemModel_CollectionChanged;
             ArmorModel.Armors.CollectionChanged += ItemModel_CollectionChanged;
             ArmorModel.PowerArmors.CollectionChanged += ItemModel_CollectionChanged;
