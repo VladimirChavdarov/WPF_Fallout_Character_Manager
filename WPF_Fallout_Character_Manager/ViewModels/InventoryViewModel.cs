@@ -332,6 +332,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             AddUpgradeCommand = new RelayCommand(AddUpgrade);
             RemoveUpgradeCommand = new RelayCommand(RemoveUpgrade);
 
+            // Debug
+            ReloadItemAttributesCommand = new RelayCommand(ReloadItemAttributes);
+            //
+
             _searchCatalogueText = "";
             SelectedCatalogueCategory = Categories.First();
             CatalogueView.Filter = FilterCatalogue;
@@ -673,6 +677,24 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             window.ShowDialog();
+        }
+        //
+
+        // Debug
+        public RelayCommand ReloadItemAttributesCommand { get; private set; }
+        private void ReloadItemAttributes(object _ = null)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                //foreach(Weapon w in WeaponsModel.Weapons)
+                //{
+                //    w.Properties.Clear();
+                //    w.Upgrades.Clear();
+                //    Weapon xtrnlW = XtrnlWeaponsModel.Weapons.FirstOrDefault(x =>  x.Name == w.Name);
+                //}
+            }
         }
         //
     }

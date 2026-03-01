@@ -76,203 +76,288 @@
                 BorderBrush="#23ba03"
                 BorderThickness="1 1 1 1">
 
-            <ScrollViewer>
-                <TabControl Style="{StaticResource FalloutTabControl}">
-                    
-                    <!-- Character Tab -->
-                    <TabItem Header="Character">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="270"/>
-                                <ColumnDefinition Width="562"/>
-                                <ColumnDefinition Width="260"/>
-                                <ColumnDefinition Width="260"/>
-                            </Grid.ColumnDefinitions>
+            <Grid>
+                <Menu
+                    IsMainMenu="True"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Panel.ZIndex="1000">
+                    <MenuItem
+                        Header=""
+                        Foreground="{StaticResource FalloutGreen}"
+                        Margin="0">
+                        <MenuItem.Template>
+                            <ControlTemplate TargetType="MenuItem">
+                                <Grid>
+                                    <Border x:Name="PART_Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            Margin="4 4.5 4 4">
+                                            <Rectangle x:Name="PART_IconRect"
+                                                Width="16"
+                                                Height="16">
+                                                <Rectangle.Fill>
+                                                    <SolidColorBrush Color="#23ba03"/>
+                                                </Rectangle.Fill>
+                                                <Rectangle.OpacityMask>
+                                                    <ImageBrush ImageSource="/Resources/wrench.png"/>
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
 
-                            <!-- First Column (Small Bio, Survival Params., Passives) -->
-                            <Grid
-                                Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="420"/>
-                                    <RowDefinition Height="200"/>
-                                    <RowDefinition Height="140"/>
-                                </Grid.RowDefinitions>
+                                            <ContentPresenter x:Name="ContentPresenter"
+                                                ContentSource="Header"
+                                                VerticalAlignment="Center"
+                                                RecognizesAccessKey="True"
+                                                TextElement.Foreground="{TemplateBinding Foreground}"/>
+                                        </StackPanel>
+                                    </Border>
 
-                                <!-- Small Bio -->
-                                <panels:SmallBioPanel
-                                    Grid.Row="0"
-                                    DataContext="{Binding BioViewModel}"/>
+                                    <Popup x:Name="PART_Popup"
+                                        Placement="Left"
+                                        IsOpen="{TemplateBinding IsSubmenuOpen}"
+                                        AllowsTransparency="True"
+                                        Focusable="False"
+                                        PopupAnimation="Fade">
+                                        <Border Background="Black"
+                                            BorderBrush="{StaticResource FalloutGreen}"
+                                            BorderThickness="1">
+                                            <StackPanel IsItemsHost="True"/>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsHighlighted" Value="True">
+                                        <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                        <Setter TargetName="PART_IconRect" Property="Fill" Value="Black"/>
+                                        <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="Black"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </MenuItem.Template>
+
+                        <MenuItem Header="Reload Item Attributes"
+                            DataContext="{Binding InventoryViewModel}"
+                            Foreground="{StaticResource FalloutGreen}"
+                            FontFamily="{StaticResource JH_Fallout}"
+                            Command="{Binding ReloadItemAttributesCommand}"/>
+
+                        <MenuItem Header="_Spawn Item"
+                            Foreground="{StaticResource FalloutGreen}"
+                            FontFamily="{StaticResource JH_Fallout}"
+                            Command="{Binding SpawnItemCommand}"/>
+
+                        <MenuItem Header="_Reload Data"
+                            Foreground="{StaticResource FalloutGreen}"
+                            FontFamily="{StaticResource JH_Fallout}"
+                            Command="{Binding ReloadCommand}"/>
+                    </MenuItem>
+                </Menu>
+
+                <ScrollViewer>
+                    <TabControl Style="{StaticResource FalloutTabControl}">
+
+                        <!-- Character Tab -->
+                        <TabItem Header="Character">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="270"/>
+                                    <ColumnDefinition Width="562"/>
+                                    <ColumnDefinition Width="260"/>
+                                    <ColumnDefinition Width="260"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- First Column (Small Bio, Survival Params., Passives) -->
+                                <Grid
+                                    Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="420"/>
+                                        <RowDefinition Height="200"/>
+                                        <RowDefinition Height="140"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Small Bio -->
+                                    <panels:SmallBioPanel
+                                        Grid.Row="0"
+                                        DataContext="{Binding BioViewModel}"/>
+                                    <!-- -->
+
+                                    <!-- Survival -->
+                                    <panels:SurvivalPanel
+                                        Grid.Row="1"
+                                        DataContext="{Binding SurvivalViewModel}"/>
+                                    <!-- -->
+
+                                    <!-- Passives -->
+                                    <panels:PassivesPanel
+                                        Grid.Row="2"
+                                        DataContext="{Binding SurvivalViewModel}"/>
+                                    <!-- -->
+                                </Grid>
                                 <!-- -->
 
-                                <!-- Survival -->
-                                <panels:SurvivalPanel
-                                    Grid.Row="1"
-                                    DataContext="{Binding SurvivalViewModel}"/>
+                                <!-- Second Column (SPECIAL, Equipped Items) -->
+                                <Grid
+                                    Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="450"/>
+                                        <RowDefinition Height="310"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- SPECIAL -->
+                                    <panels:SPECIALPanel
+                                        Grid.Row="0"
+                                        DataContext="{Binding CombatViewModel}"/>
+                                    <!-- -->
+
+                                    <!-- Equipped Items -->
+                                    <panels:EquippablePanel
+                                        Grid.Row="1"
+                                        DataContext="{Binding EquippableViewModel}"/>
+                                    <!-- -->
+                                </Grid>
                                 <!-- -->
 
-                                <!-- Passives -->
-                                <panels:PassivesPanel
-                                    Grid.Row="2"
-                                    DataContext="{Binding SurvivalViewModel}"/>
+                                <!-- Third Column (Skills) -->
+                                <Grid
+                                    Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="500"/>
+                                        <RowDefinition Height="260"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Skills -->
+                                    <panels:SkillsPanel
+                                        Grid.Row="0"
+                                        DataContext="{Binding SkillViewModel}"/>
+                                    <!-- -->
+
+                                    <panels:KarmaCapPanel
+                                        Grid.Row="1"
+                                        DataContext="{Binding BioViewModel}"/>
+                                </Grid>
                                 <!-- -->
+
+                                <!-- Fourth Column (Conditions) -->
+                                <Grid
+                                    Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="340"/>
+                                        <RowDefinition Height="420"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Limb Conditions -->
+                                    <panels:LimbConditionsPanel
+                                        Grid.Row="0"
+                                        DataContext="{Binding LimbConditionsViewModel}"/>
+                                    <!-- -->
+
+                                    <!-- Limb Conditions -->
+                                    <panels:ConditionsPanel
+                                        Grid.Row="1"
+                                        DataContext="{Binding ConditionsViewModel}"/>
+                                    <!-- -->
+                                </Grid>
+                                <!-- -->
+
                             </Grid>
-                            <!-- -->
+                        </TabItem>
+                        <!-- -->
 
-                            <!-- Second Column (SPECIAL, Equipped Items) -->
+                        <!-- Inventory Tab -->
+                        <TabItem Header="Inventory">
                             <Grid
-                                Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="450"/>
-                                    <RowDefinition Height="310"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
+                                Height="760"
+                                VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="350"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="350"/>
+                                </Grid.ColumnDefinitions>
 
-                                <!-- SPECIAL -->
-                                <panels:SPECIALPanel
-                                    Grid.Row="0"
-                                    DataContext="{Binding CombatViewModel}"/>
-                                <!-- -->
-
-                                <!-- Equipped Items -->
-                                <panels:EquippablePanel
-                                    Grid.Row="1"
-                                    DataContext="{Binding EquippableViewModel}"/>
-                                <!-- -->
-                            </Grid>
-                            <!-- -->
-
-                            <!-- Third Column (Skills) -->
-                            <Grid
-                                Grid.Column="2">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="500"/>
-                                    <RowDefinition Height="260"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Skills -->
-                                <panels:SkillsPanel
-                                    Grid.Row="0"
-                                    DataContext="{Binding SkillViewModel}"/>
-                                <!-- -->
-
-                                <panels:KarmaCapPanel
-                                    Grid.Row="1"
-                                    DataContext="{Binding BioViewModel}"/>
-                            </Grid>
-                            <!-- -->
-
-                            <!-- Fourth Column (Conditions) -->
-                            <Grid
-                                Grid.Column="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="340"/>
-                                    <RowDefinition Height="420"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Limb Conditions -->
-                                <panels:LimbConditionsPanel
-                                    Grid.Row="0"
-                                    DataContext="{Binding LimbConditionsViewModel}"/>
-                                <!-- -->
-
-                                <!-- Limb Conditions -->
-                                <panels:ConditionsPanel
-                                    Grid.Row="1"
-                                    DataContext="{Binding ConditionsViewModel}"/>
-                                <!-- -->
-                            </Grid>
-                            <!-- -->
-
-                        </Grid>
-                    </TabItem>
-                    <!-- -->
-                    
-                    <!-- Inventory Tab -->
-                    <TabItem Header="Inventory">
-                        <Grid
-                            Height="760"
-                            VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="350"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="350"/>
-                            </Grid.ColumnDefinitions>
-
-                            <panels:InventoryPanel
-                                Grid.Column="0"
-                                DataContext="{Binding InventoryViewModel}"/>
-
-                            <Grid
-                                Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="500"/>
-                                    <RowDefinition Height="260"/>
-                                </Grid.RowDefinitions>
-
-                                <panels:ItemDetailsPanel
-                                    Grid.Row="0"
+                                <panels:InventoryPanel
+                                    Grid.Column="0"
                                     DataContext="{Binding InventoryViewModel}"/>
 
-                                <panels:JunkPanel
-                                    Grid.Row="1"
-                                    DataContext="{Binding JunkManagerViewModel}"/>
+                                <Grid
+                                    Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="500"/>
+                                        <RowDefinition Height="260"/>
+                                    </Grid.RowDefinitions>
+
+                                    <panels:ItemDetailsPanel
+                                        Grid.Row="0"
+                                        DataContext="{Binding InventoryViewModel}"/>
+
+                                    <panels:JunkPanel
+                                        Grid.Row="1"
+                                        DataContext="{Binding JunkManagerViewModel}"/>
+                                </Grid>
+
+                                <panels:CataloguePanel
+                                    Grid.Column="2"
+                                    DataContext="{Binding InventoryViewModel}"/>
                             </Grid>
+                        </TabItem>
+                        <!-- -->
 
-                            <panels:CataloguePanel
-                                Grid.Column="2"
-                                DataContext="{Binding InventoryViewModel}"/>
-                        </Grid>
-                    </TabItem>
-                    <!-- -->
+                        <!-- Perks Tab -->
+                        <TabItem Header="Perks">
+                            <Grid
+                                Height="760"
+                                VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                    <!-- Perks Tab -->
-                    <TabItem Header="Perks">
-                        <Grid
-                            Height="760"
-                            VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="300"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                                <panels:PerksCataloguesPanel
+                                    Grid.Column="0"
+                                    DataContext="{Binding PerksViewModel}"/>
 
-                            <panels:PerksCataloguesPanel
-                                Grid.Column="0"
-                                DataContext="{Binding PerksViewModel}"/>
+                                <panels:PerksCollectionPanel
+                                    Grid.Column="1"
+                                    DataContext="{Binding PerksViewModel}"/>
+                            </Grid>
+                        </TabItem>
+                        <!-- -->
 
-                            <panels:PerksCollectionPanel
-                                Grid.Column="1"
-                                DataContext="{Binding PerksViewModel}"/>
-                        </Grid>
-                    </TabItem>
-                    <!-- -->
+                        <!-- Perks Tab -->
+                        <TabItem Header="Data">
+                            <panels:BioPanel
+                                DataContext="{Binding BioViewModel}"/>
+                        </TabItem>
+                        <!-- -->
 
-                    <!-- Perks Tab -->
-                    <TabItem Header="Data">
-                        <panels:BioPanel
-                            DataContext="{Binding BioViewModel}"/>
-                    </TabItem>
-                    <!-- -->
-
-                    <TabItem Header="   "
+                        <TabItem Header="   "
                              Focusable="False"
                              IsHitTestVisible="False"
                              FontFamily="{StaticResource Monofonto}">
-                    </TabItem>
+                        </TabItem>
 
-                    <!-- Perks Tab -->
-                    <TabItem Header="Load"
-                             PreviewMouseDown="RunFunctionTab_LoadCharacter">
-                    </TabItem>
-                    <!-- -->
+                        <!-- Perks Tab -->
+                        <TabItem Header="Load"
+                            PreviewMouseDown="RunFunctionTab_LoadCharacter">
+                        </TabItem>
+                        <!-- -->
 
-                    <!-- Perks Tab -->
-                    <TabItem Header="Save"
-                             PreviewMouseDown="RunFunctionTab_SaveCharacter">
-                    </TabItem>
-                    <!-- -->
-                </TabControl>
-                
-            </ScrollViewer>
+                        <!-- Perks Tab -->
+                        <TabItem Header="Save"
+                            PreviewMouseDown="RunFunctionTab_SaveCharacter">
+                        </TabItem>
+                        <!-- -->
+                    </TabControl>
+
+                </ScrollViewer>
+            </Grid>
         </Border>
         <!-- -->
     </Grid>

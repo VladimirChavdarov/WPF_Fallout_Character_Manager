@@ -131,6 +131,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             PerksViewModel = new PerksViewModel(XtrnlPerksModel, PerksModel);
 
+
             // serialization
             RegisterModelForSerialization<BioModel, BioModelDTO>(BioModel, DtoType.Character);
             RegisterModelForSerialization<SurvivalModel, SurvivalModelDTO>(SurvivalModel, DtoType.Character);

@@ -30,30 +30,97 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
-                    <Border x:Name="Border"
-                        Background="Black"
-                        BorderThickness="0"
-                        Padding="5">
-                        <ContentPresenter x:Name="ContentPresenter"
-                            ContentSource="Header"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            RecognizesAccessKey="True"
-                            TextElement.Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
-                    </Border>
+                    <Grid>
+                        <Border x:Name="Border"
+                                Background="Black"
+                                BorderThickness="0"
+                                Padding="5">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                    ContentSource="Header"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    RecognizesAccessKey="True"
+                                    TextElement.Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Border>
+
+                        <Popup x:Name="PART_Popup"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsSubmenuOpen}"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               PopupAnimation="Fade">
+                            <Border Background="Black"
+                                    BorderBrush="{StaticResource FalloutGreen}"
+                                    BorderThickness="1">
+                                <StackPanel IsItemsHost="True"/>
+                            </Border>
+                        </Popup>
+                    </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource FalloutGreen}" />
-                            <Setter Property="Foreground" Value="Black" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="Black" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource FalloutGreenFaded}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="Black" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="FalloutMenuItem" TargetType="MenuItem">
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource FalloutGreen}"/>
+        <Setter Property="FontFamily" Value="{StaticResource JH_Fallout}"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Grid>
+                        <Border x:Name="Border"
+                            Background="Black"
+                            BorderThickness="0"
+                            Padding="5">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                ContentSource="Header"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                RecognizesAccessKey="True"
+                                TextElement.Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Border>
+
+                        <Popup x:Name="PART_Popup"
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsSubmenuOpen}"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Fade">
+                            <Border Background="Black"
+                                BorderBrush="{StaticResource FalloutGreen}"
+                                BorderThickness="1">
+                                <StackPanel IsItemsHost="True"/>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource FalloutGreen}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource FalloutGreenFaded}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="Black" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
