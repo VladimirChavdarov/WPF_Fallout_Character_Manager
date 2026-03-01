@@ -684,16 +684,147 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public RelayCommand ReloadItemAttributesCommand { get; private set; }
         private void ReloadItemAttributes(object _ = null)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            string message = "This operation will reset all of your items' upgrades and properties to their default state. Are you sure you want to proceed?";
+            MessageBoxResult result = MessageBox.Show(message, "Reload Item Attributes", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            List<string> InvalidItemsNames = new List<string>();
+            int SuccessCounter = 0;
 
             if (result == MessageBoxResult.Yes)
             {
-                //foreach(Weapon w in WeaponsModel.Weapons)
-                //{
-                //    w.Properties.Clear();
-                //    w.Upgrades.Clear();
-                //    Weapon xtrnlW = XtrnlWeaponsModel.Weapons.FirstOrDefault(x =>  x.Name == w.Name);
-                //}
+                // weapons
+                foreach(Weapon w in WeaponsModel.Weapons)
+                {
+                    Weapon xtrnlW = XtrnlWeaponsModel.Weapons.FirstOrDefault(x =>  x.Name.BaseValue == w.Name.BaseValue);
+                    if(xtrnlW == null)
+                    {
+                        InvalidItemsNames.Add(w.Name.Total);
+                        continue;
+                    }
+
+                    w.Properties.Clear();
+                    w.Upgrades.Clear();
+                    foreach(WeaponProperty property in xtrnlW.Properties)
+                        w.Properties.Add(property);
+
+                    foreach (WeaponUpgrade upgrade in xtrnlW.Upgrades)
+                        w.Upgrades.Add(upgrade);
+
+                    SuccessCounter++;
+                }
+
+                // armor
+                foreach (Armor a in ArmorModel.Armors)
+                {
+                    Armor xtrnlA = XtrnlArmorModel.Armors.FirstOrDefault(x => x.Name.BaseValue == a.Name.BaseValue);
+                    if (xtrnlA == null)
+                    {
+                        InvalidItemsNames.Add(a.Name.Total);
+                        continue;
+                    }
+
+                    a.Upgrades.Clear();
+                    foreach (ArmorUpgrade upgrade in xtrnlA.Upgrades)
+                        a.Upgrades.Add(upgrade);
+
+                    SuccessCounter++;
+                }
+
+                // power armor
+                foreach (PowerArmor p in ArmorModel.PowerArmors)
+                {
+                    PowerArmor xtrnlP = XtrnlArmorModel.PowerArmors.FirstOrDefault(x => x.Name.BaseValue == p.Name.BaseValue);
+                    if (xtrnlP == null)
+                    {
+                        InvalidItemsNames.Add(p.Name.Total);
+                        continue;
+                    }
+
+                    p.Upgrades.Clear();
+                    foreach (ArmorUpgrade upgrade in xtrnlP.Upgrades)
+                        p.Upgrades.Add(upgrade);
+
+                    SuccessCounter++;
+                }
+
+                // ammo
+                foreach (Ammo a in AmmoModel.Ammos)
+                {
+                    Ammo xtrnlA = XtrnlAmmoModel.Ammos.FirstOrDefault(x => x.Name.BaseValue == a.Name.BaseValue);
+                    if (xtrnlA == null)
+                    {
+                        InvalidItemsNames.Add(a.Name.Total);
+                        continue;
+                    }
+
+                    a.Effects.Clear();
+                    foreach (AmmoEffect effect in xtrnlA.Effects)
+                        a.Effects.Add(effect);
+
+                    SuccessCounter++;
+                }
+
+                // aid
+                foreach (Aid a in InventoryModel.AidItems)
+                {
+                    Aid xtrnlA = XtrnlAidModel.AidItems.FirstOrDefault(x => x.Name.BaseValue == a.Name.BaseValue);
+                    if (xtrnlA == null)
+                    {
+                        InvalidItemsNames.Add(a.Name.Total);
+                        continue;
+                    }
+
+                    a.Properties.Clear();
+                    foreach (AidProperty property in xtrnlA.Properties)
+                        a.Properties.Add(property);
+
+                    SuccessCounter++;
+                }
+
+                // explosives
+                foreach (Explosive e in InventoryModel.Explosives)
+                {
+                    Explosive xtrnlE = XtrnlExplosivesModel.Explosives.FirstOrDefault(x => x.Name.BaseValue == e.Name.BaseValue);
+                    if (xtrnlE == null)
+                    {
+                        InvalidItemsNames.Add(e.Name.Total);
+                        continue;
+                    }
+
+                    e.Properties.Clear();
+                    foreach (ExplosiveProperty property in xtrnlE.Properties)
+                        e.Properties.Add(property);
+
+                    SuccessCounter++;
+                }
+
+                // nourishment
+                foreach (Nourishment n in InventoryModel.Nourishment)
+                {
+                    Nourishment xtrnlN = XtrnlNourishmentModel.Nourishments.FirstOrDefault(x => x.Name.BaseValue == n.Name.BaseValue);
+                    if (xtrnlN == null)
+                    {
+                        InvalidItemsNames.Add(n.Name.Total);
+                        continue;
+                    }
+
+                    n.Properties.Clear();
+                    foreach (NourishmentProperty property in xtrnlN.Properties)
+                        n.Properties.Add(property);
+
+                    SuccessCounter++;
+                }
+
+                int maxProcessedItems = FullInventory.Count - InventoryModel.GearItems.Count - InventoryModel.JunkItems.Count;
+                string output = "Operation finished.\n" + SuccessCounter + "/" + maxProcessedItems + " items successfully reset.";
+                if(InvalidItemsNames.Count > 0)
+                {
+                    output += "\n\nThe following items need to be manually handled:\n";
+                    foreach(string name in InvalidItemsNames)
+                    {
+                        output += name + "\n";
+                    }
+                }
+                MessageBox.Show(output, "Reload Item Attributes", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         //

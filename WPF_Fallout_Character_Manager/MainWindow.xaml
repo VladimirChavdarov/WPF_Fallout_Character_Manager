@@ -147,16 +147,6 @@
                             Foreground="{StaticResource FalloutGreen}"
                             FontFamily="{StaticResource JH_Fallout}"
                             Command="{Binding ReloadItemAttributesCommand}"/>
-
-                        <MenuItem Header="_Spawn Item"
-                            Foreground="{StaticResource FalloutGreen}"
-                            FontFamily="{StaticResource JH_Fallout}"
-                            Command="{Binding SpawnItemCommand}"/>
-
-                        <MenuItem Header="_Reload Data"
-                            Foreground="{StaticResource FalloutGreen}"
-                            FontFamily="{StaticResource JH_Fallout}"
-                            Command="{Binding ReloadCommand}"/>
                     </MenuItem>
                 </Menu>
 
