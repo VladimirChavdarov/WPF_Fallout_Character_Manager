@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -15,7 +16,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlArmorModel : ModelBase
+    class XtrnlArmorModel : ModelBase, ISerializable<XtrnlArmorModelDTO>
     {
         private static string armorUpgradesPath = "Resources/Spreadsheets/armor_upgrades.csv";
         private static string powerArmorUpgradesPath = "Resources/Spreadsheets/power_armor_upgrades.csv";
@@ -136,6 +137,58 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 PowerArmors.Add(newPowerArmor);
             }
             //
+        }
+        //
+
+        // methods
+        public void FromDto(XtrnlArmorModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(ArmorUpgrade upgrade in dto.Upgrades)
+            {
+                ArmorUpgrades.Add(upgrade);
+            }
+            foreach(ArmorDTO armor in dto.Armors)
+            {
+                Armors.Add(new Armor(armor));
+            }
+            foreach(PowerArmorDTO powerArmor in dto.PowerArmors)
+            {
+                PowerArmors.Add(new PowerArmor(powerArmor));
+            }
+        }
+
+        public XtrnlArmorModelDTO ToDto()
+        {
+            XtrnlArmorModelDTO result = new XtrnlArmorModelDTO();
+            foreach(ArmorUpgrade upgrade in ArmorUpgrades)
+            {
+                if (upgrade.IsFromSpreadsheet)
+                    continue;
+
+                result.Upgrades.Add(upgrade);
+            }
+            foreach (Armor armor in Armors)
+            {
+                if (armor.ToDto() is not ArmorDTO aDto)
+                    throw new InvalidOperationException("Expected ArmorDTO");
+
+                if (armor.IsFromSpreadsheet)
+                    continue;
+
+                result.Armors.Add(aDto);
+            }
+            foreach (PowerArmor powerArmor in PowerArmors)
+            {
+                if (powerArmor.ToDto() is not PowerArmorDTO paDto)
+                    throw new InvalidOperationException("Expected PowerArmorDTO");
+
+                if (powerArmor.IsFromSpreadsheet)
+                    continue;
+
+                result.PowerArmors.Add(paDto);
+            }
+
+            return result;
         }
         //
 

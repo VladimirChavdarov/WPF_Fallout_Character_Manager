@@ -147,6 +147,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<PerksModel, PerksModelDTO>(PerksModel, DtoType.Character);
 
             RegisterModelForSerialization<XtrnlWeaponsModel, XtrnlWeaponsModelDTO>(XtrnlWeaponsModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlArmorModel, XtrnlArmorModelDTO>(XtrnlArmorModel, DtoType.Catalogue);
             //
         }
         //
