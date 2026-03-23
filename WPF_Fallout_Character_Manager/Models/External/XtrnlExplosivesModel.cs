@@ -111,15 +111,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 {
                     Utils.IdFromString("", out Guid id);
                     newProperty = new ExplosiveProperty(id, trimmedProperty, "This specifies another property the weapon has.");
-                    string csvPath = "";
-                    if(explosive.Type == ExplosiveTypes[0])
-                    {
-                        csvPath = explosivesThrownPath;
-                    }
-                    else if(explosive.Type == ExplosiveTypes[1])
-                    {
-                        csvPath = explosivesPlacedPath;
-                    }
+                    string csvPath = explosivePropertiesPath;
                     Utils.AddCSVLine(csvPath, newProperty.Name + ";" + newProperty.Value + ";" + id.ToString());
                     ExplosiveProperties.Add(newProperty);
                 }
