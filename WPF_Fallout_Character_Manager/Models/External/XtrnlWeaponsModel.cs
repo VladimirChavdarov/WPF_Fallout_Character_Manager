@@ -122,12 +122,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     continue;
 
                 _missingIds |= !Utils.IdFromString(parts[3], out Guid id);
+                CostType costType;
+                int cost = 0;
+                Utils.ProcessCostString(parts[1], out costType, out cost);
 
                 WeaponUpgrade upgrade = new WeaponUpgrade(
                     id,
                     weaponType: WeaponType.Melee,
                     name: parts[0],
-                    costMultiplier: parts[1],
+                    costType: costType,
+                    cost: cost,
                     timeToEquip: "5 minutes.",
                     slotCost: 1,
                     value: parts[2],
@@ -148,12 +152,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
                 _missingIds |= !Utils.IdFromString(parts[5], out Guid id);
                 int slotCost = Int32.Parse(Utils.Between(parts[3], "Mod Slot Total: ", "."));
+                CostType costType;
+                int cost = 0;
+                Utils.ProcessCostString(parts[1], out costType, out cost);
 
                 WeaponUpgrade upgrade = new WeaponUpgrade(
                     id,
                     weaponType: WeaponType.Ranged,
                     name: parts[0],
-                    costMultiplier: parts[1],
+                    costType: costType,
+                    cost: cost,
                     timeToEquip: parts[2],
                     slotCost: slotCost,
                     value: parts[3],
@@ -303,6 +311,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         private void DetermineWeaponTypes()
         {
+            WeaponEnumTypes = new ObservableCollection<WeaponType>() { WeaponType.Melee, WeaponType.Ranged };
+
             WeaponTypes.Clear();
             foreach (Weapon w in Weapons)
             {
@@ -398,6 +408,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // data
         private bool _missingIds = false;
+        public static ObservableCollection<WeaponType> WeaponEnumTypes { get; set; }
         public static ObservableCollection<string> WeaponTypes { get; set; }
         public static ObservableCollection<Weapon> Weapons { get; set; }
         public static ObservableCollection<WeaponProperty> WeaponProperties { get; set; }
@@ -911,7 +922,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 else
                 {
-                    Upgrades.Add(new WeaponUpgrade(Guid.Empty, WeaponType.Melee, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                    Upgrades.Add(new WeaponUpgrade(Guid.Empty, WeaponType.Melee, Globals.INVALID_UPGRADE, CostType.Flat, 0, "", 0, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
                 }
             }
 
@@ -937,6 +948,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             _weaponType = weaponType;
         }
+
+        public WeaponProperty() : base(new Guid(), "New Weapon Property", "")
+        {
+            _weaponType = WeaponType.Melee;
+        }
         //
 
         // members
@@ -952,14 +968,27 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class WeaponUpgrade : ItemAttribute
     {
         // constructor
-        public WeaponUpgrade(Guid id, WeaponType weaponType, string name="NewUpgrade", string costMultiplier="x1.0", string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
+        public WeaponUpgrade(Guid id, WeaponType weaponType, string name="NewUpgrade", CostType costType = CostType.Flat, int cost = 0, string timeToEquip="", int slotCost = 0, string value="", string equipRequirement="")
             : base(id, name, value)
         {
             WeaponType= weaponType;
-            CostMultiplier = costMultiplier;
+            CostType = costType;
+            Cost = cost;
             TimeToEquip = timeToEquip;
             SlotCost = slotCost;
             EquipRequirement = equipRequirement;
+
+            Note += "\nRequirements: " + EquipRequirement;
+        }
+
+        public WeaponUpgrade() : base(new Guid(), "New Weapon Upgrade", "")
+        {
+            WeaponType = WeaponType.Melee;
+            CostType = CostType.Flat;
+            Cost = 0;
+            TimeToEquip = "0 minutes";
+            SlotCost = 0;
+            EquipRequirement = "";
 
             Note += "\nRequirements: " + EquipRequirement;
         }
@@ -980,15 +1009,22 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _slotCost, value);
         }
 
-        private string _costMultiplier;
-        public string CostMultiplier
+        private CostType _costType;
+        public CostType CostType
         {
-            get => _costMultiplier;
+            get => _costType;
+            set => Update(ref _costType, value);
+        }
+
+        private int _cost;
+        public int Cost
+        {
+            get => _cost;
             set
             {
                 if (IsReadOnly)
-                    throw new InvalidOperationException("Cannot edit WeaponUpgrade.CostMultiplier when in read-only mode");
-                Update(ref _costMultiplier, value);
+                    throw new InvalidOperationException("Cannot edit WeaponUpgrade.Cost when in read-only mode");
+                Update(ref _cost, value);
             }
         }
 

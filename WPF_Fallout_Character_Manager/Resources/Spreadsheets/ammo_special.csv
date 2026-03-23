@@ -21,15 +21,15 @@ Bulk;x0.5;Damage -3. Gains Durable.;Energy Cell, Microfusion Cell;fbe03d50-e813-
 Optimized;x2;+1 damage, ignores 1 DT.;Energy Cell, Microfusion Cell;0af48594-684d-4945-8db9-0738e10541c2
 Overcharged;x3;+2 damage, ignores 2 DT. Gains Breakable.;Energy Cell, Microfusion Cell;2f77863c-e1be-4958-9bf0-486836954d3c
 Max Charge;x5;+4 damage, ignores 4 DT. Gains Breakable and decay every 3rd attack.;Energy Cell, Microfusion Cell;91b014d8-afb2-438a-833d-6891768b760f
-Stimpak Loader;c25;This syringe allows you to load it with a stimpak, the target gains the effects of the stimpak.;Syringe;45e529b5-f01c-4ee2-8674-a365f0b9af88
-Chem Loader;c25;This syringe allows you to load it with a chem, the target gains the effects of the chem. Note: You cannot load a chem that has an inhaler.;Syringe;057917b2-9e38-458a-87a4-562c4de7b861
-Radscorpion Venom;c35;Target becomes poisoned fro 3 turns and takes 1d6 poison damage at the start of each of their turns.;Syringe;82a49e96-a4fa-48df-aaee-129462c7f850
-Endangerol;c40;Target's DT is reduced by 3 for 1 minute.;Syringe;91ceda4a-f732-4954-b1b5-0646ea7a99da
-Yellow Belly;c50;Target becomes frightened for 3 rounds.;Syringe;d2456a74-2118-4815-85e8-412dd9010ea4
-Berserk;c55;Target spends all of its AP on its next turn to attack the nearest creature to it.;Syringe;b07a59b5-871e-47b3-b223-72080157d7c6
-Hemorrhage;c75;Target gains one level of bleeding.;Syringe;89960e70-a096-4c41-8935-a037e9a09bc6
-Lock Joint;c85;Target becomes slowed for 2 turns.;Syringe;1b3522c1-c47c-4044-9e05-182aedd5b51c
-Sclerosis;c110;Target becomes Deafened for 3 rounds.;Syringe;85ace093-49bc-4949-9f60-9451a6efe138
-Myopic Serum;c160;Target becomes Blinded for 3 rounds.;Syringe;d820b4e2-692b-43b2-8e51-bb00bf4df6e7
-Mind Cloud;c175;All creatures beyond 30 feet of the target creature become invisible to them for 1 minute.;Syringe;cdd76338-5b51-4f79-81ff-b2fd0c82985f
-Tranquilizer;c200;If the target's Endurance is a 4 or below, they fall unconscious for 1 hour. Otherwise, they become Dazed for their next two turns and fall unconscious for 1 hour at the end of their third turn. Creatures dazed in this way can remove this condition and prevent falling unconscious by using any chem with the stimulant property.;Syringe;e929fa8e-1ec1-4afb-a93b-2bc9c68ba86b
+Stimpak Loader;25;This syringe allows you to load it with a stimpak, the target gains the effects of the stimpak.;Syringe;45e529b5-f01c-4ee2-8674-a365f0b9af88
+Chem Loader;25;This syringe allows you to load it with a chem, the target gains the effects of the chem. Note: You cannot load a chem that has an inhaler.;Syringe;057917b2-9e38-458a-87a4-562c4de7b861
+Radscorpion Venom;35;Target becomes poisoned fro 3 turns and takes 1d6 poison damage at the start of each of their turns.;Syringe;82a49e96-a4fa-48df-aaee-129462c7f850
+Endangerol;40;Target's DT is reduced by 3 for 1 minute.;Syringe;91ceda4a-f732-4954-b1b5-0646ea7a99da
+Yellow Belly;50;Target becomes frightened for 3 rounds.;Syringe;d2456a74-2118-4815-85e8-412dd9010ea4
+Berserk;55;Target spends all of its AP on its next turn to attack the nearest creature to it.;Syringe;b07a59b5-871e-47b3-b223-72080157d7c6
+Hemorrhage;75;Target gains one level of bleeding.;Syringe;89960e70-a096-4c41-8935-a037e9a09bc6
+Lock Joint;85;Target becomes slowed for 2 turns.;Syringe;1b3522c1-c47c-4044-9e05-182aedd5b51c
+Sclerosis;110;Target becomes Deafened for 3 rounds.;Syringe;85ace093-49bc-4949-9f60-9451a6efe138
+Myopic Serum;160;Target becomes Blinded for 3 rounds.;Syringe;d820b4e2-692b-43b2-8e51-bb00bf4df6e7
+Mind Cloud;175;All creatures beyond 30 feet of the target creature become invisible to them for 1 minute.;Syringe;cdd76338-5b51-4f79-81ff-b2fd0c82985f
+Tranquilizer;200;If the target's Endurance is a 4 or below, they fall unconscious for 1 hour. Otherwise, they become Dazed for their next two turns and fall unconscious for 1 hour at the end of their third turn. Creatures dazed in this way can remove this condition and prevent falling unconscious by using any chem with the stimulant property.;Syringe;e929fa8e-1ec1-4afb-a93b-2bc9c68ba86b

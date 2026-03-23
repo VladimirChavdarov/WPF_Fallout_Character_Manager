@@ -61,11 +61,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     continue;
 
                 Utils.IdFromString(parts[4], out Guid id);
+                CostType costType;
+                int cost = 0;
+                Utils.ProcessCostString(parts[1], out costType, out cost);
 
                 AmmoEffect effect = new AmmoEffect(
                     id,
                     name: parts[0],
-                    costMultiplier: parts[1],
+                    costType: costType,
+                    cost: cost,
                     value: parts[2]);
 
                 // compatible ammo types
@@ -277,25 +281,33 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class AmmoEffect : ItemAttribute
     {
         // constructor
-        public AmmoEffect(Guid id, string name = "NewAmmoEffect", string value = "", string costMultiplier = "x1.0")
+        public AmmoEffect(Guid id, string name = "NewAmmoEffect", string value = "", CostType costType = CostType.Flat, int cost = 0)
             : base(id, name, value)
         {
-            CostMultiplier = costMultiplier;
+            CostType = costType;
+            Cost = cost;
             IsReadOnly = true;
             CompatibleAmmo = new ObservableCollection<string>();
         }
         //
 
         // members
-        private string _costMultiplier;
-        public string CostMultiplier
+        private CostType _costType;
+        public CostType CostType
         {
-            get => _costMultiplier;
+            get => _costType;
+            set => Update(ref _costType, value);
+        }
+
+        private int _cost;
+        public int Cost
+        {
+            get => _cost;
             set
             {
                 if (IsReadOnly)
                     throw new InvalidOperationException("Cannot edit LabeledString.CostMultiplier when in read-only mode");
-                Update(ref _costMultiplier, value);
+                Update(ref _cost, value);
             }
         }
 

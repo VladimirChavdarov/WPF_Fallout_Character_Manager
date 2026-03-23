@@ -8,6 +8,12 @@ using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 
 namespace WPF_Fallout_Character_Manager.Models.Inventory
 {
+    public enum CostType
+    {
+        Flat,
+        Percentage
+    }
+
     // The children classes of this one are usually stuff like Properties and Upgrades. They are unique within the memory of the app,
     // the items simply reference the master list.
     // Because of the simplicity of this class and its parent, it can be serialized without a designated DTO.

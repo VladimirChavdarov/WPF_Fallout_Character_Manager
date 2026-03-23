@@ -43,6 +43,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     continue;
 
                 Utils.IdFromString(parts[5], out Guid id);
+                CostType costType;
+                int cost = 0;
+                Utils.ProcessCostString(parts[1], out costType, out cost);
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -50,7 +53,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     ArmorUpgrade newUpgrade = new ArmorUpgrade(
                         id,
                         name: name,
-                        cost: parts[1],
+                        costType: costType,
+                        cost: cost,
                         rank: i + 1,
                         value: parts[2 + i],
                         slotCost: 1
@@ -70,6 +74,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     continue;
 
                 Utils.IdFromString(parts[5], out Guid id);
+                CostType costType;
+                int cost = 0;
+                Utils.ProcessCostString(parts[1], out costType, out cost);
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -77,7 +84,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     ArmorUpgrade newUpgrade = new ArmorUpgrade(
                         id,
                         name: name,
-                        cost: parts[1],
+                        costType: costType,
+                        cost: cost,
                         rank: i + 1,
                         value: parts[2 + i],
                         slotCost: 1
@@ -468,7 +476,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 else
                 {
-                    Upgrades.Add(new ArmorUpgrade(Guid.Empty, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                    Upgrades.Add(new ArmorUpgrade(Guid.Empty, Globals.INVALID_UPGRADE, CostType.Flat, 0, 0, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
                 }
             }
 
@@ -756,7 +764,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 }
                 else
                 {
-                    Upgrades.Add(new ArmorUpgrade(Guid.Empty, Globals.INVALID_UPGRADE, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
+                    Upgrades.Add(new ArmorUpgrade(Guid.Empty, Globals.INVALID_UPGRADE, CostType.Flat, 0, 0, Globals.INVALID_ATTRIBUTE_DESCRIPTION));
                 }
             }
 
@@ -769,9 +777,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class ArmorUpgrade : ItemAttribute
     {
         // constructor
-        public ArmorUpgrade(Guid id, string name="NewUpgrade", string cost = "c0", int rank = 0, string value = "", int slotCost = 0)
+        public ArmorUpgrade(Guid id, string name="NewUpgrade", CostType costType = CostType.Flat, int cost = 0, int rank = 0, string value = "", int slotCost = 0)
             : base(id, name, value)
         {
+            CostType = costType;
             Cost = cost;
             Rank = rank;
             SlotCost = slotCost;
@@ -779,8 +788,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // members
-        private string _cost;
-        public string Cost
+        private CostType _costType;
+        public CostType CostType
+        {
+            get => _costType;
+            set => Update(ref _costType, value);
+        }
+
+        private int _cost;
+        public int Cost
         {
             get => _cost;
             set => Update(ref _cost, value);

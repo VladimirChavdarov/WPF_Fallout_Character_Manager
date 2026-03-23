@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.Inventory;
 
 namespace WPF_Fallout_Character_Manager.Utilities
 {
@@ -70,30 +71,20 @@ namespace WPF_Fallout_Character_Manager.Utilities
             throw new Exception($"Failed to convert {s} to float...");
         }
 
-        /// <summary>
-        /// Returns the numeric value of the cost multiplier.
-        /// If isFlatCost is true,you should use the return value as a flat cost increase.
-        /// If it is false, you should use the return value as a cost multiplier.
-        /// </summary>
-        /// <param name="costMultiplier">The string you want to convert to a numeric value.</param>
-        /// <param name="isFlatCost">True if the function output should be used as a flat cost increase. False if the function output should be used as a cost multiplier.</param>
-        /// <returns></returns>
-        public static float GetCostMultiplier(string costMultiplier, out bool isFlatCost)
+        public static void ProcessCostString(string costString, out CostType costType, out int cost)
         {
-            if (costMultiplier.StartsWith("x"))
+            if (costString.StartsWith("x"))
             {
-                string ss = costMultiplier.Substring(1);
-                isFlatCost = false;
-                return Utils.FloatFromString(ss);
+                string ss = costString.Substring(1);
+                costType = CostType.Percentage;
+                float value = Utils.FloatFromString(ss);
+                cost = (int)(value * 100);
             }
-            else if (costMultiplier.StartsWith("c"))
+            else
             {
-                string ss = costMultiplier.Substring(1);
-                isFlatCost = true;
-                return Utils.FloatFromString(ss);
+                costType = CostType.Flat;
+                cost = Int32.Parse(costString);
             }
-
-            throw new Exception($"CostModifier has a wrong format: {costMultiplier}");
         }
 
         public static bool GetRangeMultiplier(string ranges, out ValueTuple<int, int> result)
