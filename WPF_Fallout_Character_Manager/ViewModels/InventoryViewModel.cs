@@ -715,7 +715,16 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 NewItemAttribute.ConstructNote();
                 NewItemAttribute.IsFromSpreadsheet = false;
 
-                collection.Add(NewItemAttribute);
+                // Armor Upgrades are split into two observable collections, one for normal armor and one for power armor.
+                // We handle the edge case for that here instead of developing a proper solution, because it's late and I am sleepy...
+                if (NewItemTemplate is PowerArmor)
+                {
+                    XtrnlArmorModel.PowerArmorUpgrades.Add(NewItemAttribute);
+                }
+                else
+                {
+                    collection.Add(NewItemAttribute);
+                }
 
                 NewItemAttribute = null;
             }
