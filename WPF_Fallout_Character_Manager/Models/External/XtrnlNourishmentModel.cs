@@ -214,6 +214,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ConstructNote();
         }
+
+        public NourishmentProperty() : base(new Guid(), "New Nourishment Property", "Property Description...")
+        {
+            ConstructNote();
+        }
         //
     }
 }

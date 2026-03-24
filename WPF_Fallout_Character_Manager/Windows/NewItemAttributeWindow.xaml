@@ -385,6 +385,66 @@
             </StackPanel>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type xtrnl:AidProperty}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                <control:TextBoxWithLabelControl
+                    Margin="0 0 0 20"
+                    TextPadding="5"
+                    Width="450"
+                    MinHeight="50"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    Orientation="Vertical"
+                    LabelFontSize="9"
+                    LabelText="Description: "
+                    FontSize="9"
+                    CanOpenModal="false"
+                    IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                    Text="{Binding NewItemAttribute.Value}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:ExplosiveProperty}">
+            <StackPanel
+        DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                <control:TextBoxWithLabelControl
+            Margin="0 0 0 20"
+            TextPadding="5"
+            Width="450"
+            MinHeight="50"
+            HorizontalAlignment="Left"
+            HorizontalContentAlignment="Left"
+            Orientation="Vertical"
+            LabelFontSize="9"
+            LabelText="Description: "
+            FontSize="9"
+            CanOpenModal="false"
+            IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+            Text="{Binding NewItemAttribute.Value}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:NourishmentProperty}">
+            <StackPanel
+        DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                <control:TextBoxWithLabelControl
+            Margin="0 0 0 20"
+            TextPadding="5"
+            Width="450"
+            MinHeight="50"
+            HorizontalAlignment="Left"
+            HorizontalContentAlignment="Left"
+            Orientation="Vertical"
+            LabelFontSize="9"
+            LabelText="Description: "
+            FontSize="9"
+            CanOpenModal="false"
+            IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+            Text="{Binding NewItemAttribute.Value}"/>
+            </StackPanel>
+        </DataTemplate>
+
     </Window.Resources>
 
     <Grid>

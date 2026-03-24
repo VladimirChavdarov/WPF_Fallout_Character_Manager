@@ -330,6 +330,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ConstructNote();
         }
+
+        public ExplosiveProperty() : base(new Guid(), "New Explosive Property", "Property Description...")
+        {
+            ConstructNote();
+        }
         //
     }
 }
