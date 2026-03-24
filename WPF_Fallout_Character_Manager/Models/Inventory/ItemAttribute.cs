@@ -49,7 +49,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
         // methods
         public virtual void ConstructNote()
         {
-
+            Note = Value;
         }
         //
     }

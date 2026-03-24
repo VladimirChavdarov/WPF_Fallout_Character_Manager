@@ -784,6 +784,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Cost = cost;
             Rank = rank;
             SlotCost = slotCost;
+
+            ConstructNote();
         }
         //
 
@@ -814,6 +816,21 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             get => _slotCost;
             set => Update(ref _slotCost, value);
+        }
+        //
+
+        // methods
+        public override void ConstructNote()
+        {
+            Note = "";
+            Note += "Rank: " + Rank;
+            Note += "\nCost: ";
+            if(CostType  == CostType.Flat)
+                Note += Cost;
+            else
+                Note += Cost + "% of the armor's base cost";
+            Note += "\nSlots: " + SlotCost;
+            Note += "\n\n" + Value;
         }
         //
     }

@@ -207,10 +207,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             if (obj is AmmoEffect effectToAdd)
             {
-                if(effectToAdd.CompatibleAmmo.Contains(Type))
-                {
-                    Effects.Add(effectToAdd);
-                }
+                Effects.Add(effectToAdd);
+
+                // This was a nice idea, but the Compatible ammo cell in the csv's doesn't follow a strict enough convention.
+                //if(effectToAdd.CompatibleAmmo.Contains(Type))
+                //{
+                //}
             }
             else
             {
@@ -288,6 +290,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Cost = cost;
             IsReadOnly = true;
             CompatibleAmmo = new ObservableCollection<string>();
+
+            ConstructNote();
         }
         //
 
@@ -315,13 +319,17 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // methods
-        public void ConstructNote()
+        public override void ConstructNote()
         {
-            Note += "\nCompatibility: ";
+            IsReadOnly = false;
+            Note = "";
+            Note += "Compatibility: ";
             foreach (string compatibleAmmo in CompatibleAmmo)
             {
                 Note += compatibleAmmo + ". ";
             }
+            Note += "\n\n" + Value;
+            IsReadOnly = true;
         }
         //
     }

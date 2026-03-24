@@ -963,6 +963,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _weaponType, value);
         }
         //
+
+        // methods
+        public override void ConstructNote()
+        {
+            Note = Value;
+        }
+        //
     }
 
     class WeaponUpgrade : ItemAttribute
@@ -978,7 +985,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             SlotCost = slotCost;
             EquipRequirement = equipRequirement;
 
-            Note += "\nRequirements: " + EquipRequirement;
+            ConstructNote();
         }
 
         public WeaponUpgrade() : base(new Guid(), "New Weapon Upgrade", "Upgrade Description...")
@@ -990,7 +997,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             SlotCost = 0;
             EquipRequirement = "Any weapon";
 
-            Note += "\nRequirements: " + EquipRequirement;
+            ConstructNote();
         }
         //
 
@@ -1052,6 +1059,22 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     throw new InvalidOperationException("Cannot edit WeaponUpgrade.EquipRequirement when in read-only mode");
                 Update(ref _equipRequirement, value);
             }
+        }
+        //
+
+        // methods
+        public override void ConstructNote()
+        {
+            Note = "";
+            Note += "Requirements: " + EquipRequirement;
+            Note += "\n\nCost: ";
+            if (CostType == CostType.Flat)
+                Note += Cost;
+            else
+                Note += Cost + "% of the weapon's base cost";
+            Note += "\n\nTime to Equip: " + TimeToEquip;
+            Note += "\n\nSlots: " + SlotCost;
+            Note += "\n\n" + Value;
         }
         //
     }

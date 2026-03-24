@@ -326,7 +326,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class ExplosiveProperty : ItemAttribute
     {
         // constructor
-        public ExplosiveProperty(Guid id, string name = "NewExplosiveProperty", string value = "") : base(id, name, value) { }
+        public ExplosiveProperty(Guid id, string name = "NewExplosiveProperty", string value = "") : base(id, name, value)
+        {
+            ConstructNote();
+        }
         //
     }
 }

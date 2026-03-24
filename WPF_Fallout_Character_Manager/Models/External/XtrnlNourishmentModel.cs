@@ -210,7 +210,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class NourishmentProperty : ItemAttribute
     {
         // constructor
-        public NourishmentProperty(Guid id, string name = "NewNourishmentProperty", string value = "") : base(id, name, value) { }
+        public NourishmentProperty(Guid id, string name = "NewNourishmentProperty", string value = "") : base(id, name, value)
+        {
+            ConstructNote();
+        }
         //
     }
 }

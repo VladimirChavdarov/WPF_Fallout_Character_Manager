@@ -248,7 +248,10 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class AidProperty : ItemAttribute
     {
         // constructor
-        public AidProperty(Guid id, string name = "NewAidProperty", string value = "") : base(id, name, value) { }
+        public AidProperty(Guid id, string name = "NewAidProperty", string value = "") : base(id, name, value)
+        {
+            ConstructNote();        
+        }
         //
     }
 }
