@@ -151,11 +151,15 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public void FromDto(XtrnlArmorModelDTO dto, bool versionMismatch = false)
         {
-            foreach(ArmorUpgrade upgrade in dto.Upgrades)
+            foreach(ArmorUpgrade upgrade in dto.ArmorUpgrades)
             {
                 ArmorUpgrades.Add(upgrade);
             }
-            foreach(ArmorDTO armor in dto.Armors)
+            foreach (ArmorUpgrade upgrade in dto.PowerArmorUpgrades)
+            {
+                ArmorUpgrades.Add(upgrade);
+            }
+            foreach (ArmorDTO armor in dto.Armors)
             {
                 Armors.Add(new Armor(armor));
             }
@@ -173,7 +177,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (upgrade.IsFromSpreadsheet)
                     continue;
 
-                result.Upgrades.Add(upgrade);
+                result.ArmorUpgrades.Add(upgrade);
+            }
+            foreach (ArmorUpgrade upgrade in PowerArmorUpgrades)
+            {
+                if (upgrade.IsFromSpreadsheet)
+                    continue;
+
+                result.PowerArmorUpgrades.Add(upgrade);
             }
             foreach (Armor armor in Armors)
             {

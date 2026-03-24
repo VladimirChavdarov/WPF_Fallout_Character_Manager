@@ -9,7 +9,8 @@ namespace WPF_Fallout_Character_Manager.Models.External.Serialization
 {
     class XtrnlArmorModelDTO
     {
-        public List<ArmorUpgrade> Upgrades { get; set; } = new List<ArmorUpgrade>();
+        public List<ArmorUpgrade> ArmorUpgrades { get; set; } = new List<ArmorUpgrade>();
+        public List<ArmorUpgrade> PowerArmorUpgrades { get; set; } = new List<ArmorUpgrade>();
 
         public List<ArmorDTO> Armors { get; set; } = new List<ArmorDTO>();
         public List<PowerArmorDTO> PowerArmors { get; set; } = new List<PowerArmorDTO>();
