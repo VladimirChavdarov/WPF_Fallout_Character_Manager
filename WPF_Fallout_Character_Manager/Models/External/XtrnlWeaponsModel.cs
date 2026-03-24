@@ -981,14 +981,14 @@ namespace WPF_Fallout_Character_Manager.Models.External
             Note += "\nRequirements: " + EquipRequirement;
         }
 
-        public WeaponUpgrade() : base(new Guid(), "New Weapon Upgrade", "")
+        public WeaponUpgrade() : base(new Guid(), "New Weapon Upgrade", "Upgrade Description...")
         {
             WeaponType = WeaponType.Melee;
             CostType = CostType.Flat;
             Cost = 0;
             TimeToEquip = "0 minutes";
             SlotCost = 0;
-            EquipRequirement = "";
+            EquipRequirement = "Any weapon";
 
             Note += "\nRequirements: " + EquipRequirement;
         }

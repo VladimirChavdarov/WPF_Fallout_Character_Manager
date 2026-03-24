@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using WPF_Fallout_Character_Manager.Models.Inventory;
+using WPF_Fallout_Character_Manager.ViewModels;
+
+namespace WPF_Fallout_Character_Manager.Windows
+{
+    /// <summary>
+    /// Interaction logic for NewItemAttributeWindow.xaml
+    /// </summary>
+    public partial class NewItemAttributeWindow : Window
+    {
+        public NewItemAttributeWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // NOTE: Make sure this doesn't cause a race condition with the command bound to the combo boxes for adding properties and upgrades
+            if (sender is ComboBox comboBox)
+            {
+                comboBox.SelectedItem = null;
+            }
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton rb && rb.Tag is CostType costType)
+            {
+                if(DataContext is InventoryViewModel inventoryViewModel)
+                {
+                    inventoryViewModel.NewItemAttribute.CostType = costType; // setter is hit
+                }
+            }
+        }
+    }
+}

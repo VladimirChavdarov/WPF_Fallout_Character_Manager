@@ -55,8 +55,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private Type _selectedTypeForCreating;
         private dynamic _newItemTemplate;
 
+        private dynamic _newItemAttribute;
+
         private Dictionary<Type, IList> _typeToInventoryCollections { get; } = new Dictionary<Type, IList>();
         private Dictionary<Type, IList> _typeToCatalogueCollections { get; } = new Dictionary<Type, IList>();
+        private Dictionary<Type, IList> _typeToItemAttributeCatalogueCollections { get; } = new Dictionary<Type, IList>();
         //
 
         // public variables
@@ -64,6 +67,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public IReadOnlyList<Type> ItemTypes { get; } = new List<Type>() { typeof(Weapon), typeof(Armor), typeof(PowerArmor), typeof(Ammo), typeof(Aid), typeof(Explosive), typeof(Nourishment), typeof(Gear), typeof(Junk) };
         public ICollectionView CatalogueView { get; }
         public ICollectionView FullInventoryView { get; }
+        public ObservableCollection<CostType> CostTypes { get; } = new ObservableCollection<CostType>() { CostType.Percentage, CostType.Flat };
         
         public string SelectedCatalogueCategory
         {
@@ -173,6 +177,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             set
             {
                 Update(ref _newItemTemplate, value);
+            }
+        }
+
+        public dynamic NewItemAttribute
+        {
+            get => _newItemAttribute;
+            set
+            {
+                Update(ref _newItemAttribute, value);
             }
         }
 
@@ -311,6 +324,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             _typeToCatalogueCollections.Add(typeof(Gear), XtrnlGearModel.GearItems);
             _typeToCatalogueCollections.Add(typeof(Junk), XtrnlJunkModel.JunkItems);
 
+            _typeToItemAttributeCatalogueCollections.Add(typeof(WeaponProperty), XtrnlWeaponsModel.WeaponProperties);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(WeaponUpgrade), XtrnlWeaponsModel.WeaponUpgrades);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(ArmorUpgrade), XtrnlArmorModel.ArmorUpgrades);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(AmmoEffect), XtrnlAmmoModel.AmmoEffects);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(AidProperty), XtrnlAidModel.AidProperties);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(ExplosiveProperty), XtrnlExplosivesModel.ExplosiveProperties);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(NourishmentProperty), XtrnlNourishmentModel.NourishmentProperties);
+            _typeToItemAttributeCatalogueCollections.Add(typeof(JunkComponent), XtrnlJunkModel.JunkComponents);
+
             CatalogueView = CollectionViewSource.GetDefaultView(Catalogue);
             CatalogueView.SortDescriptions.Add(new SortDescription(nameof(Item.NameString), ListSortDirection.Ascending));
 
@@ -326,6 +348,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OpenNewTemplateWindowCommand = new RelayCommand(OpenNewTemplateWindow);
             AddToCatalogueCommand = new RelayCommand(AddToCatalogue);
             NullifyNewItemTemplateCommand = new RelayCommand(NullifyNewItemTemplate);
+
+            OpenNewItemAttributeWindowCommand = new RelayCommand(OpenNewItemAttributeWindow);
+            AddItemAttributeToCatalogueCommand = new RelayCommand(AddItemAttributeToCatalogue);
+            NullifyNewItemAttributeCommand = new RelayCommand(NullifyNewItemAttribute);
 
             AddPropertyCommand = new RelayCommand(AddProperty);
             RemovePropertyCommand = new RelayCommand(RemoveProperty);
@@ -649,6 +675,54 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             NewItemTemplate = null;
             SelectedCatalogueItem = null;
             SelectedInventoryItem = null;
+        }
+
+        public RelayCommand OpenNewItemAttributeWindowCommand { get; private set; }
+        private void OpenNewItemAttributeWindow(object obj)
+        {
+            NewItemAttribute = null;
+            if(obj is Type attributeType)
+            {
+                NewItemAttribute = Activator.CreateInstance(attributeType);
+                if(NewItemAttribute == null)
+                {
+                    throw new Exception("This type doesn't exist!");
+                }
+            }
+            else
+            {
+                throw new Exception("Couldn't cast argument to Type!");
+            }
+
+            var window = new NewItemAttributeWindow();
+            window.DataContext = this;
+            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
+
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
+        }
+
+        public RelayCommand AddItemAttributeToCatalogueCommand { get; private set; }
+        private void AddItemAttributeToCatalogue(object _ = null)
+        {
+            Type AttributeType = NewItemAttribute.GetType();
+
+            if (_typeToItemAttributeCatalogueCollections.TryGetValue(AttributeType, out IList collection))
+            {
+                NewItemAttribute.ConstructNote();
+                NewItemAttribute.IsFromSpreadsheet = false;
+
+                collection.Add(NewItemAttribute);
+
+                NewItemAttribute = null;
+            }
+        }
+
+        public RelayCommand NullifyNewItemAttributeCommand { get; private set; }
+        private void NullifyNewItemAttribute(object _ = null)
+        {
+            NewItemAttribute = null;
         }
 
         public RelayCommand DuplicateStackCommand { get; private set; }

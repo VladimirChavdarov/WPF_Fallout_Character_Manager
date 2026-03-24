@@ -313,6 +313,18 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
+
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="New Property"
+                            Margin="5 0 10 0"
+                            Padding="5"
+                            Width="Auto"
+                            FontSize="9"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{x:Type xtrnl:WeaponProperty}"/>
                     </StackPanel>
 
                     <StackPanel
@@ -399,6 +411,18 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
+
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="New Upgrade"
+                            Margin="5 0 10 0"
+                            Padding="5"
+                            Width="Auto"
+                            FontSize="9"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{x:Type xtrnl:WeaponUpgrade}"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -597,6 +621,17 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
+
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="New Upgrade"
+                            Margin="5 0 10 0"
+                            Padding="5"
+                            Width="Auto"
+                            FontSize="9"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -816,6 +851,17 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
+
+                        <Button
+                            Style="{StaticResource FalloutButton}"
+                            Content="New Upgrade"
+                            Margin="5 0 10 0"
+                            Padding="5"
+                            Width="Auto"
+                            FontSize="9"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -899,7 +945,7 @@
                 Width="Auto"
                 ItemsSource="{Binding XtrnlAmmoModel.AmmoEffects}"
                 DisplayMemberPath="Name"
-                Tag="Properties"
+                Tag="Effects"
                 Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
@@ -916,6 +962,17 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
+
+                    <Button
+                        Style="{StaticResource FalloutButton}"
+                        Content="New Effect"
+                        Margin="5 0 10 0"
+                        Padding="5"
+                        Width="Auto"
+                        FontSize="9"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -1017,6 +1074,17 @@
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </StackPanel>
+
+                <Button
+                    Style="{StaticResource FalloutButton}"
+                    Content="New Property"
+                    Margin="10 0 10 0"
+                    Padding="5"
+                    Width="Auto"
+                    FontSize="9"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
             </StackPanel>
         </DataTemplate>
 
@@ -1200,6 +1268,17 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
+
+                            <Button
+                                Style="{StaticResource FalloutButton}"
+                                Content="New Property"
+                                Margin="5 0 10 0"
+                                Padding="5"
+                                Width="Auto"
+                                FontSize="9"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                         </StackPanel>
 
                         <StackPanel
@@ -1309,6 +1388,17 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
+
+                    <Button
+                        Style="{StaticResource FalloutButton}"
+                        Content="New Property"
+                        Margin="5 0 10 0"
+                        Padding="5"
+                        Width="Auto"
+                        FontSize="9"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -1494,7 +1584,7 @@
                 Width="Auto"
                 ItemsSource="{Binding XtrnlJunkModel.JunkComponents}"
                 DisplayMemberPath="NameString"
-                Tag="Properties"
+                Tag="Junk Components"
                 Visibility="{Binding NewItemTemplate.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"
                 SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBox.ItemContainerStyle>
@@ -1511,6 +1601,17 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
+
+                    <Button
+                        Style="{StaticResource FalloutButton}"
+                        Content="New Junk Component"
+                        Margin="5 0 10 0"
+                        Padding="5"
+                        Width="Auto"
+                        FontSize="9"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
