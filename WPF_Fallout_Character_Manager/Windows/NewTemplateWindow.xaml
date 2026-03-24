@@ -631,7 +631,8 @@
                             FontSize="9"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom"
-                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{x:Type xtrnl:ArmorUpgrade}"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -861,7 +862,8 @@
                             FontSize="9"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom"
-                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                            Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{x:Type xtrnl:ArmorUpgrade}"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -972,7 +974,8 @@
                         FontSize="9"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="{x:Type xtrnl:AmmoEffect}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -1084,7 +1087,8 @@
                     FontSize="9"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
-                    Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{x:Type xtrnl:AidProperty}"/>
             </StackPanel>
         </DataTemplate>
 
@@ -1278,7 +1282,8 @@
                                 FontSize="9"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Bottom"
-                                Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{x:Type xtrnl:ExplosiveProperty}"/>
                         </StackPanel>
 
                         <StackPanel
@@ -1398,7 +1403,8 @@
                         FontSize="9"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                        CommandParameter="{x:Type xtrnl:NourishmentProperty}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -1601,17 +1607,6 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
-
-                    <Button
-                        Style="{StaticResource FalloutButton}"
-                        Content="New Junk Component"
-                        Margin="5 0 10 0"
-                        Padding="5"
-                        Width="Auto"
-                        FontSize="9"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Command="{Binding DataContext.OpenNewItemAttributeWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>

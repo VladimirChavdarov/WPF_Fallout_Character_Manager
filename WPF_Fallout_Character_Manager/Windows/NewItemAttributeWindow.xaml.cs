@@ -58,5 +58,25 @@ namespace WPF_Fallout_Character_Manager.Windows
                 }
             }
         }
+
+        private void ListBoxItem_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (DataContext is InventoryViewModel vm)
+            {
+                if (vm.SelectedItem is Item gameItem)
+                {
+                    if (!gameItem.CanBeEdited)
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+            }
+
+            if (sender is ListBoxItem listBoxItem && listBoxItem.ContextMenu != null)
+            {
+                listBoxItem.ContextMenu.DataContext = this.DataContext;
+            }
+        }
     }
 }

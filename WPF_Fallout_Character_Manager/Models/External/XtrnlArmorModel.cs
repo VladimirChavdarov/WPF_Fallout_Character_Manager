@@ -777,13 +777,23 @@ namespace WPF_Fallout_Character_Manager.Models.External
     class ArmorUpgrade : ItemAttribute
     {
         // constructor
-        public ArmorUpgrade(Guid id, string name="NewUpgrade", CostType costType = CostType.Flat, int cost = 0, int rank = 0, string value = "", int slotCost = 0)
+        public ArmorUpgrade(Guid id, string name="NewUpgrade", CostType costType = CostType.Flat, int cost = 0, int rank = 1, string value = "", int slotCost = 0)
             : base(id, name, value)
         {
             CostType = costType;
             Cost = cost;
             Rank = rank;
             SlotCost = slotCost;
+
+            ConstructNote();
+        }
+
+        public ArmorUpgrade() : base(new Guid(), "New Armor Upgrade", "Upgrade Description...")
+        {
+            CostType = CostType.Flat;
+            Cost = 0;
+            Rank = 1;
+            SlotCost = 0;
 
             ConstructNote();
         }

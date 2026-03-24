@@ -288,7 +288,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             CostType = costType;
             Cost = cost;
-            IsReadOnly = true;
+            //IsReadOnly = true;
+            IsReadOnly = false;
+            CompatibleAmmo = new ObservableCollection<string>();
+
+            ConstructNote();
+        }
+
+        public AmmoEffect() : base(new Guid(), "New Ammo Effect", "Effect Description...")
+        {
+            CostType = CostType.Flat;
+            Cost = 0;
+            IsReadOnly = false;
             CompatibleAmmo = new ObservableCollection<string>();
 
             ConstructNote();
@@ -321,7 +332,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
         // methods
         public override void ConstructNote()
         {
-            IsReadOnly = false;
+            //IsReadOnly = false;
             Note = "";
             Note += "Compatibility: ";
             foreach (string compatibleAmmo in CompatibleAmmo)
@@ -329,7 +340,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 Note += compatibleAmmo + ". ";
             }
             Note += "\n\n" + Value;
-            IsReadOnly = true;
+            //IsReadOnly = true;
         }
         //
     }

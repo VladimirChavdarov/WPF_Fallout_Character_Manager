@@ -352,6 +352,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             OpenNewItemAttributeWindowCommand = new RelayCommand(OpenNewItemAttributeWindow);
             AddItemAttributeToCatalogueCommand = new RelayCommand(AddItemAttributeToCatalogue);
             NullifyNewItemAttributeCommand = new RelayCommand(NullifyNewItemAttribute);
+            AddCompatibleAmmoCommand = new RelayCommand(AddCompatibleAmmo);
+            RemoveCompatibleAmmoCommand = new RelayCommand(RemoveCompatibleAmmo);
 
             AddPropertyCommand = new RelayCommand(AddProperty);
             RemovePropertyCommand = new RelayCommand(RemoveProperty);
@@ -717,12 +719,43 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
                 NewItemAttribute = null;
             }
+            else
+            {
+                throw new Exception($"No collection found for attribute type {AttributeType}");
+            }
         }
 
         public RelayCommand NullifyNewItemAttributeCommand { get; private set; }
         private void NullifyNewItemAttribute(object _ = null)
         {
             NewItemAttribute = null;
+        }
+
+        public RelayCommand AddCompatibleAmmoCommand { get; private set; }
+        private void AddCompatibleAmmo(object obj)
+        {
+            if(NewItemAttribute is AmmoEffect NewAmmoEffect)
+            {
+                if(obj is string compatibleAmmo)
+                {
+                    NewAmmoEffect.CompatibleAmmo.Add(compatibleAmmo);
+                }
+            }
+        }
+
+        public RelayCommand RemoveCompatibleAmmoCommand { get; private set; }
+        private void RemoveCompatibleAmmo(object obj)
+        {
+            if (obj == null)
+                return;
+
+            if (NewItemAttribute is AmmoEffect NewAmmoEffect)
+            {
+                if (obj is string compatibleAmmo)
+                {
+                    NewAmmoEffect.CompatibleAmmo.Remove(compatibleAmmo);
+                }
+            }
         }
 
         public RelayCommand DuplicateStackCommand { get; private set; }

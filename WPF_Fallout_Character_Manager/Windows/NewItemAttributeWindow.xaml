@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
         xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
@@ -160,6 +161,212 @@
                     CanOpenModal="false"
                     IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
                     Text="{Binding NewItemAttribute.TimeToEquip}"/>
+
+                <control:TextBoxWithLabelControl
+                    Margin="0 0 0 20"
+                    TextPadding="5"
+                    Width="450"
+                    MinHeight="50"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    Orientation="Vertical"
+                    LabelFontSize="9"
+                    LabelText="Description: "
+                    FontSize="9"
+                    CanOpenModal="false"
+                    IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                    Text="{Binding NewItemAttribute.Value}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:ArmorUpgrade}">
+            <StackPanel
+                DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <StackPanel>
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="9"
+                            VerticalAlignment="Center"
+                            Content="Rank:"/>
+                        <control:UpDownTextBoxControl x:Name="Rank"
+                            Margin="0 0 15 0"
+                            FontSize="11"
+                            MinusButtonSlot="1"
+                            PlusButtonSlot="2"
+                            TextBoxSlot="0"
+                            MinValue="1"
+                            MaxValue="3"
+                            IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                            Text="{Binding NewItemAttribute.Rank}"
+                            CanOpenModal="False"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="9"
+                            VerticalAlignment="Center"
+                            Content="Cost:"/>
+                        <control:UpDownTextBoxControl x:Name="Cost"
+                            Margin="0 0 5 0"
+                            FontSize="11"
+                            MinusButtonSlot="1"
+                            PlusButtonSlot="2"
+                            TextBoxSlot="0"
+                            IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                            Text="{Binding NewItemAttribute.Cost}"
+                            CanOpenModal="False"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="9"
+                            VerticalAlignment="Center"
+                            Content="Cost Type:"/>
+                        <ComboBox
+                            Margin="2 2 15 2"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            MinWidth="100"
+                            Width="Auto"
+                            ItemsSource="{Binding CostTypes}"
+                            SelectedItem="{Binding NewItemAttribute.CostType}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label
+                            Style="{StaticResource FalloutDefaultLabel}"
+                            FontSize="9"
+                            VerticalAlignment="Center"
+                            Content="Slots:"/>
+                        <control:UpDownTextBoxControl x:Name="SlotCost"
+                            Margin="0 0 10 0"
+                            FontSize="11"
+                            MinusButtonSlot="1"
+                            PlusButtonSlot="2"
+                            TextBoxSlot="0"
+                            IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                            Text="{Binding NewItemAttribute.SlotCost}"
+                            CanOpenModal="False"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <control:TextBoxWithLabelControl
+                    Margin="0 0 0 20"
+                    TextPadding="5"
+                    Width="450"
+                    MinHeight="50"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Left"
+                    Orientation="Vertical"
+                    LabelFontSize="9"
+                    LabelText="Description: "
+                    FontSize="9"
+                    CanOpenModal="false"
+                    IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                    Text="{Binding NewItemAttribute.Value}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type xtrnl:AmmoEffect}">
+            <StackPanel DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType=Window}}">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <StackPanel
+                        Orientation="Vertical">
+                        <StackPanel>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="9"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Content="Compatible Ammo:"/>
+                            <ComboBox
+                                Margin="5"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                MinWidth="180"
+                                Width="Auto"
+                                ItemsSource="{Binding XtrnlAmmoModel.AmmoTypes}"
+                                Tag="Ammo Types"
+                                SelectionChanged="ComboBox_SelectionChanged">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                        <Setter Property="Tag" Value="{Binding Note}"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding AddCompatibleAmmoCommand}"
+                                            CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="9"
+                                VerticalAlignment="Center"
+                                Content="Cost:"/>
+                            <control:UpDownTextBoxControl x:Name="Cost"
+                                HorizontalAlignment="Left"
+                                Margin="0 0 5 0"
+                                FontSize="11"
+                                MinusButtonSlot="1"
+                                PlusButtonSlot="2"
+                                TextBoxSlot="0"
+                                IsReadOnly="{Binding NewItemAttribute.IsReadOnly}"
+                                Text="{Binding NewItemAttribute.Cost}"
+                                CanOpenModal="False"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label
+                                Style="{StaticResource FalloutDefaultLabel}"
+                                FontSize="9"
+                                VerticalAlignment="Center"
+                                Content="Cost Type:"/>
+                            <ComboBox
+                                Margin="2 2 15 2"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                MinWidth="100"
+                                Width="Auto"
+                                ItemsSource="{Binding CostTypes}"
+                                SelectedItem="{Binding NewItemAttribute.CostType}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ListBox
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource FalloutInventoryTabsListBox}"
+                        BorderBrush="{StaticResource FalloutGreen}"
+                        BorderThickness="1"
+                        Padding="5"
+                        Height="100"
+                        Width="160"
+                        ItemsSource="{Binding NewItemAttribute.CompatibleAmmo}"
+                        FontSize="9">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                                <Setter Property="Tag" Value="{Binding Note}"/>
+                                <EventSetter Event="ContextMenuOpening" Handler="ListBoxItem_ContextMenuOpening"/>
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete"
+                                                Command="{Binding RemoveCompatibleAmmoCommand}"
+                                                CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
 
                 <control:TextBoxWithLabelControl
                     Margin="0 0 0 20"
