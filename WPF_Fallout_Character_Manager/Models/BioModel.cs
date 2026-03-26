@@ -28,7 +28,7 @@ namespace WPF_Fallout_Character_Manager.Models
             Vices = "";
             _xtrnlLevelModel = xtrnlLevelModel;
             LevelNum = 1;
-            _xp = new ModInt("XP", 543, false, "");
+            _xp = new ModInt("XP", 0, false, "");
             _xp.Note = "The GM may award the players with XP at any time, but is typically awarded when the player characters spend any amount of time resting after completing a quest, encounter, or discovering something new. Whenever you gain XP, if your XP total is lower than any other player character’s total XP, you gain XP equal to the difference between your total and theirs. (Simply put: everyone shares the same amount of XP, defaulting to whoever has the highest). Additionally, the following modifiers are added to the total: Reaching 0 Hit points (10%), Death (1000 XP), Creature Discovery (20%), Location Discovery (20%)";
             _xp.PropertyChanged += (s, e) => OnPropertyChanged(nameof(XP));
 
