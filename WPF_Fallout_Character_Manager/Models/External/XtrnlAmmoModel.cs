@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Ribbon.Primitives;
 using System.Windows.Media.Effects;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -17,7 +18,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlAmmoModel : ModelBase
+    class XtrnlAmmoModel : ModelBase, ISerializable<XtrnlAmmoModelDTO>
     {
         private static string ammoEffectsPath = "Resources/Spreadsheets/ammo_special.csv";
         private static string ammoPath = "Resources/Spreadsheets/ammo.csv";
@@ -116,6 +117,44 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     AmmoTypes.Add(a.Type);
                 }
             }
+        }
+
+        public XtrnlAmmoModelDTO ToDto()
+        {
+            XtrnlAmmoModelDTO result = new XtrnlAmmoModelDTO();
+            foreach(AmmoEffect effect in AmmoEffects)
+            {
+                if (effect.IsFromSpreadsheet)
+                    continue;
+
+                result.AmmoEffects.Add(effect);
+            }
+            foreach(Ammo ammo in Ammos)
+            {
+                if (ammo.ToDto() is not AmmoDTO aDto)
+                    throw new InvalidOperationException("Expected AmmoDTO");
+
+                if (ammo.IsFromSpreadsheet)
+                    continue;
+
+                result.Ammos.Add(aDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(XtrnlAmmoModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(AmmoEffect ammoEffect in dto.AmmoEffects)
+            {
+                AmmoEffects.Add(ammoEffect);
+            }
+            foreach(AmmoDTO ammoDto in dto.Ammos)
+            {
+                Ammos.Add(new Ammo(ammoDto));
+            }
+
+            DetermineAmmoTypes();
         }
         //
 

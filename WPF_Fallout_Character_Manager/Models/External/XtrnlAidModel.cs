@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Effects;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -14,7 +15,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlAidModel : ModelBase
+    class XtrnlAidModel : ModelBase, ISerializable<XtrnlAidModelDTO>
     {
         private static string aidPropertiesPath = "Resources/Spreadsheets/chem_properties.csv";
         private static string chemsPath = "Resources/Spreadsheets/chems.csv";
@@ -95,6 +96,44 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 AidItems.Add(medicine);
             }
             //
+        }
+        //
+
+        // methods
+        public XtrnlAidModelDTO ToDto()
+        {
+            XtrnlAidModelDTO result = new XtrnlAidModelDTO();
+            foreach (AidProperty property in AidProperties)
+            {
+                if (property.IsFromSpreadsheet)
+                    continue;
+
+                result.AidProperties.Add(property);
+            }
+            foreach (Aid aidItem in AidItems)
+            {
+                if (aidItem.ToDto() is not AidDTO aDto)
+                    throw new InvalidOperationException("Expected AidDTO");
+
+                if (aidItem.IsFromSpreadsheet)
+                    continue;
+
+                result.AidItems.Add(aDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(XtrnlAidModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(AidProperty property in dto.AidProperties)
+            {
+                AidProperties.Add(property);
+            }
+            foreach(AidDTO aidDto in dto.AidItems)
+            {
+                AidItems.Add(new Aid(aidDto));
+            }
         }
         //
 

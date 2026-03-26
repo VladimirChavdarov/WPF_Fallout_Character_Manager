@@ -7,6 +7,7 @@ using System.Linq;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.MVVM;
@@ -14,7 +15,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlJunkModel : ModelBase
+    class XtrnlJunkModel : ModelBase, ISerializable<XtrnlJunkModelDTO>
     {
         private static readonly string junkComponentsPath = "Resources/Spreadsheets/junk_components.csv";
         private static readonly string junkPath = "Resources/Spreadsheets/junk.csv";
@@ -94,6 +95,31 @@ namespace WPF_Fallout_Character_Manager.Models.External
                     componentToAdd.Amount.BaseValue = Int32.Parse(amountString);
                     junk.Components.Add(componentToAdd);
                 }
+            }
+        }
+
+        public XtrnlJunkModelDTO ToDto()
+        {
+            XtrnlJunkModelDTO result = new XtrnlJunkModelDTO();
+            foreach(Junk junk in JunkItems)
+            {
+                if (junk.ToDto() is not JunkDTO wDto)
+                    throw new InvalidOperationException("Expected JunkDTO");
+
+                if (junk.IsFromSpreadsheet)
+                    continue;
+
+                result.JunkItems.Add(wDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(XtrnlJunkModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(JunkDTO junkDto in dto.JunkItems)
+            {
+                JunkItems.Add(new Junk(junkDto));
             }
         }
         //

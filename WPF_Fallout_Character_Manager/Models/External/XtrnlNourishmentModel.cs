@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -14,7 +15,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlNourishmentModel : ModelBase
+    class XtrnlNourishmentModel : ModelBase, ISerializable<XtrnlNourishmentModelDTO>
     {
         private static readonly string nourishmentPropertiesPath = "Resources/Spreadsheets/foods_drinks_properties.csv";
         private static readonly string nourishmentPath = "Resources/Spreadsheets/foods_drinks.csv";
@@ -79,6 +80,39 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (newProperty == null)
                     throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
                 nourishment.Properties.Add(newProperty);
+            }
+        }
+
+        public XtrnlNourishmentModelDTO ToDto()
+        {
+            XtrnlNourishmentModelDTO result = new XtrnlNourishmentModelDTO();
+            foreach(NourishmentProperty property in NourishmentProperties)
+            {
+                result.NourishmentProperties.Add(property);
+            }
+            foreach(Nourishment nourishment in Nourishments)
+            {
+                if (nourishment.ToDto() is not NourishmentDTO nDto)
+                    throw new InvalidOperationException("Expected NourishmentDTO");
+
+                if (nourishment.IsFromSpreadsheet)
+                    continue;
+
+                result.Nourishments.Add(nDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(XtrnlNourishmentModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(NourishmentProperty nourishmentProperty in dto.NourishmentProperties)
+            {
+                NourishmentProperties.Add(nourishmentProperty);
+            }
+            foreach(NourishmentDTO nourishmentDto in dto.Nourishments)
+            {
+                Nourishments.Add(new Nourishment(nourishmentDto));
             }
         }
         //

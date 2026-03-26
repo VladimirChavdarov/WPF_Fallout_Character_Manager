@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -13,7 +14,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlGearModel : ModelBase
+    class XtrnlGearModel : ModelBase, ISerializable<XtrnlGearModelDTO>
     {
         private static readonly string gearPath = "Resources/Spreadsheets/gear.csv";
         private static readonly string magazinesPath = "Resources/Spreadsheets/magazine.csv";
@@ -67,6 +68,31 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         // data
         public ObservableCollection<Gear> GearItems { get; set; }
+
+        public void FromDto(XtrnlGearModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(GearDTO gearDto in dto.GearItems)
+            {
+                GearItems.Add(new Gear(gearDto));
+            }
+        }
+
+        public XtrnlGearModelDTO ToDto()
+        {
+            XtrnlGearModelDTO result = new XtrnlGearModelDTO();
+            foreach(Gear gear in GearItems)
+            {
+                if (gear.ToDto() is not GearDTO wDto)
+                    throw new InvalidOperationException("Expected GearDTO");
+
+                if (gear.IsFromSpreadsheet)
+                    continue;
+
+                result.GearItems.Add(wDto);
+            }
+
+            return result;
+        }
         //
     }
 

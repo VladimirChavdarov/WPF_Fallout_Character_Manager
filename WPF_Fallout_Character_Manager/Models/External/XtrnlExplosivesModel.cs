@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.Inventory.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
@@ -13,7 +14,7 @@ using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlExplosivesModel : ModelBase
+    class XtrnlExplosivesModel : ModelBase, ISerializable<XtrnlExplosivesModelDTO>
     {
         private static readonly string explosivePropertiesPath = "Resources/Spreadsheets/explosives_properties.csv";
         private static readonly string explosivesThrownPath = "Resources/Spreadsheets/explosives_thrown.csv";
@@ -119,6 +120,39 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 if (newProperty == null)
                     throw new Exception($"Cannot find property in master list. Property: {trimmedProperty}");
                 explosive.Properties.Add(newProperty);
+            }
+        }
+
+        public XtrnlExplosivesModelDTO ToDto()
+        {
+            XtrnlExplosivesModelDTO result = new XtrnlExplosivesModelDTO();
+            foreach(ExplosiveProperty property in ExplosiveProperties)
+            {
+                result.ExplosiveProperties.Add(property);
+            }
+            foreach(Explosive explosive in Explosives)
+            {
+                if (explosive.ToDto() is not ExplosiveDTO eDto)
+                    throw new InvalidOperationException("Expected ExplosiveDTO");
+
+                if (explosive.IsFromSpreadsheet)
+                    continue;
+
+                result.Explosives.Add(eDto);
+            }
+
+            return result;
+        }
+
+        public void FromDto(XtrnlExplosivesModelDTO dto, bool versionMismatch = false)
+        {
+            foreach(ExplosiveProperty property in dto.ExplosiveProperties)
+            {
+                ExplosiveProperties.Add(property);
+            }
+            foreach(ExplosiveDTO explosiveDto in dto.Explosives)
+            {
+                Explosives.Add(new Explosive(explosiveDto));
             }
         }
         //

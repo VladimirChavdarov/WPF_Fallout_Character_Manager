@@ -148,6 +148,12 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             RegisterModelForSerialization<XtrnlWeaponsModel, XtrnlWeaponsModelDTO>(XtrnlWeaponsModel, DtoType.Catalogue);
             RegisterModelForSerialization<XtrnlArmorModel, XtrnlArmorModelDTO>(XtrnlArmorModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlAmmoModel, XtrnlAmmoModelDTO>(XtrnlAmmoModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlAidModel, XtrnlAidModelDTO>(XtrnlAidModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlExplosivesModel, XtrnlExplosivesModelDTO>(XtrnlExplosivesModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlNourishmentModel, XtrnlNourishmentModelDTO>(XtrnlNourishmentModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlGearModel, XtrnlGearModelDTO>(XtrnlGearModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlJunkModel, XtrnlJunkModelDTO>(XtrnlJunkModel, DtoType.Catalogue);
             //
         }
         //
