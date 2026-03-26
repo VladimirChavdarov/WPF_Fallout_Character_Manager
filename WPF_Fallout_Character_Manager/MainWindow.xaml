@@ -147,6 +147,11 @@
                             Foreground="{StaticResource FalloutGreen}"
                             FontFamily="{StaticResource JH_Fallout}"
                             Command="{Binding ReloadItemAttributesCommand}"/>
+                        <MenuItem Header="Reset Custom Catalogue"
+                            DataContext="{Binding InventoryViewModel}"
+                            Foreground="{StaticResource FalloutGreen}"
+                            FontFamily="{StaticResource JH_Fallout}"
+                            Command="{Binding ResetCustomCatalogueCommand}"/>
                     </MenuItem>
                 </Menu>
 

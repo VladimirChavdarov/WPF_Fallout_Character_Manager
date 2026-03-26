@@ -128,6 +128,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             XtrnlExplosivesModelDTO result = new XtrnlExplosivesModelDTO();
             foreach(ExplosiveProperty property in ExplosiveProperties)
             {
+                if (property.IsFromSpreadsheet)
+                    continue;
+
                 result.ExplosiveProperties.Add(property);
             }
             foreach(Explosive explosive in Explosives)

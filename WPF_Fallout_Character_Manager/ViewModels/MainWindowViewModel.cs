@@ -281,9 +281,17 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 if (!File.Exists(_serializationCataloguePath))
                 {
-                    error = "Cannot find file: " + _serializationCataloguePath;
-                    return false;
+                    CatalogueDTO defaultDto = new CatalogueDTO();
+                    string defaultCatalogueJson = JsonSerializer.Serialize(defaultDto, new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    });
+
+                    File.WriteAllText(_serializationCataloguePath, defaultCatalogueJson);
                 }
+
+                // Reset any custom templates in the catalogue
+                InventoryViewModel.RemoveCustomCatalogueItems(new List<string>(), new List<string>(), new List<string>());
 
                 string json = File.ReadAllText(_serializationCataloguePath);
                 CatalogueDTO dto = new CatalogueDTO();

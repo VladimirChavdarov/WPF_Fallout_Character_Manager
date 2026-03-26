@@ -362,6 +362,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             // Debug
             ReloadItemAttributesCommand = new RelayCommand(ReloadItemAttributes);
+            ResetCustomCatalogueCommand = new RelayCommand(ResetCustomCatalogue);
             //
 
             _searchCatalogueText = "";
@@ -950,6 +951,132 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     }
                 }
                 MessageBox.Show(output, "Reload Item Attributes", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        public RelayCommand ResetCustomCatalogueCommand { get; private set; }
+        private void ResetCustomCatalogue(object _ = null)
+        {
+            string message = "This operation will delete all of your custom item templates, custom properties and custom upgrades. Are you sure you want to proceed?";
+            MessageBoxResult result = MessageBox.Show(message, "Reload Item Attributes", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            List<string> deletedItemNames = new List<string>();
+            List<string> deletedPropertyNames = new List<string>();
+            List<string> deletedUpgradeNames = new List<string>();
+
+            if (result == MessageBoxResult.Yes)
+            {
+                RemoveCustomCatalogueItems(deletedItemNames, deletedPropertyNames, deletedUpgradeNames);
+
+                string output = "";
+                output += "Operation finished.";
+                output += "\n" + deletedItemNames.Count + " Item templates deleted:";
+                foreach(string itemName in deletedItemNames)
+                {
+                    output += "\n" + itemName;
+                }
+                output += "\n\n" + deletedPropertyNames.Count + " Property templates deleted:";
+                foreach(string propertyNames in deletedPropertyNames)
+                {
+                    output += "\n" + propertyNames;
+                }
+                output += "\n\n" + deletedUpgradeNames.Count + " Upgrade templates deleted:";
+                foreach(string upgradeName in deletedUpgradeNames)
+                {
+                    output += "\n" + upgradeName;
+                }
+                MessageBox.Show(output, "Reset Custom Catalogue", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        public void RemoveCustomCatalogueItems(List<string> deletedItemNames, List<string> deletedPropertyNames, List<string> deletedUpgradeNames)
+        {
+            // items
+            foreach (Item item in Catalogue.ToList())
+            {
+                if (!item.IsFromSpreadsheet)
+                {
+                    Type itemType = item.GetType();
+                    if (_typeToCatalogueCollections.TryGetValue(item.GetType(), out IList collection))
+                    {
+                        collection.Remove(item);
+                        Catalogue.Remove(item);
+                        deletedItemNames.Add(item.NameString);
+                    }
+                }
+            }
+            CatalogueView.Refresh();
+
+            // weapon properties
+            foreach (var property in XtrnlWeaponsModel.WeaponProperties.ToList())
+            {
+                if (!property.IsFromSpreadsheet)
+                {
+                    XtrnlWeaponsModel.WeaponProperties.Remove(property);
+                    deletedPropertyNames.Add(property.Name);
+                }
+            }
+            // weapon upgrades
+            foreach (var upgrade in XtrnlWeaponsModel.WeaponUpgrades.ToList())
+            {
+                if (!upgrade.IsFromSpreadsheet)
+                {
+                    XtrnlWeaponsModel.WeaponUpgrades.Remove(upgrade);
+                    deletedUpgradeNames.Add(upgrade.Name);
+                }
+            }
+            // armor upgrades
+            foreach (var upgrade in XtrnlArmorModel.ArmorUpgrades.ToList())
+            {
+                if (!upgrade.IsFromSpreadsheet)
+                {
+                    XtrnlArmorModel.ArmorUpgrades.Remove(upgrade);
+                    deletedUpgradeNames.Add(upgrade.Name);
+                }
+            }
+            // power armor upgrades
+            foreach (var upgrade in XtrnlArmorModel.PowerArmorUpgrades.ToList())
+            {
+                if (!upgrade.IsFromSpreadsheet)
+                {
+                    XtrnlArmorModel.PowerArmorUpgrades.Remove(upgrade);
+                    deletedUpgradeNames.Add(upgrade.Name);
+                }
+            }
+            // ammo upgrades
+            foreach (var effect in XtrnlAmmoModel.AmmoEffects.ToList())
+            {
+                if (!effect.IsFromSpreadsheet)
+                {
+                    XtrnlAmmoModel.AmmoEffects.Remove(effect);
+                    deletedUpgradeNames.Add(effect.Name);
+                }
+            }
+            // aid properties
+            foreach (var property in XtrnlAidModel.AidProperties.ToList())
+            {
+                if (!property.IsFromSpreadsheet)
+                {
+                    XtrnlAidModel.AidProperties.Remove(property);
+                    deletedPropertyNames.Add(property.Name);
+                }
+            }
+            // explosive properties
+            foreach (var property in XtrnlExplosivesModel.ExplosiveProperties.ToList())
+            {
+                if (!property.IsFromSpreadsheet)
+                {
+                    XtrnlExplosivesModel.ExplosiveProperties.Remove(property);
+                    deletedPropertyNames.Add(property.Name);
+                }
+            }
+            // nourishment properties
+            foreach (var property in XtrnlNourishmentModel.NourishmentProperties.ToList())
+            {
+                if (!property.IsFromSpreadsheet)
+                {
+                    XtrnlNourishmentModel.NourishmentProperties.Remove(property);
+                    deletedPropertyNames.Add(property.Name);
+                }
             }
         }
         //

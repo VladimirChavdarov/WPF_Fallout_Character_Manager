@@ -232,6 +232,8 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             dto.Cost = Cost.ToDto();
             dto.Amount = Amount.ToDto();
             dto.Load = Load.ToDto();
+            dto.CanBeEdited = CanBeEdited;
+            dto.IsFromSpreadsheet = IsFromSpreadsheet;
         }
 
         public virtual ItemDTO ToDto()
@@ -242,7 +244,8 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
                 Cost = Cost.ToDto(),
                 Amount = Amount.ToDto(),
                 Load = Load.ToDto(),
-                CanBeEdited = CanBeEdited
+                CanBeEdited = this.CanBeEdited,
+                IsFromSpreadsheet = this.IsFromSpreadsheet
             };
         }
 
@@ -252,7 +255,8 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             Cost = new ModInt(dto.Cost);
             Amount = new ModInt(dto.Amount);
             Load = new ModFloat(dto.Load);
-            CanBeEdited = true;
+            CanBeEdited = dto.CanBeEdited;
+            IsFromSpreadsheet = dto.IsFromSpreadsheet;
 
             OnPropertyChanged(nameof(TotalCost));
             OnPropertyChanged(nameof(TotalLoad));

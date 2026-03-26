@@ -88,6 +88,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
             XtrnlNourishmentModelDTO result = new XtrnlNourishmentModelDTO();
             foreach(NourishmentProperty property in NourishmentProperties)
             {
+                if (property.IsFromSpreadsheet)
+                    continue;
+
                 result.NourishmentProperties.Add(property);
             }
             foreach(Nourishment nourishment in Nourishments)
@@ -108,6 +111,9 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             foreach(NourishmentProperty nourishmentProperty in dto.NourishmentProperties)
             {
+                if (nourishmentProperty.IsFromSpreadsheet)
+                    continue;
+
                 NourishmentProperties.Add(nourishmentProperty);
             }
             foreach(NourishmentDTO nourishmentDto in dto.Nourishments)

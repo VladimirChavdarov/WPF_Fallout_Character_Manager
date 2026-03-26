@@ -15,5 +15,6 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory.Serialization
         public ModValueDTO<int> Amount { get; set; }
         public ModValueDTO<float> Load { get; set; }
         public bool CanBeEdited { get; set; }
+        public bool IsFromSpreadsheet { get; set; }
     }
 }
