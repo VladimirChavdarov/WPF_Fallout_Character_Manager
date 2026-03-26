@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Windows;
 using Microsoft.Win32;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
@@ -155,6 +156,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<XtrnlGearModel, XtrnlGearModelDTO>(XtrnlGearModel, DtoType.Catalogue);
             RegisterModelForSerialization<XtrnlJunkModel, XtrnlJunkModelDTO>(XtrnlJunkModel, DtoType.Catalogue);
             //
+
+            // Deserialize the catalogue by default so the user has access to all of their custom data without having to load a character file
+            if(!DeserializeCatalogueJson(out string error))
+            {
+                MessageBox.Show("Unable to Load Catalogue. This means the catalogue.cft file might be corrupted. Fix it manually or delete it. " + error, "Load error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            InventoryViewModel.ReloadCatalogueAndInventory();
         }
         //
 
@@ -220,71 +228,97 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         bool DeserializeCharacterJson(out string error)
         {
-            if (!CreateOpenFileDialog("Load Character", ".fch", out string filePath, out error))
-                return false;
-
-            if (!File.Exists(filePath))
+            try
             {
-                error = "Cannot find file: " + filePath;
-                return false;
-            }
+                if (!CreateOpenFileDialog("Load Character", ".fch", out string filePath, out error))
+                    return false;
 
-            string json = File.ReadAllText(filePath);
-            CharacterDTO dto = new CharacterDTO();
-            float appVersion = dto.Version;
-            dto = JsonSerializer.Deserialize<CharacterDTO>(json);
-            bool versionMisMatch = appVersion != dto.Version;
-
-            foreach(var (modelName, jsonElement) in dto.ModelDtos)
-            {
-                if (!_serializableModels.TryGetValue(_serializableModels.Keys.First(t => t.Name == modelName), out var model))
+                if (!File.Exists(filePath))
                 {
-                    error = "Trying to deserialize a Model that wasn't marked for serialization/deserialization. Model: " + modelName;
+                    error = "Cannot find file: " + filePath;
                     return false;
                 }
 
-                var fromDtoMethod = model.GetType().GetMethod("FromDto");
-                var dtoType = fromDtoMethod.GetParameters()[0].ParameterType;
+                string json = File.ReadAllText(filePath);
+                CharacterDTO dto = new CharacterDTO();
+                float appVersion = dto.Version;
+                dto = JsonSerializer.Deserialize<CharacterDTO>(json);
+                bool versionMisMatch = appVersion != dto.Version;
 
-                var typedDto = jsonElement.Deserialize(dtoType);
-                fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
+                foreach (var (modelName, jsonElement) in dto.ModelDtos)
+                {
+                    if (!_serializableModels.TryGetValue(_serializableModels.Keys.First(t => t.Name == modelName), out var model))
+                    {
+                        error = "Trying to deserialize a Model that wasn't marked for serialization/deserialization. Model: " + modelName;
+                        return false;
+                    }
+
+                    var fromDtoMethod = model.GetType().GetMethod("FromDto");
+                    var dtoType = fromDtoMethod.GetParameters()[0].ParameterType;
+
+                    var typedDto = jsonElement.Deserialize(dtoType);
+                    fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
+                }
+
+                error = default;
+                return true;
             }
-
-            error = default;
-            return true;
+            catch (JsonException ex)
+            {
+                error = "Invalid JSON format: " + ex.Message;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                error = "Failed to deserialize character: " + ex.Message;
+                return false;
+            }
         }
 
         bool DeserializeCatalogueJson(out string error)
         {
-            if (!File.Exists(_serializationCataloguePath))
+            try
             {
-                error = "Cannot find file: " + _serializationCataloguePath;
-                return false;
-            }
-
-            string json = File.ReadAllText(_serializationCataloguePath);
-            CatalogueDTO dto = new CatalogueDTO();
-            float appVersion = dto.Version;
-            dto = JsonSerializer.Deserialize<CatalogueDTO>(json);
-            bool versionMisMatch = appVersion != dto.Version;
-
-            foreach (var (modelName, jsonElement) in dto.XtrnlModelDtos)
-            {
-                if (!_serializableXtrnlModels.TryGetValue(_serializableXtrnlModels.Keys.First(t => t.Name == modelName), out var model))
+                if (!File.Exists(_serializationCataloguePath))
                 {
-                    error = "Trying to deserialize a Model that wasn't marked for serialization/deserialization. Model: " + modelName;
+                    error = "Cannot find file: " + _serializationCataloguePath;
                     return false;
                 }
 
-                var fromDtoMethod = model.GetType().GetMethod("FromDto");
-                var dtoType = fromDtoMethod.GetParameters()[0].ParameterType;
+                string json = File.ReadAllText(_serializationCataloguePath);
+                CatalogueDTO dto = new CatalogueDTO();
+                float appVersion = dto.Version;
+                dto = JsonSerializer.Deserialize<CatalogueDTO>(json);
+                bool versionMisMatch = appVersion != dto.Version;
 
-                var typedDto = jsonElement.Deserialize(dtoType);
-                fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
+                foreach (var (modelName, jsonElement) in dto.XtrnlModelDtos)
+                {
+                    if (!_serializableXtrnlModels.TryGetValue(_serializableXtrnlModels.Keys.First(t => t.Name == modelName), out var model))
+                    {
+                        error = "Trying to deserialize a Model that wasn't marked for serialization/deserialization. Model: " + modelName;
+                        return false;
+                    }
+
+                    var fromDtoMethod = model.GetType().GetMethod("FromDto");
+                    var dtoType = fromDtoMethod.GetParameters()[0].ParameterType;
+
+                    var typedDto = jsonElement.Deserialize(dtoType);
+                    fromDtoMethod.Invoke(model, new[] { typedDto, versionMisMatch });
+                }
+
+                error = default;
+                return true;
             }
-
-            error = default;
-            return true;
+            catch(JsonException ex)
+            {
+                error = "Invalid JSON format: " + ex.Message;
+                return false;
+            }
+            catch(Exception ex)
+            {
+                error = "Failed to deserialize catalogue: " + ex.Message;
+                return false;
+            }
         }
 
         private void PostLoadUpdate()
