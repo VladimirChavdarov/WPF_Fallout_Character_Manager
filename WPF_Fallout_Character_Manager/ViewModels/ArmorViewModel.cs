@@ -95,7 +95,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void Armor_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(Armor.Equipped))
-                UnequipOtherArmors();
+                UnequipOtherArmors(sender);
         }
 
         private void PowerArmors_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -120,16 +120,28 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void PowerArmor_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PowerArmor.Equipped))
-                UnequipOtherPowerArmors();
+                UnequipOtherPowerArmors(sender);
         }
         //
 
         // commands
         public RelayCommand UnequipOtherArmorsCommand { get; private set; }
-        private void UnequipOtherArmors(object _ = null)
+        private void UnequipOtherArmors(object obj = null)
         {
             ArmorsModel.EquippedArmor = SelectedArmor;
-            List<Armor> uneqiuppedArmors = ArmorsModel.Armors.Where(x => x != SelectedArmor).ToList();
+            List<Armor> uneqiuppedArmors = new List<Armor>();
+            if (SelectedArmor != null)
+            {
+                uneqiuppedArmors = ArmorsModel.Armors.Where(x => x != SelectedArmor).ToList();
+            }
+            else
+            {
+                if (obj != null && obj is Armor senderArmor)
+                {
+                    uneqiuppedArmors = ArmorsModel.Armors.Where(x => x != senderArmor).ToList();
+                    SelectedArmor = senderArmor;
+                }
+            }
             foreach (Armor armor in uneqiuppedArmors)
             {
                 armor.Equipped = false;
@@ -143,10 +155,22 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         }
 
         public RelayCommand UnequipOtherPowerArmorsCommand { get; private set; }
-        private void UnequipOtherPowerArmors(object _ = null)
+        private void UnequipOtherPowerArmors(object obj = null)
         {
             ArmorsModel.EquippedPowerArmor = SelectedPowerArmor;
-            List<PowerArmor> uneqiuppedPowerArmors = ArmorsModel.PowerArmors.Where(x => x != SelectedPowerArmor).ToList();
+            List<PowerArmor> uneqiuppedPowerArmors = new List<PowerArmor>();
+            if (SelectedPowerArmor != null)
+            {
+                uneqiuppedPowerArmors = ArmorsModel.PowerArmors.Where(x => x != SelectedPowerArmor).ToList();
+            }
+            else
+            {
+                if (obj != null && obj is PowerArmor senderPowerArmor)
+                {
+                    uneqiuppedPowerArmors = ArmorsModel.PowerArmors.Where(x => x != senderPowerArmor).ToList();
+                    SelectedPowerArmor = senderPowerArmor;
+                }
+            }
             foreach (PowerArmor powerArmor in uneqiuppedPowerArmors)
             {
                 powerArmor.Equipped = false;
