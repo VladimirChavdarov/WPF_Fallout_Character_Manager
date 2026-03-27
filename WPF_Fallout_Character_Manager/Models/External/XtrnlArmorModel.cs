@@ -319,9 +319,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
             get => _equipped;
             set
             {
-                Update(ref _equipped, value);
-                Load.BaseValue = Equipped ? Load.BaseValue / 2.0f : Load.BaseValue * 2.0f;
-                OnPropertyChanged(nameof(EquippedNameAmount));
+                if(_equipped != value)
+                {
+                    Update(ref _equipped, value);
+                    Load.BaseValue = Equipped ? Load.BaseValue / 2.0f : Load.BaseValue * 2.0f;
+                    OnPropertyChanged(nameof(EquippedNameAmount));
+                }
             }
         }
 
@@ -441,10 +444,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             ArmorDTO result = new ArmorDTO();
 
-            result.Name = Name.ToDto();
-            result.Cost = Cost.ToDto();
-            result.Amount = Amount.ToDto();
-            result.Load = Load.ToDto();
+            UpdateItemDTO(result);
+            //result.Name = Name.ToDto();
+            //result.Cost = Cost.ToDto();
+            //result.Amount = Amount.ToDto();
+            //result.Load = Load.ToDto();
 
             result.AC = AC.ToDto();
             result.DT = DT.ToDto();
@@ -468,6 +472,8 @@ namespace WPF_Fallout_Character_Manager.Models.External
                 throw new InvalidOperationException("Expected ArmorDTO");
 
             base.FromDto(dto, versionMismatch);
+
+            var a = Load;
 
             AC = new ModInt(aDto.AC);
             DT = new ModInt(aDto.DT);
@@ -608,11 +614,12 @@ namespace WPF_Fallout_Character_Manager.Models.External
             get => _equipped;
             set
             {
-                Update(ref _equipped, value);
-
-                Load.BaseValue = Equipped ? 0.0f : 100.0f;
-
-                OnPropertyChanged(nameof(EquippedNameAmount));
+                if(_equipped != value)
+                {
+                    Update(ref _equipped, value);
+                    Load.BaseValue = Equipped ? 0.0f : 100.0f;
+                    OnPropertyChanged(nameof(EquippedNameAmount));
+                }
             }
         }
 
@@ -727,10 +734,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             PowerArmorDTO result = new PowerArmorDTO();
 
-            result.Name = Name.ToDto();
-            result.Cost = Cost.ToDto();
-            result.Amount = Amount.ToDto();
-            result.Load = Load.ToDto();
+            UpdateItemDTO(result);
+            //result.Name = Name.ToDto();
+            //result.Cost = Cost.ToDto();
+            //result.Amount = Amount.ToDto();
+            //result.Load = Load.ToDto();
 
             result.AC = AC.ToDto();
             result.DP = DP.ToDto();

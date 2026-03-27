@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
-    class XtrnlPerksModel : ModelBase
+    class XtrnlPerksModel : ModelBase, ISerializable<XtrnlPerksModelDTO>
     {
         // constructor
         public XtrnlPerksModel()
@@ -166,6 +167,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
 
             return ImageIcons["None"];
+        }
+
+        public XtrnlPerksModelDTO ToDto()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FromDto(XtrnlPerksModelDTO dto, bool versionMismatch = false)
+        {
+            throw new NotImplementedException();
         }
         //
 

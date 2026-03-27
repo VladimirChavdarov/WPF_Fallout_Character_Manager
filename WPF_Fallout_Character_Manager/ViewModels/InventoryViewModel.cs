@@ -515,8 +515,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private void FullInventory_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             float loadToAdd = 0.0f;
-
-            switch(e.Action)
+            switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     foreach(Item item in e.NewItems)
@@ -530,6 +529,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                     {
                         loadToAdd -= item.TotalLoad;
                     }
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    CalculateCurrentLoad();
                     break;
             }
 
