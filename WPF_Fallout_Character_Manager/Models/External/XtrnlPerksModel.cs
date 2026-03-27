@@ -171,12 +171,35 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public XtrnlPerksModelDTO ToDto()
         {
-            throw new NotImplementedException();
+            XtrnlPerksModelDTO result = new XtrnlPerksModelDTO();
+            foreach(Trait trait in Traits)
+            {
+                result.Traits.Add(trait);
+            }
+            foreach(Perk perk in Perks)
+            {
+                result.Perks.Add(perk);
+            }
+
+            return result;
         }
 
         public void FromDto(XtrnlPerksModelDTO dto, bool versionMismatch = false)
         {
-            throw new NotImplementedException();
+            foreach(Trait trait in dto.Traits)
+            {
+                if (trait.IsFromSpreadsheet)
+                    continue;
+
+                Traits.Add(trait);
+            }
+            foreach (Perk perks in dto.Perks)
+            {
+                if (perks.IsFromSpreadsheet)
+                    continue;
+
+                Perks.Add(perks);
+            }
         }
         //
 
@@ -234,6 +257,13 @@ namespace WPF_Fallout_Character_Manager.Models.External
         //
 
         // members
+        private bool _isFromSpreadsheet = true;
+        public bool IsFromSpreadsheet
+        {
+            get => _isFromSpreadsheet;
+            set => Update(ref _isFromSpreadsheet, value);
+        }
+
         private string _prerequisite;
         public string Prerequisite
         {

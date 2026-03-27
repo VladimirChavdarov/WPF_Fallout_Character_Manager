@@ -153,6 +153,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public RelayCommand AddTraitToCatalogueCommand { get; private set; }
         private void AddTraitToCatalogue(object _ = null)
         {
+            NewTrait.IsFromSpreadsheet = false;
             XtrnlPerksModel.Traits.Add(NewTrait.Clone());
             NewTrait = null;
         }
@@ -171,6 +172,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public RelayCommand AddPerkToCatalogueCommand { get; private set; }
         private void AddPerkToCatalogue(object _ = null)
         {
+            NewPerk.IsFromSpreadsheet = false;
             XtrnlPerksModel.Perks.Add(NewPerk.Clone());
             NewPerk = null;
         }
