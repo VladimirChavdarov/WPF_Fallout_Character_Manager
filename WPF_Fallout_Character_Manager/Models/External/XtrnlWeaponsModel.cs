@@ -833,10 +833,6 @@ namespace WPF_Fallout_Character_Manager.Models.External
             WeaponDTO result = new WeaponDTO();
 
             UpdateItemDTO(result);
-            //result.Name = Name.ToDto();
-            //result.Cost = Cost.ToDto();
-            //result.Amount = Amount.ToDto();
-            //result.Load = Load.ToDto();
 
             result.Type = Type;
             result.AP = AP.ToDto();
