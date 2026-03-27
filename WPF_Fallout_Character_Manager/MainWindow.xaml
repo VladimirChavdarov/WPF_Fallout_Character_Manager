@@ -51,16 +51,16 @@
                        Margin="10, 0, 0, 0"/>
 
             <Button x:Name="Minimize"
-                Grid.Column="1"
+                Grid.Column="2"
                 Content=" - "
                 Style="{StaticResource FalloutTopBarButton}"
                 Click="btnMinimize_Click"/>
 
-            <Button x:Name="Fullscreen"
+            <!--<Button x:Name="Fullscreen"
                 Grid.Column="2"
                 Content=" o "
                 Style="{StaticResource FalloutTopBarButton}"
-                Click="btnFullscreen_Click"/>
+                Click="btnFullscreen_Click"/>-->
 
             <Button x:Name="Close"
                 Grid.Column="3"
