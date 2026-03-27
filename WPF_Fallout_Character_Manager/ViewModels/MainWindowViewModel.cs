@@ -79,8 +79,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // serialization
-        private bool _xtrnlModelsChanged = false;
-        private bool _modelsChanged = false;
         private readonly Dictionary<Type, object> _serializableModels = new();
         private readonly Dictionary<Type, object> _serializableXtrnlModels = new();
         //private readonly Dictionary<DtoType, string> _serializationFilePaths = new Dictionary<DtoType, string>
@@ -158,29 +156,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<XtrnlGearModel, XtrnlGearModelDTO>(XtrnlGearModel, DtoType.Catalogue);
             RegisterModelForSerialization<XtrnlJunkModel, XtrnlJunkModelDTO>(XtrnlJunkModel, DtoType.Catalogue);
             RegisterModelForSerialization<XtrnlPerksModel, XtrnlPerksModelDTO>(XtrnlPerksModel, DtoType.Catalogue);
-
-            BioModel.PropertyChanged += Model_PropertyChanged;
-            SurvivalModel.PropertyChanged += Model_PropertyChanged;
-            SPECIALModel.PropertyChanged += Model_PropertyChanged;
-            CombatModel.PropertyChanged += Model_PropertyChanged;
-            SkillModel.PropertyChanged += Model_PropertyChanged;
-            LimbConditionsModel.PropertyChanged += Model_PropertyChanged;
-            ConditionsModel.PropertyChanged += Model_PropertyChanged;
-            AmmoModel.PropertyChanged += Model_PropertyChanged;
-            ArmorModel.PropertyChanged += Model_PropertyChanged;
-            WeaponsModel.PropertyChanged += Model_PropertyChanged;
-            InventoryModel.PropertyChanged += Model_PropertyChanged;
-            PerksModel.PropertyChanged += Model_PropertyChanged;
-
-            XtrnlWeaponsModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlArmorModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlAmmoModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlAidModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlExplosivesModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlNourishmentModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlGearModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlJunkModel.PropertyChanged += XtrnlModel_PropertyChanged;
-            XtrnlPerksModel.PropertyChanged += XtrnlModel_PropertyChanged;
             //
 
             // Deserialize the catalogue by default so the user has access to all of their custom data without having to load a character file
@@ -193,15 +168,6 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // serialization
-        private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            _modelsChanged = true;
-        }
-        private void XtrnlModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            _xtrnlModelsChanged = true;
-        }
-
         private void RegisterModelForSerialization<TModel, TDto>(TModel model, DtoType type) where TModel : ISerializable<TDto>
         {
             if(type == DtoType.Character)
@@ -296,7 +262,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 }
 
                 error = default;
-                _modelsChanged = false;
+                ChangeTracker.Reset();
                 return true;
             }
             catch (JsonException ex)
@@ -351,7 +317,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 }
 
                 error = default;
-                _xtrnlModelsChanged = false;
+                ChangeTracker.Reset();
                 return true;
             }
             catch(JsonException ex)
@@ -459,7 +425,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public void SerializeUnsavedChanges()
         {
             string message = "";
-            if (_modelsChanged || _xtrnlModelsChanged)
+            if (ChangeTracker.IsDirty())
                 message += "You have unsaved changes. Do you wish to save them before proceeding?";
             else
                 return;

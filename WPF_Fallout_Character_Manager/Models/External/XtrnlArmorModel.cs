@@ -481,7 +481,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             TakenUpgradeSlots = new ModInt(aDto.TakenUpgradeSlots);
             StrRequirement = new ModInt(aDto.StrRequirement);
             Decay = new ModInt(aDto.Decay);
-            Equipped = aDto.Equipped;
+            _equipped = aDto.Equipped; // we avoid the Equipped setter because this thing multiplies or divides the load depending on the toggle and is cursed. I was probably drunk when I was writing that.
 
             Upgrades.Clear();
             foreach (Guid id in aDto.UpgradeIds)

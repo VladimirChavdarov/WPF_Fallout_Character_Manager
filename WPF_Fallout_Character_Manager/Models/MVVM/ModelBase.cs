@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.ViewModels.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.MVVM
 {
@@ -26,6 +27,7 @@ namespace WPF_Fallout_Character_Manager.Models.MVVM
             {
                 field = value;
                 OnPropertyChanged(propertyName);
+                ChangeTracker.SetDirty();
             }
         }
 
@@ -35,6 +37,7 @@ namespace WPF_Fallout_Character_Manager.Models.MVVM
             {
                 setter(newValue);
                 OnPropertyChanged(propertyName);
+                ChangeTracker.SetDirty();
             }
         }
     }

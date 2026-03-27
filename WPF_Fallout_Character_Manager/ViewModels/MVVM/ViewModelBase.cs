@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
+using WPF_Fallout_Character_Manager.ViewModels.Serialization;
 using WPF_Fallout_Character_Manager.Windows;
 
 namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
@@ -31,6 +32,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
             {
                 field = value;
                 OnPropertyChanged(propertyName);
+                ChangeTracker.SetDirty();
             }
         }
         //

@@ -83,7 +83,7 @@ namespace WPF_Fallout_Character_Manager
         {
             if (DataContext is MainWindowViewModel mainVM)
             {
-
+                mainVM.SerializeUnsavedChanges();
             }
         }
     }
