@@ -16,6 +16,7 @@
         AllowsTransparency="true"
         Background="Black"
         
+        Closing="Window_Closing"
         MouseDown="Window_MouseDown">
 
 

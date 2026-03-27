@@ -78,5 +78,13 @@ namespace WPF_Fallout_Character_Manager
             }
             e.Handled = true;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel mainVM)
+            {
+
+            }
+        }
     }
 }
