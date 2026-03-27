@@ -155,6 +155,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             RegisterModelForSerialization<XtrnlNourishmentModel, XtrnlNourishmentModelDTO>(XtrnlNourishmentModel, DtoType.Catalogue);
             RegisterModelForSerialization<XtrnlGearModel, XtrnlGearModelDTO>(XtrnlGearModel, DtoType.Catalogue);
             RegisterModelForSerialization<XtrnlJunkModel, XtrnlJunkModelDTO>(XtrnlJunkModel, DtoType.Catalogue);
+            RegisterModelForSerialization<XtrnlPerksModel, XtrnlPerksModelDTO>(XtrnlPerksModel, DtoType.Catalogue);
             //
 
             // Deserialize the catalogue by default so the user has access to all of their custom data without having to load a character file

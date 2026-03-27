@@ -174,10 +174,16 @@ namespace WPF_Fallout_Character_Manager.Models.External
             XtrnlPerksModelDTO result = new XtrnlPerksModelDTO();
             foreach(Trait trait in Traits)
             {
+                if (trait.IsFromSpreadsheet)
+                    continue;
+
                 result.Traits.Add(trait);
             }
             foreach(Perk perk in Perks)
             {
+                if(perk.IsFromSpreadsheet)
+                    continue;
+
                 result.Perks.Add(perk);
             }
 
