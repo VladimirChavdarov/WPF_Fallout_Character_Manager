@@ -10,6 +10,17 @@
 	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
 
+  <Target Name="CopyResourcesAfterPublish" AfterTargets="Publish">
+	<Copy
+	  SourceFiles="@(ResourceFiles)"
+	  DestinationFolder="$(PublishDir)Resources\%(RecursiveDir)"
+	  SkipUnchangedFiles="true" />
+  </Target>
+
+<ItemGroup>
+	<ResourceFiles Include="Resources\**\*" />
+</ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Controls\Tabs\**" />
     <EmbeddedResource Remove="Controls\Tabs\**" />
