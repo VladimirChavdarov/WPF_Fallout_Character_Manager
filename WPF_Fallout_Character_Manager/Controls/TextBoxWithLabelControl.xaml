@@ -39,13 +39,18 @@
                 CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Hint="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                PreviewMouseRightButtonDown="EnhancedTextBox_PreviewMouseRightButtonDown">
+                PreviewMouseRightButtonDown="EnhancedTextBox_PreviewMouseRightButtonDown"
+                PreviewMouseLeftButtonDown="EnhancedTextBox_PreviewMouseLeftButtonDown">
 
                 <local:EnhancedTextBox.InputBindings>
                     <MouseBinding Gesture="RightClick"
                         Command="{Binding OpenModifierModalWindowCommand}"
                         CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <MouseBinding Gesture="LeftClick"
+                        Command="{Binding OpenModifierModalWindowCommand}"
+                        CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </local:EnhancedTextBox.InputBindings>
+                
             </local:EnhancedTextBox>
         </StackPanel>
     </Grid>

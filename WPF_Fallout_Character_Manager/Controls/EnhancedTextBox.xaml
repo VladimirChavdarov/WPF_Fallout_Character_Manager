@@ -42,7 +42,8 @@
                 ToolTipService.InitialShowDelay="500"
                 ToolTipService.Placement="Mouse"
                 ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}"
-                PreviewMouseRightButtonDown="CustomTextBox_PreviewMouseRightButtonDown">
+                PreviewMouseRightButtonDown="CustomTextBox_PreviewMouseRightButtonDown"
+                PreviewMouseLeftButtonDown="CustomTextBox_PreviewMouseLeftButtonDown">
 
             <TextBox.ToolTip>
                 <ToolTip>

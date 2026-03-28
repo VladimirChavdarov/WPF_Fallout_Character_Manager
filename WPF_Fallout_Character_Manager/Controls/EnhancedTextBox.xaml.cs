@@ -252,7 +252,15 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CustomTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(!CanOpenModal)
+            if (!CanOpenModal)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void CustomTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (CanOpenModal && ModValue != null)
             {
                 e.Handled = true;
             }
@@ -262,7 +270,9 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             var existingBindings = CustomTextBox.InputBindings
                 .OfType<MouseBinding>()
-                .Where(mouseBinding => mouseBinding.Gesture is MouseGesture mouseGesture && mouseGesture.MouseAction == MouseAction.RightClick)
+                .Where(mouseBinding => mouseBinding.Gesture is MouseGesture mouseGesture &&
+                      (mouseGesture.MouseAction == MouseAction.RightClick ||
+                       mouseGesture.MouseAction == MouseAction.LeftClick))
                 .ToList();
 
             foreach (var mouseBinding in existingBindings)
@@ -274,22 +284,31 @@ namespace WPF_Fallout_Character_Manager.Controls
             ClearMouseBindings();
 
             // add binding if OpenModal is true
-            if (CanOpenModal && DataContext != null)
+            if (CanOpenModal && ModValue != null && DataContext != null)
             {
-                var binding = new MouseBinding
+                var rightBinding = new MouseBinding
                 {
                     Gesture = new MouseGesture(MouseAction.RightClick)
                 };
+                var leftBinding = new MouseBinding
+                {
+                    Gesture = new MouseGesture(MouseAction.LeftClick)
+                };
 
                 // bind command
-                BindingOperations.SetBinding(binding, MouseBinding.CommandProperty,
+                BindingOperations.SetBinding(leftBinding, MouseBinding.CommandProperty,
+                    new Binding("OpenModifierModalWindowCommand") { Source = DataContext });
+                BindingOperations.SetBinding(rightBinding, MouseBinding.CommandProperty,
                     new Binding("OpenModifierModalWindowCommand") { Source = DataContext });
 
                 // bind param
-                BindingOperations.SetBinding(binding, MouseBinding.CommandParameterProperty,
+                BindingOperations.SetBinding(leftBinding, MouseBinding.CommandParameterProperty,
+                    new Binding(nameof(ModValue)) { Source = this });
+                BindingOperations.SetBinding(rightBinding, MouseBinding.CommandParameterProperty,
                     new Binding(nameof(ModValue)) { Source = this });
 
-                CustomTextBox.InputBindings.Add(binding);
+                CustomTextBox.InputBindings.Add(leftBinding);
+                CustomTextBox.InputBindings.Add(rightBinding);
             }
         }
     }

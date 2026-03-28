@@ -293,5 +293,22 @@ namespace WPF_Fallout_Character_Manager.Controls
                 e.Handled = true;
             }
         }
+
+        private void EnhancedTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (CanOpenModal && ModValue != null)
+            {
+                if (EnhancedTextBox.InputBindings
+                    .OfType<MouseBinding>()
+                    .FirstOrDefault(b => b.Gesture is MouseGesture g && g.MouseAction == MouseAction.LeftClick)?.Command is ICommand command)
+                {
+                    if (command.CanExecute(ModValue))
+                    {
+                        command.Execute(ModValue);
+                        e.Handled = true;
+                    }
+                }
+            }
+        }
     }
 }

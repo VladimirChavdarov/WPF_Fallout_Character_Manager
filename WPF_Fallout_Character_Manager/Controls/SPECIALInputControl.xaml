@@ -65,6 +65,9 @@
                             <MouseBinding Gesture="RightClick"
                                 Command="{Binding OpenModifierModalWindowCommand}"
                                 CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <MouseBinding Gesture="LeftClick"
+                                Command="{Binding OpenModifierModalWindowCommand}"
+                                CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         </TextBox.InputBindings>
                     </TextBox>
                     
@@ -100,6 +103,9 @@
 
                             <TextBox.InputBindings>
                                 <MouseBinding Gesture="RightClick"
+                                    Command="{Binding OpenModifierModalWindowCommand}"
+                                    CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                <MouseBinding Gesture="LeftClick"
                                     Command="{Binding OpenModifierModalWindowCommand}"
                                     CommandParameter="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </TextBox.InputBindings>
