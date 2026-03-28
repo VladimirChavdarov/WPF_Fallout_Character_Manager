@@ -146,6 +146,15 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         // helpers
         public abstract void UpdateTotal();
         public abstract object Clone();
+        public virtual bool Compare(ModValue<T> other)
+        {
+            if (BaseValueObject.Name != other.BaseValueObject.Name) return false;
+            //if (BaseValueObject.Value != other.BaseValueObject.Value) return false; // Needs to be implemented in derived classes.
+            if (BaseValueObject.Note != other.BaseValueObject.Note) return false;
+            if (BaseValueObject.IsReadOnly != other.BaseValueObject.IsReadOnly) return false;
+
+            return true;
+        }
 
 
         public void AddModifier(LabeledValue<T> newModifier)

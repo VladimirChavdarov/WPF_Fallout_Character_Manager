@@ -263,5 +263,21 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             OnPropertyChanged(nameof(NameAmount));
             OnPropertyChanged(nameof(NameString));
         }
+
+        public bool Compare(Item otherItem)
+        {
+            if (!Name.Compare(otherItem.Name))
+                return false;
+            if (!Cost.Compare(otherItem.Cost))
+                return false;
+            if (!Load.Compare(otherItem.Load))
+                return false;
+            if (CanBeEdited != otherItem.CanBeEdited)
+                return false;
+            if (IsFromSpreadsheet != otherItem.IsFromSpreadsheet)
+                return false;
+
+            return true;
+        }
     }
 }

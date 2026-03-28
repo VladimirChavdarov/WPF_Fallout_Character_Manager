@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -39,6 +40,14 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
         public override ModInt Clone() => new ModInt(this);
+
+        public override bool Compare(ModValue<int> other)
+        {
+            if (!base.Compare(other)) return false;
+            if (BaseValueObject.Value != other.BaseValue) return false;
+
+            return true;
+        }
         //
     }
 

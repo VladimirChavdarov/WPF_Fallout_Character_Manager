@@ -40,6 +40,14 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
         public override ModString Clone() => new ModString(this);
+
+        public override bool Compare(ModValue<string> other)
+        {
+            if (!base.Compare(other)) return false;
+            if (BaseValueObject.Value != other.BaseValue) return false;
+
+            return true;
+        }
         //
     }
 

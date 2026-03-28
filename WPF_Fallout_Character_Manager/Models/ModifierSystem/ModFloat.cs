@@ -38,6 +38,14 @@ namespace WPF_Fallout_Character_Manager.Models.ModifierSystem
         }
 
         public override ModFloat Clone() => new ModFloat(this);
+
+        public override bool Compare(ModValue<float> other)
+        {
+            if (!base.Compare(other)) return false;
+            if (BaseValueObject.Value != other.BaseValue) return false;
+
+            return true;
+        }
         //
     }
 

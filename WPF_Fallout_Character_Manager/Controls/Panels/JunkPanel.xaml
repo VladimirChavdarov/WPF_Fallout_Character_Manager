@@ -18,17 +18,19 @@
             <TabControl
                 Style="{StaticResource FalloutEquippableTabControl}"
                 Margin="5"
-                FontSize="10">
-                <TabItem Header="Spend">
-                    <ScrollViewer>
-                        <panel:SpendJunkPanel
-                            DataContext="{Binding}"/>
-                    </ScrollViewer>
-                </TabItem>
+                FontSize="10"
+                SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
 
                 <TabItem Header="Scrap">
                     <ScrollViewer>
                         <panel:ScrapJunkItem
+                            DataContext="{Binding}"/>
+                    </ScrollViewer>
+                </TabItem>
+                
+                <TabItem Header="Spend">
+                    <ScrollViewer>
+                        <panel:SpendJunkPanel
                             DataContext="{Binding}"/>
                     </ScrollViewer>
                 </TabItem>

@@ -245,7 +245,7 @@
                     Width="180"
                     HorizontalAlignment="Center"
                     SelectionChanged="ListBox_SelectionChanged"
-                    ItemsSource="{Binding Output}">
+                    ItemsSource="{Binding OutputView}">
 
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">

@@ -4,9 +4,191 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:jnk="clr-namespace:WPF_Fallout_Character_Manager.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="180" d:DesignWidth="665">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="330"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel
+            Grid.Column="0">
+            <StackPanel
+                Orientation="Horizontal">
+                <ComboBox
+                    Margin="5"
+                    MinWidth="180"
+                    Width="Auto"
+                    ItemsSource="{Binding SelectableJunkItems}"
+                    IsEditable="False"
+                    IsReadOnly="True"
+                    StaysOpenOnEdit="True"
+                    Tag="Junk Inventory"
+                    SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                            <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                        Orientation="Horizontal">
+                                <CheckBox
+                            Style="{StaticResource FalloutSkillCheckbox}"
+                            FontSize="18"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                            Command="{Binding DataContext.SelectOrDeselectJunkCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding}"/>
+                                <TextBlock
+                            Grid.Column="0"
+                            Text="{Binding NameAmount}"
+                            FontSize="9"
+                            Width="160"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button
+                    Style="{StaticResource FalloutButton}"
+                    Content="Select All"
+                    Margin="5"
+                    Padding="5"
+                    Width="100"
+                    FontSize="11"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding SelectAllJunkCommand}"/>
+            </StackPanel>
+
+            <Label
+                Style="{StaticResource FalloutDefaultLabel}"
+                FontSize="10"
+                Content="Selected Junk Stacks"/>
+
+            <ListBox
+                Style="{StaticResource FalloutInventoryTabsListBox}"
+                BorderBrush="{StaticResource FalloutGreen}"
+                BorderThickness="1"
+                Padding="5"
+                Height="115"
+                Width="300"
+                HorizontalAlignment="Left"
+                ItemsSource="{Binding SelectedJunkItems}">
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                        <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Grid.Column="0"
+                                Text="{Binding NameAmount}"
+                                FontSize="9"
+                                Width="160"
+                                TextWrapping="Wrap"
+                                VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <StackPanel
+            Grid.Column="1"
+            Margin="8 0 0 0">
+            <Button
+                Style="{StaticResource FalloutButton}"
+                Content="Accept"
+                Margin="5"
+                Padding="5"
+                Width="280"
+                FontSize="11"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Command="{Binding DataContext.AcceptOutputCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+            <Label
+                Style="{StaticResource FalloutDefaultLabel}"
+                Margin="6 0 0 0"
+                FontSize="10"
+                Content="Output"/>
+
+            <ListBox
+                Style="{StaticResource FalloutInventoryTabsListBox}"
+                BorderBrush="{StaticResource FalloutGreen}"
+                BorderThickness="1"
+                Padding="5"
+                Height="115"
+                Width="315"
+                HorizontalAlignment="Center"
+                SelectionChanged="ListBox_SelectionChanged"
+                ItemsSource="{Binding OutputView}">
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource FalloutInventoryListBoxItem}">
+                        <Setter Property="Tag" Value="{Binding Junk.Name.Note}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Text="{Binding ActionSymbol}"
+                                FontSize="9"
+                                TextWrapping="Wrap"
+                                VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource FalloutGreen}" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding JunkAction}"
+                                                Value="{x:Static jnk:JunkAction.ForRemove}">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock
+                                Text="{Binding NameAmount}"
+                                FontSize="9"
+                                Width="120"
+                                TextWrapping="Wrap"
+                                VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource FalloutGreen}" />
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding JunkAction}"
+                                                Value="{x:Static jnk:JunkAction.ForRemove}">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
     </Grid>
 </UserControl>

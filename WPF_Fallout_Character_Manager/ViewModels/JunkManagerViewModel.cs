@@ -8,14 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.ViewModels
 {
+    public enum JunkManagerMode
+    {
+        Scrap,
+        Spend
+    }
+
     public enum JunkAction
     {
         ForAdd,
@@ -110,12 +118,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // local variables
         XtrnlJunkModel _xtrnlJunkModel;
         InventoryModel _inventoryModel;
+
+        JunkManagerMode _mode = JunkManagerMode.Scrap;
         //
 
         // public variables
         public ObservableCollection<JunkComponentWrapped> ComponentsToSpend { get; }
         public ObservableCollection<SelectableJunk> SelectedJunkItems { get; }
         public ObservableCollection<SelectableJunk> Output { get; }
+        public ICollectionView OutputView { get; }
         public ObservableCollection<SelectableJunk> SelectableJunkItems { get; } // this is just a wrapper for the junk inventory that uses SelectableJunk instead of Junk class.
 
         public XtrnlJunkModel XtrnlJunkModel
@@ -126,6 +137,22 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public InventoryModel InventoryModel
         {
             get => _inventoryModel;
+        }
+
+        public JunkManagerMode Mode
+        {
+            get => _mode;
+            set => Update(ref _mode, value);
+        }
+
+        public int SelectedTabIndex
+        {
+            get => (int)Mode;
+            set
+            {
+                Mode = (JunkManagerMode)value;
+                OnPropertyChanged();
+            }
         }
 
         public Visibility ShowAcceptButton
@@ -156,6 +183,9 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SelectOrDeselectJunkCommand = new RelayCommand(SelectOrDeselectJunk);
             AutoSelectJunkCommand = new RelayCommand(AutoSelectJunk);
             AcceptOutputCommand = new RelayCommand(AcceptOutput);
+
+            OutputView = CollectionViewSource.GetDefaultView(Output);
+            OutputView.SortDescriptions.Add(new SortDescription(nameof(SelectableJunk.JunkAction), ListSortDirection.Ascending));
         }
 
         //
@@ -195,21 +225,35 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         private void ProcessSelectedJunkItems()
         {
-            // reset
-            foreach(var wrappedJunk in ComponentsToSpend)
+            // Scrapping is easier, we cut it off here
+            if(Mode == JunkManagerMode.Scrap)
             {
-                wrappedJunk.AvailableAmount = 0;
+                Output.Clear();
+                foreach(SelectableJunk selectedJunk in SelectedJunkItems)
+                {
+                    ScrapJunkItem(selectedJunk);
+                }
             }
-            Output.Clear();
-            //
-
-            // stress test the shit out of this one.
-            foreach(SelectableJunk selectedJunk in SelectedJunkItems)
+            else
             {
-                ProcessSingleJunkItem(selectedJunk);
+                // reset
+                foreach (var wrappedJunk in ComponentsToSpend)
+                {
+                    wrappedJunk.AvailableAmount = 0;
+                }
+                Output.Clear();
+                //
+
+                // stress test the shit out of this one.
+                foreach(SelectableJunk selectedJunk in SelectedJunkItems)
+                {
+                    ProcessSingleJunkItem(selectedJunk);
+                }
+
+                OnPropertyChanged(nameof(ShowAcceptButton));
             }
 
-            OnPropertyChanged(nameof(ShowAcceptButton));
+            OutputView.Refresh();
         }
 
         // This method compares a junk item's components to the ComponentToSpend list and decides whether and how to scrap it.
@@ -304,6 +348,33 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
 
             return isSomethingGettingScrapped;
+        }
+
+        private void ScrapJunkItem(SelectableJunk junkToScrap)
+        {
+            List<Junk> scrappedJunkItem = junkToScrap.Junk.ScrapJunkItem(); // convert the components of the item into junk items which will go into the inventory
+
+            junkToScrap.JunkAction = JunkAction.ForRemove;
+            Output.Add(junkToScrap);
+
+            foreach(Junk junkComponentItem in scrappedJunkItem)
+            {
+                SelectableJunk selectableJunkComponentItem = new SelectableJunk();
+                selectableJunkComponentItem.Junk = junkComponentItem;
+                selectableJunkComponentItem.JunkAction = JunkAction.ForAdd;
+                bool createNewJunkItem = true;
+                foreach (SelectableJunk outputJunk in Output)
+                {
+                    if(outputJunk.Junk.CompareJunkItem(selectableJunkComponentItem.Junk))
+                    {
+                        outputJunk.Junk.Amount.BaseValue += selectableJunkComponentItem.Junk.Amount.Total;
+                        createNewJunkItem = false;
+                        break;
+                    }
+                }
+                if(createNewJunkItem)
+                    Output.Add(selectableJunkComponentItem);
+            }
         }
 
         private void SelectableJunk_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -473,20 +544,34 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         public RelayCommand AcceptOutputCommand { get; private set; }
         private void AcceptOutput(object _ = null)
         {
-            foreach(SelectableJunk sJunk in Output)
+            for(int i = 0; i < Output.Count; i++)
             {
+                SelectableJunk sJunk = Output[i];
+
                 switch(sJunk.JunkAction)
                 {
-                case JunkAction.ForAdd:
-                {
-                    InventoryModel.JunkItems.Add(sJunk.Junk.Clone());
-                    break;
-                }
-                case JunkAction.ForRemove:
-                {
-                    InventoryModel.JunkItems.Remove(sJunk.Junk);
-                    break;
-                }
+                    case JunkAction.ForAdd:
+                    {
+                        sJunk.Junk.CanBeEdited = true;
+                        bool createNewJunkItem = true;
+                        foreach(Junk inventoryJunk in InventoryModel.JunkItems)
+                        {
+                            if(inventoryJunk.CompareJunkItem(sJunk.Junk))
+                            {
+                                inventoryJunk.Amount.BaseValue += sJunk.Junk.Amount.Total;
+                                createNewJunkItem = false;
+                                break;
+                            }
+                        }
+                        if(createNewJunkItem)
+                            InventoryModel.JunkItems.Add(sJunk.Junk.Clone());
+                        break;
+                    }
+                    case JunkAction.ForRemove:
+                    {
+                        InventoryModel.JunkItems.Remove(sJunk.Junk);
+                        break;
+                    }
                 }
             }
 

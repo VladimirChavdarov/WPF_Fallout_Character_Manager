@@ -204,6 +204,21 @@ namespace WPF_Fallout_Character_Manager.Models.External
             return result;
         }
 
+        // This method compares all data in a junk item (except the amount) and returns true if all data matches. The method also compares the components' amount.
+        public bool CompareJunkItem(Junk otherJunk)
+        {
+            if (!base.Compare(otherJunk)) return false;
+
+            if(Components.Count != otherJunk.Components.Count) return false;
+
+            for(int i = 0; i < Components.Count; i++)
+            {
+                if (!Components[i].Compare(otherJunk.Components[i])) return false;
+            }
+
+            return true;
+        }
+
         public void AddProperty(object obj)
         {
             if (obj is JunkComponent componentToAdd)
