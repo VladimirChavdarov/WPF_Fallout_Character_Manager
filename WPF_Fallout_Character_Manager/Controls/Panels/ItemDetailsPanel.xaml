@@ -1540,13 +1540,13 @@
                             TextPadding="8"
                             Padding="2, 3"
                             FontSize="15"
-                            IsReadOnly="True"
                             MaxWidth="560"
                             TextWrapping="Wrap"
-                            Text="{Binding SelectedItem.Name.Total, Mode=OneWay}"
+                            Text="{Binding SelectedItem.Name.BaseValue}"
                             Hint="{Binding SelectedItem.Name.Note}"
                             ModValue="{Binding SelectedItem.Name}"
-                            CanOpenModal="{Binding SelectedItem.CanBeEdited}"/>
+                            IsReadOnly="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
+                            CanOpenModal="False"/>
 
                         <ToggleButton
                             x:Name="EditBtn"
