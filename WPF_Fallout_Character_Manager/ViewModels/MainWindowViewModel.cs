@@ -215,6 +215,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             string characterJson = JsonSerializer.Serialize(characterDto, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, characterJson);
 
+            ChangeTracker.Reset();
             return true;
         }
 
@@ -224,6 +225,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             string catalogueJson = JsonSerializer.Serialize(catalogueDto, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(_serializationCataloguePath, catalogueJson);
 
+            ChangeTracker.Reset();
             return true;
         }
 
