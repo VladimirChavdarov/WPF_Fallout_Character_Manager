@@ -11,10 +11,7 @@
   </PropertyGroup>
 
   <Target Name="CopyResourcesAfterPublish" AfterTargets="Publish">
-	<Copy
-	  SourceFiles="@(ResourceFiles)"
-	  DestinationFolder="$(PublishDir)Resources\%(RecursiveDir)"
-	  SkipUnchangedFiles="true" />
+	<Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(PublishDir)Resources\%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
 <ItemGroup>
@@ -36,6 +33,7 @@
     <None Remove="Resources\bottlecap_front.png" />
     <None Remove="Resources\carry_load_icon.png" />
     <None Remove="Resources\Fonts\JH_FALLOUT.TTF" />
+    <None Remove="Resources\lock.png" />
     <None Remove="Resources\pen.png" />
     <None Remove="Resources\Spreadsheets\ammo.csv" />
     <None Remove="Resources\Spreadsheets\ammo_special.csv" />
@@ -109,6 +107,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\carry_load_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\lock.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\wrench.png">

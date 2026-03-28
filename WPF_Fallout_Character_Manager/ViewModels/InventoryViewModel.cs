@@ -343,6 +343,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             AddToInventoryCommand = new RelayCommand(AddToInventory);
             RemoveFromInventoryCommand = new RelayCommand(RemoveFromInventory);
             DuplicateStackCommand = new RelayCommand(DuplicateStack);
+            LockUnlockStackCommand = new RelayCommand(LockUnlockStack);
             CreateNewTemplateFromSelectedItemCommand = new RelayCommand(CreateNewTemplateFromSelectedItem);
 
             OpenNewTemplateWindowCommand = new RelayCommand(OpenNewTemplateWindow);
@@ -588,6 +589,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             if (_typeToInventoryCollections.TryGetValue(itemType, out IList collection))
             {
+                if (SelectedItem is Item selectedItem)
+                    if (selectedItem.Locked) return;
                 collection.Remove(SelectedItem);
             }
         }
@@ -785,6 +788,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 throw new Exception($"No collection found for item type {itemType.Name}");
             }
+        }
+
+        public RelayCommand LockUnlockStackCommand { get; private set; }
+        private void LockUnlockStack(object _ = null)
+        {
+            if (SelectedItem is Item selectedItem)
+                selectedItem.Locked = !selectedItem.Locked;
         }
 
         public RelayCommand CreateNewTemplateFromSelectedItemCommand { get; private set; }

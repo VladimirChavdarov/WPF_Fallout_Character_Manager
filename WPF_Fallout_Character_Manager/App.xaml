@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/ToolTipStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/ContextMenuStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ShapeStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -149,6 +149,13 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             set => Update(ref _canBeEdited, value);
         }
 
+        private bool _locked = false;
+        public bool Locked
+        {
+            get => _locked;
+            set => Update(ref _locked, value);
+        }
+
         // by default, all items come from a spreadsheet. The ones that don't are the ones the user has created via the app.
         // this variable is used for the Catalogue items, specifically during its serialization.
         private bool _isFromSpreadsheet = true;
@@ -233,6 +240,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             dto.Amount = Amount.ToDto();
             dto.Load = Load.ToDto();
             dto.CanBeEdited = CanBeEdited;
+            dto.Locked = Locked;
             dto.IsFromSpreadsheet = IsFromSpreadsheet;
         }
 
@@ -245,6 +253,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
                 Amount = Amount.ToDto(),
                 Load = Load.ToDto(),
                 CanBeEdited = this.CanBeEdited,
+                Locked = this.Locked,
                 IsFromSpreadsheet = this.IsFromSpreadsheet
             };
         }
@@ -256,6 +265,7 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             Amount = new ModInt(dto.Amount);
             Load = new ModFloat(dto.Load);
             CanBeEdited = dto.CanBeEdited;
+            Locked = dto.Locked;
             IsFromSpreadsheet = dto.IsFromSpreadsheet;
 
             OnPropertyChanged(nameof(TotalCost));

@@ -66,6 +66,9 @@
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource FalloutGreenFaded}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="Black" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground"  Value="{StaticResource FalloutGreenBackground}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="FalloutIcon" TargetType="Rectangle">
+        <Setter Property="Fill" Value="{StaticResource FalloutGreen}"/>
+
+        <Style.Triggers>
+            <DataTrigger
+                Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                Value="True">
+                <Setter Property="Fill" Value="Black"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

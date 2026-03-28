@@ -437,8 +437,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 }
                 else
                 {
-                    junk.IsSelected = true;
-                    SelectedJunkItems.Add(junk);
+                    if(junk.Junk.Locked)
+                        junk.IsSelected = false;
+                    else
+                    {
+                        junk.IsSelected = true;
+                        SelectedJunkItems.Add(junk);
+                    }
                 }
             }
 
@@ -534,8 +539,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
                 if(ProcessSingleJunkItem(evalJunk.Junk))
                 {
-                    evalJunk.Junk.IsSelected = true;
-                    SelectedJunkItems.Add(evalJunk.Junk);
+                    if (evalJunk.Junk.Junk.Locked)
+                        evalJunk.Junk.IsSelected = false;
+                    else
+                    {
+                        evalJunk.Junk.IsSelected = true;
+                        SelectedJunkItems.Add(evalJunk.Junk);
+                    }
                 }
             }
 
@@ -547,8 +557,13 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             foreach(SelectableJunk sJunk in SelectableJunkItems)
             {
-                sJunk.IsSelected = true;
-                SelectedJunkItems.Add(sJunk);
+                if (sJunk.Junk.Locked)
+                    sJunk.IsSelected = false;
+                else
+                {
+                    sJunk.IsSelected = true;
+                    SelectedJunkItems.Add(sJunk);
+                }
             }
             ProcessSelectedJunkItems();
         }
