@@ -18,7 +18,8 @@
             Background="Black"
             BorderBrush="#23ba03"
             BorderThickness="1">
-            <ScrollViewer>
+            <ScrollViewer
+                VerticalScrollBarVisibility="Disabled">
                 <Grid Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
