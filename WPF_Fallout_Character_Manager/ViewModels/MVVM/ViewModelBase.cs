@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
+using WPF_Fallout_Character_Manager.Utilities;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 using WPF_Fallout_Character_Manager.ViewModels.Serialization;
 using WPF_Fallout_Character_Manager.Windows;
@@ -87,9 +88,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
                     }
             }
 
-            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
-            window.Left = mousePoint.X + 100;
-            window.Top = mousePoint.Y + 100;
+            window.Loaded += (s, e) =>
+            {
+                Utils.ClampWindowWithinScreen(window);
+            };
             window.ShowDialog();
         }
         //

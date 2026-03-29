@@ -8,6 +8,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using WPF_Fallout_Character_Manager.Models.Inventory;
 
 namespace WPF_Fallout_Character_Manager.Utilities
@@ -166,6 +168,43 @@ namespace WPF_Fallout_Character_Manager.Utilities
                 throw new InvalidOperationException($"Expected {typeof(TExpected).Name}");
 
             return typedDto;
+        }
+
+        public static void ClampWindowWithinScreen(Window window)
+        {
+            Point mousePosition = Application.Current.MainWindow.PointToScreen(Mouse.GetPosition(Application.Current.MainWindow));
+
+            // convert mouse from physical pixels to WPF DIPs
+            var source = PresentationSource.FromVisual(window);
+            if (source?.CompositionTarget != null)
+            {
+                mousePosition = source.CompositionTarget
+                    .TransformFromDevice
+                    .Transform(mousePosition);
+            }
+
+            Rect workingArea = SystemParameters.WorkArea;
+            double left = mousePosition.X;
+            double top = mousePosition.Y;
+
+            // right
+            if (left + window.ActualWidth > workingArea.Right)
+                left = workingArea.Right - window.ActualWidth;
+
+            // bottom
+            if (top + window.ActualHeight > workingArea.Bottom)
+                top = workingArea.Bottom - window.ActualHeight;
+
+            // left (prevent negative)
+            if (left < workingArea.Left)
+                left = workingArea.Left;
+
+            // top (prevent negative)
+            if (top < workingArea.Top)
+                top = workingArea.Top;
+
+            window.Left = left;
+            window.Top = top;
         }
     }
 }

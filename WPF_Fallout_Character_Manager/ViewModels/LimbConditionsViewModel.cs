@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
+using WPF_Fallout_Character_Manager.Utilities;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 using WPF_Fallout_Character_Manager.Windows;
 
@@ -233,10 +234,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             // Open Modal window
             var window = new LimbConditionsWindow(this);
-            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
-            window.Left = mousePoint.X - 140;
-            window.Top = mousePoint.Y + 100;
 
+            window.Loaded += (s, e) =>
+            {
+                Utils.ClampWindowWithinScreen(window);
+            };
             window.ShowDialog();
             //
         }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPF_Fallout_Character_Manager.Models;
 using WPF_Fallout_Character_Manager.Models.External;
+using WPF_Fallout_Character_Manager.Utilities;
 using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 using WPF_Fallout_Character_Manager.Windows;
 using Condition = WPF_Fallout_Character_Manager.Models.External.Condition;
@@ -71,10 +72,11 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             var window = new ConditionsWindow();
             window.DataContext = this;
-            var mousePoint = System.Windows.Input.Mouse.GetPosition(Application.Current.MainWindow);
-            window.Left = mousePoint.X - 140;
-            window.Top = mousePoint.Y - 100;
 
+            window.Loaded += (s, e) =>
+            {
+                Utils.ClampWindowWithinScreen(window);
+            };
             window.ShowDialog();
         }
         //
