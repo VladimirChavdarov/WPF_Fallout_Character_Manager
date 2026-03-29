@@ -174,8 +174,8 @@
             <Grid
                 Grid.Row="4">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel
@@ -191,7 +191,7 @@
                         Margin="0 0 5 0"/>
                     <control:UpDownTextBoxControl
                         MinWidth="50"
-                        MaxWidth="170"
+                        MaxWidth="125"
                         FontSize="13"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
