@@ -114,7 +114,11 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void ModValuePropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-
+            if(ModValue is ModString)
+            {
+                DecrementButton.Visibility = Visibility.Collapsed;
+                IncrementButton.Visibility = Visibility.Collapsed;
+            }
         }
         #endregion
 

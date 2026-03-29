@@ -42,6 +42,7 @@
         </Grid>
 
         <RepeatButton
+            x:Name="DecrementButton"
             Grid.Column="{Binding MinusButtonSlot, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Height="Auto"
             Width="22"
@@ -54,6 +55,7 @@
         </RepeatButton>
 
         <RepeatButton
+            x:Name="IncrementButton"
             Grid.Column="{Binding PlusButtonSlot, RelativeSource={RelativeSource AncestorType=UserControl}}"
             Height="Auto"
             Width="22"

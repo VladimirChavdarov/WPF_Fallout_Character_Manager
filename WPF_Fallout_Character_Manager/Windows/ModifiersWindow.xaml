@@ -106,6 +106,7 @@
                                             LabelText="Modifier"
                                             FontSize="9"
                                             CanOpenModal="false"
+                                            ModValue="{Binding DataContext.ModValue, RelativeSource={RelativeSource AncestorType=Window}}"
                                             IsReadOnly="{Binding IsReadOnly}"
                                             ChangeBackgroundOnReadOnly="True"
                                             Text="{Binding Name}"/>
@@ -120,6 +121,7 @@
                                             LabelText="Value"
                                             FontSize="9"
                                             CanOpenModal="False"
+                                            ModValue="{Binding DataContext.ModValue, RelativeSource={RelativeSource AncestorType=Window}}"
                                             IsReadOnly="{Binding IsReadOnly}"
                                             ChangeBackgroundOnReadOnly="True"
                                             Text="{Binding Value}"/>
@@ -134,6 +136,7 @@
                                             LabelText="Note"
                                             FontSize="9"
                                             CanOpenModal="False"
+                                            ModValue="{Binding DataContext.ModValue, RelativeSource={RelativeSource AncestorType=Window}}"
                                             IsReadOnly="{Binding IsReadOnly}"
                                             ChangeBackgroundOnReadOnly="True"
                                             Text="{Binding Note}"/>
