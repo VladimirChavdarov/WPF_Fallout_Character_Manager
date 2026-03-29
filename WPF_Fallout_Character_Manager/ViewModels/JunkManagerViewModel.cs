@@ -605,7 +605,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ComponentsToSpend.Clear();
             SelectedJunkItems.Clear();
             Output.Clear();
-            SelectableJunkItems.Clear();
+            UpdateSelectableJunkCollection();
         }
         //
     }
