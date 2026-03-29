@@ -412,6 +412,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ArmorModel.PowerArmors.CollectionChanged -= ItemModel_CollectionChanged;
             AmmoModel.Ammos.CollectionChanged -= ItemModel_CollectionChanged;
             InventoryModel.AidItems.CollectionChanged -= ItemModel_CollectionChanged;
+            InventoryModel.Explosives.CollectionChanged -= ItemModel_CollectionChanged;
             InventoryModel.Nourishment.CollectionChanged -= ItemModel_CollectionChanged;
             InventoryModel.GearItems.CollectionChanged -= ItemModel_CollectionChanged;
             InventoryModel.JunkItems.CollectionChanged -= ItemModel_CollectionChanged;
@@ -421,6 +422,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             ArmorModel.PowerArmors.CollectionChanged += ItemModel_CollectionChanged;
             AmmoModel.Ammos.CollectionChanged += ItemModel_CollectionChanged;
             InventoryModel.AidItems.CollectionChanged += ItemModel_CollectionChanged;
+            InventoryModel.Explosives.CollectionChanged += ItemModel_CollectionChanged;
             InventoryModel.Nourishment.CollectionChanged += ItemModel_CollectionChanged;
             InventoryModel.GearItems.CollectionChanged += ItemModel_CollectionChanged;
             InventoryModel.JunkItems.CollectionChanged += ItemModel_CollectionChanged;
