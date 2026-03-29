@@ -1424,7 +1424,7 @@
                     <Label
                         Style="{StaticResource FalloutDefaultLabel}"
                         FontSize="10"
-                        Content="Properties"/>
+                        Content="Components"/>
 
                     <ListBox
                         Style="{StaticResource FalloutInventoryTabsListBox}"

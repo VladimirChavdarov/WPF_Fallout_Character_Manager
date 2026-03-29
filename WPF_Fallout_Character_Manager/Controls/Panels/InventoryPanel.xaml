@@ -174,8 +174,8 @@
             <Grid
                 Grid.Row="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel
@@ -189,14 +189,17 @@
                         Width="25"
                         Height="25"
                         Margin="0 0 5 0"/>
-                    <control:EnhancedTextBox
+                    <control:UpDownTextBoxControl
+                        MinWidth="50"
+                        MaxWidth="170"
                         FontSize="13"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
-                        Text="{Binding InventoryModel.Caps.Total, Mode=OneWay}"
+                        CanOpenModal="False"
+                        Text="{Binding InventoryModel.Caps.BaseValue}"
                         Hint="{Binding InventoryModel.Caps.Note}"
-                        IsReadOnly="True"
-                        ModValue="{Binding InventoryModel.Caps}"/>
+                        ModValue="{Binding InventoryModel.Caps}"
+                        IsReadOnly="{Binding InventoryModel.Caps.IsBaseValueReadOnly}"/>
                 </StackPanel>
                 
                 <StackPanel
