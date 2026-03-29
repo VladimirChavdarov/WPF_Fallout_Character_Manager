@@ -252,7 +252,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CustomTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!CanOpenModal)
+            if (!CanOpenModal && ModValue != null)
             {
                 e.Handled = true;
             }
@@ -260,7 +260,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CustomTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (CanOpenModal && ModValue != null)
+            if (!CanOpenModal && ModValue != null)
             {
                 e.Handled = true;
             }
@@ -284,7 +284,7 @@ namespace WPF_Fallout_Character_Manager.Controls
             ClearMouseBindings();
 
             // add binding if OpenModal is true
-            if (CanOpenModal && ModValue != null && DataContext != null)
+            if (CanOpenModal /*&& ModValue != null*/ && DataContext != null)
             {
                 var rightBinding = new MouseBinding
                 {
