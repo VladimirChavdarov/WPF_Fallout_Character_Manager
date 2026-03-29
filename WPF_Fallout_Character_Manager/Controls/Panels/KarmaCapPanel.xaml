@@ -14,19 +14,19 @@
     
     <Grid>
         <GroupBox
-        Header="Karma Caps"
-        Margin="5"
-        Background="Black"
-        BorderBrush="#23ba03"
-        BorderThickness="1">
-            <ScrollViewer
-                HorizontalScrollBarVisibility="Disabled">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition MinHeight="190"/>
-                        <RowDefinition MinHeight="30"/>
-                    </Grid.RowDefinitions>
-                    
+            Header="Karma Caps"
+            Margin="5"
+            Background="Black"
+            BorderBrush="#23ba03"
+            BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="190"/>
+                    <RowDefinition MinHeight="30"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Disabled">
                     <ItemsControl
                         Grid.Row="0"
                         HorizontalAlignment="Center"
@@ -81,33 +81,33 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                </ScrollViewer>
 
-                    <Grid
-                        Grid.Row="1"
+                <Grid
+                    Grid.Row="1"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Stretch"
+                    Margin="5 0 5 10">
+                    <Button
+                        Style="{StaticResource FalloutButton}"
+                        Content="Add"
+                        Padding="5"
+                        Width="70"
+                        FontSize="9"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        HorizontalAlignment="Stretch"
-                        Margin="5 0 5 10">
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            Content="Add"
-                            Padding="5"
-                            Width="70"
-                            FontSize="9"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
-                            Command="{Binding DataContext.AddKarmaCapCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                        <Button
-                            Style="{StaticResource FalloutButton}"
-                            Content="Remove"
-                            Padding="5"
-                            Width="70"
-                            FontSize="9"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
-                            Command="{Binding DataContext.RemoveKarmaCapCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                    </Grid>
+                        Command="{Binding DataContext.AddKarmaCapCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <Button
+                        Style="{StaticResource FalloutButton}"
+                        Content="Remove"
+                        Padding="5"
+                        Width="70"
+                        FontSize="9"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding DataContext.RemoveKarmaCapCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 </Grid>
-            </ScrollViewer>
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>
