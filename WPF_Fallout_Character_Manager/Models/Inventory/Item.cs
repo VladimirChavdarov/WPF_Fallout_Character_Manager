@@ -39,6 +39,8 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             _load = new ModFloat("Load", load);
 
             CanBeEdited = false;
+            Locked = false;
+            IsFromSpreadsheet = true;
 
             SubscribeToChildPropertyChanges();
         }
@@ -51,6 +53,8 @@ namespace WPF_Fallout_Character_Manager.Models.Inventory
             Load = other.Load.Clone();
 
             CanBeEdited = other.CanBeEdited;
+            Locked = other.Locked;
+            IsFromSpreadsheet = other.IsFromSpreadsheet;
 
             SubscribeToChildPropertyChanges();
         }
