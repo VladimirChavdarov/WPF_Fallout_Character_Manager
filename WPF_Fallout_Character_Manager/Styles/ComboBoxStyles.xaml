@@ -155,8 +155,8 @@
                                         VerticalAlignment="Center"
                                         Opacity="0.7"
                                         Visibility="{Binding HasItems, 
-                                            RelativeSource={RelativeSource AncestorType=ComboBox},
-                                            Converter={StaticResource InvertBoolToVisibilityConverter}}"/>
+                                                    RelativeSource={RelativeSource AncestorType=ComboBox},
+                                                    Converter={StaticResource InvertBoolToVisibilityConverter}}"/>
                                 </Grid>
                             </Border>
                         </Popup>
