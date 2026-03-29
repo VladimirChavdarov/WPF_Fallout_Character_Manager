@@ -15,6 +15,7 @@
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="true"
         Background="Black"
+        Icon="/Resources/vault_tec_128x128.ico"
         
         Closing="Window_Closing"
         MouseDown="Window_MouseDown">
