@@ -1549,6 +1549,7 @@
                             Hint="{Binding SelectedItem.Name.Note}"
                             ModValue="{Binding SelectedItem.Name}"
                             IsReadOnly="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
+                            ChangeBackgroundOnReadOnly="True"
                             CanOpenModal="False"/>
 
                         <Button
@@ -1620,47 +1621,6 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <!--<ToggleButton
-                            x:Name="EditBtn"
-                            Grid.Column="1"
-                            Style="{StaticResource FalloutToggleButton}"
-                            BorderBrush="{StaticResource FalloutGreen}"
-                            BorderThickness="1"
-                            Margin="10 0 3 0"
-                            HorizontalAlignment="Right"
-                            IsChecked="{Binding SelectedItem.CanBeEdited, Mode=TwoWay}"
-                            IsHitTestVisible="False">
-                            <ToggleButton.Template>
-                                <ControlTemplate TargetType="ToggleButton">
-                                    <Border x:Name="PART_Border"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}">
-                                        <Rectangle x:Name="PART_OverlayRect"
-                                            Margin="5"
-                                            Width="30"
-                                            Height="30">
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="#23ba03"/>
-                                            </Rectangle.Fill>
-                                            <Rectangle.OpacityMask>
-                                                <ImageBrush ImageSource="/Resources/pen.png"/>
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
-                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
-                                        </Trigger>
-                                        <Trigger Property="IsChecked" Value="True">
-                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
-                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </ToggleButton.Template>
-                        </ToggleButton>-->
                     </Grid>
 
                     <Border
