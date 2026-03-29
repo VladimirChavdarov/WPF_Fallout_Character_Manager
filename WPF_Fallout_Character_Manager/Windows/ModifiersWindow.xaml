@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         mc:Ignorable="d"
-        Title="ModifiersWindow" Height="300" Width="500"
+        Title="ModifiersWindow" Height="300" Width="600"
         WindowStyle="None"
         ResizeMode="CanResizeWithGrip"
         MinWidth="50"
@@ -70,6 +70,7 @@
                         Text="{Binding ModValue.BaseValue}"
                         ModValue="{Binding ModValue}"
                         IsReadOnly="{Binding ModValue.IsBaseValueReadOnly}"
+                        ChangeBackgroundOnReadOnly="True"
                         CanOpenModal="False"
                         BorderThickness="0 0 0 1"
                         BorderBrush="{StaticResource FalloutGreen}"/>
@@ -78,88 +79,108 @@
                               HorizontalAlignment="Left"
                               Background="Black"
                               Height="200"
-                              Width="480">
+                              Width="580">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel
-                                    Orientation="Horizontal">
-                                    <controls:TextBoxWithLabelControl
-                                        Margin="2"
-                                        Width="135"
-                                        VerticalAlignment="Top"
-                                        Orientation="Vertical"
-                                        LabelFontSize="8"
-                                        LabelText="Modifier"
-                                        FontSize="9"
-                                        CanOpenModal="false"
-                                        IsReadOnly="{Binding IsReadOnly}"
-                                        Text="{Binding Name}"/>
-                                    <controls:UpDownTextBoxWithLabelControl
-                                        Margin="2"
-                                        MaxWidth="200"
-                                        VerticalAlignment="Top"
-                                        Orientation="Vertical"
-                                        LabelFontSize="8"
-                                        LabelText="Value"
-                                        FontSize="9"
-                                        IsReadOnly="{Binding IsReadOnly}"
-                                        Text="{Binding Value}"/>
-                                    <controls:TextBoxWithLabelControl
-                                        Margin="2"
-                                        Width="200"
-                                        VerticalAlignment="Top"
-                                        HorizontalContentAlignment="Left"
-                                        Orientation="Vertical"
-                                        LabelFontSize="8"
-                                        LabelText="Note"
-                                        FontSize="9"
-                                        CanOpenModal="False"
-                                        IsReadOnly="{Binding IsReadOnly}"
-                                        Text="{Binding Note}"/>
-                                    <StackPanel Orientation="Vertical">
-                                        <Label
-                                        Style="{StaticResource FalloutDefaultLabel}"
-                                        FontSize="8"
-                                        VerticalAlignment="Center"
-                                        Content=" "/>
-                                        <Button
-                                            Cursor="Hand"
-                                            FontSize="9"
-                                            Margin="0 0 0 5"
-                                            Background="{StaticResource FalloutGreenBackground}"
-                                            BorderThickness="0"
-                                            HorizontalAlignment="Center"
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="135"/>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="25"/>
+                                        </Grid.ColumnDefinitions>
+                                        <controls:TextBoxWithLabelControl
+                                            Grid.Column="0"
+                                            Margin="2"
+                                            Width="135"
                                             VerticalAlignment="Top"
-                                            Command="{Binding DataContext.RemoveModifierCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            CommandParameter="{Binding}">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border x:Name="PART_Border"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                                        <Rectangle x:Name="PART_OverlayRect"
-                                                        Margin="5"
-                                                        Width="18"
-                                                        Height="18">
-                                                            <Rectangle.Fill>
-                                                                <SolidColorBrush Color="#23ba03"/>
-                                                            </Rectangle.Fill>
-                                                            <Rectangle.OpacityMask>
-                                                                <ImageBrush ImageSource="/Resources/trashcan.png"/>
-                                                            </Rectangle.OpacityMask>
-                                                        </Rectangle>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsPressed" Value="True">
-                                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
-                                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                    </StackPanel>
+                                            Orientation="Vertical"
+                                            LabelFontSize="8"
+                                            LabelText="Modifier"
+                                            FontSize="9"
+                                            CanOpenModal="false"
+                                            IsReadOnly="{Binding IsReadOnly}"
+                                            ChangeBackgroundOnReadOnly="True"
+                                            Text="{Binding Name}"/>
+                                        <controls:UpDownTextBoxWithLabelControl
+                                            Grid.Column="1"
+                                            Margin="2 -1 2 -1"
+                                            MinWidth="50"
+                                            VerticalAlignment="Top"
+                                            HorizontalContentAlignment="Left"
+                                            Orientation="Vertical"
+                                            LabelFontSize="8"
+                                            LabelText="Value"
+                                            FontSize="9"
+                                            IsReadOnly="{Binding IsReadOnly}"
+                                            ChangeBackgroundOnReadOnly="True"
+                                            Text="{Binding Value}"/>
+                                        <controls:TextBoxWithLabelControl
+                                            Grid.Column="2"
+                                            Margin="2"
+                                            Width="180"
+                                            VerticalAlignment="Top"
+                                            HorizontalContentAlignment="Left"
+                                            Orientation="Vertical"
+                                            LabelFontSize="8"
+                                            LabelText="Note"
+                                            FontSize="9"
+                                            CanOpenModal="False"
+                                            IsReadOnly="{Binding IsReadOnly}"
+                                            ChangeBackgroundOnReadOnly="True"
+                                            Text="{Binding Note}"/>
+                                        <StackPanel
+                                            Grid.Column="3"
+                                            Orientation="Vertical">
+                                            <Label
+                                                Style="{StaticResource FalloutDefaultLabel}"
+                                                FontSize="8"
+                                                VerticalAlignment="Center"
+                                                Content=" "/>
+                                            <Button
+                                                Cursor="Hand"
+                                                FontSize="9"
+                                                Margin="0 0 0 5"
+                                                Background="{StaticResource FalloutGreenBackground}"
+                                                BorderThickness="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Top"
+                                                Command="{Binding DataContext.RemoveModifierCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="PART_Border"
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                                            <Rectangle x:Name="PART_OverlayRect"
+                                                                Margin="5"
+                                                                Width="18"
+                                                                Height="18">
+                                                                <Rectangle.Fill>
+                                                                    <SolidColorBrush Color="#23ba03"/>
+                                                                </Rectangle.Fill>
+                                                                <Rectangle.OpacityMask>
+                                                                    <ImageBrush ImageSource="/Resources/trashcan.png"/>
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                                                <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Border
+                                        Margin="0 2 0 0"
+                                        BorderThickness="0 1 0 0"
+                                        BorderBrush="{StaticResource FalloutGreenBackground}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

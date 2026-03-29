@@ -53,6 +53,23 @@
                         Text="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ToolTip}}"/>
                 </ToolTip>
             </TextBox.ToolTip>
+
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter
+                        Property="Background"
+                        Value="{Binding TextBoxBackground, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </TextBox.Style>
         </TextBox>
     </Grid>
 </UserControl>

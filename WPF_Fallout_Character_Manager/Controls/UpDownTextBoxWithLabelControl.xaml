@@ -17,12 +17,15 @@
                 Content="{Binding LabelText, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 ContentStringFormat="{}{0}:"/>
             <local:UpDownTextBoxControl
+                HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                HorizontalContentAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinValue="{Binding MinValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxValue="{Binding MaxValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MaxWidth="{Binding MaxWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 MinWidth="{Binding MinWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                ChangeBackgroundOnReadOnly="{Binding ChangeBackgroundOnReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 CanOpenModal="{Binding CanOpenModal, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 ModValue="{Binding ModValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

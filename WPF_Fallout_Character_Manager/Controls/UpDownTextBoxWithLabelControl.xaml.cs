@@ -190,6 +190,29 @@ namespace WPF_Fallout_Character_Manager.Controls
         }
         #endregion
 
+        #region ChangeBackgroundOnReadOnly
+        // When this is toggled, the background will become transparent when the textbox is set as read-only
+        public static readonly DependencyProperty ChangeBackgroundOnReadOnlyProperty =
+        DependencyProperty.Register("ChangeBackgroundOnReadOnly", typeof(bool), typeof(UpDownTextBoxWithLabelControl),
+            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(ChangeBackgroundOnReadOnlyPropertyChanged)));
+
+        public bool ChangeBackgroundOnReadOnly
+        {
+            get => (bool)GetValue(ChangeBackgroundOnReadOnlyProperty);
+            set => SetValue(ChangeBackgroundOnReadOnlyProperty, value);
+        }
+
+        private static void ChangeBackgroundOnReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UpDownTextBoxWithLabelControl? ThisUserControl = d as UpDownTextBoxWithLabelControl;
+            ThisUserControl.ChangeBackgroundOnReadOnlyPropertyChanged(e);
+        }
+
+        private void ChangeBackgroundOnReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
+
         #region CanOpenModal
         public static readonly DependencyProperty CanOpenModalProperty =
         DependencyProperty.Register("CanOpenModal", typeof(bool), typeof(UpDownTextBoxWithLabelControl),

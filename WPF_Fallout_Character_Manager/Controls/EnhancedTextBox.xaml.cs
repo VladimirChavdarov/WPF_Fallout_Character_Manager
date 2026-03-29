@@ -93,6 +93,38 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             //CustomTextBox.IsReadOnly = (bool)e.NewValue;
             CustomTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
+
+            if ((bool)e.NewValue)
+                if(ChangeBackgroundOnReadOnly)
+                {
+                    CustomTextBox.Background = Brushes.Transparent;
+                    CustomTextBox.Opacity = 0.7f/*(Brush)FindResource("FalloutGreenFaded")*/;
+                }
+            else
+                CustomTextBox.Background = TextBoxBackground;
+        }
+        #endregion
+
+        #region ChangeBackgroundOnReadOnly
+        // When this is toggled, the background will become transparent when the textbox is set as read-only
+        public static readonly DependencyProperty ChangeBackgroundOnReadOnlyProperty =
+        DependencyProperty.Register("ChangeBackgroundOnReadOnly", typeof(bool), typeof(EnhancedTextBox),
+            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(ChangeBackgroundOnReadOnlyPropertyChanged)));
+
+        public bool ChangeBackgroundOnReadOnly
+        {
+            get => (bool)GetValue(ChangeBackgroundOnReadOnlyProperty);
+            set => SetValue(ChangeBackgroundOnReadOnlyProperty, value);
+        }
+
+        private static void ChangeBackgroundOnReadOnlyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
+            ThisUserControl.ChangeBackgroundOnReadOnlyPropertyChanged(e);
+        }
+
+        private void ChangeBackgroundOnReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
         }
         #endregion
 
@@ -260,7 +292,7 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CustomTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!CanOpenModal && ModValue != null)
+            if (CanOpenModal/* && ModValue != null*/)
             {
                 e.Handled = true;
             }
