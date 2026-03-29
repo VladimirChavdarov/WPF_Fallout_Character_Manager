@@ -1597,13 +1597,13 @@
                                         BorderThickness="{TemplateBinding BorderThickness}">
                                         <Rectangle x:Name="PART_OverlayRect"
                                             Margin="5"
-                                            Width="30"
-                                            Height="30">
+                                            Width="25"
+                                            Height="25">
                                             <Rectangle.Fill>
                                                 <SolidColorBrush Color="#23ba03"/>
                                             </Rectangle.Fill>
                                             <Rectangle.OpacityMask>
-                                                <ImageBrush ImageSource="/Resources/pen.png"/>
+                                                <ImageBrush ImageSource="/Resources/three_dots_2.png"/>
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Border>
