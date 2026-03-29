@@ -186,7 +186,7 @@
                                     <Rectangle
                                         Grid.Row="2"
                                         HorizontalAlignment="Left"
-                                        Height="10"
+                                        Height="5"
                                         Width="198"
                                         Fill="{StaticResource FalloutGreen}"
                                         Visibility="{Binding DescriptionVisibility, Converter={StaticResource VisibilitySwitcherConverter}}"/>
