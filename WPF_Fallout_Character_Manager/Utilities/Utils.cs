@@ -73,6 +73,17 @@ namespace WPF_Fallout_Character_Manager.Utilities
             throw new Exception($"Failed to convert {s} to float...");
         }
 
+        public static bool FloatFromStringSafe(string s, out float result)
+        {
+            if (float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
+            {
+                return true;
+            }
+            return false;
+
+            //throw new Exception($"Failed to convert {s} to float...");
+        }
+
         public static void ProcessCostString(string costString, out CostType costType, out int cost)
         {
             if (costString.StartsWith("x"))

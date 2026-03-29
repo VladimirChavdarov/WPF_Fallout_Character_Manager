@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Controls
 {
@@ -311,15 +312,54 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             if(!IsReadOnly)
             {
-                if (int.TryParse(Text, out int value))
+                // integers
+                if(ModValue is ModInt)
                 {
-                    value--;
-                    if (value > MaxValue)
-                        value = MaxValue;
-                    if (value < MinValue)
-                        value = MinValue;
-                    Text = value.ToString();
+                    if (int.TryParse(Text, out int intValue))
+                    {
+                        intValue--;
+                        if (intValue > MaxValue)
+                            intValue = MaxValue;
+                        if (intValue < MinValue)
+                            intValue = MinValue;
+                        Text = intValue.ToString();
+                    }
                 }
+
+                // floats
+                if (ModValue is ModFloat)
+                {
+                    if (Utils.FloatFromStringSafe(Text, out float floatValue))
+                    {
+                        floatValue -= 0.5f;
+                        if (floatValue > MaxValue)
+                            floatValue = (float)MaxValue;
+                        if (floatValue < MinValue)
+                            floatValue = (float)MinValue;
+                        Text = floatValue.ToString();
+                    }
+                }
+                //// integers
+                //if (int.TryParse(Text, out int intValue))
+                //{
+                //    intValue--;
+                //    if (intValue > MaxValue)
+                //        intValue = MaxValue;
+                //    if (intValue < MinValue)
+                //        intValue = MinValue;
+                //    Text = intValue.ToString();
+                //}
+
+                //// floats
+                //if(Utils.FloatFromStringSafe(Text, out float floatValue))
+                //{
+                //    floatValue -= 0.5f;
+                //    if(floatValue > MaxValue)
+                //        floatValue = (float)MaxValue;
+                //    if(floatValue < MinValue)
+                //        floatValue = (float)MinValue;
+                //    Text = floatValue.ToString();
+                //}
             }
         }
 
@@ -327,14 +367,32 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             if (!IsReadOnly)
             {
-                if (int.TryParse(Text, out int value))
+                // integers
+                if (ModValue is ModInt)
                 {
-                    value++;
-                    if(value > MaxValue)
-                        value = MaxValue;
-                    if (value < MinValue)
-                        value = MinValue;
-                    Text = value.ToString();
+                    if (int.TryParse(Text, out int intValue))
+                    {
+                        intValue++;
+                        if (intValue > MaxValue)
+                            intValue = MaxValue;
+                        if (intValue < MinValue)
+                            intValue = MinValue;
+                        Text = intValue.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+
+                // floats
+                if (ModValue is ModFloat)
+                {
+                    if (Utils.FloatFromStringSafe(Text, out float floatValue))
+                    {
+                        floatValue += 0.5f;
+                        if (floatValue > MaxValue)
+                            floatValue = (float)MaxValue;
+                        if (floatValue < MinValue)
+                            floatValue = (float)MinValue;
+                        Text = floatValue.ToString(CultureInfo.InvariantCulture);
+                    }
                 }
             }
         }

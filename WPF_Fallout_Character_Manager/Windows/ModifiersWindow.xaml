@@ -73,6 +73,7 @@
                         LabelFontSize="10"
                         LabelText="Base Value"
                         FontSize="11"
+                        MinWidth="40"
                         Text="{Binding ModValue.BaseValue}"
                         ModValue="{Binding ModValue}"
                         IsReadOnly="{Binding ModValue.IsBaseValueReadOnly}"

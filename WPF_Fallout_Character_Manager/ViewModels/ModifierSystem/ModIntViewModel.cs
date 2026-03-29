@@ -39,7 +39,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels.ModifierSystem
                 LabeledValue<T> newModifier;
 
                 if (typeof(T) == typeof(float))
-                    newModifier = new LabeledValue<T>("NewFloatModifier", (T)(object)5.5f);
+                    newModifier = new LabeledValue<T>("NewFloatModifier", (T)(object)0.0f);
                 else if (typeof(T) == typeof(int))
                     newModifier = new LabeledValue<T>("NewIntModifier", (T)(object)0);
                 else if (typeof(T) == typeof(string))
