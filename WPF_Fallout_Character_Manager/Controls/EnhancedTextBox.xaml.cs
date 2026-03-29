@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem.MVVM;
+using WPF_Fallout_Character_Manager.ViewModels.MVVM;
 
 namespace WPF_Fallout_Character_Manager.Controls
 {
@@ -291,19 +292,15 @@ namespace WPF_Fallout_Character_Manager.Controls
             }
         }
 
-        private void CustomTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void CustomTextBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (!CanOpenModal && ModValue != null)
+            if (CanOpenModal && DataContext != null)
             {
-                e.Handled = true;
-            }
-        }
-
-        private void CustomTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (CanOpenModal/* && ModValue != null*/)
-            {
-                e.Handled = true;
+                if (DataContext is ViewModelBase vm)
+                {
+                    vm.OpenModifierModalWindowCommand?.Execute(ModValue);
+                    e.Handled = true;
+                }
             }
         }
 
