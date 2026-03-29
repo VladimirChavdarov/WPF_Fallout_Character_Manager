@@ -117,7 +117,28 @@
                             Stretch="Uniform"/>
                     </Button>
 
-                    <controls:TextBoxWithLabelControl
+                    <GroupBox
+                        Header="Appearance"
+                        Margin="0"
+                        Background="Black"
+                        BorderBrush="#23ba03"
+                        BorderThickness="1">
+                        <controls:EnhancedTextBox
+                            Margin="0 0 0 0"
+                            TextBoxBackground="Black"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Left"
+                            FontSize="11"
+                            IsReadOnly="False"
+                            CanOpenModal="False"
+                            Text="{Binding BioModel.AppearanceDescription}"
+                            Width="280"
+                            MinHeight="377"
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
+                    </GroupBox>
+                    <!--<controls:TextBoxWithLabelControl
                         Margin="0 0 0 0"
                         Orientation="Vertical"
                         HorizontalContentAlignment="Left"
@@ -132,13 +153,74 @@
                         MinHeight="380"
                         TextWrapping="Wrap"
                         AllowNewLines="True"
-                        AllowTabs="True"/>
+                        AllowTabs="True"/>-->
                 </StackPanel>
 
                 <StackPanel
                     Grid.Column="1"
                     Margin="10">
-                    <controls:TextBoxWithLabelControl
+                    <GroupBox
+                        Header="Backstory"
+                        Margin="0"
+                        Background="Black"
+                        BorderBrush="#23ba03"
+                        BorderThickness="1">
+                        <controls:EnhancedTextBox
+                            Margin="0 0 0 0"
+                            TextBoxBackground="Black"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Left"
+                            FontSize="11"
+                            IsReadOnly="False"
+                            CanOpenModal="False"
+                            Text="{Binding BioModel.Backstory}"
+                            Width="430"
+                            MinHeight="370"
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
+                    </GroupBox>
+                    <GroupBox
+                        Header="Virtues"
+                        Margin="0 20 0 0"
+                        Background="Black"
+                        BorderBrush="#23ba03"
+                        BorderThickness="1">
+                        <controls:EnhancedTextBox
+                            TextBoxBackground="Black"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Left"
+                            FontSize="11"
+                            IsReadOnly="False"
+                            CanOpenModal="False"
+                            Text="{Binding BioModel.Virtues}"
+                            Width="430"
+                            MinHeight="130"
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
+                    </GroupBox>
+                    <GroupBox
+                        Header="Vices"
+                        Margin="0 20 0 0"
+                        Background="Black"
+                        BorderBrush="#23ba03"
+                        BorderThickness="1">
+                        <controls:EnhancedTextBox
+                            TextBoxBackground="Black"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Left"
+                            FontSize="11"
+                            IsReadOnly="False"
+                            CanOpenModal="False"
+                            Text="{Binding BioModel.Vices}"
+                            Width="430"
+                            MinHeight="130"
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
+                    </GroupBox>
+                    <!--<controls:TextBoxWithLabelControl
                         Margin="0 0 0 0"
                         Orientation="Vertical"
                         HorizontalContentAlignment="Left"
@@ -185,28 +267,33 @@
                         MinHeight="130"
                         TextWrapping="Wrap"
                         AllowNewLines="True"
-                        AllowTabs="True"/>
+                        AllowTabs="True"/>-->
                 </StackPanel>
                 
                 <StackPanel
                     Grid.Column="2"
                     Margin="10">
-                    <controls:TextBoxWithLabelControl
-                        Margin="0 0 0 0"
-                        Orientation="Vertical"
-                        HorizontalContentAlignment="Left"
-                        HorizontalAlignment="Left"
-                        LabelFontSize="10"
-                        LabelText="Notes:"
-                        FontSize="11"
-                        IsReadOnly="False"
-                        CanOpenModal="False"
-                        Text="{Binding BioModel.Notes}"
-                        Width="570"
-                        MinHeight="725"
-                        TextWrapping="Wrap"
-                        AllowNewLines="True"
-                        AllowTabs="True"/>
+                    <GroupBox
+                        Header="Notes"
+                        Margin="0"
+                        Background="Black"
+                        BorderBrush="#23ba03"
+                        BorderThickness="1">
+                        <controls:EnhancedTextBox
+                            Margin="0 0 0 0"
+                            TextBoxBackground="Black"
+                            HorizontalContentAlignment="Left"
+                            HorizontalAlignment="Left"
+                            FontSize="11"
+                            IsReadOnly="False"
+                            CanOpenModal="False"
+                            Text="{Binding BioModel.Notes}"
+                            Width="560"
+                            MinHeight="723"
+                            TextWrapping="Wrap"
+                            AllowNewLines="True"
+                            AllowTabs="True"/>
+                    </GroupBox>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
