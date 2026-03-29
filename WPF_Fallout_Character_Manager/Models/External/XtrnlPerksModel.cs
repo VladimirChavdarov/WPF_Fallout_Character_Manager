@@ -10,6 +10,8 @@ using System.Windows;
 using WPF_Fallout_Character_Manager.Models.External.Serialization;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
+using WPF_Fallout_Character_Manager.Models.Serialization;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models.External
 {
@@ -174,17 +176,24 @@ namespace WPF_Fallout_Character_Manager.Models.External
             XtrnlPerksModelDTO result = new XtrnlPerksModelDTO();
             foreach(Trait trait in Traits)
             {
+                if(trait.ToDto() is not TraitDTO tdto)
+                    throw new InvalidOperationException("Expected TraitDTO");
+
                 if (trait.IsFromSpreadsheet)
                     continue;
 
-                result.Traits.Add(trait);
+                result.Traits.Add(tdto);
             }
-            foreach(Perk perk in Perks)
+
+            foreach (Perk perk in Perks)
             {
-                if(perk.IsFromSpreadsheet)
+                if (perk.ToDto() is not PerkDTO pdto)
+                    throw new InvalidOperationException("Expected PerkDTO");
+
+                if (perk.IsFromSpreadsheet)
                     continue;
 
-                result.Perks.Add(perk);
+                result.Perks.Add(pdto);
             }
 
             return result;
@@ -192,19 +201,19 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
         public void FromDto(XtrnlPerksModelDTO dto, bool versionMismatch = false)
         {
-            foreach(Trait trait in dto.Traits)
+            foreach(TraitDTO traitDto in dto.Traits)
             {
-                if (trait.IsFromSpreadsheet)
+                if (traitDto.IsFromSpreadsheet)
                     continue;
 
-                Traits.Add(trait);
+                Traits.Add(new Trait(traitDto));
             }
-            foreach (Perk perks in dto.Perks)
+            foreach (PerkDTO perkDto in dto.Perks)
             {
-                if (perks.IsFromSpreadsheet)
+                if (perkDto.IsFromSpreadsheet)
                     continue;
 
-                Perks.Add(perks);
+                Perks.Add(new Perk(perkDto));
             }
         }
         //
@@ -256,10 +265,56 @@ namespace WPF_Fallout_Character_Manager.Models.External
             ConstructNote();
             OnPropertyChanged(nameof(DescriptionToShow));
         }
+
+        public TPCard(TPCardDTO dto)
+        {
+            FromDto(dto);
+        }
         //
 
         // method
         public virtual void ConstructNote() { }
+
+        protected void UpdateTPCardDTO(TPCardDTO dto)
+        {
+            dto.BaseObject = new LabeledString(Name, Value, Note, IsReadOnly);
+            dto.IsFromSpreadsheet = IsFromSpreadsheet;
+            dto.Prerequisite = Prerequisite;
+            dto.ExtraDscription = ExtraDescription;
+            dto.CardType = CardType;
+            dto.ImagePath = ImagePath;
+            dto.ShowDescription = ShowDescription;
+        }
+
+        public virtual TPCardDTO ToDto()
+        {
+            return new TPCardDTO
+            {
+                BaseObject = new LabeledString(Name, Value, Note, IsReadOnly),
+                IsFromSpreadsheet = IsFromSpreadsheet,
+                Prerequisite = this.Prerequisite,
+                ExtraDscription = this.ExtraDescription,
+                CardType = this.CardType,
+                ImagePath = this.ImagePath,
+                ShowDescription = this.ShowDescription,
+            };
+        }
+
+        public virtual void FromDto(TPCardDTO dto, bool versionMismatch = false)
+        {
+            Name = dto.BaseObject.Name;
+            Value = dto.BaseObject.Value;
+            Note = dto.BaseObject.Note;
+            IsFromSpreadsheet = dto.IsFromSpreadsheet;
+            IsReadOnly = dto.BaseObject.IsReadOnly;
+            Prerequisite = dto.Prerequisite;
+            ExtraDescription = dto.ExtraDscription;
+            CardType = dto.CardType;
+            ImagePath = dto.ImagePath;
+            ShowDescription = dto.ShowDescription;
+
+            OnPropertyChanged(nameof(DescriptionToShow));
+        }
         //
 
         // members
@@ -352,6 +407,11 @@ namespace WPF_Fallout_Character_Manager.Models.External
         {
             IsWildWastelandToggled = other.IsWildWastelandToggled;
         }
+
+        public Trait(TraitDTO dto)
+        {
+            FromDto(dto);
+        }
         //
 
         // method
@@ -368,6 +428,25 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
             if(ExtraDescription != "")
                 Note += "\n\nWild Wasteland: " + ExtraDescription;
+        }
+
+        public override TPCardDTO ToDto()
+        {
+            TraitDTO result = new TraitDTO();
+
+            UpdateTPCardDTO(result);
+            result.IsWildWastelandToggled = IsWildWastelandToggled;
+
+            return result;
+        }
+
+        public override void FromDto(TPCardDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<TraitDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+
+            IsWildWastelandToggled = typedDto.IsWildWastelandToggled;
         }
         //
 
@@ -409,28 +488,53 @@ namespace WPF_Fallout_Character_Manager.Models.External
     public class Perk : TPCard
     {
         // constructor
-        public Perk() : base() { }
+        public Perk() : base()
+        {
+            _currentStacks = new ModInt("Current Stacks", 0);
+            _maxStacks = new ModInt("Max Stacks", 1);
+
+            CurrentStacks.PropertyChanged += CurrentStacks_PropertyChanged;
+            ConstructNote();
+        }
 
         public Perk(string name = "", string description = "", string repeatDescription = "", int max = 0, string requirement = "", string cardType = "None", string imagePath = "")
             : base(name, description, repeatDescription, requirement, cardType, imagePath)
         {
-            CurrentStacks = 0;
-            MaxStacks = max;
+            _currentStacks = new ModInt("Current Stacks", 0);
+            _maxStacks = new ModInt("Max Stacks", max);
 
+            CurrentStacks.PropertyChanged += CurrentStacks_PropertyChanged;
             ConstructNote();
         }
 
         public Perk(Perk other) : base(other)
         {
-            CurrentStacks = other.CurrentStacks;
-            MaxStacks = other.MaxStacks;
+            CurrentStacks = other.CurrentStacks.Clone();
+            MaxStacks = other.MaxStacks.Clone();
 
+            CurrentStacks.PropertyChanged += CurrentStacks_PropertyChanged;
+            ConstructNote();
+        }
+
+        public Perk(PerkDTO dto)
+        {
+            FromDto(dto);
+
+            CurrentStacks.PropertyChanged += CurrentStacks_PropertyChanged;
             ConstructNote();
         }
         //
 
         // methods
         public Perk Clone() => new Perk(this);
+
+        private void CurrentStacks_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ModInt.Total))
+            {
+                OnPropertyChanged(nameof(ReachedMaxStacks));
+            }
+        }
 
         public override void ConstructNote()
         {
@@ -445,6 +549,27 @@ namespace WPF_Fallout_Character_Manager.Models.External
 
             if(ExtraDescription != "")
                 Note += "\n\nRepeat: " + ExtraDescription;
+        }
+
+        public override TPCardDTO ToDto()
+        {
+            PerkDTO result = new PerkDTO();
+
+            UpdateTPCardDTO(result);
+
+            result.CurrentStacks = CurrentStacks.ToDto();
+            result.MaxStacks = MaxStacks.ToDto();
+
+            return result;
+        }
+
+        public override void FromDto(TPCardDTO dto, bool versionMismatch = false)
+        {
+            var typedDto = Utils.EnsureDtoType<PerkDTO>(dto);
+
+            base.FromDto(dto, versionMismatch);
+            CurrentStacks = new ModInt(typedDto.CurrentStacks);
+            MaxStacks = new ModInt(typedDto.MaxStacks);
         }
         //
 
@@ -462,26 +587,18 @@ namespace WPF_Fallout_Character_Manager.Models.External
             }
         }
 
-        int _currentStacks;
-        public int CurrentStacks
+        ModInt _currentStacks;
+        public ModInt CurrentStacks
         {
             get => _currentStacks;
-            set
-            {
-                Update(ref _currentStacks, value);
-                OnPropertyChanged(nameof(ReachedMaxStacks));
-            }
+            set => Update(ref _currentStacks, value);
         }
 
-        int _maxStacks;
-        public int MaxStacks
+        ModInt _maxStacks;
+        public ModInt MaxStacks
         {
             get => _maxStacks;
-            set
-            {
-                Update(ref _maxStacks, value);
-                ConstructNote();
-            }
+            set => Update(ref _maxStacks, value);
         }
 
         public bool ReachedMaxStacks => MaxStacks == CurrentStacks ? true : false;

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_Fallout_Character_Manager.Models.Serialization;
 
 namespace WPF_Fallout_Character_Manager.Models.External.Serialization
 {
     class XtrnlPerksModelDTO
     {
-        public List<Trait> Traits { get; set; } = new List<Trait>();
-        public List<Perk> Perks { get; set; } = new List<Perk>();
+        public List<TraitDTO> Traits { get; set; } = new List<TraitDTO>();
+        public List<PerkDTO> Perks { get; set; } = new List<PerkDTO>();
     }
 }

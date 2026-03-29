@@ -353,6 +353,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         public bool SaveCharacter(out string error)
         {
+            error = "";
             if (!SerializeCatalogueJson())
             {
                 error = "";
@@ -369,6 +370,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
         public bool LoadCharacter(out string error)
         {
+            error = "";
             SerializeUnsavedChanges();
 
             if (!DeserializeCatalogueJson(out error))

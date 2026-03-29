@@ -169,8 +169,10 @@
                                 PlusButtonSlot="2"
                                 TextBoxSlot="1"
                                 MinValue="1"
-                                MaxValue="{Binding MaxStacks}"
-                                Text="{Binding CurrentStacks}"
+                                MaxValue="{Binding MaxStacks.BaseValue}"
+                                Text="{Binding CurrentStacks.BaseValue}"
+                                ModValue="{Binding CurrentStacks}"
+                                IsReadOnly="{Binding CurrentStacks.IsBaseValueReadOnly}"
                                 CanOpenModal="False"/>
                             <Label
                                 Style="{StaticResource FalloutDefaultLabel}"

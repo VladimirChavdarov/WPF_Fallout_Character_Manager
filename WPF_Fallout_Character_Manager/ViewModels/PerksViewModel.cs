@@ -165,7 +165,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             if(SelectedCataloguePerk != null)
             {
                 var perkToAdd = SelectedCataloguePerk.Clone();
-                perkToAdd.CurrentStacks = 1;
+                perkToAdd.CurrentStacks.BaseValue = 1;
                 PerksModel.Perks.Add(perkToAdd);
             }
         }
@@ -216,7 +216,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         {
             NewPerk = new Perk();
             NewPerk.ImagePath = "/Resources/vault_boy_thumbsup.png";
-            NewPerk.MaxStacks = 1;
+            NewPerk.MaxStacks.BaseValue = 1;
 
             var window = new NewPerkWindow();
             window.DataContext = this;

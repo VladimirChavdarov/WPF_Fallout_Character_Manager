@@ -160,7 +160,9 @@
                                 FontSize="11"
                                 MinValue="1"
                                 MaxValue="999"
-                                Text="{Binding NewPerk.MaxStacks}"
+                                Text="{Binding NewPerk.MaxStacks.BaseValue}"
+                                ModValue="{Binding NewPerk.MaxStacks}"
+                                IsReadOnly="{Binding NewPerk.MaxStacks.IsBaseValueReadOnly}"
                                 CanOpenModal="False"/>
                         </StackPanel>
                         <control:TextBoxWithLabelControl

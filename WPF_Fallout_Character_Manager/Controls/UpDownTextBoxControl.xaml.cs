@@ -339,26 +339,16 @@ namespace WPF_Fallout_Character_Manager.Controls
                         Text = floatValue.ToString();
                     }
                 }
-                //// integers
-                //if (int.TryParse(Text, out int intValue))
-                //{
-                //    intValue--;
-                //    if (intValue > MaxValue)
-                //        intValue = MaxValue;
-                //    if (intValue < MinValue)
-                //        intValue = MinValue;
-                //    Text = intValue.ToString();
-                //}
 
-                //// floats
-                //if(Utils.FloatFromStringSafe(Text, out float floatValue))
+                //// fallback to int
+                //if (int.TryParse(Text, out int fallbackIntValue))
                 //{
-                //    floatValue -= 0.5f;
-                //    if(floatValue > MaxValue)
-                //        floatValue = (float)MaxValue;
-                //    if(floatValue < MinValue)
-                //        floatValue = (float)MinValue;
-                //    Text = floatValue.ToString();
+                //    fallbackIntValue--;
+                //    if (fallbackIntValue > MaxValue)
+                //        fallbackIntValue = MaxValue;
+                //    if (fallbackIntValue < MinValue)
+                //        fallbackIntValue = MinValue;
+                //    Text = fallbackIntValue.ToString();
                 //}
             }
         }
@@ -394,6 +384,17 @@ namespace WPF_Fallout_Character_Manager.Controls
                         Text = floatValue.ToString(CultureInfo.InvariantCulture);
                     }
                 }
+
+                //// fallback to int
+                //if (int.TryParse(Text, out int fallbackIntValue))
+                //{
+                //    fallbackIntValue++;
+                //    if (fallbackIntValue > MaxValue)
+                //        fallbackIntValue = MaxValue;
+                //    if (fallbackIntValue < MinValue)
+                //        fallbackIntValue = MinValue;
+                //    Text = fallbackIntValue.ToString();
+                //}
             }
         }
 

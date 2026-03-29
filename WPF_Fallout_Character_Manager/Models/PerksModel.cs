@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Models.Serialization;
+using WPF_Fallout_Character_Manager.Utilities;
 
 namespace WPF_Fallout_Character_Manager.Models
 {
@@ -42,11 +43,13 @@ namespace WPF_Fallout_Character_Manager.Models
             PerksModelDTO result = new PerksModelDTO();
             foreach (var trait in Traits)
             {
-                result.Traits.Add(trait);
+                var typedDto = Utils.EnsureDtoType<TraitDTO>(trait.ToDto());
+                result.Traits.Add(typedDto);
             }
             foreach (var perk in Perks)
             {
-                result.Perks.Add(perk);
+                var typedDto = Utils.EnsureDtoType<PerkDTO>(perk.ToDto());
+                result.Perks.Add(typedDto);
             }
 
             return result;

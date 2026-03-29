@@ -9,7 +9,7 @@ namespace WPF_Fallout_Character_Manager.Models.Serialization
 {
     class PerksModelDTO
     {
-        public List<Trait> Traits { get; set; } = new();
-        public List<Perk> Perks { get; set; } = new();
+        public List<TraitDTO> Traits { get; set; } = new();
+        public List<PerkDTO> Perks { get; set; } = new();
     }
 }
