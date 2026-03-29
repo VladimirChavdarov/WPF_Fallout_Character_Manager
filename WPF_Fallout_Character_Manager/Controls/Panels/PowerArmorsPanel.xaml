@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
+             xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
              xmlns:control="clr-namespace:WPF_Fallout_Character_Manager.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="238" d:DesignWidth="530">
+
+    <UserControl.Resources>
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </UserControl.Resources>
+
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
@@ -36,27 +42,29 @@
                 </ComboBox>
 
                 <StackPanel
-                Grid.Column="1"
-                Margin="5"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right">
-                    <Label
-                    Style="{StaticResource FalloutDefaultLabel}"
-                    Content="Equipped:"
-                    FontSize="9"
-                    VerticalAlignment="Top"/>
-                    <CheckBox
-                    Style="{StaticResource FalloutSkillCheckbox}"
-                    Margin="0 2 0 0"
-                    FontSize="18"
-                    VerticalAlignment="Top"
+                    Grid.Column="1"
+                    Margin="5"
+                    Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    IsChecked="{Binding SelectedPowerArmor.Equipped}"/>
+                    Visibility="{Binding SelectedPowerArmor, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Label
+                        Style="{StaticResource FalloutDefaultLabel}"
+                        Content="Equipped:"
+                        FontSize="9"
+                        VerticalAlignment="Top"/>
+                    <CheckBox
+                        Style="{StaticResource FalloutSkillCheckbox}"
+                        Margin="0 2 0 0"
+                        FontSize="18"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        IsChecked="{Binding SelectedPowerArmor.Equipped}"/>
                 </StackPanel>
             </Grid>
 
             <Grid
-            Grid.Row="1">
+                Grid.Row="1"
+                Visibility="{Binding SelectedPowerArmor, Converter={StaticResource NullToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="65"/>
                     <ColumnDefinition Width="165"/>
@@ -126,7 +134,8 @@
             </Grid>
 
             <Grid
-            Grid.Row="2">
+                Grid.Row="2"
+                Visibility="{Binding SelectedPowerArmor, Converter={StaticResource NullToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="200"/>
@@ -148,7 +157,8 @@
             </Grid>
 
             <Grid
-            Grid.Row="3">
+                Grid.Row="3"
+                Visibility="{Binding SelectedPowerArmor, Converter={StaticResource NullToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="200"/>
@@ -170,7 +180,8 @@
             </Grid>
 
             <Grid
-            Grid.Row="4">
+                Grid.Row="4"
+                Visibility="{Binding SelectedPowerArmor, Converter={StaticResource NullToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="200"/>
