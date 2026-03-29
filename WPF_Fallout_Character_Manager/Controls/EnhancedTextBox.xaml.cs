@@ -87,21 +87,11 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
             ThisUserControl.IsReadOnlyPropertyChanged(e);
+            ThisUserControl.UpdateAppearance();
         }
 
         private void IsReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            //CustomTextBox.IsReadOnly = (bool)e.NewValue;
-            CustomTextBox.IsReadOnly = (bool)GetValue(IsReadOnlyProperty);
-
-            if ((bool)e.NewValue)
-                if(ChangeBackgroundOnReadOnly)
-                {
-                    CustomTextBox.Background = Brushes.Transparent;
-                    CustomTextBox.Opacity = 0.7f/*(Brush)FindResource("FalloutGreenFaded")*/;
-                }
-            else
-                CustomTextBox.Background = TextBoxBackground;
         }
         #endregion
 
@@ -121,6 +111,7 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
             EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
             ThisUserControl.ChangeBackgroundOnReadOnlyPropertyChanged(e);
+            ThisUserControl.UpdateAppearance();
         }
 
         private void ChangeBackgroundOnReadOnlyPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -280,6 +271,24 @@ namespace WPF_Fallout_Character_Manager.Controls
 
             Loaded += (s, e) => BindOpenModifierWindowCommand();
             //DataContextChanged += (s, e) => BindOpenModifierWindowCommand();
+        }
+
+        private void UpdateAppearance()
+        {
+            CustomTextBox.IsReadOnly = IsReadOnly;
+
+            if (IsReadOnly && ChangeBackgroundOnReadOnly)
+            {
+                CustomTextBox.Background = Brushes.Transparent;
+                CustomTextBox.Opacity = 0.8;
+                CustomTextBox.Cursor = Cursors.Arrow;
+            }
+            else
+            {
+                CustomTextBox.Background = TextBoxBackground;
+                CustomTextBox.Opacity = 1.0;
+                CustomTextBox.Cursor = Cursors.IBeam;
+            }
         }
 
         private void CustomTextBox_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

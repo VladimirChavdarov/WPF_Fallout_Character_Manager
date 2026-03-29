@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager.Windows"
+        xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         mc:Ignorable="d"
         Title="ModifiersWindow" Height="300" Width="600"
@@ -14,6 +15,11 @@
         AllowsTransparency="true"
         Background="Black"
         MouseDown="Window_MouseDown">
+
+    <Window.Resources>
+        <conv:InvertBoolToVisibilityConverter x:Key="InvertBoolToVisibilityConverter"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -88,7 +94,7 @@
                                             <ColumnDefinition Width="135"/>
                                             <ColumnDefinition Width="200"/>
                                             <ColumnDefinition Width="180"/>
-                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <controls:TextBoxWithLabelControl
                                             Grid.Column="0"
@@ -113,6 +119,7 @@
                                             LabelFontSize="8"
                                             LabelText="Value"
                                             FontSize="9"
+                                            CanOpenModal="False"
                                             IsReadOnly="{Binding IsReadOnly}"
                                             ChangeBackgroundOnReadOnly="True"
                                             Text="{Binding Value}"/>
@@ -132,7 +139,8 @@
                                             Text="{Binding Note}"/>
                                         <StackPanel
                                             Grid.Column="3"
-                                            Orientation="Vertical">
+                                            Orientation="Vertical"
+                                            Visibility="{Binding IsReadOnly, Converter={StaticResource InvertBoolToVisibilityConverter}}">
                                             <Label
                                                 Style="{StaticResource FalloutDefaultLabel}"
                                                 FontSize="8"
