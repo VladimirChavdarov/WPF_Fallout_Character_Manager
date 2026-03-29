@@ -16,6 +16,8 @@
         
         <conv:InvertBoolConverter x:Key="InvertBoolConverter"/>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conv:InvertBoolToVisibilityConverter x:Key="InvertBoolToVisibilityConverter"/>
+        <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
         <DataTemplate DataType="{x:Type xtrnl:Weapon}">
             <StackPanel
@@ -1525,7 +1527,8 @@
         <ScrollViewer>
             <Grid>
                 <StackPanel
-                    Margin="8">
+                    Margin="8"
+                    Visibility="{Binding SelectedItem, Converter={StaticResource NullToVisibilityConverter}}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -1548,7 +1551,76 @@
                             IsReadOnly="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolConverter}}"
                             CanOpenModal="False"/>
 
-                        <ToggleButton
+                        <Button
+                            Grid.Column="1"
+                            Style="{StaticResource FalloutButton}"
+                            BorderBrush="{StaticResource FalloutGreen}"
+                            BorderThickness="1"
+                            Margin="10 0 3 0"
+                            HorizontalAlignment="Right"
+                            Click="MenuButton_Click">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <!-- Inventory Actions -->
+                                    <MenuItem 
+                                        Header="Delete"
+                                        Command="{Binding RemoveFromInventoryCommand}"
+                                        CommandParameter="{Binding SelectedItem}"
+                                        IsEnabled="{Binding SelectedItem.Locked, Converter={StaticResource InvertBoolConverter}}"
+                                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <MenuItem Header="Duplicate Stack"
+                                        Command="{Binding DuplicateStackCommand}"
+                                        CommandParameter="{Binding SelectedItem}"
+                                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <MenuItem Header="Lock/Unlock"
+                                        Command="{Binding LockUnlockStackCommand}"
+                                        CommandParameter="{Binding SelectedItem}"
+                                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                                    <!-- Catalogue Actions -->
+                                    <MenuItem Header="Add to Inventory"
+                                        Command="{Binding OpenAddToInventoryWindowCommand}"
+                                        CommandParameter="{Binding SelectedItem}"
+                                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolToVisibilityConverter}}"/>
+                                    <MenuItem Header="Create Template From This"
+                                        Command="{Binding CreateNewTemplateFromSelectedItemCommand}"
+                                        CommandParameter="{Binding SelectedItem}"
+                                        Visibility="{Binding SelectedItem.CanBeEdited, Converter={StaticResource InvertBoolToVisibilityConverter}}"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="PART_Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                        <Rectangle x:Name="PART_OverlayRect"
+                                            Margin="5"
+                                            Width="30"
+                                            Height="30">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="#23ba03"/>
+                                            </Rectangle.Fill>
+                                            <Rectangle.OpacityMask>
+                                                <ImageBrush ImageSource="/Resources/pen.png"/>
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreen}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="PART_OverlayRect" Property="Fill" Value="Black"/>
+                                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource FalloutGreenFaded}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <!--<ToggleButton
                             x:Name="EditBtn"
                             Grid.Column="1"
                             Style="{StaticResource FalloutToggleButton}"
@@ -1588,7 +1660,7 @@
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </ToggleButton.Template>
-                        </ToggleButton>
+                        </ToggleButton>-->
                     </Grid>
 
                     <Border

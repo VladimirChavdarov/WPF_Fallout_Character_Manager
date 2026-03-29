@@ -55,5 +55,14 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
                 listBoxItem.ContextMenu.DataContext = this.DataContext;
             }
         }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                btn.ContextMenu.PlacementTarget = btn;
+                btn.ContextMenu.IsOpen = true;
+            }
+        }
     }
 }
