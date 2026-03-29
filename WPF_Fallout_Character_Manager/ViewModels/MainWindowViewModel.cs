@@ -206,10 +206,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             return catalogueDto;
         }
 
-        bool SerializeCharacterJson()
+        bool SerializeCharacterJson(out string error)
         {
+            error = "";
             if (!CreateSaveFileDialog("Save Character", BioModel.Name, ".fch", out string filePath))
-                return false;
+            {
+                error = "Operation Canceled";
+                return true; // If we click "cancel" on the dialog, it is not an error. I hope this doesn't return false in other, more severe cases...
+            }
 
             CharacterDTO characterDto = CreateCharacterDto();
             string characterJson = JsonSerializer.Serialize(characterDto, new JsonSerializerOptions { WriteIndented = true });
@@ -234,7 +238,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             try
             {
                 if (!CreateOpenFileDialog("Load Character", ".fch", out string filePath, out error))
-                    return false;
+                    return true; // If we click "cancel" on the dialog, it is not an error. I hope this doesn't return false in other, more severe cases...
 
                 if (!File.Exists(filePath))
                 {
@@ -347,14 +351,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             InventoryViewModel.ReloadCatalogueAndInventory();
         }
 
-        public bool SaveCharacter(object _ = null)
+        public bool SaveCharacter(out string error)
         {
             if (!SerializeCatalogueJson())
             {
+                error = "";
                 return false;
             }
 
-            if(!SerializeCharacterJson())
+            if(!SerializeCharacterJson(out error))
             {
                 return false;
             }
@@ -435,9 +440,10 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             MessageBoxResult result = MessageBox.Show(message, "Save Changes", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if(result == MessageBoxResult.Yes)
             {
-                if (SaveCharacter())
+                if (SaveCharacter(out string error))
                 {
-                    MessageBox.Show("Character Saved!");
+                    if(error == "")
+                        MessageBox.Show("Character Saved!");
                 }
                 else
                 {

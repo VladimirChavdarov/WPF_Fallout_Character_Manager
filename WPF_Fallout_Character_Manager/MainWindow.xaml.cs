@@ -51,9 +51,10 @@ namespace WPF_Fallout_Character_Manager
         {
             if (DataContext is MainWindowViewModel mainVM)
             {
-                if(mainVM.SaveCharacter())
+                if(mainVM.SaveCharacter(out string error))
                 {
-                    MessageBox.Show("Character Saved!");
+                    if(error == "")
+                        MessageBox.Show("Character Saved!");
                 }
                 else
                 {
@@ -69,7 +70,8 @@ namespace WPF_Fallout_Character_Manager
             {
                 if(mainVM.LoadCharacter(out string error))
                 {
-                    MessageBox.Show("Characted Loaded!");
+                    if(error == "")
+                        MessageBox.Show("Characted Loaded!");
                 }
                 else
                 {
