@@ -71,25 +71,13 @@ namespace WPF_Fallout_Character_Manager.Models
         {
             foreach (var (key, value) in _special)
             {
-                value.PropertyChanged -= ModInt_PropertyChanged;
-                value.PropertyChanged += ModInt_PropertyChanged;
-            }
-
-            OnPropertyChanged(nameof(Strength));
-            OnPropertyChanged(nameof(Perception));
-            OnPropertyChanged(nameof(Endurance));
-            OnPropertyChanged(nameof(Charisma));
-            OnPropertyChanged(nameof(Intelligence));
-            OnPropertyChanged(nameof(Agility));
-            OnPropertyChanged(nameof(Luck));
-        }
-
-        private void ModInt_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (sender is ModInt modInt)
-            {
-                var stat = _special.First(kvp => kvp.Value == modInt).Key;
-                OnPropertyChanged(stat.ToString());
+                value.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(ModInt.Total))
+                    {
+                        OnPropertyChanged(key.ToString());
+                    }
+                };
             }
         }
 

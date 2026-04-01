@@ -106,7 +106,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             SkillViewModel = new SkillViewModel(SkillModel, SPECIALModel, BioModel);
             LimbConditionsViewModel = new LimbConditionsViewModel(XtrnlLimbConditionsModel, LimbConditionsModel);
             ConditionsViewModel = new ConditionsViewModel(XtrnlConditionsModel, ConditionsModel);
-            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel, XtrnlAmmoModel, AmmoModel, SkillModel);
+            WeaponsViewModel = new WeaponsViewModel(XtrnlWeaponsModel, WeaponsModel, XtrnlAmmoModel, AmmoModel, SkillModel, SPECIALModel);
             ArmorViewModel = new ArmorViewModel(XtrnlArmorModel, ArmorModel);
             EquippableViewModel = new EquippableViewModel(WeaponsViewModel, ArmorViewModel);
             InventoryViewModel = new InventoryViewModel(

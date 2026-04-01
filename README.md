@@ -4,35 +4,35 @@ A digital character sheet for the [Fallout TTRPG](https://www.patreon.com/posts/
 
 ![showcase](/WPF_Fallout_Character_Manager/Resources/ReadmeImages/thumbnail.png)
 
-NOTE: This is a stand-alone *desktop application* for **Windows**.
+NOTE: This is a stand-alone ***desktop** application* for **Windows**.
 
-My friend and I started a campaign using this system but we realized there is a lot of number crunching during gameplay. That's why I decided to make a convenient tools which automates most of that process while still allowing the players complete freedom of how they customize their characters.
+## How to Install
 
-This application is the successor of the [first digital character sheet](https://github.com/VladimirChavdarov/Fallout_Character_Manager) I made for version 1.6 of the TTRPG. This time I decided to make it using **WPF** as it is a lot more suited for the purpose. This was both my first time working with WPF and the first time applying the MVVM pattern so a lot of the code probably looks sketchy but it works robustly and provides pleasant user experience.
+1. Go to the *Releases* section on this page and click on the latest *Release*.
+2. Scroll to the bottom of the page.
+3. Download the **first** .zip file at the top. The name should be *"Fallout_Character_Manager.zip"* or something similar.
+4. Extract the folder in your desired directory on your PC.
+5. **(EXTRA)** If this is **NOT your first time downloading the app**, I strongly recommend going to the directory of your old version of the app and copy-pasting the **"catalogue.fct"** file into the new directory.
+6. Click the **.exe** and use the app!
 
-This repo is open-source so if you wish to extend it, feel free to make a fork!
-
-If you find any bugs, please create an issue on this github page and I will try to address it as soon as possible. :)
-
-# README
+## Features
 
 ### Modifier System
 
-Most of the app is pretty straight-forward. However, something that people might miss is the modifier system that lets you modify almost any value related to your character. To activate it, just **Right-click** on a text field with some value. Here is an example:
+A good amount of parameters are tied to a modifier system, which gives you modular control over the value. Instead of editing the field directly, the app will open a Window which will let you modify the parameter's base value and/or add modifiers for better book-keeping of your character information. For example: *Veronica takes Med-X and gains the Anesthetic property, which gives 6 DT. Veronica's player left-clicks on the Damage Threshold field and can add a modifier with a title "Med-X", value of 6 and a note saying "This lasts for 1 hour."*
 
 ![modiffiers](/WPF_Fallout_Character_Manager/Resources/ReadmeImages/modifiers.gif)
 
-That way, you can tweak the values of your character, apply temporary or permanent buffs or debuffs that could come from chems, perks, upgrades, injured limbs, environmental factors and everything in-between. However, the base value remains intact and will keep scaling if it's tied to another parameter. This makes tracing the state of your character much easier.
+### Auto-Calculations
 
-# Roadmap
-
-This is a **work-in-progress** project. Here is a general list of what I plan to add before considering it finished:
- - Save/Load functionality
- - Inventory window
-    - Adding/removing items from "backpack"
-    - Customizing items
-    - Creating brand new items
-    - (optional) Crafting
- - Perks window
-    - (optional) automated effect application
- - Data window - portrait, backstory, notes, other roleplay-related stuff.
+Below is a list of values that scale automatically:
+- **Max Stamina Points** scale with Level and Agility
+- **Max Health Points** scale with Level and Endurance
+- **Healing Rate** scales with Endurance
+- **Armor Class** scales with equipped Armor or Power Armor
+- **Damage Threshold** scales with equipped Armor or Power Armor
+- **Combat Sequence** scales with Perception
+- **RadDC** scales with Endurance
+- **Passive Sense** scales with Perception
+- **Carrying Capacity** scales with Strength
+- **All Skills** scale with their respective SPECIAL stat and *Luck*

@@ -18,6 +18,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         private XtrnlAmmoModel _xtrnlAmmoModel;
         private AmmoModel _ammoModel;
         private SkillModel _skillModel;
+        private SPECIALModel _specialModel;
 
         private Weapon _selectedWeapon;
         private Ammo _selectedAmmo;
@@ -78,19 +79,21 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         //
 
         // constructor
-        public WeaponsViewModel(XtrnlWeaponsModel xtrnlWeaponsModel, WeaponsModel weaponsModel, XtrnlAmmoModel xtrnlAmmoModel, AmmoModel ammoModel, SkillModel skillModel)
+        public WeaponsViewModel(XtrnlWeaponsModel xtrnlWeaponsModel, WeaponsModel weaponsModel, XtrnlAmmoModel xtrnlAmmoModel, AmmoModel ammoModel, SkillModel skillModel, SPECIALModel specialModel)
         {
             _xtrnlWeaponsModel = xtrnlWeaponsModel;
             _weaponsModel = weaponsModel;
             _xtrnlAmmoModel = xtrnlAmmoModel;
             _ammoModel = ammoModel;
             _skillModel = skillModel;
+            _specialModel = specialModel;
 
             ShootCommand = new RelayCommand(Shoot);
             ReloadCommand = new RelayCommand(Reload);
             UnequipOtherWeaponsCommand = new RelayCommand(UnequipOtherWeapons);
 
             _skillModel.PropertyChanged += SkillModel_PropertyChanged;
+            _specialModel.PropertyChanged += SPECIALModel_PropertyChanged;
 
             _ammoModel.Ammos.CollectionChanged += AmmoModel_Ammos_CollectionChanged;
 
@@ -124,7 +127,42 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         // methods
         private void SkillModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            SetToHitBaseValue(SelectedWeapon);
+            if(e.PropertyName == nameof(SkillModel.Guns))
+                SetToHitBaseValue(SelectedWeapon);
+        }
+
+        public static string CritLuckModifierName = "Half Luck Modifier";
+        private void SPECIALModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(SelectedWeapon == null)
+                return;
+
+            if (e.PropertyName != nameof(SPECIALModel.Luck))
+                return;
+
+            int halfLuck = _specialModel.GetClampedHalfLuckModifier();
+            halfLuck = -halfLuck;
+            LabeledValue<int> luckCritModifier = SelectedWeapon.CritChance.Modifiers.FirstOrDefault(x => x.Name == CritLuckModifierName);
+            if(halfLuck != 0)
+            {
+                if(luckCritModifier == null)
+                {
+                    SelectedWeapon.CritChance.AddModifier(new LabeledInt(CritLuckModifierName, halfLuck, "Crit chance is decreased by half your Luck Modifier.", true));
+                }
+                else
+                {
+                    luckCritModifier.IsReadOnly = false;
+                    luckCritModifier.Value = halfLuck;
+                    luckCritModifier.IsReadOnly = true;
+                }
+            }
+            else
+            {
+                if(luckCritModifier != null)
+                {
+                    SelectedWeapon.CritChance.RemoveModifier(luckCritModifier);
+                }
+            }
         }
 
         private void AmmoModel_Ammos_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

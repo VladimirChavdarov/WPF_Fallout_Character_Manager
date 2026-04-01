@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using WPF_Fallout_Character_Manager.Models.External;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Models.Serialization;
@@ -79,12 +81,13 @@ namespace WPF_Fallout_Character_Manager.Models
                 var key = keyValue.Key;
                 var value = keyValue.Value;
 
-                value.PropertyChanged += (s, e) => OnPropertyChanged(key.ToString());
-            }
-
-            foreach (Skill skill in Enum.GetValues(typeof(Skill)))
-            {
-                OnPropertyChanged(skill.ToString());
+                value.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(ModIntSkill.Total))
+                    {
+                        OnPropertyChanged(key.ToString());
+                    }
+                };
             }
         }
 

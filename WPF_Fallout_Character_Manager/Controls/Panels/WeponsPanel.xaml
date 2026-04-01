@@ -148,7 +148,7 @@
                             TextWrapping="NoWrap"
                             IsReadOnly="True"
                             ModValue ="{Binding SelectedWeapon.CritChance}"
-                            Text="{Binding SelectedWeapon.CritChance.BaseValue}"
+                            Text="{Binding SelectedWeapon.CritChance.Total, Mode=OneWay}"
                             Hint="{Binding SelectedWeapon.CritChance.Note}"/>
 
                         <control:EnhancedTextBox
@@ -159,7 +159,7 @@
                             TextWrapping="NoWrap"
                             IsReadOnly="True"
                             ModValue ="{Binding SelectedWeapon.CritDamage}"
-                            Text="{Binding SelectedWeapon.CritDamage.BaseValue}"
+                            Text="{Binding SelectedWeapon.CritDamage.Total, Mode=OneWay}"
                             Hint="{Binding SelectedWeapon.CritDamage.Note}"/>
                     </Grid>
                 </StackPanel>
