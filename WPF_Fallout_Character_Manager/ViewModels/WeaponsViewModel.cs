@@ -68,6 +68,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 }
 
                 SetToHitBaseValue(SelectedWeapon);
+                ScaleCritChance(SelectedWeapon);
             }
         }
 
@@ -131,38 +132,14 @@ namespace WPF_Fallout_Character_Manager.ViewModels
                 SetToHitBaseValue(SelectedWeapon);
         }
 
-        public static string CritLuckModifierName = "Half Luck Modifier";
+        public static string critLuckModifierName = "Half Luck Modifier";
         private void SPECIALModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(SelectedWeapon == null)
                 return;
 
-            if (e.PropertyName != nameof(SPECIALModel.Luck))
-                return;
-
-            int halfLuck = _specialModel.GetClampedHalfLuckModifier();
-            halfLuck = -halfLuck;
-            LabeledValue<int> luckCritModifier = SelectedWeapon.CritChance.Modifiers.FirstOrDefault(x => x.Name == CritLuckModifierName);
-            if(halfLuck != 0)
-            {
-                if(luckCritModifier == null)
-                {
-                    SelectedWeapon.CritChance.AddModifier(new LabeledInt(CritLuckModifierName, halfLuck, "Crit chance is decreased by half your Luck Modifier.", true));
-                }
-                else
-                {
-                    luckCritModifier.IsReadOnly = false;
-                    luckCritModifier.Value = halfLuck;
-                    luckCritModifier.IsReadOnly = true;
-                }
-            }
-            else
-            {
-                if(luckCritModifier != null)
-                {
-                    SelectedWeapon.CritChance.RemoveModifier(luckCritModifier);
-                }
-            }
+            if (e.PropertyName == nameof(SPECIALModel.Luck))
+                ScaleCritChance(SelectedWeapon);
         }
 
         private void AmmoModel_Ammos_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -200,6 +177,38 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             }
         }
 
+        private void ScaleCritChance(Weapon weapon)
+        {
+            if(weapon == null)
+            {
+                return;
+            }    
+
+            int halfLuck = _specialModel.GetClampedHalfLuckModifier();
+            halfLuck = -halfLuck;
+            LabeledValue<int> luckCritModifier = weapon.CritChance.Modifiers.FirstOrDefault(x => x.Name == critLuckModifierName);
+            if (halfLuck != 0)
+            {
+                if (luckCritModifier == null)
+                {
+                    weapon.CritChance.AddModifier(new LabeledInt(critLuckModifierName, halfLuck, "Crit chance is decreased by half your Luck Modifier.", true));
+                }
+                else
+                {
+                    luckCritModifier.IsReadOnly = false;
+                    luckCritModifier.Value = halfLuck;
+                    luckCritModifier.IsReadOnly = true;
+                }
+            }
+            else
+            {
+                if (luckCritModifier != null)
+                {
+                    weapon.CritChance.RemoveModifier(luckCritModifier);
+                }
+            }
+        }
+
         private void SetToHitBaseValue(Weapon weapon)
         {
             if(weapon == null)
@@ -210,53 +219,60 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             switch (weapon.Type)
             {
                 case "Bladed":
-                    SetToHitBaseValue(Skill.MeleeWeapons);
+                    SetToHitBaseValue(weapon, Skill.MeleeWeapons);
                     break;
                 case "Blunt":
-                    SetToHitBaseValue(Skill.MeleeWeapons);
+                    SetToHitBaseValue(weapon, Skill.MeleeWeapons);
                     break;
                 case "Mechanical":
-                    SetToHitBaseValue(Skill.MeleeWeapons);
+                    SetToHitBaseValue(weapon, Skill.MeleeWeapons);
                     break;
 
                 case "Unarmed":
-                    SetToHitBaseValue(Skill.Unarmed);
+                    SetToHitBaseValue(weapon, Skill.Unarmed);
                     break;
 
                 case "Handgun":
-                    SetToHitBaseValue(Skill.Guns);
+                    SetToHitBaseValue(weapon, Skill.Guns);
                     break;
                 case "Revolver":
-                    SetToHitBaseValue(Skill.Guns);
+                    SetToHitBaseValue(weapon, Skill.Guns);
                     break;
                 case "Submachine Gun":
-                    SetToHitBaseValue(Skill.Guns);
+                    SetToHitBaseValue(weapon, Skill.Guns);
                     break;
                 case "Rifle":
-                    SetToHitBaseValue(Skill.Guns);
+                    SetToHitBaseValue(weapon, Skill.Guns);
                     break;
                 case "Shotgun":
-                    SetToHitBaseValue(Skill.Guns);
+                    SetToHitBaseValue(weapon, Skill.Guns);
                     break;
                 case "Big Gun":
-                    SetToHitBaseValue(Skill.Guns);
+                    SetToHitBaseValue(weapon, Skill.Guns);
                     break;
                 case "Energy":
-                    SetToHitBaseValue(Skill.EnergyWeapons);
+                    SetToHitBaseValue(weapon, Skill.EnergyWeapons);
                     break;
             }
         }
 
-        private void SetToHitBaseValue(Skill skill)
+        private void SetToHitBaseValue(Weapon weapon, Skill skill)
         {
-            SetToHitBaseValue(SkillModel.GetSkill(skill).Total);
+            ModIntSkill skillObject = SkillModel.GetSkill(skill);
+            int hitSkillValue = skillObject.Total;
+            string hitSkillModifierName = skillObject.Name + " Modifier";
+            LabeledValue<int> hitSkillModifier = weapon.ToHit.Modifiers.FirstOrDefault(x => x.Name == hitSkillModifierName);
+            if (hitSkillModifier == null)
+            {
+                weapon.ToHit.AddModifier(new LabeledInt(hitSkillModifierName, hitSkillValue, "The hit modifier of this weapon scales with " + skillObject.Name + ".", true));
+            }
+            else
+            {
+                hitSkillModifier.IsReadOnly = false;
+                hitSkillModifier.Value = hitSkillValue;
+                hitSkillModifier.IsReadOnly = true;
+            }
         }
-
-        private void SetToHitBaseValue(int skillModifier)
-        {
-            SelectedWeapon.ToHit.BaseValue = skillModifier;
-        }
-        //
 
         // commands
         public RelayCommand ShootCommand { get; private set; }
