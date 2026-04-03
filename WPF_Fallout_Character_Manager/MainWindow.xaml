@@ -157,7 +157,8 @@
                     </MenuItem>
                 </Menu>
 
-                <ScrollViewer>
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Disabled">
                     <TabControl Style="{StaticResource FalloutTabControl}">
 
                         <!-- Character Tab -->

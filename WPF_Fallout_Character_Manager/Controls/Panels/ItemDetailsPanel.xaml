@@ -69,7 +69,6 @@
                         Margin="5"
                         VerticalAlignment="Top"
                         MinWidth="190"
-                        TextWrapping="NoWrap"
                         HorizontalContentAlignment="Left"
                         LabelFontSize="11"
                         LabelText="Damage:"
@@ -114,7 +113,6 @@
                                 HorizontalContentAlignment="Left"
                                 VerticalAlignment="Top"
                                 Width="50"
-                                TextWrapping="NoWrap"
                                 IsReadOnly="True"
                                 ModValue ="{Binding SelectedItem.CritDamage}"
                                 Text="{Binding SelectedItem.CritDamage.BaseValue}"
@@ -1524,7 +1522,8 @@
         Background="Black"
         BorderBrush="#23ba03"
         BorderThickness="1">
-        <ScrollViewer>
+        <ScrollViewer
+            HorizontalScrollBarVisibility="Disabled">
             <Grid>
                 <StackPanel
                     Margin="8"

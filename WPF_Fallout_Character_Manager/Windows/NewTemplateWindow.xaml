@@ -75,7 +75,6 @@
                 Margin="5"
                 VerticalAlignment="Top"
                 MinWidth="190"
-                TextWrapping="NoWrap"
                 HorizontalContentAlignment="Left"
                 LabelFontSize="11"
                 LabelText="Damage:"
@@ -120,7 +119,6 @@
                         HorizontalContentAlignment="Left"
                         VerticalAlignment="Top"
                         Width="50"
-                        TextWrapping="NoWrap"
                         IsReadOnly="True"
                         ModValue ="{Binding NewItemTemplate.CritDamage}"
                         Text="{Binding NewItemTemplate.CritDamage.BaseValue}"
@@ -1658,8 +1656,16 @@
             Background="Black"
             BorderBrush="#23ba03"
             BorderThickness="1 1 1 1">
-            <StackPanel>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
                 <ComboBox
+                    Grid.Row="0"
                     Margin="5"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
@@ -1670,9 +1676,8 @@
                     DisplayMemberPath="Name"/>
 
                 <ScrollViewer
-                    Margin="8">
+                    Grid.Row="1">
                     <StackPanel
-                        Height="520"
                         Margin="8">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1747,40 +1752,42 @@
                                 Margin="0 15 0 15"/>
                         </Border>
 
-                        <Grid
-                            Margin="0 15 0 0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Button
-                                Grid.Column="0"
-                                Style="{StaticResource FalloutButton}"
-                                Content="Cancel"
-                                Margin="0 0 10 0"
-                                Padding="5"
-                                Width="80"
-                                FontSize="13"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Bottom"
-                                Click="btnClose_Click"
-                                Command="{Binding DataContext.NullifyNewItemTemplateCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                            <Button
-                                Grid.Column="1"
-                                Style="{StaticResource FalloutHighlightedButton}"
-                                Content="Add To Catalogue"
-                                Margin="10 0 0 0"
-                                Padding="5"
-                                Width="190"
-                                FontSize="13"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Click="btnClose_Click"
-                                Command="{Binding DataContext.AddToCatalogueCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                        </Grid>
                     </StackPanel>
                 </ScrollViewer>
-            </StackPanel>
+                
+                <Grid
+                    Grid.Row="2"
+                    Margin="8 15 8 8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Style="{StaticResource FalloutButton}"
+                        Content="Cancel"
+                        Margin="0 0 10 0"
+                        Padding="5"
+                        Width="80"
+                        FontSize="13"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Click="btnClose_Click"
+                        Command="{Binding DataContext.NullifyNewItemTemplateCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <Button
+                        Grid.Column="1"
+                        Style="{StaticResource FalloutHighlightedButton}"
+                        Content="Add To Catalogue"
+                        Margin="10 0 0 0"
+                        Padding="5"
+                        Width="190"
+                        FontSize="13"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Click="btnClose_Click"
+                        Command="{Binding DataContext.AddToCatalogueCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </Grid>
+            </Grid>
         </Border>
         <!-- -->
     </Grid>
