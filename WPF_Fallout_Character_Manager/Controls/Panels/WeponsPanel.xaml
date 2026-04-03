@@ -14,11 +14,12 @@
         <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <ScrollViewer>
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="Auto"/>
@@ -28,7 +29,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
             
                 <ComboBox
@@ -45,7 +46,7 @@
 
                 <StackPanel
                     Grid.Column="1"
-                    Margin="5"
+                    Margin="5 5 25 5"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Visibility="{Binding SelectedWeapon, Converter={StaticResource NullToVisibilityConverter}}">
@@ -72,7 +73,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="65"/>
                     <ColumnDefinition Width="85"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
@@ -112,8 +113,7 @@
                     Orientation="Vertical"
                     Margin="5"
                     VerticalAlignment="Top"
-                    MinWidth="190"
-                    TextWrapping="NoWrap"
+                    MinWidth="170"
                     HorizontalContentAlignment="Left"
                     LabelFontSize="11"
                     LabelText="Damage:"
@@ -156,7 +156,6 @@
                             HorizontalContentAlignment="Left"
                             VerticalAlignment="Top"
                             Width="50"
-                            TextWrapping="NoWrap"
                             IsReadOnly="True"
                             ModValue ="{Binding SelectedWeapon.CritDamage}"
                             Text="{Binding SelectedWeapon.CritDamage.Total, Mode=OneWay}"
@@ -285,7 +284,7 @@
 
                 <ComboBox
                     Grid.Column="2"
-                    Margin="5"
+                    Margin="5 5 25 5"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
                     MinWidth="130"
@@ -375,7 +374,7 @@
 
                 <StackPanel
                     Grid.Column="2"
-                    Margin="5"
+                    Margin="5 5 25 5"
                     HorizontalAlignment="Right">
                     <Label
                         Style="{StaticResource FalloutDefaultLabel}"

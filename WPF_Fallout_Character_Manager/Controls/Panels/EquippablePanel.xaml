@@ -21,7 +21,8 @@
                 Margin="5"
                 FontSize="10">
                 <TabItem Header="Weapons">
-                    <ScrollViewer>
+                    <ScrollViewer
+                        HorizontalScrollBarVisibility="Disabled">
                         <panel:WeponsPanel
                             DataContext="{Binding WeaponsViewModel}"/>
                     </ScrollViewer>

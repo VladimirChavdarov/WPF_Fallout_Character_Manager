@@ -225,7 +225,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
                         // TODO: When we add this to the ModString, we also need to make sure this modifier is always last for aesthetic purposes.
                         // I still haven't added sorting of modifiers.
                         string depleted = trimmedProperty.Replace("Depleted: ", "");
-                        weapon.Damage.AddModifier(new LabeledString("Depleted Damage", "| Depleted: " + depleted + "|", "Use this damage if the weapon has no ammo left."));
+                        weapon.Damage.AddModifier(new LabeledString("Depleted Damage", "| Depleted: " + depleted + "|", "Use this damage if the weapon has no ammo left.", true));
                     }
 
                     // TODO: complete this after adding the Weapon Properties first.
