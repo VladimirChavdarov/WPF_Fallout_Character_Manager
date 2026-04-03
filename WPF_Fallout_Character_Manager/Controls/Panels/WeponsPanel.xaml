@@ -217,6 +217,7 @@
                         HorizontalAlignment="Left"
                         MinWidth="130"
                         Width="Auto"
+                        MaxWidth="130"
                         DisplayMemberPath="NameAmount"
                         ItemsSource="{Binding SelectedWeapon.CompatibleAmmos, diag:PresentationTraceSources.TraceLevel=High}"
                         SelectedItem="{Binding SelectedAmmo}">

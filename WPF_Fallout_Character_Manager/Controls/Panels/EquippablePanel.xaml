@@ -9,7 +9,7 @@
              d:DesignHeight="310" d:DesignWidth="562">
     <Grid>
         <GroupBox
-            Header="Equipped Items"
+            Header="Combat Items"
             Grid.Row="1"
             Margin="5"
             Background="Black"
