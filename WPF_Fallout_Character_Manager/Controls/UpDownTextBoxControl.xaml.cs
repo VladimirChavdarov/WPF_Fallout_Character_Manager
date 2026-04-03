@@ -340,16 +340,16 @@ namespace WPF_Fallout_Character_Manager.Controls
                     }
                 }
 
-                //// fallback to int
-                //if (int.TryParse(Text, out int fallbackIntValue))
-                //{
-                //    fallbackIntValue--;
-                //    if (fallbackIntValue > MaxValue)
-                //        fallbackIntValue = MaxValue;
-                //    if (fallbackIntValue < MinValue)
-                //        fallbackIntValue = MinValue;
-                //    Text = fallbackIntValue.ToString();
-                //}
+                // fallback to int
+                if (int.TryParse(Text, out int fallbackIntValue))
+                {
+                    fallbackIntValue--;
+                    if (fallbackIntValue > MaxValue)
+                        fallbackIntValue = MaxValue;
+                    if (fallbackIntValue < MinValue)
+                        fallbackIntValue = MinValue;
+                    Text = fallbackIntValue.ToString();
+                }
             }
         }
 
@@ -385,16 +385,16 @@ namespace WPF_Fallout_Character_Manager.Controls
                     }
                 }
 
-                //// fallback to int
-                //if (int.TryParse(Text, out int fallbackIntValue))
-                //{
-                //    fallbackIntValue++;
-                //    if (fallbackIntValue > MaxValue)
-                //        fallbackIntValue = MaxValue;
-                //    if (fallbackIntValue < MinValue)
-                //        fallbackIntValue = MinValue;
-                //    Text = fallbackIntValue.ToString();
-                //}
+                // fallback to int
+                if (int.TryParse(Text, out int fallbackIntValue))
+                {
+                    fallbackIntValue++;
+                    if (fallbackIntValue > MaxValue)
+                        fallbackIntValue = MaxValue;
+                    if (fallbackIntValue < MinValue)
+                        fallbackIntValue = MinValue;
+                    Text = fallbackIntValue.ToString();
+                }
             }
         }
 
