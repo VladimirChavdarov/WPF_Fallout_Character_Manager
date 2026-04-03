@@ -324,6 +324,7 @@ namespace WPF_Fallout_Character_Manager.Controls
                             intValue = MinValue;
                         Text = intValue.ToString();
                     }
+                    return;
                 }
 
                 // floats
@@ -338,6 +339,7 @@ namespace WPF_Fallout_Character_Manager.Controls
                             floatValue = (float)MinValue;
                         Text = floatValue.ToString();
                     }
+                    return;
                 }
 
                 // fallback to int
@@ -369,6 +371,7 @@ namespace WPF_Fallout_Character_Manager.Controls
                             intValue = MinValue;
                         Text = intValue.ToString(CultureInfo.InvariantCulture);
                     }
+                    return;
                 }
 
                 // floats
@@ -383,6 +386,7 @@ namespace WPF_Fallout_Character_Manager.Controls
                             floatValue = (float)MinValue;
                         Text = floatValue.ToString(CultureInfo.InvariantCulture);
                     }
+                    return;
                 }
 
                 // fallback to int
