@@ -37,31 +37,36 @@
                 IsReadOnly="False"
                 Text="{Binding SearchCatalogueText, Mode=TwoWay}"/>
 
-            <ListBox
+            <ScrollViewer 
                 Grid.Row="1"
-                Style="{StaticResource FalloutInventoryTabsListBox}"
-                ItemsSource="{Binding Categories}"
-                SelectedItem="{Binding SelectedCatalogueCategory, Mode=TwoWay}"
-                Margin="0 0 0 0">
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Disabled"
+                PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                <ListBox
+                    Style="{StaticResource FalloutInventoryTabsListBox}"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCatalogueCategory, Mode=TwoWay}"
+                    Margin="0 0 0 0">
 
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
 
-                <ListBox.ItemContainerStyle>
-                    <StaticResource ResourceKey="FalloutInventoryTabListBoxItem"/>
-                </ListBox.ItemContainerStyle>
+                    <ListBox.ItemContainerStyle>
+                        <StaticResource ResourceKey="FalloutInventoryTabListBoxItem"/>
+                    </ListBox.ItemContainerStyle>
 
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock
-                            Text="{Binding}"
-                            FontSize="12"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                    Text="{Binding}"
+                    FontSize="12"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
 
             <Grid
                 Grid.Row="2">

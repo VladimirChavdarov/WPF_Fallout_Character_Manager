@@ -32,5 +32,15 @@ namespace WPF_Fallout_Character_Manager.Controls.Panels
                 item.ContextMenu.DataContext = this.DataContext;
             }
         }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+
+            scrollViewer.ScrollToHorizontalOffset(
+                scrollViewer.HorizontalOffset - e.Delta);
+
+            e.Handled = true;
+        }
     }
 }
