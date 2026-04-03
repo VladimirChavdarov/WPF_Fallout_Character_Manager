@@ -35,9 +35,7 @@ Double Barrel Shotgun;Shotgun;700;4;2d10 ballistic;x3/x6;20, 3d10;12 gauge, 2 ro
 Combat Shotgun;Shotgun;800;4;2d12 ballistic;x4/x7;20, 2d12;12 gauge, 8 rounds, 1 attacks per ammo;Powerful. Spread. Two Handed.;12;5
 Riot Shotgun;Shotgun;900;5;3d6 ballistic;x3/x6;20, 6d6;12 gauge, 12 rounds, 1 attacks per ammo;Powerful. Semi-Automatic. Spread. Two Handed.;12;5
 Solar Scorcher;Energy;340;3;1d4 fire;x5/x10;20, applies burning.;Sunlight, 0 rounds, 1 attacks per ammo;;3;1
-Laser pistol;Energy;415;4;1d8 laser;x10/x20;20, x2, applies burning.;Energy Cell, 1 round, 30 attacks per ammo;"Energy Weapon. Semi-Automatic.Energy Weapon. 
-Semi-Automatic.
- Quick Reload.";5;1
+Laser pistol;Energy;415;4;1d8 laser;x10/x20;20, x2, applies burning.;Energy Cell, 1 round, 30 attacks per ammo;"Energy Weapon. Semi-Automatic.Energy Weapon. Semi-Automatic. Quick Reload.";5;1
 Laser rifle;Energy;500;5;2d6 laser;x12/x24;20, x2, applies burning.;Energy Cell, 1 round, 24 attacks per ammo;Accurate. Energy Weapon. Unwieldy. Quick Reload.;8;2
 Automatic laser rifle;Energy;360;5;1d6 laser;x8/x12;20, 1d6 laser and applies burning.;Energy Cell, 1 round, 24 attacks per ammo;Automatic: 2. Energy Weapon. Unstable. Unwieldy. Quick Reload.;10;2
 Tri-Beam laser rifle;Energy;730;5;3d6 laser;x4/x8;20, 5d6 laser and applies burning.;Energy Cell, 1 round, 8 attacks per ammo;Energy Weapon. Spread. Powerful. Unwieldy. Quick Reload.;10;2
