@@ -616,6 +616,7 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             {
                 ItemToAddToInventory.CanBeEdited = true;
                 collection.Add(ItemToAddToInventory);
+                SelectedInventoryItem = ItemToAddToInventory;
             }
             else
             {
