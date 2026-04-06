@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Fallout_Character_Manager"
+        xmlns:conv="clr-namespace:WPF_Fallout_Character_Manager.Converters"
         xmlns:controls="clr-namespace:WPF_Fallout_Character_Manager.Controls"
         xmlns:panels="clr-namespace:WPF_Fallout_Character_Manager.Controls.Panels"
         mc:Ignorable="d"
@@ -20,7 +21,9 @@
         Closing="Window_Closing"
         MouseDown="Window_MouseDown">
 
-
+    <Window.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,6 +32,16 @@
         </Grid.RowDefinitions>
 
         <!-- Top Bar -->
+        <Border
+            Grid.Row="0"
+            Background="#AA000000"
+            Visibility="{Binding IsDialogOpen, Converter={StaticResource BoolToVisibilityConverter}}"
+            Panel.ZIndex="1000">
+            <Border.Effect>
+                <BlurEffect Radius="5"/>
+            </Border.Effect>
+        </Border>
+
         <Border Grid.Row="0"
         Background="Black"
         BorderBrush="#23ba03"
@@ -73,6 +86,16 @@
         <!-- -->
 
         <!-- Main Window -->
+        <Border
+            Grid.Row="1"
+            Background="#AA000000"
+            Visibility="{Binding IsDialogOpen, Converter={StaticResource BoolToVisibilityConverter}}"
+            Panel.ZIndex="1000">
+            <Border.Effect>
+                <BlurEffect Radius="5"/>
+            </Border.Effect>
+        </Border>
+        
         <Border Grid.Row="1"
                 Background="Black"
                 BorderBrush="#23ba03"

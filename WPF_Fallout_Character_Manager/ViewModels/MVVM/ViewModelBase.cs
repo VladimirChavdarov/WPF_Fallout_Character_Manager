@@ -38,10 +38,41 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
         }
         //
 
+        // Opening a dialog
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen
+        {
+            get => _isDialogOpen;
+            set => Update(ref _isDialogOpen, value);
+        }
+
+        public static event Action<ViewModelBase, bool>? DialogStateChanged;
+        protected void NotifyDialogStateChanged(ViewModelBase sender, bool isOpen)
+        {
+            DialogStateChanged?.Invoke(sender, isOpen);
+        }
+        private void OnDialogStateChanged(ViewModelBase sender, bool isOpen)
+        {
+            if (sender == this)
+                return;
+
+            IsDialogOpen = isOpen;
+        }
+        //
+
         // Constructor
         public ViewModelBase()
         {
             OpenModifierModalWindowCommand = new RelayCommand(OpenModifierModal);
+
+            DialogStateChanged += OnDialogStateChanged;
+        }
+        //
+
+        // Destructor
+        ~ViewModelBase()
+        {
+            DialogStateChanged -= OnDialogStateChanged;
         }
         //
 
@@ -90,7 +121,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
 
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
+            NotifyDialogStateChanged(this, true);
+            try
+            {
+                window.ShowDialog();
+            }
+            finally
+            {
+                NotifyDialogStateChanged(this, false);
+            }
         }
         //
     }

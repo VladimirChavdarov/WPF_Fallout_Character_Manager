@@ -263,6 +263,28 @@ namespace WPF_Fallout_Character_Manager.ViewModels
         }
         //
 
+        // Opening new item attribute dialog
+        private bool _isItemAttributeDialogOpen = false;
+        public bool IsItemAttributeDialogOpen
+        {
+            get => _isItemAttributeDialogOpen;
+            set => Update(ref _isItemAttributeDialogOpen, value);
+        }
+
+        public static event Action<ViewModelBase, bool>? ItemAttributeDialogStateChanged;
+        protected void NotifyItemAttributeDialogStateChanged(ViewModelBase sender, bool isOpen)
+        {
+            ItemAttributeDialogStateChanged?.Invoke(sender, isOpen);
+        }
+        private void OnItemAttributeDialogStateChanged(ViewModelBase sender, bool isOpen)
+        {
+            //if (sender == this)
+            //    return;
+
+            IsItemAttributeDialogOpen = isOpen;
+        }
+        //
+
         // constructor
         public InventoryViewModel(
             WeaponsViewModel weaponsViewModel,
@@ -378,6 +400,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             FullInventory.CollectionChanged += FullInventory_CollectionChanged;
             CalculateCurrentLoad();
+
+            ItemAttributeDialogStateChanged += OnItemAttributeDialogStateChanged;
+        }
+        //
+
+        // Destructor
+        ~InventoryViewModel()
+        {
+            ItemAttributeDialogStateChanged -= OnItemAttributeDialogStateChanged;
         }
         //
 
@@ -565,7 +596,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             window.Left = mousePoint.X;
             window.Top = mousePoint.Y;
 
-            window.ShowDialog();
+            NotifyDialogStateChanged(this, true);
+            try
+            {
+                window.ShowDialog();
+            }
+            finally
+            {
+                NotifyDialogStateChanged(this, false);
+            }
         }
 
         public RelayCommand AddToInventoryCommand { get; private set; }
@@ -650,7 +689,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            window.ShowDialog();
+            NotifyDialogStateChanged(this, true);
+            try
+            {
+                window.ShowDialog();
+            }
+            finally
+            {
+                NotifyDialogStateChanged(this, false);
+            }
         }
 
         public RelayCommand AddToCatalogueCommand { get; private set; }
@@ -710,7 +757,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            window.ShowDialog();
+            NotifyItemAttributeDialogStateChanged(this, true);
+            try
+            {
+                window.ShowDialog();
+            }
+            finally
+            {
+                NotifyItemAttributeDialogStateChanged(this, false);
+            }
         }
 
         public RelayCommand AddItemAttributeToCatalogueCommand { get; private set; }
@@ -816,7 +871,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            window.ShowDialog();
+            NotifyDialogStateChanged(this, true);
+            try
+            {
+                window.ShowDialog();
+            }
+            finally
+            {
+                NotifyDialogStateChanged(this, false);
+            }
         }
         //
 

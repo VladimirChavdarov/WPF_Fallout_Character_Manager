@@ -75,7 +75,15 @@ namespace WPF_Fallout_Character_Manager.ViewModels
 
             window.Owner = Application.Current.MainWindow;
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.ShowDialog();
+            NotifyDialogStateChanged(this, true);
+            try
+            {
+                window.ShowDialog();
+            }
+            finally
+            {
+                NotifyDialogStateChanged(this, false);
+            }
         }
         //
 
