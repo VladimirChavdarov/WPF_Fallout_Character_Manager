@@ -204,10 +204,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             var window = new NewTraitWindow();
             window.DataContext = this;
 
-            window.Loaded += (s, e) =>
-            {
-                Utils.ClampWindowWithinScreen(window);
-            };
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
 
@@ -221,10 +219,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             var window = new NewPerkWindow();
             window.DataContext = this;
 
-            window.Loaded += (s, e) =>
-            {
-                Utils.ClampWindowWithinScreen(window);
-            };
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
 

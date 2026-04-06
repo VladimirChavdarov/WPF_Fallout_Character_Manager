@@ -88,10 +88,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels.MVVM
                     }
             }
 
-            window.Loaded += (s, e) =>
-            {
-                Utils.ClampWindowWithinScreen(window);
-            };
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
         }
         //

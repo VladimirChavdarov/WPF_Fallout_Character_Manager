@@ -235,10 +235,8 @@ namespace WPF_Fallout_Character_Manager.ViewModels
             // Open Modal window
             var window = new LimbConditionsWindow(this);
 
-            window.Loaded += (s, e) =>
-            {
-                Utils.ClampWindowWithinScreen(window);
-            };
+            window.Owner = Application.Current.MainWindow;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.ShowDialog();
             //
         }
