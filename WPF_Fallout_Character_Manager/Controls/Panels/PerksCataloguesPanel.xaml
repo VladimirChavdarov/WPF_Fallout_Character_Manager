@@ -77,16 +77,43 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="230" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
+                                <!-- Name -->
                                 <TextBlock
                                     Grid.Column="0"
+                                    VerticalAlignment="Center"
                                     Text="{Binding Name}"
                                     FontSize="9"
                                     TextWrapping="Wrap"
                                     Padding="0 0 10 0"/>
+
+                                <!-- Add Button -->
+                                <Button
+                                    Style="{StaticResource FalloutBracketButton}"
+                                    x:Name="AddButton"
+                                    VerticalAlignment="Center"
+                                    Grid.Column="1"
+                                    FontSize="9"
+                                    Content=" + "
+                                    Width="18"
+                                    Height="18"
+                                    Margin="0,0,0,0"
+                                    Visibility="Collapsed"
+                                    Command="{Binding DataContext.AddTraitCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                    CommandParameter="{Binding}"/>
                             </Grid>
+
+                            <!-- Trigger to show button when item is selected -->
+                            <DataTemplate.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                    Value="True">
+                                    <Setter TargetName="AddButton" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -168,16 +195,43 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="230" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
+                                <!-- Name -->
                                 <TextBlock
                                     Grid.Column="0"
+                                    VerticalAlignment="Center"
                                     Text="{Binding Name}"
                                     FontSize="9"
                                     TextWrapping="Wrap"
                                     Padding="0 0 10 0"/>
+
+                                <!-- Add Button -->
+                                <Button
+                                    Style="{StaticResource FalloutBracketButton}"
+                                    x:Name="AddButton"
+                                    VerticalAlignment="Center"
+                                    Grid.Column="1"
+                                    FontSize="9"
+                                    Content=" + "
+                                    Width="18"
+                                    Height="18"
+                                    Margin="0,0,0,0"
+                                    Visibility="Collapsed"
+                                    Command="{Binding DataContext.AddPerkCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                    CommandParameter="{Binding}"/>
                             </Grid>
+
+                            <!-- Trigger to show button when item is selected -->
+                            <DataTemplate.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                    Value="True">
+                                    <Setter TargetName="AddButton" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

@@ -42,7 +42,8 @@
                 ToolTipService.InitialShowDelay="500"
                 ToolTipService.Placement="Mouse"
                 ToolTipService.IsEnabled="{Binding Hint, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringToBoolConverter}}"
-                MouseDown="CustomTextBox_MouseDown">
+                MouseDown="CustomTextBox_MouseDown"
+                GotKeyboardFocus="CustomTextBox_GotKeyboardFocus">
 
             <TextBox.ToolTip>
                 <ToolTip>

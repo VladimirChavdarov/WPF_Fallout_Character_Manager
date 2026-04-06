@@ -349,5 +349,10 @@ namespace WPF_Fallout_Character_Manager.Controls
                 CustomTextBox.InputBindings.Add(rightBinding);
             }
         }
+
+        private void CustomTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            CustomTextBox.SelectAll();
+        }
     }
 }
