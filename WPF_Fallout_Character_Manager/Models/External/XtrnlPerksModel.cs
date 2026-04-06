@@ -601,7 +601,7 @@ namespace WPF_Fallout_Character_Manager.Models.External
             set => Update(ref _maxStacks, value);
         }
 
-        public bool ReachedMaxStacks => MaxStacks == CurrentStacks ? true : false;
+        public bool ReachedMaxStacks => MaxStacks.Total == CurrentStacks.Total ? true : false;
         //
     }
 }
