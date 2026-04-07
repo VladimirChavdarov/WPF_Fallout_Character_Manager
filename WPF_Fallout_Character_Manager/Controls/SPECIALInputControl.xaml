@@ -27,7 +27,7 @@
                 Style="{StaticResource FalloutDefaultLabel}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="6"
+                FontSize="7"
                 Opacity="0.7"
                 Content="{Binding StatLabel, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <ContentControl
