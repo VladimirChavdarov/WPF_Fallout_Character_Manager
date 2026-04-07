@@ -264,6 +264,29 @@ namespace WPF_Fallout_Character_Manager.Controls
         {
         }
         #endregion
+
+        #region AutoSelectText
+        public static readonly DependencyProperty AutoSelectTextProperty =
+        DependencyProperty.Register("AutoSelectText", typeof(bool), typeof(EnhancedTextBox),
+            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(AutoSelectTextPropertyChanged)));
+
+        public bool AutoSelectText
+        {
+            get => (bool)GetValue(AutoSelectTextProperty);
+            set => SetValue(AutoSelectTextProperty, value);
+        }
+
+        private static void AutoSelectTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            EnhancedTextBox? ThisUserControl = d as EnhancedTextBox;
+            ThisUserControl.AutoSelectTextPropertyChanged(e);
+            ThisUserControl.BindOpenModifierWindowCommand();
+        }
+
+        private void AutoSelectTextPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
         //
 
         public EnhancedTextBox()
@@ -352,7 +375,17 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CustomTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            CustomTextBox.SelectAll();
+            if(AutoSelectText)
+                CustomTextBox.SelectAll();
+        }
+
+        private void CustomTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!CustomTextBox.IsKeyboardFocusWithin && AutoSelectText)
+            {
+                e.Handled = true;
+                CustomTextBox.Focus();
+            }
         }
     }
 }

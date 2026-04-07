@@ -351,7 +351,7 @@
                         </TabItem>
                         <!-- -->
 
-                        <!-- Perks Tab -->
+                        <!-- Data Tab -->
                         <TabItem Header="Data">
                             <panels:BioPanel
                                 DataContext="{Binding BioViewModel}"/>
@@ -364,13 +364,13 @@
                              FontFamily="{StaticResource Monofonto}">
                         </TabItem>
 
-                        <!-- Perks Tab -->
+                        <!-- Load Button -->
                         <TabItem Header="Load"
                             PreviewMouseDown="RunFunctionTab_LoadCharacter">
                         </TabItem>
                         <!-- -->
 
-                        <!-- Perks Tab -->
+                        <!-- Save Button -->
                         <TabItem Header="Save"
                             PreviewMouseDown="RunFunctionTab_SaveCharacter">
                         </TabItem>
