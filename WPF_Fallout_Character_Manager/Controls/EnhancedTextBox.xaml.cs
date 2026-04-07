@@ -375,13 +375,13 @@ namespace WPF_Fallout_Character_Manager.Controls
 
         private void CustomTextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if(AutoSelectText)
+            if(AutoSelectText && !IsReadOnly)
                 CustomTextBox.SelectAll();
         }
 
         private void CustomTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!CustomTextBox.IsKeyboardFocusWithin && AutoSelectText)
+            if (!CustomTextBox.IsKeyboardFocusWithin && AutoSelectText && !IsReadOnly)
             {
                 e.Handled = true;
                 CustomTextBox.Focus();
