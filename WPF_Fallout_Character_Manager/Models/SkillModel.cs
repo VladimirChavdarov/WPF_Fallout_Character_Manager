@@ -78,16 +78,25 @@ namespace WPF_Fallout_Character_Manager.Models
             // subscribe to OnPropertyChange
             foreach (var keyValue in _skills)
             {
-                var key = keyValue.Key;
                 var value = keyValue.Value;
 
-                value.PropertyChanged += (s, e) =>
+                value.PropertyChanged -= SkillValue_PropertyChanged;
+                value.PropertyChanged += SkillValue_PropertyChanged;
+            }
+        }
+
+        private void SkillValue_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ModInt.Total))
+            {
+                foreach (var kvp in _skills)
                 {
-                    if (e.PropertyName == nameof(ModIntSkill.Total))
+                    if (ReferenceEquals(kvp.Value, sender))
                     {
-                        OnPropertyChanged(key.ToString());
+                        OnPropertyChanged(kvp.Key.ToString());
+                        break;
                     }
-                };
+                }
             }
         }
 
@@ -111,6 +120,11 @@ namespace WPF_Fallout_Character_Manager.Models
             }
 
             SubscribeToOnPropertyChanged();
+
+            foreach (Skill stat in Enum.GetValues(typeof(Skill)))
+            {
+                OnPropertyChanged(stat.ToString());
+            }
         }
 
         public void UpdateModel(SPECIALModel specialModel)

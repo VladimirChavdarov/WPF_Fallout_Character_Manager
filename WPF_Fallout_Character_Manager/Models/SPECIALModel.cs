@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Windows.Input;
 using WPF_Fallout_Character_Manager.Models.ModifierSystem;
 using WPF_Fallout_Character_Manager.Models.MVVM;
 using WPF_Fallout_Character_Manager.Models.Serialization;
@@ -65,19 +66,34 @@ namespace WPF_Fallout_Character_Manager.Models
             }
 
             SubscribeToPropertyChanged();
+
+            foreach (SPECIAL stat in Enum.GetValues(typeof(SPECIAL)))
+            {
+                OnPropertyChanged(stat.ToString());
+            }
         }
 
         private void SubscribeToPropertyChanged()
         {
             foreach (var (key, value) in _special)
             {
-                value.PropertyChanged += (s, e) =>
+                value.PropertyChanged -= SPECIALValue_PropertyChanged;
+                value.PropertyChanged += SPECIALValue_PropertyChanged;
+            }
+        }
+
+        private void SPECIALValue_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ModInt.Total))
+            {
+                foreach (var kvp in _special)
                 {
-                    if (e.PropertyName == nameof(ModInt.Total))
+                    if (ReferenceEquals(kvp.Value, sender))
                     {
-                        OnPropertyChanged(key.ToString());
+                        OnPropertyChanged(kvp.Key.ToString());
+                        break;
                     }
-                };
+                }
             }
         }
 
